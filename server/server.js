@@ -1,10 +1,36 @@
-let me = 'Hi there';
-console.log( me );
+'use strict'
 
-let sum = (a, b) => {
+const express = require( 'express' );
+const app = express();
+const bodyParser = require('body-parser');
+const cors = require('cors');
 
-  console.log( a+b );
+app.use(bodyParser.urlencoded( {
 
-}
+  extended: true
 
-sum( 5, 5 );
+}));
+
+app.use(cors());
+
+app.get( '/api/users', ( request, response) => {
+  response.send('Hello World');
+});
+
+
+const hostname = 'localhost';
+const port = '3001';
+/*
+const server = http.createServer (( request, response ) => {
+
+  response.statusCode = 200;
+  response.setHeader ( 'Content-Type', 'text/html' );
+  response.end( '<h1>Hello World!</h1>\n' );
+
+});*/
+
+app.listen( port, hostname, () => {
+
+  console.log( `server is running...`);
+
+} );
