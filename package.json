@@ -5,7 +5,9 @@
   "main": "/server/server.js",
   "scripts": {
     "test": "mocha tests/test.js",
-    "build": "babel server -d dist"
+    "build": "babel server -d dist",
+    "start": "node server/server.js",
+    "dev": "nodemon server/server.js"
   },
   "script": {
     "build": "babel --presets es2015 server -d dist"

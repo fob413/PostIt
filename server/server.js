@@ -4,6 +4,7 @@ const express = require( 'express' );
 const app = express();
 const bodyParser = require('body-parser');
 const cors = require('cors');
+let users = require('./data');
 
 app.use(bodyParser.urlencoded( {
 
@@ -14,7 +15,7 @@ app.use(bodyParser.urlencoded( {
 app.use(cors());
 
 app.get( '/api/users', ( request, response) => {
-  response.send('Hello World');
+  response.json(users);
 });
 
 
