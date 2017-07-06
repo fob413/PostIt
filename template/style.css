@@ -33,12 +33,19 @@
 
 .messageHist{
 
-
+  background-color: #d3d7d3;
+  width: 100%;
+  height: 100%;
 
 }
 
 .messageChat{
 
-
+  background-color: #025c09;
+  padding: 10px;
+  width: 80%;
+  position: fixed;
+  bottom: 0;
+  color: white;
 
 }
