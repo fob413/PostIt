@@ -7,7 +7,6 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-    <link rel="stylesheet" href="style.css">
   </head>
   <body>
 
@@ -15,58 +14,39 @@
   
   <div style="text-align: center; margin: auto">
       
-      <a class="navbar-brand" href="#"><img class="col-sm-3 img-fluid img-center" src="image/postitL.png" alt="PostIt Logo"></a>
+      <a class="navbar-brand" href="broadcast.html"><img class="col-sm-3 img-fluid img-center" src="image/postitL.png" alt="PostIt Logo"></a>
   
   </div>
 
     </nav>
 
-    <div class="container-fluid" style="height: 81vh">
+   <div class="container-fluid">
+
+    <form class="col-sm-6" style="margin: auto; text-align:center; padding-top: 100px">
   
-      <div class="col-sm-10" style="margin: auto">
-
-          <div style="text-align:center; margin: auto; padding: 50px">            
-
-            <a href="group.html" style="text-decoration: none; color:black">
-
-              <img class="img-fluid" style="height: 100px" src="image/add.png" alt="Add Button">
-              <p>Create Group</p>
-
-            </a>
-
+        <div class="form-group has-success">
+    
+          <h3>Create Group</h3>
+          <input type="email" class="form-control" aria-describedby="emailHelp" placeholder="Name Of Group">
+    
         </div>
 
-        <div class="row">
+        <div class="form-group has-success">
 
-          <div class="col-sm-4">
-
-            <a href="messageBoard.html" class="noLinkDeco"><p><img src="image/group.png"> Sample Group 1</p></a></a>
-
-          </div>
-
-          <div class="col-sm-4">
-
-            <a href="messageBoard.html" class="noLinkDeco"><p><img src="image/group.png"> Sample Group 2</p></a>
-
-          </div>
-
-          <div class="col-sm-4">
-
-            <a href="messageBoard.html" class="noLinkDeco"><p><img src="image/group.png"> Sample Group 3</p></a>
-
-          </div>
-
-          <div class="col-sm-4">
-
-            <a href="messageBoard.html" class="noLinkDeco"><p><img src="image/group.png"> Sample Group 3</p></a>
-
-          </div>
+          <input type="text" class="form-control" placeholder="Add User">
         
         </div>
+        
+        <div class="text-center">
 
-      </div>
+          <button type="submit" class="btn btn-success"><a href="broadcast.html" style="text-decoration: none; color: white;">Cancel</a></button>
+          <button type="submit" class="btn btn-success"><a href="#" style="text-decoration: none; color: white;">Create</a></button>
 
-    </div>
+        </div>
+      
+      </form> 
+
+   </div>
 
 
 

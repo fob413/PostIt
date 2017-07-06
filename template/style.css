@@ -1,0 +1,44 @@
+.noLinkDeco{
+
+  text-decoration: none;
+  color: black;
+
+}
+
+.noLinkDeco, a:hover{
+
+  text-decoration: none;
+  color: black;
+
+}
+
+.noLinkDeco, a:visited{
+
+  text-decoration: none;
+  color: #013d05
+
+}
+
+.noLinkDeco, a:active{
+
+  text-decoration: none;
+
+}
+
+.noLinkDeco, a:link{
+
+  text-decoration: none;
+
+}
+
+.messageHist{
+
+
+
+}
+
+.messageChat{
+
+
+
+}
