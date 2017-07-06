@@ -1,0 +1,19 @@
+{
+  "name": "postit",
+  "version": "1.0.0",
+  "description": "A simple application that allows friends and colleagues create groups for notifications",
+  "main": "/server/server.js",
+  "scripts": {
+    "test": "mocha tests/test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fob413/PostIt.git"
+  },
+  "author": "Funsho Oluyole-Balogun",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fob413/PostIt/issues"
+  },
+  "homepage": "https://github.com/fob413/PostIt#readme"
+}
