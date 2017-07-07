@@ -6,7 +6,7 @@ PostIt is a simple application that allows friends and colleagues create groups 
 Tests were run with Mocha and Chai on all functions and Api routes
 
 #Built With
-UserInterface - Built with HTML, CSS, BOOTSTRAP
+UserInterface - Built with HTML, CSS, BOOTSTRAP 
 NodeJs - Runs Javascript on server
 Express - Web application framework that provides features for the application
 Babel - Used to transpile Javascript written in ES6 down to ES5
