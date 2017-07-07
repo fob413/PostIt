@@ -69,3 +69,23 @@
   color: white;
 
 }
+
+.grpImgWidth {
+
+    width: 50px;
+
+}
+
+.mBoard {
+
+  border-bottom: 1px solid black;
+
+}
+
+.mBoardTop {
+
+    padding-left: 3%;
+    padding-top: 8px;
+    padding-bottom: 1px;
+
+}
