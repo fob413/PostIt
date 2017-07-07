@@ -4,6 +4,7 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var cors = require('cors');
+var users = require('./data');
 
 app.use(bodyParser.urlencoded({
 
@@ -14,7 +15,7 @@ app.use(bodyParser.urlencoded({
 app.use(cors());
 
 app.get('/api/users', function (request, response) {
-  response.send('Hello World');
+  response.json(users);
 });
 
 var hostname = 'localhost';
