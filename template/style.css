@@ -39,6 +39,25 @@
 
 }
 
+.messageHist{
+
+  background-color: #d3d7d3;
+  width: 100%;
+  height: 100%;
+
+}
+
+.searchUsers {
+
+  padding: 10px;
+  width: 150px;
+  max-width: 150px;
+  max-height: 32px;
+  overflow-y: hidden;
+  border: 1px solid black;
+
+}
+
 .messageChat{
 
   background-color: #025c09;
@@ -49,6 +68,7 @@
   color: white;
 
 }
+
 
 .centerInDiv{
   
@@ -87,5 +107,17 @@
     padding-left: 3%;
     padding-top: 8px;
     padding-bottom: 1px;
+
+}
+
+div[data-placeholder]:not(:focus):not([data-div-placeholder-content]):before {
+
+    content: attr(data-placeholder);
+
+    float: left;
+
+    margin-left: 2px;
+
+    color: #b3b3b3;
 
 }
