@@ -2,10 +2,10 @@
 PostIt is a simple application that allows friends and colleagues create groups for notifications.
 
 
-#Tests
+## Tests
 Tests were run with Mocha and Chai on all functions and Api routes
 
-#Built With
+## Built With
 UserInterface - Built with HTML, CSS, BOOTSTRAP 
 NodeJs - Runs Javascript on server
 Express - Web application framework that provides features for the application
