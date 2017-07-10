@@ -30,7 +30,7 @@ module.exports = {
       },
     });
   },
-  down: function(queryInterface, Sequelize) {
-    return queryInterface.dropTable('Groups');
+  down: (queryInterface/*, Sequelize*/) => {
+    queryInterface.dropTable('Groups');
   }
 };
