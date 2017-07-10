@@ -10,7 +10,7 @@ module.exports = function(sequelize, DataTypes) {
         // associations can be defined here
         Groups.belongsTo( models.Users, {
 
-          foreignKey: usersId,
+          foreignKey: userId,
           onDelete: 'CASCADE',
 
         });
