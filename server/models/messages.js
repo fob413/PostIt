@@ -1,6 +1,9 @@
 module.exports = function(sequelize, DataTypes) {
   const Messages = sequelize.define('Messages', {
-    content: DataTypes.TEXT
+    content: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+    },
   }, {
     classMethods: {
       associate: function(models) {
