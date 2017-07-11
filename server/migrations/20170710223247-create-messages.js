@@ -19,6 +19,7 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       },
+      /*
       groupId: {
         type: Sequelize.INTEGER,
         onDelete: 'CASCADE',
@@ -27,7 +28,7 @@ module.exports = {
           key: 'id',
           as: GroupId,
         },
-      },
+      },*/
     });
   },
   down: (queryInterface, Sequelize) => {
