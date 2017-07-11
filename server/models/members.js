@@ -1,13 +1,13 @@
 module.exports = (sequelize, DataTypes) => {
   const Members = sequelize.define('Members', {
-    allowNull: DataTypes.FALSE
+    allowNull: DataTypes.BOOLEAN
   }, {
     classMethods: {
       associate: (models) => {
         // associations can be defined here
 
         // associations between members and groups
-        Groups.belongsTo( models.Groups, {
+        Members.belongsTo(models.Groups, {
 
           foreignKey: 'groupId',
           onDelete: 'CASCADE',

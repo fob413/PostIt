@@ -29,9 +29,10 @@
     "express": "^4.15.3",
     "mocha": "^3.4.2",
     "morgan": "^1.8.2",
+    "mysql": "^2.13.0",
     "pg": "^6.4.0",
     "pg-hstore": "^2.3.2",
-    "sequelize": "^4.3.0"
+    "sequelize": "^3.30.4"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",

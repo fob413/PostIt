@@ -1,4 +1,4 @@
-module.exports = function(sequelize, DataTypes) {
+module.exports = (sequelize, DataTypes) => {
   const Messages = sequelize.define('Messages', {
     content: {
       type: DataTypes.TEXT,
@@ -8,19 +8,18 @@ module.exports = function(sequelize, DataTypes) {
     classMethods: {
       associate: (models) => {
         // associations can be defined here
-        
-        //associations between messages and groups
-        Groups.belongsTo( models.Groups, {
+        // associations between messages and groups
+        Messages.belongsTo(models.Groups, {
 
-          foreignKey: groupId,
+          foreignKey: 'groupId',
           onDelete: 'CASCADE',
 
         });
 
         // associations between messages and users
-        Groups.belongsTo( models.Users, {
+        Messages.belongsTo(models.Users, {
 
-          foreignKey: userId,
+          foreignKey: 'userId',
           onDelete: 'CASCADE,'
 
         });
