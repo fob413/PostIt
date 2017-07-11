@@ -17,7 +17,7 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
-      Email: {
+      email: {
         type: Sequelize.STRING,
         allowNull: false
       },
@@ -31,7 +31,7 @@ module.exports = {
       }
     });
   },
-  down: function down(queryInterface /*, Sequelize*/) {
-    return queryInterface.dropTable('Users');
+  down: function down(queryInterface /* , Sequelize*/) {
+    queryInterface.dropTable('Users');
   }
 };
