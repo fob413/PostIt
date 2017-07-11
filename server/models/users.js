@@ -1,15 +1,20 @@
-module.exports = function(sequelize, DataTypes) {
+module.exports = (sequelize, DataTypes) => {
   const Users = sequelize.define('Users', {
     UserName: {
       type: DataTypes.STRING,
       allowNull: false,
+      required: true,
+      unique: true,
     },
     password: {
       type: DataTypes.STRING,
       allowNull: false,
+      required: true,
     },
-    Email: {
-      type: DataTypes.STRING
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      required: true,
     },
   }, {
     classMethods: {
@@ -17,20 +22,20 @@ module.exports = function(sequelize, DataTypes) {
       associate: (models) => {
         // associations can be defined here
 
-        //association between the users and the groups
-        Users.hasMany( models.Groups, {
+        // association between the users and the groups
+        Users.hasMany(models.Groups, {
 
           foreignKey: 'userId',
 
         });
 
 
-        //association between users and messages
-        Users.hasMany( models.Messages, {
+        // association between users and messages
+        Users.hasMany(models.Messages, {
 
           foreignKey: 'userId',
 
-        })
+        });
       },
     },
   });
