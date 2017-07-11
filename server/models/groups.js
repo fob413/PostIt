@@ -6,18 +6,29 @@ module.exports = function(sequelize, DataTypes) {
     },
   }, {
     classMethods: {
-      associate: function(models) {
+      associate: (models) => {
         // associations can be defined here
+
+        //associations between group and users
         Groups.belongsTo( models.Users, {
 
-          foreignKey: userId,
+          foreignKey: 'userId',
           onDelete: 'CASCADE',
 
         });
+
+
+        //associations between groups and messages
         Groups.hasMany( models.Messages, {
 
           foreignKey: 'groupId',
-          as: 'messages',
+
+        });
+
+        // associations between groups and members
+        Groups.hasMany( models.Members, {
+
+          foreignKey: 'groupId',
 
         });
       },

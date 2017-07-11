@@ -19,19 +19,29 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       },
-      /*
+      
       groupId: {
         type: Sequelize.INTEGER,
         onDelete: 'CASCADE',
         references: {
           model: 'Groups',
           key: 'id',
-          as: GroupId,
         },
-      },*/
+      },
+
+      userId: {
+        type: Sequelize.INTEGER,
+        onDelete: 'CASCADE',
+        references: {
+          model: 'Users',
+          key: 'id',
+        },
+      },
     });
   },
+
   down: (queryInterface, Sequelize) => {
     queryInterface.dropTable('Messages');
   }
+
 };

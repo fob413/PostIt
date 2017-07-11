@@ -13,15 +13,24 @@ module.exports = function(sequelize, DataTypes) {
     },
   }, {
     classMethods: {
-      
-      associate: function(models) {
+
+      associate: (models) => {
         // associations can be defined here
+
+        //association between the users and the groups
         Users.hasMany( models.Groups, {
 
           foreignKey: 'userId',
-          as: 'groups',
 
         });
+
+
+        //association between users and messages
+        Users.hasMany( models.Messages, {
+
+          foreignKey: 'userId',
+
+        })
       },
     },
   });
