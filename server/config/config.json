@@ -1,20 +1,6 @@
 {
   "development": {
     "dialect": "postgres",
-    "use_env_variable": "postgres://postgres:abcd@localhost:5432/postgres"
-  },
-  "test": {
-    "username": "funsho",
-    "password": null,
-    "database": "database_test",
-    "host": "127.0.0.1",
-    "dialect": "postgres"
-  },
-  "production": {
-    "username": "funsho",
-    "password": null,
-    "database": "database_production",
-    "host": "127.0.0.1",
-    "dialect": "postgres"
+    "use_env_variable": "DATABASE_URL"
   }
 }

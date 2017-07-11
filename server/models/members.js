@@ -8,10 +8,8 @@ module.exports = (sequelize, DataTypes) => {
 
         // associations between members and groups
         Members.belongsTo(models.Groups, {
-
           foreignKey: 'groupId',
           onDelete: 'CASCADE',
-
         });
       }
     }

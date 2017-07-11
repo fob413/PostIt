@@ -8,7 +8,8 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       allowNull: {
-        type: Sequelize.FALSE
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
       },
       createdAt: {
         allowNull: false,
@@ -28,7 +29,7 @@ module.exports = {
       },
     });
   },
-  down: (queryInterface/*, Sequelize*/) => {
+  down: (queryInterface) => {
     queryInterface.dropTable('Members');
   }
 };
