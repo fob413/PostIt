@@ -13,9 +13,24 @@ module.exports = {
     .catch(error => res.status(400).send(error));
   },
 
-  list(req, res) {
+  signin(req, res) {
     return Users
-    .all()
+    .findOne({
+      where: {
+        UserName: req.body.UserName
+      }
+    })
+    .then((user) => {
+      if (user) {
+        if (user.password !== req.body.password) {
+          return 'Invalid Username or Password';
+        } else {
+          return 'Successfully logged in';
+        }
+      } else {
+        return 'User is not on the platform';
+      }
+    })
     .then(user => res.status(201).send(user))
     .catch(error => res.status(400).send(error));
   }

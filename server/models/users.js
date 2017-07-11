@@ -3,8 +3,10 @@ module.exports = (sequelize, DataTypes) => {
     UserName: {
       type: DataTypes.STRING,
       allowNull: false,
-      required: true,
-      unique: true,
+      unique: {
+        args: true,
+        message: 'Username must be unique.',
+      },
     },
     password: {
       type: DataTypes.STRING,
@@ -15,6 +17,9 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
       required: true,
+      validate: {
+        isEmail: true
+      }
     },
   }, {
     classMethods: {
