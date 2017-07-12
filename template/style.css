@@ -130,3 +130,7 @@ div[data-placeholder]:not(:focus):not([data-div-placeholder-content]):before {
   color: white;
   padding: 5%;
 }
+
+.cOutline{
+    border: 1px solid black;
+}
