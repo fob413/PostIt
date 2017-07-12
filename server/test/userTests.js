@@ -6,7 +6,7 @@ const api = supertest('http://localhost:8000');
 
 describe('User', () => {
   it('should return a 200 response', (done) => {
-    api.get('/user/1')
+    api.get('/api')
     .set('Accept', 'application/json')
     .expect(200, done);
   });

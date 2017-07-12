@@ -10,11 +10,13 @@ module.exports = (app) => {
 
   app.post('/api/user/signin', usersController.signin);
 
-  app.get('/api/Group', (req, res) => res.status(200).send({
+  app.get('/api/group', (req, res) => res.status(200).send({
     message: 'Hi, Welcome to Groups in PostIt',
   }));
 
-  app.post('/api/Group', groupsContoller.create);
+  app.get('/api/group/list', groupsContoller.list);
+
+  app.post('/api/group', groupsContoller.create);
 
   // app.post('/api/Group', groupsContoller.list);
 };

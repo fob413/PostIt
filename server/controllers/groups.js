@@ -1,4 +1,5 @@
-const groups = require('../models').groups;
+const groups = require('../models').Groups;
+console.log(groups);
 
 module.exports = {
 
