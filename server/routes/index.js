@@ -1,8 +1,10 @@
 const usersController = require('../controllers/user');
 const groupsController = require('../controllers/groups');
 const membersController = require('../controllers/members');
+const messagesController = require('../controllers/messages');
 
 module.exports = (app) => {
+  // a get all api for users signup
   app.get('/api/user/signup', (req, res) => res.status(200).send({
     message: 'Hi, Welcome to PostIt',
   }));
@@ -30,6 +32,15 @@ module.exports = (app) => {
   // list all the members
   app.get('/api/group/:groupId/user', membersController.list);
 
-  // ass a user to a particular group
+  // add a user to a particular group
   app.post('/api/group/:groupId/user', membersController.create);
+
+  // a get all spi for users messages
+  app.get('/api/group/message', (req, res) => res.status(200).send({
+    message: 'Hi, welcome to users messages',
+  }));
+
+  app.get('/api/group/:groupId/message', messagesController.list);
+
+  app.post('/api/group/:groupId/message', messagesController.create);
 };

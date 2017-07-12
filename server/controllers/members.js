@@ -8,8 +8,6 @@ module.exports = {
   },
 
   create(req, res) {
-    console.log(`======================>>>>>>>>>>>the passed in group parameter ${req.params.groupId}
-    ==========>>>>>>> the userId is ${req.body.userId}`);
     return members
     .create({
       userId: req.body.userId,
