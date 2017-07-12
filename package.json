@@ -4,7 +4,7 @@
   "description": "A simple application that allows friends and colleagues create groups for notifications",
   "main": "/server/server.js",
   "scripts": {
-    "test": "mocha tests/test.js",
+    "test": "mocha server/test/userTests.js",
     "build": "babel server -d dist",
     "start:dev": "nodemon ./server/bin/www",
     "dev": "nodemon server/server.js"
@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/fob413/PostIt#readme",
   "dependencies": {
+    "bcrypt": "^1.0.2",
     "body-parser": "^1.17.2",
     "chai": "^4.0.2",
     "cors": "^2.8.3",
@@ -33,7 +34,8 @@
     "mysql": "^2.13.0",
     "pg": "^6.4.0",
     "pg-hstore": "^2.3.2",
-    "sequelize": "^3.30.4"
+    "sequelize": "^3.30.4",
+    "supertest": "^3.0.0"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",

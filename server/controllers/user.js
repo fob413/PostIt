@@ -1,4 +1,7 @@
+const bcrypt = require('bcrypt');
+
 const Users = require('../models').Users;
+
 
 module.exports = {
 
@@ -6,7 +9,7 @@ module.exports = {
     return Users
     .create({
       UserName: req.body.UserName,
-      password: req.body.password,
+      password: bcrypt.hashSync(req.body.password, 11),
       email: req.body.email
     })
     .then(user => res.status(201).send(user))
@@ -22,13 +25,13 @@ module.exports = {
     })
     .then((user) => {
       if (user) {
-        if (user.password !== req.body.password) {
-          return 'Invalid Username or Password';
+        if (!bcrypt.compareSync(req.body.password, user.password)) {
+          res.status(401).json('Invalid Username or Password');
         } else {
-          return 'Successfully logged in';
+          res.status(200).json('Successfully logged in');
         }
       } else {
-        return 'User is not on the platform';
+        res.status(401).json('Not a user on the platform');
       }
     })
     .then(user => res.status(201).send(user))
