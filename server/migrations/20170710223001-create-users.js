@@ -21,6 +21,10 @@ module.exports = {
         allowNull: false,
         isEmail: true
       },
+      isLoggedin: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: true,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

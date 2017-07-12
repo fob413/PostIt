@@ -12,6 +12,11 @@ module.exports = {
         allowNull: false,
         unique: true,
       },
+      Description: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        required: true,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
@@ -20,15 +25,6 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       },
-/*
-      userId: {
-        type: Sequelize.INTEGER,
-        onDelete: 'CASCADE',
-        references: {
-          model: 'Users',
-          key: 'id',
-        },
-      },*/
     });
   },
   down: (queryInterface) => {

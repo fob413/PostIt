@@ -1,5 +1,5 @@
 const groups = require('../models').Groups;
-console.log(groups);
+
 
 module.exports = {
 
@@ -7,16 +7,18 @@ module.exports = {
     return groups
     .create({
       GroupName: req.body.GroupName,
+      Description: req.body.Description,
     })
-    .then(user => res.status(201).send(user))
-    .catch(error => res.status(400).send(error));
+    .then(user => res.status(
+      201).send(user))
+    .catch(error => res.status(400).send(error.message));
   },
 
   list(req, res) {
     return groups
     .all()
     .then(group => res.status(200).send(group))
-    .catch(error => res.status(400).send(error));
+    .catch(error => res.status(400).send(error.message));
   }
 
 };

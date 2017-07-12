@@ -21,6 +21,10 @@ module.exports = (sequelize, DataTypes) => {
         isEmail: true
       }
     },
+    isLoggedin: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true,
+    }
   }, {
     classMethods: {
 
@@ -28,9 +32,9 @@ module.exports = (sequelize, DataTypes) => {
         // associations can be defined here
 
         // association between the users and the groups
-        Users.hasMany(models.Groups, {
+        Users.belongsToMany(models.Groups, {
 
-          foreignKey: 'userId',
+          through: 'members',
 
         });
 

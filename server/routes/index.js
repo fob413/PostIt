@@ -8,7 +8,7 @@ module.exports = (app) => {
 
   app.post('/api/user/signup', usersController.create);
 
-  app.post('/api/user/signin', usersController.signin);
+  app.patch('/api/user/signin', usersController.signin);
 
   app.get('/api/group', (req, res) => res.status(200).send({
     message: 'Hi, Welcome to Groups in PostIt',

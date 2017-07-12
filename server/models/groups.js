@@ -8,19 +8,22 @@ module.exports = (sequelize, DataTypes) => {
         message: 'Username must be unique.',
       },
     },
+    Description: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      required: true,
+    }
   }, {
     classMethods: {
       associate: (models) => {
         // associations can be defined here
 
         // associations between group and users
-        /*
-        Groups.belongsTo(models.Users, {
+        Groups.belongsToMany(models.Users, {
 
-          foreignKey: 'userId',
-          onDelete: 'CASCADE',
+          through: 'members',
 
-        });*/
+        });
 
 
         // associations between groups and messages
@@ -35,7 +38,7 @@ module.exports = (sequelize, DataTypes) => {
 
           foreignKey: 'groupId',
 
-        });
+        }); 
       },
     },
   });
