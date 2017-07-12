@@ -15,7 +15,8 @@ module.exports = {
     .then((user) => {
       if (user) {
         if (user.isLoggedin) {
-          return groups.create({
+          return groups
+          .create({
             GroupName: req.body.GroupName,
             Description: req.body.Description,
           })
