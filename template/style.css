@@ -121,3 +121,12 @@ div[data-placeholder]:not(:focus):not([data-div-placeholder-content]):before {
     color: #b3b3b3;
 
 }
+
+.createGroup{
+  display: block;
+  text-align: center;
+  width: 100%;
+  background-color: green;
+  color: white;
+  padding: 5%;
+}
