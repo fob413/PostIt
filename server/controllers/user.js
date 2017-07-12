@@ -4,6 +4,11 @@ const Users = require('../models').Users;
 
 
 module.exports = {
+  list(req, res) {
+    return Users
+    .all()
+    .then(user => res.status(200).send(user));
+  },
 
   create(req, res) {
     return Users
