@@ -1,6 +1,14 @@
 const groups = require('../models').Groups;
 const members = require('../models/').Members;
 const Users = require('../models/').Users;
+const jwt = require('jsonwebtoken');
+const express = require('express');
+
+require('dotenv').config();
+
+const secret = process.env,SECRET_TOKEN;
+
+const app = express();
 
 
 module.exports = {
@@ -38,6 +46,7 @@ module.exports = {
     })
     .then(user => res.status(201).send(user))
     .catch(error => res.status(400).send(error));
+    
     
     /*
     groups
