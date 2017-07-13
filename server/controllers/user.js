@@ -1,5 +1,5 @@
-import db from '../models/index';
 import bcrypt from 'bcrypt';
+import db from '../models/index';
 
 const Users = db.Users;
 // const bcrypt = require('bcrypt');

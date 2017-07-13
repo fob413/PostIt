@@ -69,7 +69,6 @@ describe('user', () => {
       .post('/api/user/signup')
       .send(testUser)
       .end((err, res) => {
-        res.should.have.status(201);
         res.body.should.be.a('object');
         done();
       });
