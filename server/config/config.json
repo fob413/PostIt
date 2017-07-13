@@ -1,6 +1,7 @@
 {
   "development": {
     "dialect": "postgres",
+    "secret": "thisisbootcamp",
     "use_env_variable": "DATABASE_URL"
   }
 }

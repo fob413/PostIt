@@ -9,21 +9,21 @@ module.exports = (app) => {
     message: 'Hi, Welcome to PostIt',
   }));
 
-  // list out all the registered users
+  // to be removed list out all the registered users
   app.get('/api/user', usersController.list);
 
   // signup a user into the application
   app.post('/api/user/signup', usersController.create);
 
   // signin a user into the application
-  app.patch('/api/user/signin', usersController.signin);
+  app.post('/api/user/signin', usersController.signin);
 
-  // a get all api for group
+  // to be removed a get all api for group
   app.get('/api/group', (req, res) => res.status(200).send({
     message: 'Hi, Welcome to Groups in PostIt',
   }));
 
-  // list out all the available groups on the application
+  // to be removed list out all the available groups on the application
   app.get('/api/group/list', groupsController.list);
 
   // creates a new group on the application
