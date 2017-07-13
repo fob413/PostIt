@@ -1,4 +1,4 @@
-https://api.travis-ci.org/fob413/PostIt.svg?branch=newDatabase
+[![Build Status](https://travis-ci.org/fob413/PostIt.svg?branch=newDatabase)](https://travis-ci.org/fob413/PostIt)
 
 # PostIt
 PostIt is a simple application that allows friends and colleagues create groups for notifications.
