@@ -35,7 +35,7 @@ module.exports = {
     .then((user) => {
       if (user) {
         if (!bcrypt.compareSync(req.body.password, user.password)) {
-          res.status(401).json('Invalid Username or Password');
+          res.status(401).json('Invalid Credentials');
         } else {
           return user
           .update({
