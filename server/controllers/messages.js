@@ -11,27 +11,15 @@ module.exports = {
       }
     })
     .then((user) => {
-      console.log(`=========>>>>>>>>>Got here 1`);
-      console.log(req.body);
-      console.log(req.params.groupId);
-      console.log(user.email);
       if (user) {
-        console.log(`=========>>>>>>>>>Got here 2`);
-        console.log(req.body);
-        console.log(req.params.groupId);
-        console.log(user.email);
+        console.log('===============>>>>>>>>>>>>>' + user.id);
         if (user.isLoggedin) {
-          console.log(`=========>>>>>>>>>Got here 3`);
-          console.log(req.body);
-          console.log(req.params.groupId);
-          console.log(user.email);
-          console.log("=====777888=========>>>>>>>>>>>>" + message);
           return message
           .create({
             authorsName: user.UserName,
             content: req.body.content,
             groupId: req.params.groupId,
-            userId: user.userId
+            userId: user.id
           })
           .then(messages => res.status(201).send(messages));
         }
