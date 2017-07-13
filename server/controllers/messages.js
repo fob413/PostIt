@@ -12,7 +12,6 @@ module.exports = {
     })
     .then((user) => {
       if (user) {
-        console.log('===============>>>>>>>>>>>>>' + user.id);
         if (user.isLoggedin) {
           return message
           .create({
@@ -30,11 +29,41 @@ module.exports = {
     .catch(error => res.status(400).send(error.message));
   },
 
+  listMessages(req, res) {
+    return Users
+    .findOne({
+      where: {
+        id: req.body.userId
+      }
+    })
+    .then((user) => {
+      if (user) {
+        if (user.isLoggedin) {
+          message
+          .findOne({
+            where: {
+              groupId: req.params.groupId,
+            }
+          })
+          .then((groupMessages) => {
+            res.status(200).send(groupMessages);
+          });
+        } else {
+          res.status(401).json({
+            message: 'No messages found for users',
+          });
+        }
+      } else {
+        res.status(401);
+      }
+    });
+  },
+
   list(req, res) {
-    return messages
+    return message
     .all()
-    .then(message => res.status(200).send(message))
+    .then(messages => res.status(200).send(messages))
     .catch(error => res.status(400).send(error.message));
   }
 
-}
+};

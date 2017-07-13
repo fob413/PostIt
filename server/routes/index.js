@@ -40,7 +40,9 @@ module.exports = (app) => {
     message: 'Hi, welcome to users messages',
   }));
 
+  // list all the messages
   app.get('/api/group/:groupId/message', messagesController.list);
 
+  // list all the messages of a particular user in a group
   app.post('/api/group/:groupId/message', messagesController.create);
 };
