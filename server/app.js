@@ -22,7 +22,7 @@ require('./routes')(app);
 welcome message in json format*/
 app.get('*', (req, res) => res.status(200).send({
 
-  message: 'Welcome to the beginning of nothingness',
+  message: 'WELCOME TO POSTIT',
 
 }));
 
