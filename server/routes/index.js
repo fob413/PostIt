@@ -1,7 +1,7 @@
-const usersController = require('../controllers/user');
-const groupsController = require('../controllers/groups');
-const membersController = require('../controllers/members');
-const messagesController = require('../controllers/messages');
+import usersController from '../controllers/user';
+import groupsController from '../controllers/groups';
+import membersController from '../controllers/members';
+import messagesController from '../controllers/messages';
 
 module.exports = (app) => {
   // a get all api for users signup

@@ -1,12 +1,11 @@
-const fs = require('fs');
-const path = require('path');
-const Sequelize = require('sequelize');
-const dotenv = require('dotenv');
+import fs from 'fs';
+import path from 'path';
+import Sequelize from 'sequelize';
+import dotenv from 'dotenv';
+import configUrl from '../config/config.json';
 
 const basename = path.basename(module.filename);
 const env = process.env.NODE_ENV || 'development';
-
-const configUrl = require('../config/config.json');
 
 dotenv.load();
 const config = (configUrl)[env];
