@@ -5,24 +5,27 @@ module.exports = function (sequelize, DataTypes) {
     content: {
       type: DataTypes.TEXT,
       allowNull: false
+    },
+    authorsName: {
+      type: DataTypes.STRING,
+      allowNull: false
     }
   }, {
     classMethods: {
       associate: function associate(models) {
         // associations can be defined here
+        // associations between messages and groups
+        Messages.belongsTo(models.Groups, {
 
-        //associations between messages and groups
-        Groups.belongsTo(models.Groups, {
-
-          foreignKey: groupId,
+          foreignKey: 'groupId',
           onDelete: 'CASCADE'
 
         });
 
         // associations between messages and users
-        Groups.belongsTo(models.Users, {
+        Messages.belongsTo(models.Users, {
 
-          foreignKey: userId,
+          foreignKey: 'userId',
           onDelete: 'CASCADE,'
 
         });

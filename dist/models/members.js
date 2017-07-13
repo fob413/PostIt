@@ -2,19 +2,18 @@
 
 module.exports = function (sequelize, DataTypes) {
   var Members = sequelize.define('Members', {
-    allowNull: DataTypes.FALSE
+    userId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    groupId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    }
   }, {
     classMethods: {
       associate: function associate(models) {
         // associations can be defined here
-
-        // associations between members and groups
-        Groups.belongsTo(models.Groups, {
-
-          foreignKey: 'groupId',
-          onDelete: 'CASCADE'
-
-        });
       }
     }
   });

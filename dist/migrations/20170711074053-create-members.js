@@ -9,8 +9,13 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      allowNull: {
-        type: Sequelize.FALSE
+      userId: {
+        allowNull: false,
+        type: Sequelize.INTEGER
+      },
+      groupId: {
+        allowNull: false,
+        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,
@@ -19,18 +24,10 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
-      },
-      groupId: {
-        type: Sequelize.INTEGER,
-        onDelete: 'CASCADE',
-        references: {
-          model: 'Groups',
-          key: 'id'
-        }
       }
     });
   },
-  down: function down(queryInterface /*, Sequelize*/) {
+  down: function down(queryInterface) {
     queryInterface.dropTable('Members');
   }
 };

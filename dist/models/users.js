@@ -5,8 +5,10 @@ module.exports = function (sequelize, DataTypes) {
     UserName: {
       type: DataTypes.STRING,
       allowNull: false,
-      required: true,
-      unique: true
+      unique: {
+        args: true,
+        message: 'Username must be unique.'
+      }
     },
     password: {
       type: DataTypes.STRING,
@@ -16,7 +18,14 @@ module.exports = function (sequelize, DataTypes) {
     email: {
       type: DataTypes.STRING,
       allowNull: false,
-      required: true
+      required: true,
+      validate: {
+        isEmail: true
+      }
+    },
+    isLoggedin: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true
     }
   }, {
     classMethods: {
@@ -25,9 +34,9 @@ module.exports = function (sequelize, DataTypes) {
         // associations can be defined here
 
         // association between the users and the groups
-        Users.hasMany(models.Groups, {
+        Users.belongsToMany(models.Groups, {
 
-          foreignKey: 'userId'
+          through: 'members'
 
         });
 
@@ -38,7 +47,8 @@ module.exports = function (sequelize, DataTypes) {
 
         });
       }
-    }
+    },
+    freezeTableName: true
   });
   return Users;
 };

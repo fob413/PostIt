@@ -11,7 +11,13 @@ module.exports = {
       },
       GroupName: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
+        unique: true
+      },
+      Description: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        required: true
       },
       createdAt: {
         allowNull: false,
@@ -20,20 +26,10 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
-      },
-
-      userId: {
-        type: Sequelize.INTEGER,
-        onDelete: 'CASCADE',
-        references: {
-          model: 'Users',
-          key: 'id'
-        }
-
       }
     });
   },
-  down: function down(queryInterface /*, Sequelize*/) {
+  down: function down(queryInterface) {
     queryInterface.dropTable('Groups');
   }
 };
