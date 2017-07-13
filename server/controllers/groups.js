@@ -1,29 +1,30 @@
-const groups = require('../models').Groups;
-const members = require('../models/').Members;
-const Users = require('../models/').Users;
+import db from '../models/index';
 
+const Users = db.Users;
+const Groups = db.Groups;
+const Members = db.Members;
 
-module.exports = {
+export default {
 
   create(req, res) {
     return Users
     .findOne({
       where: {
-        id: req.headers['user-id']
+        id: req.body.userId
       }
     })
     .then((user) => {
       if (user) {
         if (user.isLoggedin) {
-          return groups
+          return Groups
           .create({
             GroupName: req.body.GroupName,
             Description: req.body.Description,
           })
           .then((group) => {
-            members
+            Members
             .create({
-              userId: req.headers['user-id'],
+              userId: req.body.userId,
               groupId: group.id,
             })
             .then(res.status(201).send(group));
@@ -36,9 +37,8 @@ module.exports = {
         res.status(401).json('SignUp to access this service');
       }
     })
-    .then(user => res.status(201).send(user))
     .catch(error => res.status(400).send(error));
-    
+
     /*
     groups
     .create({
@@ -57,7 +57,7 @@ module.exports = {
   },
 
   list(req, res) {
-    return groups
+    return Groups
     .all()
     .then(group => res.status(200).send(group))
     .catch(error => res.status(400).send(error.message));

@@ -33,7 +33,7 @@ module.exports = {
     return Users
     .findOne({
       where: {
-        id: req.body.userId
+        id: req.headers['user-id']
       }
     })
     .then((user) => {

@@ -1,6 +1,10 @@
-const bcrypt = require('bcrypt');
+import db from '../models/index';
+import bcrypt from 'bcrypt';
 
-const Users = require('../models').Users;
+const Users = db.Users;
+// const bcrypt = require('bcrypt');
+
+// const Users = require('../models').Users;
 
 
 module.exports = {
@@ -18,6 +22,7 @@ module.exports = {
       email: req.body.email
     })
     .then(user => res.status(201).send({
+      id: user.id,
       Username: user.UserName,
       email: user.email,
       isLoggedin: user.isLoggedin
