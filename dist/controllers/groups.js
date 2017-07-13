@@ -8,7 +8,7 @@ module.exports = {
   create: function create(req, res) {
     return Users.findOne({
       where: {
-        id: req.body.userId
+        id: req.headers['user-id']
       }
     }).then(function (user) {
       if (user) {
@@ -18,7 +18,7 @@ module.exports = {
             Description: req.body.Description
           }).then(function (group) {
             members.create({
-              userId: req.body.userId,
+              userId: req.headers['user-id'],
               groupId: group.id
             }).then(res.status(201).send(group));
           }).catch(function (error) {

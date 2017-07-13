@@ -7,7 +7,7 @@
     "start": "node ./server/bin/www",
     "test": "mocha --compilers js:babel-core/register server/test/test.js --timeout 10000",
     "build": "babel server -d dist",
-    "start:dev": "nodemon ./server/bin/www",
+    "start:dev": "nodemon --watch server --exec babel-node -- ./server/bin/www",
     "dev": "nodemon server/server.js"
   },
   "script": {

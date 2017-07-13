@@ -13,7 +13,7 @@ module.exports = function (app) {
     });
   });
 
-  // list out all the registered users
+  // to be removed list out all the registered users
   app.get('/api/user', usersController.list);
 
   // signup a user into the application
@@ -41,7 +41,7 @@ module.exports = function (app) {
   // add a user to a particular group
   app.post('/api/group/:groupId/user', membersController.create);
 
-  // a get all spi for users messages
+  // a get all api for users messages
   app.get('/api/group/message', function (req, res) {
     return res.status(200).send({
       message: 'Hi, welcome to users messages'

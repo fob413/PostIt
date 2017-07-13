@@ -9,7 +9,7 @@ module.exports = {
     return Users
     .findOne({
       where: {
-        id: req.body.userId
+        id: req.headers['user-id']
       }
     })
     .then((user) => {
@@ -23,7 +23,7 @@ module.exports = {
           .then((group) => {
             members
             .create({
-              userId: req.body.userId,
+              userId: req.headers['user-id'],
               groupId: group.id,
             })
             .then(res.status(201).send(group));
@@ -61,6 +61,5 @@ module.exports = {
     .all()
     .then(group => res.status(200).send(group))
     .catch(error => res.status(400).send(error.message));
-  }
-
+  },
 };

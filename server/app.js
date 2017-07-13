@@ -1,6 +1,11 @@
+import express from 'express';
+import logger from 'morgan';
+import bodyParser from 'body-parser';
+
+/*
 const express = require('express');
 const logger = require('morgan');
-const bodyParser = require('body-parser');
+const bodyParser = require('body-parser');*/
 
 // setup the express app
 const app = express();

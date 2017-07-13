@@ -54,4 +54,34 @@ module.exports = {
     .catch(error => res.status(400).send(error));
   }
 
+/*
+   signin(req, res) {
+    return Users
+    .findOne({
+      where: {
+        UserName: req.body.UserName
+      }
+    })
+    .then((user) => {
+      if (user) {
+        if (!bcrypt.compareSync(req.body.password, user.password)) {
+          res.status(401).json('Invalid Username or Password');
+        } else {
+          return user
+          .update({
+            isLoggedin: true,
+          })
+          .then(res.status(200).send({
+            Username: user.UserName,
+            isLoggedin: user.isLoggedin
+          }));
+        }
+      } else {
+        res.status(401).json('Invalid Credentials');
+      }
+    })
+    .then(user => res.status(201).send(user))
+    .catch(error => res.status(400).send(error));
+   }*/
+
 };
