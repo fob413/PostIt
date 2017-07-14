@@ -85,5 +85,6 @@ Funsho Oluyole-Balogun
 ISC
 
 ### Acknowledgement
-Andela for the direction needed in this project
-Many thanks to Scotch.IO for their video tutorials
+Andela for the direction needed in this project.
+
+Many thanks to Scotch.IO for their tutorials and posts.
