@@ -2,11 +2,10 @@
   <img src="https://github.com/fob413/PostIt/blob/newDatabaseBadge/template/image/postitDsm.png">
 </p>
 
-[![Build Status](https://travis-ci.org/fob413/PostIt.svg?branch=newDatabase)](https://travis-ci.org/fob413/PostIt)
+[![Build Status](https://travis-ci.org/fob413/PostIt.svg?branch=newDatabaseBadge)](https://travis-ci.org/fob413/PostIt)
 [![Code Climate](https://codeclimate.com/github/codeclimate/codeclimate/badges/gpa.svg)](https://codeclimate.com/github/fob413/PostIt)
-[![Coverage Status](https://coveralls.io/repos/github/fob413/PostIt/badge.svg?branch=master)](https://coveralls.io/github/fob413/PostIt?branch=newDatabaseBadge)
+[![Coverage Status](https://coveralls.io/repos/github/fob413/PostIt/badge.svg?branch=newDatabaseBadge)](https://coveralls.io/github/fob413/PostIt?branch=newDatabaseBadge)
 (https://coveralls.io/github/fob413/PostIt?branch=newDatabaseBadge)
-[![Code Climate](https://codeclimate.com/github/fob413/PostIt/badges/gpa.svg)](https://codeclimate.com/github/fob413/PostIt)
 
 PostIt is a simple application that allows friends and colleagues create groups for notifications. The application allows people create accounts, creat groups, add registered users to the group and then send messages out to these groups whenever they want.
 
