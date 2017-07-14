@@ -40,7 +40,7 @@ module.exports = {
       if (user) {
         if (user.isLoggedin) {
           message
-          .findOne({
+          .findAll({
             where: {
               groupId: req.params.groupId,
             }
