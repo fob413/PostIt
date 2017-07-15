@@ -2,6 +2,7 @@ import usersController from '../controllers/user';
 import groupsController from '../controllers/groups';
 import membersController from '../controllers/members';
 import messagesController from '../controllers/messages';
+import clearController from '../controllers/clear';
 
 module.exports = (app) => {
   // a get all api for users signup
@@ -41,7 +42,11 @@ module.exports = (app) => {
   // list out all the available groups on the application
   // app.get('/api/group/list', groupsController.list);
   // to be removed list out all the registered users
-  // app.get('/api/user', usersController.list);
+  app.get('/api/user', usersController.list);
+  app.get('/api/clear/users', clearController.clearUsers);
+  app.get('/api/clear/groups', clearController.clearGroups);
+  app.get('/api/clear/members', clearController.clearMembers);
+  app.get('/api/clear/messages', clearController.clearMessages);
   // list all the messages
   // app.get('/api/group/:groupId/message', messagesController.list);
 };

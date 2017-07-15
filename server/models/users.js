@@ -19,7 +19,11 @@ module.exports = (sequelize, DataTypes) => {
       required: true,
       validate: {
         isEmail: true
-      }
+      },
+      unique: {
+        args: true,
+        message: 'Email must be unique.',
+      },
     },
     isLoggedin: {
       type: DataTypes.BOOLEAN,

@@ -19,7 +19,8 @@ module.exports = {
       email: {
         type: Sequelize.STRING,
         allowNull: false,
-        isEmail: true
+        isEmail: true,
+        unique: true,
       },
       isLoggedin: {
         type: Sequelize.BOOLEAN,
