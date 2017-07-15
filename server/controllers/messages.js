@@ -3,30 +3,71 @@ const Users = require('../models/').Users;
 
 module.exports = {
 
+  // create(req, res) {
+  //   return Users
+  //   .findOne({
+  //     where: {
+  //       id: req.body.userId
+  //     }
+  //   })
+  //   .then((user) => {
+  //     if (user) {
+  //       if (user.isLoggedin) {
+  //         return message
+  //         .create({
+  //           authorsName: user.UserName,
+  //           content: req.body.content,
+  //           groupId: req.params.groupId,
+  //           userId: user.id
+  //         })
+  //         .then(messages => res.status(201).send(messages));
+  //       }
+  //     } else {
+  //       res.status(401).send('Signup to access this service');
+  //     }
+  //   }).then(messages => res.status(201).send(messages))
+  //   .catch(error => res.status(400).send(error.message));
+  // },
+
   create(req, res) {
-    return Users
+    return Members
     .findOne({
       where: {
-        id: req.body.userId
+        userId: req.body.userId,
+        groupId: req.params.groupId
       }
     })
-    .then((user) => {
-      if (user) {
-        if (user.isLoggedin) {
-          return message
-          .create({
-            authorsName: user.UserName,
-            content: req.body.content,
-            groupId: req.params.groupId,
-            userId: user.id
-          })
-          .then(messages => res.status(201).send(messages));
-        }
+    .then((member) => {
+      if (!member) {
+        res.status(400).send({
+          message: 'Not in the Group'
+        });
       } else {
-        res.status(401).send('Signup to access this service');
-      }
-    }).then(messages => res.status(201).send(messages))
-    .catch(error => res.status(400).send(error.message));
+        Users
+        .findOne({
+          where: {
+            id: req.body.userId
+          }
+        })
+        .then((user) => {
+          if (user) {
+            if (user.isLoggedin) {
+              return message
+              .create({
+                authorsName: user.UserName,
+                content: req.body.content,
+                groupId: req.params.groupId,
+                userId: user.id
+              })
+              .then(messages => res.status(201).send(messages));
+            }
+          } else {
+            res.status(401).send('Signup to access this service');
+          }
+        }).then(messages => res.status(201).send(messages))
+        .catch(error => res.status(400).send(error.message));
+          }
+    });
   },
 
   listMessages(req, res) {

@@ -21,7 +21,7 @@ module.exports = {
   },
 
   create(req, res) {
-    if (req.body.Username > 0) {
+    if (req.body.UserName.length > 0) {
       return Users
       .create({
         UserName: req.body.UserName,
