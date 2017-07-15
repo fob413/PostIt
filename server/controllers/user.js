@@ -27,7 +27,9 @@ module.exports = {
       email: user.email,
       isLoggedin: user.isLoggedin
     }))
-    .catch(error => res.status(400).send(error));
+    .catch(res.status(400).send({
+      message: 'Bad request'
+    }));
   },
 
   signin(req, res) {
@@ -40,7 +42,9 @@ module.exports = {
     .then((user) => {
       if (user) {
         if (!bcrypt.compareSync(req.body.password, user.password)) {
-          res.status(401).json('Invalid Credentials');
+          res.status(401).send({
+            message: 'Invalid Credentials'
+          });
         } else {
           return user
           .update({
@@ -49,10 +53,13 @@ module.exports = {
           .then(res.status(200).send({
             Username: user.UserName,
             isLoggedin: user.isLoggedin
-          }));
+          }))
+          .catch(error => res.status(400).send(error.message));
         }
       } else {
-        res.status(401).json('Invalid Credentials');
+        res.status(401).json({
+          message: 'Invalid Credentials'
+        });
       }
     })
     .then(user => res.status(201).send(user))
