@@ -1,12 +1,11 @@
 import db from '../models/index';
 
 const Users = db.Users;
-const Groups = db.Groups;
 const Members = db.Members;
-const Message = db.Message;
+const Message = db.Messages;
 
 // const message = require('../models').Messages;
-const Users = require('../models/').Users;
+// const Users = require('../models/').Users;
 
 module.exports = {
 
@@ -36,6 +35,54 @@ module.exports = {
   //   .catch(error => res.status(400).send(error.message));
   // },
 
+  sendMessage(req, res) {
+    console.log('==============>>>>>>>>>>>>>>>>>>>>', Message);
+    return Users
+    .findOne({
+      where: {
+        id: req.body.userId
+      }
+    })
+    .then((user) => {
+      if (!user) {
+        res.status(401).send({
+          message: 'Signup to access this service'
+        });
+      } else {
+        if (!user.isLoggedin) {
+          res.status(401).send({
+            message: 'Signin to access this service'
+          });
+        } else {
+          return Members
+          .findOne({
+            where: {
+              userId: req.body.userId,
+              groupId: req.params.groupId
+            }
+          })
+          .then((member) => {
+            if (!member) {
+              res.status(400).send({
+                message: 'Not in the group'
+              });
+            } else {
+              return Message
+              .create({
+                authorsName: user.UserName,
+                content: req.body.content,
+                groupId: req.params.groupId,
+                userId: user.id
+              })
+              .then(messages => res.status(201).send(messages))
+              .catch(error => res.status.send(error.message));
+            }
+          });
+        }
+      }
+    });
+  },
+
   create(req, res) {
     return Members
     .findOne({
@@ -59,7 +106,7 @@ module.exports = {
         .then((user) => {
           if (user) {
             if (user.isLoggedin) {
-              return message
+              return Message
               .create({
                 authorsName: user.UserName,
                 content: req.body.content,
@@ -73,7 +120,7 @@ module.exports = {
           }
         }).then(messages => res.status(201).send(messages))
         .catch(error => res.status(400).send(error.message));
-          }
+      }
     });
   },
 
@@ -87,7 +134,7 @@ module.exports = {
     .then((user) => {
       if (user) {
         if (user.isLoggedin) {
-          message
+          Message
           .findAll({
             where: {
               groupId: req.params.groupId,
@@ -108,7 +155,7 @@ module.exports = {
   },
 
   list(req, res) {
-    return message
+    return Message
     .all()
     .then(messages => res.status(200).send(messages))
     .catch(error => res.status(400).send(error.message));
