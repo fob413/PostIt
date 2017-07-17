@@ -1,4 +1,11 @@
-const message = require('../models').Messages;
+import db from '../models/index';
+
+const Users = db.Users;
+const Groups = db.Groups;
+const Members = db.Members;
+const Message = db.Message;
+
+// const message = require('../models').Messages;
 const Users = require('../models/').Users;
 
 module.exports = {

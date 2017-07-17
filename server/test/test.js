@@ -48,7 +48,7 @@ describe('user', () => {
   });
 });
 
-describe('user', () => {
+describe('User Positive Responses', () => {
   beforeEach((done) => {
     user.destroy({
       where: {},
@@ -64,7 +64,7 @@ describe('user', () => {
       const testUser = {
         UserName: 'Bayo',
         email: 'bayo@yahoo.com',
-        password: 'abcd'
+        password: 'abcdefghij'
       };
       chai.request(app)
       .post('/api/user/signup')
@@ -79,7 +79,7 @@ describe('user', () => {
       const testUser = {
         UserName: 'Bayo',
         email: 'bayo@yahoo.com',
-        password: 'abcd'
+        password: 'abcdefghij'
       };
       chai.request(app)
       .post('/api/user/signup')
@@ -95,7 +95,7 @@ describe('user', () => {
       const testUser = {
         UserName: 'Bayo',
         email: 'bayo@yahoo.com',
-        password: 'abcd'
+        password: 'abcdefghij'
       };
       chai.request(app)
       .post('/api/user/signup')
@@ -111,7 +111,7 @@ describe('user', () => {
       const testUser = {
         UserName: 'Bayo',
         email: 'bayo@yahoo.com',
-        password: 'abcd'
+        password: 'abcdefghij'
       };
       chai.request(app)
       .post('/api/user/signup')
@@ -121,6 +121,77 @@ describe('user', () => {
         expect(res.body.password).to.be.undefined;
         done();
       });
+    });
+  });
+});
+
+describe('User Negative Responses', () => {
+  beforeEach((done) => {
+    user.destroy({
+      where: {},
+      truncate: true,
+      restartIdentity: true,
+      cascade: true,
+    });
+    done();
+  });
+
+  it(`It should return a status code of 500
+  when UserName is not given`, (done) => {
+    const testUser = {
+      email: 'bayo@yahoo.com',
+      password: 'abcdefghij'
+    };
+    chai.request(app)
+    .post('/api/user/signup')
+    .send(testUser)
+    .end((err, res) => {
+      res.should.have.status(500);
+      done();
+    });
+  });
+
+  it(`It should return a status code of 400
+  when email is not given`, (done) => {
+    const testUser = {
+      UserName: 'Bayo',
+      password: 'abcdefghij'
+    };
+    chai.request(app)
+    .post('/api/user/signup')
+    .send(testUser)
+    .end((err, res) => {
+      res.should.have.status(400);
+      done();
+    });
+  });
+
+  it(`It should return a status code of 400
+  when password is less than 8 characters`, (done) => {
+    const testUser = {
+      UserName: 'Bayo',
+      email: 'bayo@yahoo.com',
+      password: 'abcd'
+    };
+    chai.request(app)
+    .post('/api/user/signup')
+    .send(testUser)
+    .end((err, res) => {
+      res.should.have.status(400);
+      done();
+    });
+  });
+});
+
+describe('Group API works', () => {
+  console.log("=============== for dem groups");
+
+  it('it should return a response 200', (done) => {
+    chai.request(app)
+    .get('/api/group')
+    .end((err, res) => {
+      res.should.have.status(200);
+      done();
     });
   });
 });

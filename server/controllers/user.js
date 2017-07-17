@@ -22,23 +22,31 @@ module.exports = {
 
   create(req, res) {
     if (req.body.UserName.length > 0) {
-      return Users
-      .create({
-        UserName: req.body.UserName,
-        password: bcrypt.hashSync(req.body.password, 11),
-        email: req.body.email
-      })
-      .then(user => res.status(201).send({
-        id: user.id,
-        Username: user.UserName,
-        email: user.email,
-        isLoggedin: user.isLoggedin
-      }))
-      .catch(error => res.status(400).send({
-        message: error.message
-      }));
+      if (req.body.password.length > 7) {
+        return Users
+        .create({
+          UserName: req.body.UserName,
+          password: bcrypt.hashSync(req.body.password, 11),
+          email: req.body.email
+        })
+        .then(user => res.status(201).send({
+          id: user.id,
+          Username: user.UserName,
+          email: user.email,
+          isLoggedin: user.isLoggedin
+        }))
+        .catch(error => res.status(400).send({
+          message: error.message
+        }));
+      } else {
+        res.status(400).send({
+          message: 'Password must be at least 8 characters'
+        });
+      }
     } else {
-      res.status(400).send(invalid);
+      res.status(400).send({
+        message: 'Username cannot be an empty field'
+      });
     }
   },
 

@@ -16,20 +16,26 @@ export default {
     .then((user) => {
       if (user) {
         if (user.isLoggedin) {
-          return Groups
-          .create({
-            GroupName: req.body.GroupName,
-            Description: req.body.Description,
-          })
-          .then((group) => {
-            Members
+          if (req.body.GroupName.length > 0) {
+            return Groups
             .create({
-              userId: req.body.userId,
-              groupId: group.id,
+              GroupName: req.body.GroupName,
+              Description: req.body.Description,
             })
-            .then(res.status(201).send(group));
-          })
-          .catch(error => res.status(400).send(error));
+            .then((group) => {
+              Members
+              .create({
+                userId: req.body.userId,
+                groupId: group.id,
+              })
+              .then(res.status(201).send(group));
+            })
+            .catch(error => res.status(400).send(error));
+          } else {
+            res.status(400).send({
+              message: 'Input a name for the group'
+            });
+          }
         } else {
           res.status(401).json('Not logged in');
         }
