@@ -2,6 +2,7 @@ import db from '../models/index';
 
 const Members = db.Members;
 const Users = db.Users;
+const Groups = db.Groups;
 
 // const members = require('../models/').Members;
 
@@ -13,42 +14,57 @@ module.exports = {
   },
 
   create(req, res) {
-    return Users
+    return Groups
     .findOne({
       where: {
-        id: req.body.userId
+        id: req.params.groupId
       }
     })
-    .then((user) => {
-      if (!user) {
-        res.status(401).send({
-          message: 'User does not exist'
+    .then((group) => {
+      if (!group) {
+        res.status(400).send({
+          message: 'Group does not exist'
         });
       } else {
-        return Members
+        return Users
         .findOne({
           where: {
-            userId: req.body.userId,
-            groupId: req.params.groupId
+            id: req.body.userId
           }
         })
-        .then((member) => {
-          if (member) {
+        .then((user) => {
+          if (!user) {
             res.status(401).send({
-              message: 'User already in group'
+              message: 'User does not exist'
             });
           } else {
-            Members
-            .create({
-              userId: req.body.userId,
-              groupId: req.params.groupId
+            return Members
+            .findOne({
+              where: {
+                userId: req.body.userId,
+                groupId: req.params.groupId
+              }
             })
-            .then(addedMember => res.status(201).send(addedMember))
+            .then((member) => {
+              if (member) {
+                res.status(401).send({
+                  message: 'User already in group'
+                });
+              } else {
+                Members
+                .create({
+                  userId: req.body.userId,
+                  groupId: req.params.groupId
+                })
+                .then(addedMember => res.status(201).send(addedMember))
+                .catch(error => res.status(400).send(error));
+              }
+            })
             .catch(error => res.status(400).send(error));
           }
-        })
-        .catch(error => res.status(400).send(error));
+        });
       }
-    });
+    })
+    .catch(error => res.status(400).send(error));
   }
 };
