@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       unique: {
         args: true,
-        message: 'Username must be unique.',
+        msg: 'Username must be unique.',
       },
     },
     password: {
@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       unique: {
         args: true,
-        message: 'Email must be unique.',
+        msg: 'Email must be unique.',
       },
     },
     isLoggedin: {
