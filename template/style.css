@@ -5,6 +5,16 @@
 
 }
 
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
 .noLinkDeco, a:hover{
 
   text-decoration: none;
@@ -170,4 +180,8 @@ div[data-placeholder]:not(:focus):not([data-div-placeholder-content]):before {
   text-decoration: none;
     color: black;
 
+}
+
+.btn-color{
+  background-color: green;
 }
