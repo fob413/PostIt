@@ -5,62 +5,62 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-    <link rel="stylesheet" href="style.css">
+    <!--Import Google Icon Font-->
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+    <!--Import Css-->
+    <link type="text/css" rel="stylesheet" href="style.css">
 
   </head>
   <body>
     
-    <div class="container-fluid center">
 
-      <div class="centerInDiv">
-
-        <img class="col-sm-3 img-fluid img-center" src="image/postitD.png" alt="PostIt Logo">
-
+    <div class="container">
+      <div class="row centerInDiv">
+        <img width="30%" src="image/postitD.png" alt="PostIt Logo">
       </div>
 
-      <form class="col-sm-6 center">
-  
-        <div class="form-group has-success">
-    
-          <label for="exampleInputEmail1">Username</label>
-          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Username">
-    
-        </div>
+      <div class="row">
 
-        <div class="form-group has-success">
+        <div class="container col s12 m12">
 
-          <label for="exampleInputPassword1">Password</label>
-          <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-          <span><a href="#">Forgot Password?</a></span>
-        
-        </div>
-        
-        <div class="text-center">
-
-          <button type="submit" class="btn btn-success"><a href="broadcast.html" class="customButton">Log In</a></button>
+        <form class="">
+          <div class="row">
+            <div class="input-field col s12 m12">
+              <input class="validate" type="text" id="userName" data-error="wrong" data-success="right">
+              <label for="userName">Username</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12 m12">
+              <input class="validate" type="password" id="password" data-error="wrong" data-success="right">
+              <label for="password">Password</label>
+            </div>
+          </div>
+          <div class="row centerInDiv">
+            <button class="btn-large green darken-4 waves-effect" type="submit" name="action">Sign In
+              <i class="material-icons right">send</i>
+            </button>
+          </div>
+          <div class="row centerInDiv">
+            
+            <br>
+            <p class="centerInDiv">OR</p>
+            <a class=" green-text text-darken-4" href="index.html">Sign Up</a>
+            
+          </div>
+        </form>
 
         </div>
       
-      </form> 
-
-      <div class="col-sm-2 text-center" style="margin: auto; padding-top: 2%;">
-        
-        <p>
-
-          OR <br> <a href="index.html" class="text-success">Sign Up</a>
-
-        </p>
-        
       </div>
-
+      
     </div>
 
 
     <!-- jQuery first, then Tether, then Bootstrap JS. -->
-    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="js/materialize.min.js"></script>
   </body>
 </html>
