@@ -5,49 +5,59 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <!--Import Google Icon Font-->
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+    <!--Import Css-->
+    <link type="text/css" rel="stylesheet" href="style.css">
+
   </head>
   <body>
-
-    <nav class="navbar navbar-toggleable-md navbar-light bg-faded" style="background-color: #013d05">
-  
-  <div style="text-align: center; margin: auto">
-      
-      <a class="navbar-brand" href="broadcast.html"><img class="col-sm-3 img-fluid img-center" src="image/postitL.png" alt="PostIt Logo"></a>
-  
-  </div>
-
-    </nav>
-
-   <div class="container-fluid">
-
-    <form class="col-sm-6" style="margin: auto; text-align:center; padding-top: 100px">
-  
-        <div class="form-group has-success">
     
-          <h3>Create Group</h3>
-          <input type="email" style="margin-top: 4%" class="form-control" aria-describedby="emailHelp" placeholder="Name Of Group">
-          <input type="email" style="margin-top: 4%" class="form-control" aria-describedby="emailHelp" placeholder="Description">
-    
-        </div>
-        
-        <div class="text-center">
 
-          <button type="submit" class="btn btn-success"><a href="broadcast.html" style="text-decoration: none; color: white;">Cancel</a></button>
-          <button type="submit" class="btn btn-success"><a href="#" style="text-decoration: none; color: white;">Create</a></button>
+    <div class="container">
+      <div class="row centerInDiv">
+        <img width="30%" src="image/postitD.png" alt="PostIt Logo">
+      </div>
+
+      <div class="row">
+
+        <div class="container col s12 m12">
+
+        <form class="">
+          <div class="row">
+            <div class="input-field col s12 m12">
+              <input class="validate" type="text" id="userName" data-error="wrong" data-success="right">
+              <label for="userName">Username</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12 m12">
+              <input class="validate" type="password" id="password" data-error="wrong" data-success="right">
+              <label for="password">Password</label>
+            </div>
+          </div>
+          <div class="row centerInDiv">
+            <button class="btn-large green darken-4 waves-effect" type="submit" name="action"><a class="white-text" href="broadcast.html">Cancel</a>
+              <i class="material-icons right">cancel</i>
+            </button>
+            <button class="btn-large green darken-4 waves-effect" type="submit" name="action"><a class="white-text" href="broadcast.html">Create</a>
+              <i class="material-icons right">create</i>
+            </button>            
+          </div>
+          
+        </form>
 
         </div>
       
-      </form> 
-
-   </div>
-
+      </div>
+      
+    </div>
 
 
     <!-- jQuery first, then Tether, then Bootstrap JS. -->
-    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="js/materialize.min.js"></script>
   </body>
 </html>

@@ -5,93 +5,128 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-    <link rel="stylesheet" href="style.css">
+    <!--Import Google Icon Font-->
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+    <!--Import Css-->
+    <link type="text/css" rel="stylesheet" href="style.css">
+
   </head>
   <body>
+    
 
-    <nav class="navbar navbar-toggleable-md navbar-light bg-faded" style="background-color: #013d05">
-  
-      <div class="centerInDiv">
-          
-          <a class="navbar-brand" href="broadcast.html"><img class="col-sm-3 img-fluid img-center" src="image/postitL.png" alt="PostIt Logo"></a>
-      
+    <nav>
+      <div class="nav-wrapper green darken-4">
+        <a href="#" class="brand-logo center"><img width="70px" src="image/postitL.png" alt="PostIt Logo"></a>
+        <ul id="nav-mobile" class="right">
+          <li><a class="modal-trigger" href="#modal1"><i href="#modal1" class="modal-trigger white-text material-icons">settings</i></a></li>
+        </ul>
       </div>
-
     </nav>
-
-    <div class="container">
-        
-        <div class="row" style="padding-top: 3%">
-        
-            <div class="col-sm-9">
-            
-                <form>
-                
-                    <div class="form-group has-success">
     
-                        <textarea class="form-control" id="exampleTextarea" rows="20"></textarea>
-  
-                    </div>
-                
-                    
-                    <div class="form-group">
-    
-                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Type A Message">
-    
-                    </div>
-                    
-                </form>
-            
+    <div id="modal1" class="modal">
+      <div class="modal-content">
+        <h4>User Profile</h4>
+        <form class="">
+          <div class="row">
+            <div class="input-field col s12 m12">
+              <input class="validate" type="text" id="userName" data-error="wrong" data-success="right">
+              <label for="userName">Username</label>
             </div>
-            
-            <div class="col-sm-3">
-            
-                <form>
-                
-                    <div class="form-group has-success">
-    
-                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Add User">
-  
-                    </div>
-                                    
-                </form>
-                
-                <ul class="list-group">
-  
-                    <li class="list-group-item">Username 4</li>
-  
-                    <li class="list-group-item">Username 3</li>
-  
-                    <li class="list-group-item">Username 2</li>
-  
-                    <li class="list-group-item">Username 1</li>
-  
-                </ul>
-            
+          </div>
+          <div class="row">
+            <div class="input-field col s12 m12">
+              <input class="validate" type="email" id="email" data-error="wrong" data-success="right">
+              <label for="email">Email</label>
             </div>
-        
-        </div>
-
-      
-      <div></div>
-  
-      <!--
-      <div class="row messageRow">
-
-        <div class="messageChat" contenteditable="true" data-placeholder='Type your message' style="max-height: 50px; overflow-y: scroll"></div>
-
+          </div>
+          <div class="row">
+            <div class="input-field col s12 m12">
+              <input class="validate" type="text" id="phoneNumber" data-error="wrong" data-success="right">
+              <label for="phoneNumber">Phone Number</label>
+            </div>
+          </div>
+        </form>
       </div>
--->
+      <div class="modal-footer">
+        <button class="btn-large green darken-4 waves-effect" type="submit" name="action">
+          <a class="white-text" href="broadcast.html">Submit</a>
+        </button>
+      </div>
+    </div>
+          
+    <div class="container">
+        <br>
+        <br>
+
+        <div class="row">
+            <div class="col s12">
+                <div class="col s8">
+                    <div class="s12 messageBoard">
+
+                    </div>
+                    <div class="s12">
+                        <div class="row">
+                            <div class="col s2">
+                                <div class="input-field col s12">
+                                    <select>
+                                      <option value="" disabled selected>Priority</option>
+                                      <option value="1">Normal</option>
+                                      <option value="2">Urgent</option>
+                                      <option value="3">Critical</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="input-field col s9">
+                              <input type="text" placeholder="Type a message">
+                            </div>
+                            <div class="col s1">
+                                <i style="margin-top: 25px" class="material-icons prefix">send</i>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="col s4 userBoard">
+                   <div class="row">
+                    <form class="col s12">
+                      <div class="row">
+                        <div class="input-field col s12">
+                          <i class="material-icons prefix">search</i>
+                          <input id="icon_prefix" type="text" class="validate">
+                          <label for="icon_prefix">Add User</label>
+                        </div>
+                      </div>
+                    </form>
+                    <div class="collection">
+                      <a href="#!" class="collection-item">Sample User 1</a>
+                      <a href="#!" class="collection-item">Sample User 2</a>
+                      <a href="#!" class="collection-item">Sample User 3</a>
+                      <a href="#!" class="collection-item">Sample User 4</a>
+                      <a href="#!" class="collection-item">Sample User 5</a>
+                    </div>
+                  </div>     
+                </div>
+            </div>
+        </div>
 
     </div>
 
 
+    
+            
+
 
     <!-- jQuery first, then Tether, then Bootstrap JS. -->
-    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="js/materialize.min.js"></script>
+
+    <script type="text/javascript">
+      $('document').ready(function(){
+      $('.modal').modal();
+      $('select').material_select();
+  });
+    </script>
   </body>
 </html>

@@ -15,6 +15,15 @@ main {
   flex: 1 0 auto;
 }
 
+.messageBoard {
+  height: 60vh;
+  border: 2px solid #4caf50;
+  padding: 2vh !important;
+}
+
+.userBoard {
+  height: 70vh;
+}
 .noLinkDeco, a:hover{
 
   text-decoration: none;
