@@ -50,7 +50,7 @@ describe('user', () => {
   });
 });
 
-describe('User Positive Responses', () => {
+describe('SignUp Positive Responses', () => {
   beforeEach((done) => {
     user.destroy({
       where: {},
@@ -61,7 +61,7 @@ describe('User Positive Responses', () => {
     done();
   });
 
-  describe('Signs up a new user', () => {
+  describe('POST /api/user/signup', () => {
     it('it should create a new user', (done) => {
       const testUser = {
         UserName: 'Bayo',
@@ -93,7 +93,7 @@ describe('User Positive Responses', () => {
       });
     });
 
-    it('It should create and user with the email send', (done) => {
+    it('It should create and user with the email given', (done) => {
       const testUser = {
         UserName: 'Bayo',
         email: 'bayo@yahoo.com',
@@ -108,25 +108,10 @@ describe('User Positive Responses', () => {
         done();
       });
     });
-
-    it('It should not return the Users password', (done) => {
-      const testUser = {
-        UserName: 'Bayo',
-        email: 'bayo@yahoo.com',
-        password: 'abcdefghij'
-      };
-      chai.request(app)
-      .post('/api/user/signup')
-      .send(testUser)
-      .end((err, res) => {
-        res.should.have.status(201);
-        done();
-      });
-    });
   });
 });
 
-describe('User Negative Responses', () => {
+describe('SignUp Negative Responses', () => {
   beforeEach((done) => {
     user.destroy({
       where: {},
@@ -195,42 +180,67 @@ describe('Group API works', () => {
   });
 });
 
-describe('Create Group Positive Responses', () => {
-  beforeEach((done) => {
-    group.destroy({
-      where: {},
-      truncate: true,
-      restartIdentity: true,
-      cascade: true
-    });
-    user.destroy({
-      where: {},
-      truncate: true,
-      restartIdentity: true,
-      cascade: true
-    });
-    done();
-  });
+// describe('Group Positive Responses', () => {
+//   beforeEach((done) => {
+//     group.destroy({
+//       where: {},
+//       truncate: true,
+//       restartIdentity: true,
+//       cascade: true
+//     });
+//     user.destroy({
+//       where: {},
+//       truncate: true,
+//       restartIdentity: true,
+//       cascade: true
+//     });
+//     done();
+//   });
 
-  describe('Creates a new group', () => {
-    it('it should create a new group', (done) => {
-      const testUser = {
-        UserName: 'Bayo',
-        email: 'bayo@yahoo.com',
-        password: 'abcdefghij'
-      };
-      const testGroup = {
-        userId: 1,
-        GroupName: 'Sample Group',
-        Description: 'Short description about the created sample group'
-      };
-      chai.request(app)
-      .post('/api/user/signup', '/api/group')
-      .send(testUser, testGroup)
-      .end((err, res) => {
-        res.should.have.status(201);
-        done();
-      });
-    });
-  });
-});
+//   describe('POST /api/group', () => {
+//     it('it should create a new group', (done) => {
+//       const testUser = {
+//         UserName: 'Funsho',
+//         email: 'funsho@yahoo.com',
+//         password: 'abcdefghij'
+//       };
+//       chai.request(app)
+//       .post('/api/user/signup')
+//       .send(testUser);
+//       const testGroup = {
+//         userId: 1,
+//         GroupName: 'Sample Group',
+//         Description: 'Short description about the created sample group'
+//       };
+//       chai.request(app)
+//       .post('/api/group')
+//       .send(testGroup)
+//       .end((err, res) => {
+//         console.log('===========>>>>>>>>>>>>>!!!!!!!!!', res.body);
+//         res.should.have.status(201);
+//         done();
+//       });
+//     });
+
+//     it('it should create a new group with the name given', (done) => {
+//       const testUser = {
+//         UserName: 'Bayo',
+//         email: 'bayo@yahoo.com',
+//         password: 'abcdefghij'
+//       };
+//       const testGroup = {
+//         userId: 1,
+//         GroupName: 'Sample Group',
+//         Description: 'Short description about the created sample group'
+//       };
+//       chai.request(app)
+//       .post('/api/user/signup', '/api/group')
+//       .send(testUser, testGroup)
+//       .end((err, res) => {
+//         res.should.have.status(201);
+//         expect(res.body.GroupName).to.equal('Sample Group');
+//         done();
+//       });
+//     });
+//   });
+// });
