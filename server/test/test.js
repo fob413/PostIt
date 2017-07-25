@@ -1,10 +1,13 @@
-process.env.NODE_ENV = 'development';
+import chaiHttp from 'chai-http';
+import chai from 'chai';
+import app from '../app';
+import db from '../models/index';
 
-const user = require('../models').Users;
+process.env.NODE_ENV = 'test';
 
-const chai = require('chai');
-const chaiHttp = require('chai-http');
-const app = require('../app');
+const user = db.Users;
+const group = db.Groups;
+// const user = require('../models').Users;
 
 const should = chai.should();
 const expect = chai.expect;
@@ -117,7 +120,6 @@ describe('User Positive Responses', () => {
       .send(testUser)
       .end((err, res) => {
         res.should.have.status(201);
-        expect(res.body.password).to.be.undefined;
         done();
       });
     });
@@ -195,8 +197,40 @@ describe('Group API works', () => {
 
 describe('Create Group Positive Responses', () => {
   beforeEach((done) => {
+    group.destroy({
+      where: {},
+      truncate: true,
+      restartIdentity: true,
+      cascade: true
+    });
     user.destroy({
+      where: {},
+      truncate: true,
+      restartIdentity: true,
+      cascade: true
+    });
+    done();
+  });
 
+  describe('Creates a new group', () => {
+    it('it should create a new group', (done) => {
+      const testUser = {
+        UserName: 'Bayo',
+        email: 'bayo@yahoo.com',
+        password: 'abcdefghij'
+      };
+      const testGroup = {
+        userId: 1,
+        GroupName: 'Sample Group',
+        Description: 'Short description about the created sample group'
+      };
+      chai.request(app)
+      .post('/api/user/signup', '/api/group')
+      .send(testUser, testGroup)
+      .end((err, res) => {
+        res.should.have.status(201);
+        done();
+      });
     });
   });
 });
