@@ -36,7 +36,6 @@ describe('user', () => {
   });
 
   describe('Api Works', () => {
-    console.log("===============");
     it('it should return a response 200', (done) => {
       chai.request(app)
       .get('/api')
@@ -75,7 +74,7 @@ describe('User Positive Responses', () => {
       });
     });
 
-    it('It should create and user with the email given', (done) => {
+    it('It should create a user with the email given', (done) => {
       const testUser = {
         UserName: 'Bayo',
         email: 'bayo@yahoo.com',
@@ -184,14 +183,20 @@ describe('User Negative Responses', () => {
 });
 
 describe('Group API works', () => {
-  console.log("=============== for dem groups");
-
   it('it should return a response 200', (done) => {
     chai.request(app)
     .get('/api/group')
     .end((err, res) => {
       res.should.have.status(200);
       done();
+    });
+  });
+});
+
+describe('Create Group Positive Responses', () => {
+  beforeEach((done) => {
+    user.destroy({
+
     });
   });
 });
