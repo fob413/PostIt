@@ -1,3 +1,4 @@
+import path from 'path';
 import usersController from '../controllers/user';
 import groupsController from '../controllers/groups';
 import membersController from '../controllers/members';
@@ -5,6 +6,11 @@ import messagesController from '../controllers/messages';
 import clearController from '../controllers/clear';
 
 module.exports = (app) => {
+  // a get all for the starty page of the app
+  app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, '../../client/index.html'));
+  });
+
   // a get all api for users signup
   app.get('/api/user/signup', (req, res) => res.status(200).send({
     message: 'Hi, Welcome to PostIt',
