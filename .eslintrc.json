@@ -6,6 +6,12 @@
     "es6": true,
     "mocha": true
   },
+  "globals": {
+    "describe": true,
+    "expect": true,
+    "should": true,
+    "React": true
+  },
   "rules": {
     "max-len": [1, 80, 2],
     "one-var": 0,
