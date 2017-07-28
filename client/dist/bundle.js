@@ -22435,11 +22435,11 @@ var App = function (_React$Component) {
     value: function render() {
       return _react2.default.createElement(
         'div',
-        null,
+        { className: 'container' },
         _react2.default.createElement(
           'h1',
           null,
-          'HELLO WORLD TESTING ONE TWO THREE'
+          'HELLO WORLD TESTING ONE TWO THREE!!!'
         )
       );
     }
