@@ -9,7 +9,7 @@
     "build": "babel server -d dist",
     "start:dev": "nodemon --watch server --exec babel-node -- ./server/bin/www",
     "dev": "nodemon server/server.js & webpack-dev-server",
-    "webpack": "webpack-dev-server --port 3000",
+    "webpack": "webpack-dev-server --port 3000 --hot",
     "app": "npm run start | npm run webpack"
   },
   "script": {

@@ -9766,6 +9766,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 _reactDom2.default.render(_react2.default.createElement(_App2.default, null), document.getElementById('root'));
 
+if (false) {
+  module.hot.accept();
+}
+
 /***/ }),
 /* 83 */
 /***/ (function(module, exports, __webpack_require__) {
