@@ -45,7 +45,7 @@ class Signup extends React.Component {
                   data-error='wrong'
                   data-success='right'
                 />
-                <label for='password'>
+                <label htmlFor='password'>
                   Password
                 </label>
               </div>
