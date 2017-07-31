@@ -1,6 +1,13 @@
 {
   "root": true,
-  "extends": "airbnb-base",
+  "extends": "eslint:recommended",
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
   "env": {
     "node": true,
     "es6": true,
@@ -23,12 +30,12 @@
       "requireParamDescription": false,
       "requireReturnDescription": true
     }],
-    "require-jsdoc": ["error", {
-        "require": {
-            "FunctionDeclaration": true,
-            "MethodDefinition": true,
-            "ClassDeclaration": true
-        }
-    }]
+    // "require-jsdoc": ["error", {
+    //     "require": {
+    //         "FunctionDeclaration": true,
+    //         "MethodDefinition": true,
+    //         "ClassDeclaration": true
+    //     }
+    // }]
   }
 }
