@@ -6,7 +6,7 @@ const Groups = db.Groups;
 
 // const members = require('../models/').Members;
 
-module.exports = {
+export default {
   list(req, res) {
     return Members.all()
     .then(group => res.status(200).send(group))
