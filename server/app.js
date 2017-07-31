@@ -23,16 +23,15 @@ app.use(logger('dev'));
 // parse incoming requests data
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(require('webpack-dev-middleware')(compiler), {
+app.use(require('webpack-dev-middleware')(compiler, {
   noInfo: true,
   publicPath: config.output.publicPath
-})
-
+}));
 
 app.use(require('webpack-hot-middleware')(compiler));
 require('./routes')(app);
 /* setup a default catch-all route that sends back a
 welcome message in json format*/
-app.get('*', (req, res) => res.status(200).sendFile(path.join(__dirname, '../client/dist/index.html')))
+app.get('*', (req, res) => res.status(200).sendFile(path.join(__dirname, '../client/src/index.html')))
 
 module.exports = app;
