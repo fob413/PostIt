@@ -8,7 +8,7 @@ import clearController from '../controllers/clear';
 module.exports = (app) => {
   // a get all for the starty page of the app
   app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '../../client/index.html'));
+    res.sendFile(path.join(__dirname, '../../client/src/index.html'));
   });
 
   // a get all api for users signup

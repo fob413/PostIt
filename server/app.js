@@ -12,6 +12,7 @@ const logger = require('morgan');
 const bodyParser = require('body-parser');*/
 
 // setup the express app
+const port = 3000;
 const app = express();
 
 // config setup
@@ -32,6 +33,17 @@ app.use(require('webpack-hot-middleware')(compiler));
 require('./routes')(app);
 /* setup a default catch-all route that sends back a
 welcome message in json format*/
-app.get('*', (req, res) => res.status(200).sendFile(path.join(__dirname, '../client/src/index.html')))
+app.get('*', (req, res) => {
+    res.status(200)
+    .sendFile(
+    path.join(__dirname, '../client/src/index.html'
+  ));
+});
 
-module.exports = app;
+app.listen(port, (err) => {
+  if (err) {
+    console.log(err);
+  } else {
+    open(`http://localhost:${port}`);
+  }
+});

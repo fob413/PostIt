@@ -13,7 +13,7 @@ const invalid = {
 };
 
 
-module.exports = {
+export default {
   list(req, res) {
     return Users
     .all()
