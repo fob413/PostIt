@@ -5,6 +5,7 @@ import path from 'path';
 import config from '../webpack.config.dev';
 import webpack from 'webpack';
 import open from 'open';
+import colors from 'colors';
 
 /*
 const express = require('express');
@@ -40,10 +41,12 @@ app.get('*', (req, res) => {
   ));
 });
 
+/* eslint-disable no-console */
 app.listen(port, (err) => {
   if (err) {
     console.log(err);
   } else {
+    console.log(`Server running on port ${port}...`.red );
     open(`http://localhost:${port}`);
   }
 });
