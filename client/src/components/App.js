@@ -1,18 +1,19 @@
 import React, {PropTypes} from 'react';
+import {BrowserRouter, Route, Switch} from 'react-router-dom';
+import Signup from './index/signup/signup';
+import Signin from './index/signin/signin';
 
 class App extends React.Component {
   render() {
     return (
-      <div>
-        <p>Test one two three</p>
-        {this.props.children}
-      </div>
+      <BrowserRouter>
+        <Switch>
+          <Route exact path="/" component={Signup} />
+          <Route exact path="/signin" component={Signin} />
+        </Switch>
+      </BrowserRouter>
     );
   }
 }
-
-App.PropTypes = {
-  children: PropTypes.object.isRequired
-};
 
 export default App;
