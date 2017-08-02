@@ -1,6 +1,23 @@
 import React, {PropTypes} from 'react';
 
 class Signin extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.onSignIn = this.onSignIn.bind(this);
+  }
+
+  onSignIn(e) {
+    const {_userName, _password} = this.refs;
+    console.log('==>>>>>>> signin button has just been clicked');
+    e.preventDefault();
+    if (_userName.value.length > 0 && _password.value.length > 0) {
+      this.props.signInUser(_userName.value, _password.value);
+    } else {
+      console.log(`Some fields are empty`);
+    }
+  }
+
   render() {
     return (
       <div className="container">
@@ -13,10 +30,11 @@ class Signin extends React.Component {
 
         <div className="row">
           <div className="container col s12">
-            <form>
+            <form onSubmit={this.onSignIn}>
               <div className="row">
                 <div className="input-field col s12 m12">
                   <input
+                    ref="_userName"
                     className="validate"
                     type="text"
                     id="userName"
@@ -31,6 +49,7 @@ class Signin extends React.Component {
 
               <div className="input-field col s12 m12">
                 <input 
+                  ref="_password"
                   className="validate"
                   type="password"
                   id="password"
@@ -67,7 +86,8 @@ class Signin extends React.Component {
 }
 
 Signin.propTypes ={
-  toggleSignUp: PropTypes.func.isRequired
+  toggleSignUp: PropTypes.func.isRequired,
+  signInUser: PropTypes.func.isRequired
 };
 
 export default Signin; 

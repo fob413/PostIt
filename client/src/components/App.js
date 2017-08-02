@@ -30,7 +30,6 @@ class App extends React.Component {
 
   toggleSignUp(e) {
     e.preventDefault();
-    alert('toggle signup button has been clicked');
     this.state.users.map((user, i) => console.log(user, i));
     if (this.state.signup) {
       this.setState({signup: false});
@@ -60,8 +59,15 @@ class App extends React.Component {
   }
 
   signInUser(userName, password) {
-    if (userName.length > 0 || password.length > 0) {
+    if (userName.length > 0 && password.length > 0) {
       console.log('attempt to login a user please');
+      this.state.users.map((user, i) => {
+        if (user.userName == userName){
+          alert('you may signin now');
+        } else {
+          alert(`you can't be found on the database`);
+        }
+      });
     } else {
       console.log('One of the signin fields is empty');
     }
