@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 
 class Signin extends React.Component {
   render() {
@@ -65,5 +65,9 @@ class Signin extends React.Component {
     );
   }
 }
+
+Signin.propTypes ={
+  toggleSignUp: PropTypes.func.isRequired
+};
 
 export default Signin; 

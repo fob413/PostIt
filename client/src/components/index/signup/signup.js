@@ -1,7 +1,19 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 import {Link} from 'react-router';
 
 class Signup extends React.Component {
+  constructor(props) {
+    super(props);
+    
+    this.onSignUp = this.onSignUp.bind(this);
+  }
+
+  onSignUp(e) {
+    const {_userName, _email, _password} = this.refs;
+    e.preventDefault();
+    alert(`submit signup form:\nUserName: ${_userName.value} \nEmail: ${_email.value} \nPassword: ${_password.value}`);
+  }
+
   render() {
     return (
       <div className="container">
@@ -14,10 +26,11 @@ class Signup extends React.Component {
 
         <div className="row">
           <div className="container col s12">
-            <form>
+            <form onSubmit={this.onSignUp}>
               <div className="row">
                 <div className="input-field col s12 m6">
                   <input
+                    ref="_userName"
                     className="validate"
                     type="text"
                     id="userName"
@@ -31,6 +44,7 @@ class Signup extends React.Component {
 
                 <div className="input-field col s12 m6">
                   <input
+                    ref="_email"
                     className="validate"
                     type="email"
                     id="email"
@@ -45,6 +59,7 @@ class Signup extends React.Component {
 
               <div className="input-field col s12 m12">
                 <input 
+                  ref="_password"
                   className="validate"
                   type="password"
                   id="password"
@@ -80,5 +95,9 @@ class Signup extends React.Component {
     );
   }
 }
+
+Signup.propTypes ={
+  toggleSignUp: PropTypes.func.isRequired
+};
 
 export default Signup;

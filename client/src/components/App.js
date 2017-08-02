@@ -16,7 +16,7 @@ class App extends React.Component {
   }
 
   toggleLoggedIn(e) {
-    e.preventDefault;
+    e.preventDefault();
     if (this.state.loggedIn){
       this.setState({loggedIn: false});
     } else {
@@ -25,7 +25,7 @@ class App extends React.Component {
   }
 
   toggleSignUp(e) {
-    e.preventDefault;
+    e.preventDefault();
     alert('toggle signup button has been clicked');
     if (this.state.signup) {
       this.setState({signup: false});
