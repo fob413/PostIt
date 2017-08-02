@@ -7,7 +7,7 @@ class Signup extends React.Component {
       <div className="container">
         <div className="row center-align">
           <img width="30%" 
-            src="./../../../image/postitD.png"
+            src={require("./../../../image/postitD.png")}
             alt="PostIt Logo"
           />
         </div>
@@ -70,12 +70,10 @@ class Signup extends React.Component {
           </div>
         </div>
         <div className="center-align">
-          <br />
-          <br />
           <p>
             OR
             <br />
-            <a className="green-text text-darken-1" onClick={this.props.toggleSignUp}>Sign In</a>
+            <a className="green-text text-darken-1 signButton" onClick={this.props.toggleSignUp}>Sign In</a>
           </p>
         </div>
       </div>

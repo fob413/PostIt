@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react';
 import Signup from './index/signup/signup';
 import Signin from './index/signin/signin';
+import '../style/style.css';
 
 class App extends React.Component {
   constructor(props){
