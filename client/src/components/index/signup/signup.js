@@ -11,7 +11,6 @@ class Signup extends React.Component {
   onSignUp(e) {
     const {_userName, _email, _password} = this.refs;
     e.preventDefault();
-    alert(`submit signup form:\nUserName: ${_userName.value} \nEmail: ${_email.value} \nPassword: ${_password.value}`);
     this.props.signUpUser(_userName.value, _email.value, _password.value);
     _userName.value = "";
     _password.value = "";
