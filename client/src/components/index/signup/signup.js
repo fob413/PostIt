@@ -11,10 +11,14 @@ class Signup extends React.Component {
   onSignUp(e) {
     const {_userName, _email, _password} = this.refs;
     e.preventDefault();
-    this.props.signUpUser(_userName.value, _email.value, _password.value);
-    _userName.value = "";
-    _password.value = "";
-    _email.value = "";
+    if (_userName.value.length > 0 && _email.value.length && _password.value.length > 0) {
+      this.props.signUpUser(_userName.value, _email.value, _password.value);
+      _userName.value = "";
+      _password.value = "";
+      _email.value = "";
+    } else {
+      console.log('One of the fields in the form is empty');
+    }
   }
 
   render() {
