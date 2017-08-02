@@ -75,7 +75,7 @@ class Signup extends React.Component {
           <p>
             OR
             <br />
-            <a className="green-text text-darken-1" href="/signin">Sign In</a>
+            <a className="green-text text-darken-1" onClick={this.props.toggleSignUp}>Sign In</a>
           </p>
         </div>
       </div>
