@@ -7,12 +7,15 @@ class App extends React.Component {
   constructor(props){
     super(props);
     this.state = {
+      users: [],
       signup: true,
-      loggedIn: false
+      loggedIn: false,
+      idNum: 1
     };
 
     this.toggleLoggedIn = this.toggleLoggedIn.bind(this);
     this.toggleSignUp = this.toggleSignUp.bind(this);
+    this.signUpUser = this.signUpUser.bind(this);
   }
 
   toggleLoggedIn(e) {
@@ -27,10 +30,32 @@ class App extends React.Component {
   toggleSignUp(e) {
     e.preventDefault();
     alert('toggle signup button has been clicked');
+    this.state.users.map((user, i) => console.log(user, i));
     if (this.state.signup) {
       this.setState({signup: false});
     } else {
       this.setState({signup: true});
+    }
+  }
+
+  signUpUser(userName, email, password) {
+    if (userName.length > 0 || email.length || password.length){
+      let id = this.state.idNum;
+      const users = [
+        ...this.state.users,
+        {
+          id: id,
+          userName,
+          email,
+          password
+        }
+      ];
+      let newId = id + 1;
+      this.setState({users});
+      this.setState({idNum: newId});
+      console.log("===>>>>>>>", this.state.users, this.state.idNum);
+    } else {
+      console.log('One of the fields is empty');
     }
   }
 
@@ -47,7 +72,7 @@ class App extends React.Component {
       if (signup){
         return (
           <div>
-            <Signup toggleSignUp={this.toggleSignUp} />
+            <Signup toggleSignUp={this.toggleSignUp} signUpUser = {this.signUpUser} />
           </div>
         );
       } else {

@@ -12,6 +12,10 @@ class Signup extends React.Component {
     const {_userName, _email, _password} = this.refs;
     e.preventDefault();
     alert(`submit signup form:\nUserName: ${_userName.value} \nEmail: ${_email.value} \nPassword: ${_password.value}`);
+    this.props.signUpUser(_userName.value, _email.value, _password.value);
+    _userName.value = "";
+    _password.value = "";
+    _email.value = "";
   }
 
   render() {
@@ -97,7 +101,8 @@ class Signup extends React.Component {
 }
 
 Signup.propTypes ={
-  toggleSignUp: PropTypes.func.isRequired
+  toggleSignUp: PropTypes.func.isRequired,
+  signUpUser: PropTypes.func.isRequired
 };
 
 export default Signup;
