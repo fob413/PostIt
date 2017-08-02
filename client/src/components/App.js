@@ -16,6 +16,7 @@ class App extends React.Component {
     this.toggleLoggedIn = this.toggleLoggedIn.bind(this);
     this.toggleSignUp = this.toggleSignUp.bind(this);
     this.signUpUser = this.signUpUser.bind(this);
+    this.signInUser = this.signInUser.bind(this);
   }
 
   toggleLoggedIn(e) {
@@ -39,7 +40,7 @@ class App extends React.Component {
   }
 
   signUpUser(userName, email, password) {
-    if (userName.length > 0 || email.length || password.length){
+    if (userName.length > 0 && email.length > 0 && password.length > 0){
       let id = this.state.idNum;
       const users = [
         ...this.state.users,
@@ -53,9 +54,16 @@ class App extends React.Component {
       let newId = id + 1;
       this.setState({users});
       this.setState({idNum: newId});
-      console.log("===>>>>>>>", this.state.users, this.state.idNum);
     } else {
       console.log('One of the fields is empty');
+    }
+  }
+
+  signInUser(userName, password) {
+    if (userName.length > 0 || password.length > 0) {
+      console.log('attempt to login a user please');
+    } else {
+      console.log('One of the signin fields is empty');
     }
   }
 
@@ -78,7 +86,7 @@ class App extends React.Component {
       } else {
         return (
           <div>
-            <Signin toggleSignUp={this.toggleSignUp} />
+            <Signin toggleSignUp={this.toggleSignUp} signInUser = {this.signInUser}/>
           </div>
         )
       }
