@@ -1,6 +1,16 @@
 import React, {PropTypes} from 'react';
 
 class NavBar extends React.Component {
+  constructor(props){
+    super(props);
+
+    this.onLogout = this.onLogout.bind(this);
+  }
+
+  onLogout(e){
+    console.log('attempt to logout>>>>>>');
+  }
+
   render() {
     return (
       <div>
@@ -28,7 +38,7 @@ class NavBar extends React.Component {
 
             <ul className="right" id="nav-mobile">
               <li>
-                <i className="material-icons white-text logout hoverable">exit_to_app</i>
+                <i onClick={this.props.logout} className="material-icons white-text logout hoverable">exit_to_app</i>
               </li>
             </ul>
           </div>
@@ -95,6 +105,10 @@ class NavBar extends React.Component {
       </div>
     )
   }
+}
+
+NavBar.propTypes = {
+  logout: PropTypes.func.isRequired
 }
 
 export default NavBar;

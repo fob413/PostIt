@@ -84,10 +84,9 @@ class App extends React.Component {
     if (loggedIn) {
       return(
         <div>
-          <NavBar />
+          <NavBar logout={this.toggleLoggedIn} />
           <BroadPage />
-          <h1>BROADCAST BOARD<br />CREATE GROUPS AND ALL THE LIKES</h1>
-          <button onClick={this.toggleLoggedIn}>LOG OUT</button>
+          
         </div>
       );
     } else {

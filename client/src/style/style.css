@@ -4,7 +4,7 @@
 
 .logout{
   cursor: pointer;
-  padding-right: 30%;
+  padding-right: 50%;
 }
 
 .center{
@@ -13,4 +13,5 @@
 
 .cGroup{
   padding-top: 5%;
+  cursor: pointer;
 }

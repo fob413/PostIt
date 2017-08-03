@@ -3,7 +3,13 @@ import React, {PropTypes} from 'react';
 class SearchGroups extends React.Component {
   render() {
     return (
-      <h1>Its really time to search the groups this time</h1>
+      <div className="row">
+        <div className="input-field">
+          <i className="material-icons prefix">search</i>
+          <input id="icon_prefix" type="text" />
+          <label htmlFor="icon_prefix align-left">Search Groups</label>
+        </div>
+      </div>
     );
   }
 }
