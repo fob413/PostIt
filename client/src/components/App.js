@@ -1,6 +1,9 @@
 import React, {PropTypes} from 'react';
 import Signup from './index/signup/signup';
 import Signin from './index/signin/signin';
+import CreateGroup from './broadcast/broadPage/creategroup';
+import BroadPage from './broadcast/broadPage/broadpage';
+import NavBar from './broadcast/broadPage/navbar';
 import '../style/style.css';
 
 class App extends React.Component {
@@ -82,6 +85,8 @@ class App extends React.Component {
     if (loggedIn) {
       return(
         <div>
+          <NavBar />
+          <BroadPage />
           <h1>BROADCAST BOARD<br />CREATE GROUPS AND ALL THE LIKES</h1>
           <button onClick={this.toggleLoggedIn}>LOG OUT</button>
         </div>

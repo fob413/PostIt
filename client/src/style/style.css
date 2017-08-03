@@ -1,3 +1,8 @@
 .signButton{
   cursor: pointer;
 }
+
+.logout{
+  cursor: pointer;
+  padding-right: 30%;
+}
