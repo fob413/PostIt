@@ -13,7 +13,7 @@ class Signin extends React.Component {
     if (_userName.value.length > 0 && _password.value.length > 0) {
       this.props.signInUser(_userName.value, _password.value);
     } else {
-      console.log(`Some fields are empty.`);
+      alert(`Some fields are empty.`);
     }
   }
 
