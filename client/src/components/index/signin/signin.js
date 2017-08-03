@@ -76,7 +76,12 @@ class Signin extends React.Component {
           <p>
             OR
             <br />
-            <a className="green-text text-darken-1 signButton" onClick={this.props.toggleSignUp}>Sign Up</a>
+            <a
+              className="green-text text-darken-1 signButton"
+              onClick={this.props.toggleSignUp}
+            >
+              Sign Up
+            </a>
           </p>
         </div>
       </div>

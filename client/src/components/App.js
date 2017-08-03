@@ -10,21 +10,39 @@ class App extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      users: [],
+      users: [
+        {
+          email: "fob1493@gmail.com",
+          id: 0,
+          password: 'ghgh',
+          userName: 'fob',
+          groups: [
+            {
+              groupName: 'Funsho Sample Group'
+            },
+            {
+              groupName: 'Funshizzy sample group'
+            }
+          ],
+        }
+      ],
       signup: true,
       loggedIn: false,
-      idNum: 1
+      idNum: 1,
+      currentUser: {}
     };
 
     this.toggleLoggedIn = this.toggleLoggedIn.bind(this);
     this.toggleSignUp = this.toggleSignUp.bind(this);
     this.signUpUser = this.signUpUser.bind(this);
     this.signInUser = this.signInUser.bind(this);
+    this.loadUser = this.loadUser.bind(this);
   }
 
   toggleLoggedIn() {
     if (this.state.loggedIn){
       this.setState({loggedIn: false});
+      this.setState({currentUser: {}});
     } else {
       this.setState({loggedIn: true});
     }
@@ -39,6 +57,14 @@ class App extends React.Component {
     }
   }
 
+  loadUser (user) {
+    this.setState(
+      {
+        currentUser: user
+      }
+    );
+  }
+
   signUpUser(userName, email, password) {
     if (userName.length > 0 && email.length > 0 && password.length > 0){
       let id = this.state.idNum;
@@ -48,12 +74,30 @@ class App extends React.Component {
           id: id,
           userName,
           email,
-          password
+          password,
+          groups: [
+            {
+              groupName: 'Sample Group To Show'
+            }
+          ]
         }
       ];
+      const user = {
+        id: id,
+        userName,
+        email,
+        password,
+        groups: [
+          {
+            groupName: 'Sample Group To Show'
+          }
+        ]
+      };
+
       let newId = id + 1;
       this.setState({users});
       this.setState({idNum: newId});
+      this.setState({currentUser: user});
       this.toggleLoggedIn();
     } else {
       alert('One of the fields is empty');
@@ -67,6 +111,7 @@ class App extends React.Component {
         this.state.users.map((user, i) => {
           if (user.userName == userName && user.password == password){
             this.toggleLoggedIn();
+            this.loadUser(user);
           } else {
             alert('invalid credentials');
           }
@@ -85,7 +130,7 @@ class App extends React.Component {
       return(
         <div>
           <NavBar logout={this.toggleLoggedIn} />
-          <BroadPage />
+          <BroadPage user={this.state.currentUser} />
           
         </div>
       );
