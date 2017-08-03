@@ -3,7 +3,15 @@ import React, {PropTypes} from 'react';
 class CreateGroup extends React.Component {
   render() {
     return (
-      <h3>Come and search for your groups here</h3>
+      <div className="row center cGroup">
+        <div>
+          <img
+            width="70px"
+            src={require("../../../image/gIcon.png")}
+          />
+          <p>Create Group</p>
+        </div>
+      </div>
     );
   }
 }

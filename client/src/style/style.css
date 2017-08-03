@@ -6,3 +6,11 @@
   cursor: pointer;
   padding-right: 30%;
 }
+
+.center{
+  margin: auto;
+}
+
+.cGroup{
+  padding-top: 5%;
+}

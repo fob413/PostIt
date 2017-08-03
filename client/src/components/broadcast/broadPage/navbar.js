@@ -18,7 +18,7 @@ class NavBar extends React.Component {
                 <a className="modal-trigger" href="#modal1">
                   <i
                     href="#modal1"
-                    className="modal-trigger white-text material-icons"
+                    className="modal-trigger white-text material-icons hoverable"
                   >
                     settings
                   </i>
