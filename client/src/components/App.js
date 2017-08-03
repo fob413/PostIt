@@ -19,8 +19,7 @@ class App extends React.Component {
     this.signInUser = this.signInUser.bind(this);
   }
 
-  toggleLoggedIn(e) {
-    e.preventDefault();
+  toggleLoggedIn() {
     if (this.state.loggedIn){
       this.setState({loggedIn: false});
     } else {
@@ -30,7 +29,6 @@ class App extends React.Component {
 
   toggleSignUp(e) {
     e.preventDefault();
-    this.state.users.map((user, i) => console.log(user, i));
     if (this.state.signup) {
       this.setState({signup: false});
     } else {
@@ -53,21 +51,27 @@ class App extends React.Component {
       let newId = id + 1;
       this.setState({users});
       this.setState({idNum: newId});
+      console.log('>>>>>User Signed up');
+      this.toggleLoggedIn();
     } else {
       console.log('One of the fields is empty');
     }
   }
 
   signInUser(userName, password) {
+    
     if (userName.length > 0 && password.length > 0) {
-      console.log('attempt to login a user please');
-      this.state.users.map((user, i) => {
-        if (user.userName == userName){
-          alert('you may signin now');
-        } else {
-          alert(`you can't be found on the database`);
-        }
-      });
+      if (this.state.users.length > 0){
+        this.state.users.map((user, i) => {
+          if (user.userName == userName && user.password == password){
+            this.toggleLoggedIn();
+          } else {
+            console.log('invalid credentials');
+          }
+        });
+      } else {
+        console.log('Please Sign Up');
+      }
     } else {
       console.log('One of the signin fields is empty');
     }

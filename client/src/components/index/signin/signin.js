@@ -9,7 +9,6 @@ class Signin extends React.Component {
 
   onSignIn(e) {
     const {_userName, _password} = this.refs;
-    console.log('==>>>>>>> signin button has just been clicked');
     e.preventDefault();
     if (_userName.value.length > 0 && _password.value.length > 0) {
       this.props.signInUser(_userName.value, _password.value);
