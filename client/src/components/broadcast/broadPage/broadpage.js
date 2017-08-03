@@ -10,14 +10,16 @@ class BroadPage extends React.Component{
         <CreateGroup />
         <SearchGroups />
         <Groups groupList={this.props.user.groups}/>
-        {console.log(this.props.user)}
       </div>
     );
   }
 }
 
+/*
+* Validation of the components properties
+*/
 BroadPage.propTypes = {
   user: PropTypes.object.isRequired
-}
+};
 
 export default BroadPage;

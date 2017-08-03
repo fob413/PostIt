@@ -8,6 +8,12 @@ class Signup extends React.Component {
     this.onSignUp = this.onSignUp.bind(this);
   }
 
+  /*
+  * function signs up a new user
+  * @param {string} _userName is the intending users name
+  * @param {string} _email is the intending users mail
+  * @param {password} _password is the intending users password
+  */
   onSignUp(e) {
     const {_userName, _email, _password} = this.refs;
     e.preventDefault();
@@ -95,7 +101,12 @@ class Signup extends React.Component {
           <p>
             OR
             <br />
-            <a className="green-text text-darken-1 signButton" onClick={this.props.toggleSignUp}>Sign In</a>
+            <a
+              className="green-text text-darken-1 signButton"
+              onClick={this.props.toggleSignUp}
+            >
+            Sign In
+            </a>
           </p>
         </div>
       </div>
@@ -103,6 +114,9 @@ class Signup extends React.Component {
   }
 }
 
+/*
+* Validation of the components properties
+*/
 Signup.propTypes ={
   toggleSignUp: PropTypes.func.isRequired,
   signUpUser: PropTypes.func.isRequired

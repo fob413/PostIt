@@ -23,6 +23,9 @@ class Group extends React.Component{
   }
 }
 
+/*
+* Validation of the components properties
+*/
 Group.propTypes = {
   showGroup: PropTypes.object.isRequired
 };

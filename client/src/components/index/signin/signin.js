@@ -7,6 +7,11 @@ class Signin extends React.Component {
     this.onSignIn = this.onSignIn.bind(this);
   }
 
+  /*
+  * function signs in a user
+  * @param {string} _userName is the user name of the user
+  * @param {password} _password is the password of the user
+  */
   onSignIn(e) {
     const {_userName, _password} = this.refs;
     e.preventDefault();
@@ -89,6 +94,9 @@ class Signin extends React.Component {
   }
 }
 
+/*
+* Validation of the components properties
+*/
 Signin.propTypes ={
   toggleSignUp: PropTypes.func.isRequired,
   signInUser: PropTypes.func.isRequired

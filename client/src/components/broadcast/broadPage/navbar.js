@@ -3,12 +3,6 @@ import React, {PropTypes} from 'react';
 class NavBar extends React.Component {
   constructor(props){
     super(props);
-
-    this.onLogout = this.onLogout.bind(this);
-  }
-
-  onLogout(e){
-    console.log('attempt to logout>>>>>>');
   }
 
   render() {
@@ -107,6 +101,9 @@ class NavBar extends React.Component {
   }
 }
 
+/*
+* Validation of the components properties
+*/
 NavBar.propTypes = {
   logout: PropTypes.func.isRequired
 }

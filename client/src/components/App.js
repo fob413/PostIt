@@ -39,6 +39,9 @@ class App extends React.Component {
     this.loadUser = this.loadUser.bind(this);
   }
 
+  /*
+  * function toggles the user being logged in or out
+  */
   toggleLoggedIn() {
     if (this.state.loggedIn){
       this.setState({loggedIn: false});
@@ -48,6 +51,9 @@ class App extends React.Component {
     }
   }
 
+  /*
+  * function toggles the user either signing up or signing in
+  */
   toggleSignUp(e) {
     e.preventDefault();
     if (this.state.signup) {
@@ -57,6 +63,10 @@ class App extends React.Component {
     }
   }
 
+  /*
+  * function loads the logged in user to the state
+  * @param {object} user is the object of the logged in user
+  */
   loadUser (user) {
     this.setState(
       {
@@ -65,6 +75,12 @@ class App extends React.Component {
     );
   }
 
+  /*
+  * function sign up a new user
+  * @param {string} userName of the intending user
+  * @param {string} email of intending user
+  * @param {password} password of the intending user
+  */
   signUpUser(userName, email, password) {
     if (userName.length > 0 && email.length > 0 && password.length > 0){
       let id = this.state.idNum;
@@ -104,6 +120,11 @@ class App extends React.Component {
     }
   }
 
+  /*
+  * function Signs in a user
+  * @param {string} userName of the user signing in
+  * @param {password} password of the user signing in
+  */
   signInUser(userName, password) {
     
     if (userName.length > 0 && password.length > 0) {
