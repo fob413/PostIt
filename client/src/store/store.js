@@ -13,4 +13,4 @@ const initialState = {
 
 const store = createStore(user, initialState);
 
-console.log(store.getState());
+console.log(store.getState());  
