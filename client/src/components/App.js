@@ -16,23 +16,11 @@ class App extends React.Component {
       signup: true
     };
 
-    this.toggleLoggedIn = this.toggleLoggedIn.bind(this);
+    
     this.toggleSignUp = this.toggleSignUp.bind(this);
     this.signUpUser = this.signUpUser.bind(this);
     this.signInUser = this.signInUser.bind(this);
     this.loadUser = this.loadUser.bind(this);
-  }
-
-  /*
-  * function toggles the user being logged in or out
-  */
-  toggleLoggedIn() {
-    if (this.state.loggedIn){
-      this.setState({loggedIn: false});
-      this.setState({currentUser: {}});
-    } else {
-      this.setState({loggedIn: true});
-    }
   }
 
   /*

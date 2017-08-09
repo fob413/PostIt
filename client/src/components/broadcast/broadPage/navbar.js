@@ -32,7 +32,7 @@ class NavBar extends React.Component {
 
             <ul className="right" id="nav-mobile">
               <li>
-                <i onClick={this.props.logout} className="material-icons white-text logout hoverable">exit_to_app</i>
+                <i className="material-icons white-text logout hoverable">exit_to_app</i>
               </li>
             </ul>
           </div>
@@ -105,7 +105,7 @@ class NavBar extends React.Component {
 * Validation of the components properties
 */
 NavBar.propTypes = {
-  logout: PropTypes.func.isRequired
-}
+
+};
 
 export default NavBar;
