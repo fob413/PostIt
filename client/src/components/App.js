@@ -9,6 +9,7 @@ import '../style/style.css';
 class App extends React.Component {
   constructor(props){
     super(props);
+    this.store = this.props.store;
     this.state = {
       users: [
         {
@@ -147,6 +148,7 @@ class App extends React.Component {
 
   render() {
     const {signup, loggedIn} = this.state;
+    console.log('========>>>>>>>>>', this.store.getState());
     if (loggedIn) {
       return(
         <div>
@@ -178,5 +180,12 @@ class App extends React.Component {
     }
   }
 }
+
+/*
+* Validation of the components properties
+*/
+App.propTypes ={
+  store: PropTypes.object.isRequired
+};
 
 export default App;
