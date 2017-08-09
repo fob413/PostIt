@@ -6,7 +6,6 @@ class Signin extends React.Component {
     this.store = this.props.store;
 
     this.onSignIn = this.onSignIn.bind(this);
-    this.showStore = this.showStore.bind(this);
   }
 
   /*
@@ -22,10 +21,6 @@ class Signin extends React.Component {
     } else {
       alert(`Some fields are empty.`);
     }
-  }
-
-  showStore(e) {
-    console.log('======>>>> ', this.store.getState());
   }
 
   render() {
@@ -94,7 +89,6 @@ class Signin extends React.Component {
               Sign Up
             </a>
           </p>
-          <p onClick={this.showStore}>click</p>
         </div>
       </div>
     );

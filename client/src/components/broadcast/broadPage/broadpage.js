@@ -9,7 +9,7 @@ class BroadPage extends React.Component{
       <div className="container">
         <CreateGroup />
         <SearchGroups />
-        <Groups groupList={this.props.user.groups}/>
+        <Groups />
       </div>
     );
   }
@@ -19,7 +19,7 @@ class BroadPage extends React.Component{
 * Validation of the components properties
 */
 BroadPage.propTypes = {
-  user: PropTypes.object.isRequired
+  
 };
 
 export default BroadPage;

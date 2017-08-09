@@ -134,8 +134,8 @@ class App extends React.Component {
     if (this.store.getState().isLoggedIn) {
       return(
         <div>
-          <NavBar logout={this.toggleLoggedIn} />
-          <BroadPage user={this.state.currentUser} />
+          <NavBar />
+          <BroadPage />
           
         </div>
       );
