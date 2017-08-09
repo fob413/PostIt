@@ -21,6 +21,11 @@ export default (state = initialState, action) => {
         isLoggedIn: action.isLoggedin
       });
 
+    case C.SIGN_OUT:
+    return Object.assign({}, state, {
+      isLoggedIn: action.isLoggedIn
+    });
+
     default:
       return state;
   }

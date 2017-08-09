@@ -98,7 +98,8 @@ export default {
         isLoggedin: false,
       })
       .then(res.status(200).send({
-        message: 'successfully logged out'
+        message: 'successfully logged out',
+        isLoggedin: user.isLoggedin
       }))
       .catch(err => res.status(400).send(err.message));
     })

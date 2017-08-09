@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react';
 import axios from 'axios';
 import Signup from './index/signup/signup';
 import Signin from './index/signin/signin';
-import {signUp, signIn} from '../actions';
+import {signUp, signIn, signOut} from '../actions';
 import CreateGroup from './broadcast/broadPage/creategroup';
 import BroadPage from './broadcast/broadPage/broadpage';
 import NavBar from './broadcast/broadPage/navbar';
@@ -20,7 +20,7 @@ class App extends React.Component {
     this.toggleSignUp = this.toggleSignUp.bind(this);
     this.signUpUser = this.signUpUser.bind(this);
     this.signInUser = this.signInUser.bind(this);
-    this.loadUser = this.loadUser.bind(this);
+    this.logoutUser = this.logoutUser.bind(this);
   }
 
   /*
@@ -33,18 +33,6 @@ class App extends React.Component {
     } else {
       this.setState({signup: true});
     }
-  }
-
-  /*
-  * function loads the logged in user to the state
-  * @param {object} user is the object of the logged in user
-  */
-  loadUser (user) {
-    this.setState(
-      {
-        currentUser: user
-      }
-    );
   }
 
   /*
@@ -95,13 +83,24 @@ class App extends React.Component {
     }
   }
 
+  logoutUser(){
+    axios.post('api/user/signout', {
+      UserName: this.store.getState().UserName
+    })
+    .then(res => {
+      this.store.dispatch(signOut(res.data.isLoggedin));
+    })
+    .catch(err => {
+      alert(`${err.message} Please try again later`);
+    });
+  }
+
   render() {
-    const {signup, loggedIn} = this.state;
-    console.log(this.store.getState());
+    const {signup} = this.state;
     if (this.store.getState().isLoggedIn) {
       return(
         <div>
-          <NavBar />
+          <NavBar logout={this.logoutUser}/>
           <BroadPage />
           
         </div>

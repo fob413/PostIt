@@ -15,3 +15,10 @@ export const signIn = (Username, isLoggedin) => {
     isLoggedin
   };
 };
+
+export const signOut = (isLoggedin) => {
+  return {
+    type: C.SIGN_OUT,
+    isLoggedIn: isLoggedin
+  };
+};
