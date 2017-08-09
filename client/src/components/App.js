@@ -65,40 +65,19 @@ class App extends React.Component {
   * @param {string} email of intending user
   * @param {password} password of the intending user
   */
-  signUpUser(userName, email, password) {
-    if (userName.length > 0 && email.length > 0 && password.length > 0){
-      let id = this.state.idNum;
-      const users = [
-        ...this.state.users,
-        {
-          id: id,
-          userName,
-          email,
-          password,
-          groups: [
-            {
-              groupName: 'Sample Group To Show'
-            }
-          ]
-        }
-      ];
-      const user = {
-        id: id,
-        userName,
+  signUpUser(UserName, email, password) {
+    if (UserName.length > 0 && email.length > 0 && password.length > 0){
+      axios.post('api/user/signup', {
+        UserName,
         email,
-        password,
-        groups: [
-          {
-            groupName: 'Sample Group To Show'
-          }
-        ]
-      };
-
-      let newId = id + 1;
-      this.setState({users});
-      this.setState({idNum: newId});
-      this.setState({currentUser: user});
-      this.toggleLoggedIn();
+        password
+      })
+      .then(res => {
+        this.store.dispatch(signUp(res.data.Username, res.data.isLoggedin));
+      })
+      .catch(err => {
+        console.log('=====?????', err.message);
+      });
     } else {
       alert('One of the fields is empty');
     }
