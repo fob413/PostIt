@@ -31,6 +31,9 @@ module.exports = (app) => {
   // signin a user into the application
   app.post('/api/user/signin', usersController.signin);
 
+  // signout a user from the application
+  app.post('/api/user/signout', usersController.signout);
+
   // creates a new group on the application
   app.post('/api/group', groupsController.create);
 

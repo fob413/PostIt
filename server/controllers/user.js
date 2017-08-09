@@ -86,6 +86,26 @@ export default {
     .catch(error => res.status(400).send(error));
   },
 
+  signout(req, res) {
+    return Users
+    .findOne({
+      where: {
+        UserName: req.body.UserName
+      }
+    })
+    .then(user => {
+      user.update({
+        isLoggedin: false,
+      })
+      .then(res.status(200).send({
+        message: 'successfully logged out'
+      }))
+      .catch(err => res.status(400).send(err.message));
+    })
+    .catch(err => res.status(400).send(err.message));
+  }
+
+
 /*
    signin(req, res) {
     return Users
