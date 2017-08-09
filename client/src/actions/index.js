@@ -6,8 +6,10 @@ export const signUp = () => {
   };
 };
 
-export const signIn = () => {
+export const signIn = (Username, isLoggedin) => {
   return {
-    type: C.SIGN_IN
+    type: C.SIGN_IN,
+    Username,
+    isLoggedin
   };
 };

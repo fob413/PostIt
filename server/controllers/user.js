@@ -83,8 +83,6 @@ export default {
         .catch(error => res.status(400).send(error.message));
       }
     })
-    .catch(error => res.status(400).send(error))
-    .then(user => res.status(201).send(user))
     .catch(error => res.status(400).send(error));
   },
 

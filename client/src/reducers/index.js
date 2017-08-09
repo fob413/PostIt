@@ -14,7 +14,10 @@ export default (state = initialState, action) => {
 
     case C.SIGN_IN:
       console.log('attempting to sign in');
-      return;
+      return Object.assign({}, state, {
+        UserName: action.Username,
+        isLoggedIn: action.isLoggedin
+      });
 
     default:
       return state;

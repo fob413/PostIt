@@ -1,6 +1,8 @@
 import React, {PropTypes} from 'react';
+import axios from 'axios';
 import Signup from './index/signup/signup';
 import Signin from './index/signin/signin';
+import {signUp, signIn} from '../actions';
 import CreateGroup from './broadcast/broadPage/creategroup';
 import BroadPage from './broadcast/broadPage/broadpage';
 import NavBar from './broadcast/broadPage/navbar';
@@ -11,26 +13,7 @@ class App extends React.Component {
     super(props);
     this.store = this.props.store;
     this.state = {
-      users: [
-        {
-          email: "fob1493@gmail.com",
-          id: 0,
-          password: 'ghgh',
-          userName: 'fob',
-          groups: [
-            {
-              groupName: 'Funsho Sample Group'
-            },
-            {
-              groupName: 'Funshizzy sample group'
-            }
-          ],
-        }
-      ],
-      signup: true,
-      loggedIn: false,
-      idNum: 1,
-      currentUser: {}
+      signup: true
     };
 
     this.toggleLoggedIn = this.toggleLoggedIn.bind(this);
@@ -126,21 +109,20 @@ class App extends React.Component {
   * @param {string} userName of the user signing in
   * @param {password} password of the user signing in
   */
-  signInUser(userName, password) {
+  signInUser(UserName, password) {
     
-    if (userName.length > 0 && password.length > 0) {
-      if (this.state.users.length > 0){
-        this.state.users.map((user, i) => {
-          if (user.userName == userName && user.password == password){
-            this.toggleLoggedIn();
-            this.loadUser(user);
-          } else {
-            alert('invalid credentials');
-          }
-        });
-      } else {
-        alert('Please Sign Up');
-      }
+    if (UserName.length > 0 && password.length > 0) {
+      axios.post('/api/user/signin', {
+        UserName,
+        password
+      })
+      .then(res => {
+        alert(res.data);
+        this.store.dispatch(signIn(res.data.Username, res.data.isLoggedin));
+      })
+      .catch(err => {
+        console.log('===>>>>>>', err.message);
+      });
     } else {
       alert('One of the signin fields is empty');
     }
@@ -148,8 +130,8 @@ class App extends React.Component {
 
   render() {
     const {signup, loggedIn} = this.state;
-    console.log('========>>>>>>>>>', this.store.getState());
-    if (loggedIn) {
+    console.log(this.store.getState());
+    if (this.store.getState().isLoggedIn) {
       return(
         <div>
           <NavBar logout={this.toggleLoggedIn} />
@@ -171,6 +153,7 @@ class App extends React.Component {
         return (
           <div>
             <Signin
+              store={this.store}
               toggleSignUp={this.toggleSignUp}
               signInUser = {this.signInUser}
             />

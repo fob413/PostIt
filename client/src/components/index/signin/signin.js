@@ -3,8 +3,10 @@ import React, {PropTypes} from 'react';
 class Signin extends React.Component {
   constructor(props) {
     super(props);
+    this.store = this.props.store;
 
     this.onSignIn = this.onSignIn.bind(this);
+    this.showStore = this.showStore.bind(this);
   }
 
   /*
@@ -20,6 +22,10 @@ class Signin extends React.Component {
     } else {
       alert(`Some fields are empty.`);
     }
+  }
+
+  showStore(e) {
+    console.log('======>>>> ', this.store.getState());
   }
 
   render() {
@@ -88,6 +94,7 @@ class Signin extends React.Component {
               Sign Up
             </a>
           </p>
+          <p onClick={this.showStore}>click</p>
         </div>
       </div>
     );
@@ -99,7 +106,8 @@ class Signin extends React.Component {
 */
 Signin.propTypes ={
   toggleSignUp: PropTypes.func.isRequired,
-  signInUser: PropTypes.func.isRequired
+  signInUser: PropTypes.func.isRequired,
+  store: PropTypes.object.isRequired
 };
 
 export default Signin; 
