@@ -73,7 +73,7 @@ class App extends React.Component {
       })
       .then(res => {
         alert(res.data);
-        this.store.dispatch(signIn(res.data.Username, res.data.isLoggedin));
+        this.store.dispatch(signIn(res.data.UserName, res.data.isLoggedin));
       })
       .catch(err => {
         console.log('===>>>>>>', err.message);
@@ -84,6 +84,7 @@ class App extends React.Component {
   }
 
   logoutUser(){
+    console.log(`1 ${this.store.getState().Username} 2 ${this.store.getState().UserName}`);
     axios.post('api/user/signout', {
       UserName: this.store.getState().UserName
     })
@@ -91,7 +92,7 @@ class App extends React.Component {
       this.store.dispatch(signOut(res.data.isLoggedin));
     })
     .catch(err => {
-      alert(`${err.message} Please try again later`);
+      alert(`${err.message} Please try again later!`);
     });
   }
 
@@ -102,6 +103,7 @@ class App extends React.Component {
         <div>
           <NavBar logout={this.logoutUser}/>
           <BroadPage />
+          ${console.log(`${this.store.getState().Username} ${this.store.getState().isLoggedIn}`)}
           
         </div>
       );
