@@ -10,7 +10,7 @@ export default {
 
   create(req, res) {
     if (req.headers['token']) {
-      const token = req.headers['token'];
+      const token = req.body.token;
       jwt.verify(token, secret, (err, decoded) => {
         if (err) {
           return res.json({

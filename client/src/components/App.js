@@ -50,6 +50,7 @@ class App extends React.Component {
         password
       })
       .then(res => {
+        alert('Successfully Signed Up');
         this.store.dispatch(signUp(res.data.Username, res.data.isLoggedin));
       })
       .catch(err => {
@@ -73,7 +74,7 @@ class App extends React.Component {
         password
       })
       .then(res => {
-        alert(res.data);
+        alert('Successfully Signed In');
         this.store.dispatch(signIn(res.data.UserName, res.data.isLoggedin));
       })
       .catch(err => {

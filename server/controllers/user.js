@@ -90,20 +90,27 @@ export default {
                 token
               });
             })
-            .catch(err => res.status(400).send({
+            .catch(err =>  {
+              console.log(err);
+              res.status(400).send({
               message: err.message
-            }));
+            })}
+          );
           }
         } else {
           res.status(401).json(invalid)
-          .catch(error => res.status(400).send(error.message));
+          .catch(error => {
+            console.log(error);
+            res.status(400).send(error.message)});
         }
       } else {
         res.status(401).send(invalid)
         .catch(error => res.status(400).send(error.message));
       }
     })
-    .catch(error => res.status(400).send(error));
+    .catch(error => {
+      console.log(error);
+      res.status(400).send(error)});
   },
 
   signout(req, res) {
