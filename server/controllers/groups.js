@@ -52,6 +52,11 @@ export default {
                     message: 'Input a name for the group'
                   });
                 }
+              } else {
+                res.status(401).send({
+                  success: false,
+                  message: 'Sign in to access this service'
+                });
               }
             } else {
               res.status(401).json({

@@ -6,6 +6,7 @@ import {signUp, signIn, signOut} from '../actions';
 import CreateGroup from './broadcast/broadPage/creategroup';
 import BroadPage from './broadcast/broadPage/broadpage';
 import NavBar from './broadcast/broadPage/navbar';
+import Sample from './broadcast/broadPage/sample';
 import '../style/style.css';
 
 class App extends React.Component {
@@ -85,8 +86,8 @@ class App extends React.Component {
 
   logoutUser(){
     console.log(`1 ${this.store.getState().Username} 2 ${this.store.getState().UserName}`);
-    axios.post('api/user/signout', {
-      UserName: this.store.getState().UserName
+    axios.get('api/user/signout', {
+      
     })
     .then(res => {
       this.store.dispatch(signOut(res.data.isLoggedin));
@@ -103,8 +104,6 @@ class App extends React.Component {
         <div>
           <NavBar logout={this.logoutUser}/>
           <BroadPage />
-          ${console.log(`${this.store.getState().Username} ${this.store.getState().isLoggedIn}`)}
-          
         </div>
       );
     } else {
