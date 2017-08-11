@@ -33,6 +33,7 @@ class App extends React.Component {
       this.setState({signup: false});
     } else {
       this.setState({signup: true});
+      console.log(this.store.getState());
     }
   }
 
@@ -51,7 +52,7 @@ class App extends React.Component {
       })
       .then(res => {
         alert('Successfully Signed Up');
-        this.store.dispatch(signUp(res.data.Username, res.data.isLoggedin));
+        this.store.dispatch(signUp(res.data.UserName, res.data.isLoggedin, res.data.token));
       })
       .catch(err => {
         alert(err.message);
@@ -76,7 +77,8 @@ class App extends React.Component {
       })
       .then(res => {
         alert('Successfully Signed In');
-        this.store.dispatch(signIn(res.data.UserName, res.data.isLoggedin));
+        this.store.dispatch(signIn(res.data.UserName, res.data.isLoggedin, res.data.token));
+        console.log(this.store.getState());
       })
       .catch(err => {
         console.log('===>>>>>>', err.message);
@@ -87,12 +89,13 @@ class App extends React.Component {
   }
 
   logoutUser(){
-    console.log(`1 ${this.store.getState().Username} 2 ${this.store.getState().UserName}`);
-    axios.get('api/user/signout', {
-      
+    axios.post('api/user/signout', {
+      token: this.store.getState().token
     })
     .then(res => {
+      console.log(res.data.isLoggedin);
       this.store.dispatch(signOut(res.data.isLoggedin));
+      console.log(res.data.isLoggedin);
     })
     .catch(err => {
       alert(`${err.message} Please try again later!`);
@@ -105,7 +108,7 @@ class App extends React.Component {
       return(
         <div>
           <NavBar logout={this.logoutUser}/>
-          <BroadPage />
+          <BroadPage store={this.store} />
         </div>
       );
     } else {

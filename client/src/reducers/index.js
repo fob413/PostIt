@@ -12,22 +12,25 @@ export default (state = initialState, action) => {
     case C.SIGN_UP:
       return Object.assign({}, state, {
         UserName: action.Username,
-        isLoggedIn: action.isLoggedin
+        isLoggedIn: action.isLoggedin,
+        token: action.token
       });
 
     case C.SIGN_IN:
       return Object.assign({}, state, {
         UserName: action.Username,
-        isLoggedIn: action.isLoggedin
+        isLoggedIn: action.isLoggedin,
+        token: action.token
       });
 
     case C.SIGN_OUT:
-    console.log(action.isLoggedIn);
     return Object.assign({}, state, {
-      isLoggedIn: action.isLoggedIn
+      UserName: '',
+      isLoggedIn: action.isLoggedIn,
+      token: ''
     });
 
     default:
       return state;
   }
-}
+};

@@ -1,24 +1,26 @@
 import C from '../constants';
 
-export const signUp = (Username, isLoggedin) => {
+export const signUp = (Username, isLoggedin, token) => {
   return {
     type: C.SIGN_UP,
     Username,
-    isLoggedin
+    isLoggedin,
+    token
   };
 };
 
-export const signIn = (Username, isLoggedin) => {
+export const signIn = (Username, isLoggedin, token) => {
   return {
     type: C.SIGN_IN,
     Username,
-    isLoggedin
+    isLoggedin,
+    token
   };
 };
 
-export const signOut = (isLoggedin) => {
+export const signOut = (isLoggedIn) => {
   return {
     type: C.SIGN_OUT,
-    isLoggedIn: isLoggedin
+    isLoggedIn
   };
 };
