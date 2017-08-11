@@ -114,11 +114,11 @@ export default {
   },
 
   signout(req, res) {
-    if (req.body.token){
-      const token = req.body.token;
+    if (req.header('x-auth')){
+      const token = req.headers['x-auth'];
       jwt.verify(token, secret, (err, decoded) => {
         if (err) {
-          return res.json({
+          return res.status(403).json({
             success: false,
             message: 'failed to authenticate token'
           });
