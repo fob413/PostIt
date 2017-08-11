@@ -79,6 +79,40 @@ export default {
     }
   },
 
+  listGroups(req, res) {
+    if (req.body.token) {
+      const token = req.body.token;
+      jwt.verify(token, secret, (err, decoded) => {
+        if (err) {
+          return res.json({
+            success: false,
+            message: 'failed to authenticaate token'
+          });
+        } else {
+          req.decoded = decoded;
+          return Users
+          .findOne({
+            where: {
+              UserName: req.decoded.UserName
+            }
+          })
+          .then(user => {
+            if(user.isLoggedin){
+
+            } else {
+              return res.status
+            }
+          });
+        }
+      });
+    } else {
+      return res.status(403).send({
+        success: false,
+        message: 'no token provided'
+      });
+    }
+  },
+
     /*
     groups
     .create({
