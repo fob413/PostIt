@@ -89,9 +89,11 @@ class App extends React.Component {
   }
 
   logoutUser(){
-    axios.post('api/user/signout', {
-      token: this.store.getState().token
-    })
+    const config = {
+      headers: {'x-auth': this.store.getState().token}
+    };
+
+    axios.get('api/user/signout', config)
     .then(res => {
       console.log(res.data.isLoggedin);
       this.store.dispatch(signOut(res.data.isLoggedin));
