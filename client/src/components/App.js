@@ -54,7 +54,8 @@ class App extends React.Component {
         this.store.dispatch(signUp(res.data.Username, res.data.isLoggedin));
       })
       .catch(err => {
-        console.log('=====?????', err.message);
+        alert(err.message);
+        console.log(err);
       });
     } else {
       alert('One of the fields is empty');
