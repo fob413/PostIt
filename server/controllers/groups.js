@@ -37,7 +37,7 @@ export default {
                   .then((group) => {
                     Members
                     .create({
-                      userId: user.userId,
+                      userId: user.id,
                       groupId: group.id
                     })
                     .then(res.status(201).send(group));
