@@ -2,6 +2,34 @@ import React, {PropTypes} from 'react';
 import Group from './group';
 
 class Groups extends React.Component {
+  constructor(props){
+    super(props);
+    this.store = this.props.store;
+    this.state = {
+      groups : []
+    };
+
+    this.loadGroups = this.loadGroups.bind(this);
+  }
+
+  componentWillMount() {
+    console.log(`this happens before ${this.state.groups}`);
+    this.loadGroups();
+    console.log(`this happens after ${this.state.groups}`);
+    console.log(`>>>>>>>>>${this.store.getState()}`);
+  }
+
+  loadGroups() {
+    let toLoad = [];
+    toLoad = this.store.getState().groups;
+    console.log(`??? ${toLoad}`);
+    console.log(`???>>> ${this.store.getState().groups}`);
+    console.log(this.store.getState().groups);
+    this.setState({
+      groups: toLoad
+    });
+  }
+
   render() {
     if (this.props.groupList) {
       return(

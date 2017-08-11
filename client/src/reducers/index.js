@@ -4,7 +4,8 @@ const initialState = {
   UserName: '',
   email: '',
   isLoggedIn: false,
-  token: ''
+  token: '',
+  groups: []
 };
 
 export default (state = initialState, action) => {
@@ -27,8 +28,12 @@ export default (state = initialState, action) => {
     return Object.assign({}, state, {
       UserName: '',
       isLoggedIn: action.isLoggedIn,
-      token: ''
+      token: '',
+      groups: []
     });
+
+    case C.GROUPS_LIST:
+      return Object.assign({}, state, state.groups.push(action.group));
 
     default:
       return state;

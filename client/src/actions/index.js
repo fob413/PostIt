@@ -24,3 +24,10 @@ export const signOut = (isLoggedIn) => {
     isLoggedIn
   };
 };
+
+export const groupList = (group) => {
+  return {
+    type: C.GROUPS_LIST,
+    group
+  };
+};
