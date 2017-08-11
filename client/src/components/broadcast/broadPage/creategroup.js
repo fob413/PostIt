@@ -14,7 +14,7 @@ class CreateGroup extends React.Component {
             src={require("../../../image/gIcon.png")}
             onClick={toggleCreateGroup}
           />
-          <p>Create Group</p>
+          <p onClick={toggleCreateGroup}>Create Group</p>
         </div>
       </div>
     );
