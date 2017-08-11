@@ -9,7 +9,7 @@ const secret = process.env.SECRET_TOKEN;
 export default {
 
   create(req, res) {
-    if (req.headers['token']) {
+    if (req.body.token) {
       const token = req.body.token;
       jwt.verify(token, secret, (err, decoded) => {
         if (err) {

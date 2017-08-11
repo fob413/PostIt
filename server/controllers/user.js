@@ -114,8 +114,8 @@ export default {
   },
 
   signout(req, res) {
-    if (req.headers['token']){
-      const token = req.headers['token'];
+    if (req.body.token){
+      const token = req.body.token;
       jwt.verify(token, secret, (err, decoded) => {
         if (err) {
           return res.json({
