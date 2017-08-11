@@ -9,11 +9,11 @@ const secret = process.env.SECRET_TOKEN;
 export default {
 
   create(req, res) {
-    if (req.body.token) {
-      const token = req.body.token;
+    if (req.header('x-auth')) {
+      const token = req.header('x-auth');
       jwt.verify(token, secret, (err, decoded) => {
         if (err) {
-          return res.json({
+          return res.status(403).json({
             success: false,
             message: 'failed to authenticate token'
           });
@@ -80,8 +80,8 @@ export default {
   },
 
   listGroups(req, res) {
-    if (req.body.token) {
-      const token = req.body.token;
+    if (req.header('x-auth')) {
+      const token = req.header('x-auth');
       jwt.verify(token, secret, (err, decoded) => {
         if (err) {
           return res.json({
@@ -98,11 +98,34 @@ export default {
           })
           .then(user => {
             if(user.isLoggedin){
-
+              return Members
+              .findAll({
+                where: {
+                  userId: user.id
+                },
+                include: [{ model: Groups, attributes: ['id', 'GroupName'] }]
+              })
+              .then(members => {
+                res.send({
+                  success: true,
+                  members
+                });
+              })
+              .catch( err => res.status(400).send({
+                success: false,
+                error: err.message
+              }));
             } else {
-              return res.status
+              return res.status(401).send({
+                success: false,
+                message: 'Login to access this service'
+              });
             }
-          });
+          })
+          .catch(err => res.status(400).send({
+            success: false,
+            error: err.message
+          }));
         }
       });
     } else {

@@ -41,7 +41,7 @@ module.exports = (app) => {
   app.post('/api/group/:groupId/user', membersController.create);
 
   // logged in users retrieve groups they have been added to
-  app.post('/api/group/list', groupsController.listGroups);
+  app.get('/api/group/list', groupsController.listGroups);
 
   // posts a message to a particular group
   // app.post('/api/group/:groupId/message', messagesController.create);
