@@ -16,8 +16,6 @@ class Groups extends React.Component {
     this.setState({
       groups: test
     });
-    console.log(this.state.groups.length);
-    
   }
 
   log(e){
