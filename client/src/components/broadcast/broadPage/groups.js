@@ -8,35 +8,30 @@ class Groups extends React.Component {
     this.state = {
       groups : []
     };
-
-    this.loadGroups = this.loadGroups.bind(this);
+    this.log = this.log.bind(this);
   }
 
   componentWillMount() {
-    console.log(`this happens before ${this.state.groups}`);
-    this.loadGroups();
-    console.log(`this happens after ${this.state.groups}`);
-    console.log(`>>>>>>>>>${this.store.getState()}`);
+    let test = this.store.getState().groups;
+    this.setState({
+      groups: test
+    });
+    console.log(this.state.groups.length);
+    
   }
 
-  loadGroups() {
-    let toLoad = [];
-    toLoad = this.store.getState().groups;
-    console.log(`??? ${toLoad}`);
-    console.log(`???>>> ${this.store.getState().groups}`);
-    console.log(this.store.getState().groups);
-    this.setState({
-      groups: toLoad
-    });
+  log(e){
+    e.preventDefault();
+    alert(this.state.groups);
   }
 
   render() {
-    if (this.props.groupList) {
+    if (this.state.groups.length > 0) {
       return(
         <div>
-          {this.props.groupList.map((group, i) => {
+          {this.state.groups.map((group) => {
             return (
-              <div className="row" key={i}>
+              <div className="row" key={group.id}>
                 <div className="col s12 m12">
                   <Group showGroup={group}/>
                 </div>

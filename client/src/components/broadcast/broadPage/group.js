@@ -13,7 +13,7 @@ class Group extends React.Component{
     return(
       <div className="card green darken-1">
         <div className="card-content white-text">
-          <span className="card-title" style={bold}>{group.groupName}</span>
+          <span className="card-title" style={bold}>{group.GroupName}</span>
         </div>
         <div className="card-action">
           <span className="white-text click" style={bold}>GO TO GROUP</span>

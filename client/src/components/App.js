@@ -33,7 +33,6 @@ class App extends React.Component {
       this.setState({signup: false});
     } else {
       this.setState({signup: true});
-      console.log(this.store.getState());
     }
   }
 
@@ -78,7 +77,6 @@ class App extends React.Component {
       .then(res => {
         alert('Successfully Signed In');
         this.store.dispatch(signIn(res.data.UserName, res.data.isLoggedin, res.data.token));
-        console.log(this.store.getState());
       })
       .catch(err => {
         console.log('===>>>>>>', err.message);
@@ -95,9 +93,7 @@ class App extends React.Component {
 
     axios.get('api/user/signout', config)
     .then(res => {
-      console.log(res.data.isLoggedin);
       this.store.dispatch(signOut(res.data.isLoggedin));
-      console.log(res.data.isLoggedin);
     })
     .catch(err => {
       alert(`${err.message} Please try again later!`);
