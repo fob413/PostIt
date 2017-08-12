@@ -51,7 +51,7 @@ class App extends React.Component {
       })
       .then(res => {
         alert('Successfully Signed Up');
-        this.store.dispatch(signUp(res.data.UserName, res.data.isLoggedin, res.data.token));
+        this.store.dispatch(signUp(res.data.UserName, res.data.isLoggedin, res.data.token, res.data.email));
       })
       .catch(err => {
         alert(err.message);
@@ -76,7 +76,7 @@ class App extends React.Component {
       })
       .then(res => {
         alert('Successfully Signed In');
-        this.store.dispatch(signIn(res.data.UserName, res.data.isLoggedin, res.data.token));
+        this.store.dispatch(signIn(res.data.UserName, res.data.isLoggedin, res.data.token, res.data.email));
       })
       .catch(err => {
         console.log('===>>>>>>', err.message);

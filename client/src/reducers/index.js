@@ -14,14 +14,16 @@ export default (state = initialState, action) => {
       return Object.assign({}, state, {
         UserName: action.Username,
         isLoggedIn: action.isLoggedin,
-        token: action.token
+        token: action.token,
+        email: action.email
       });
 
     case C.SIGN_IN:
       return Object.assign({}, state, {
         UserName: action.Username,
         isLoggedIn: action.isLoggedin,
-        token: action.token
+        token: action.token,
+        email: action.email
       });
 
     case C.SIGN_OUT:
@@ -29,6 +31,7 @@ export default (state = initialState, action) => {
       UserName: '',
       isLoggedIn: action.isLoggedIn,
       token: '',
+      email: '',
       groups: []
     });
 

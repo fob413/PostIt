@@ -19,6 +19,7 @@ class BroadPage extends React.Component{
 
   componentWillMount() {
     this.loadGroupList();
+    console.log(this.store.getState());
   }
 
   loadGroupList() {
