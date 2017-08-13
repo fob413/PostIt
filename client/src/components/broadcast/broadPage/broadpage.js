@@ -48,7 +48,7 @@ class BroadPage extends React.Component{
       GroupName
     }, config)
     .then(res => {
-      this.store.dispatch(groupList(res.data.GroupName));
+      this.store.dispatch(groupList(res.data));
     })
     .catch(err => {
       alert(`An error has occured while creating Group ${err}`);
