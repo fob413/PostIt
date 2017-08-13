@@ -43,7 +43,8 @@ class App extends React.Component {
   * @param {password} password of the intending user
   */
   signUpUser(UserName, email, password, telephone) {
-    if (UserName.length > 0 && email.length > 0 && password.length > 0){
+    if (UserName.length > 0 && email.length > 0 
+        && password.length > 0 && telephone.length > 0){
       axios.post('api/user/signup', {
         UserName,
         email,
@@ -52,7 +53,13 @@ class App extends React.Component {
       })
       .then(res => {
         alert('Successfully Signed Up');
-        this.store.dispatch(signUp(res.data.UserName, res.data.isLoggedin, res.data.token, res.data.email, res.data.telephone));
+        this.store.dispatch(signUp(
+          res.data.UserName,
+          res.data.isLoggedin,
+          res.data.token,
+          res.data.email,
+          res.data.telephone
+        ));
       })
       .catch(err => {
         alert(err.message);
@@ -77,7 +84,14 @@ class App extends React.Component {
       })
       .then(res => {
         alert('Successfully Signed In');
-        this.store.dispatch(signIn(res.data.UserName, res.data.isLoggedin, res.data.token, res.data.email));
+        this.store.dispatch(signIn(
+          res.data.UserName,
+          res.data.isLoggedin,
+          res.data.token,
+          res.data.email,
+          res.data.telephone
+        ));
+        console.log(this.store.getState());
       })
       .catch(err => {
         console.log('===>>>>>>', err.message);

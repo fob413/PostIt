@@ -28,27 +28,41 @@ export default {
   create(req, res) {
     if (req.body.UserName.length > 0) {
       if (req.body.password.length > 7) {
-        return Users
-        .create({
-          UserName: req.body.UserName,
-          password: bcrypt.hashSync(req.body.password, 11),
-          email: req.body.email
-        })
-        .then((user) => {
-          const token = jwt.sign({
-            UserName: user.UserName,
-            email: user.email
-          }, secret, { expiresIn: '1 day'});
-          res.status(201).json({
-            UserName: user.UserName,
-            email: user.email,
-            isLoggedin: user.isLoggedin,
-            token
+        if (req.body.telephone) {
+          if (req.body.telephone.length == 11 && !isNaN(req.body.telephone)) {
+            return Users
+            .create({
+              UserName: req.body.UserName,
+              password: bcrypt.hashSync(req.body.password, 11),
+              email: req.body.email,
+              telephone: req.body.telephone
+            })
+            .then((user) => {
+              const token = jwt.sign({
+                UserName: user.UserName,
+                email: user.email
+              }, secret, { expiresIn: '1 day'});
+              res.status(201).json({
+                UserName: user.UserName,
+                email: user.email,
+                isLoggedin: user.isLoggedin,
+                telephone: user.telephone,
+                token
+              });
+            })
+            .catch(err => res.status(400).send({
+              message: err.message
+            }));
+          } else {
+            res.status(400).send({
+              message: 'Telephone must be a numbers of 11 characters'
+            });
+          }
+        } else {
+          res.status(400).send({
+            message: 'Please input your phone number'
           });
-        })
-        .catch(err => res.status(400).send({
-          message: err.message
-        }));
+        }
       } else {
         res.status(400).send({
           message: 'Password must be at least 8 characters'
@@ -87,6 +101,7 @@ export default {
                 UserName: user.UserName,
                 email: user.email,
                 isLoggedin: user.isLoggedin,
+                telephone: user.telephone,
                 token
               });
             })

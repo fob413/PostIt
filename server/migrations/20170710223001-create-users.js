@@ -22,6 +22,11 @@ module.exports = {
         isEmail: true,
         unique: true,
       },
+      telephone: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        unique: true,
+      },
       isLoggedin: {
         type: Sequelize.BOOLEAN,
         defaultValue: true,

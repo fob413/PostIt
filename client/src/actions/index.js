@@ -11,12 +11,13 @@ export const signUp = (Username, isLoggedin, token, email, telephone) => {
   };
 };
 
-export const signIn = (Username, isLoggedin, token, email) => {
+export const signIn = (Username, isLoggedin, token, email, telephone) => {
   return {
     type: C.SIGN_IN,
     Username,
     isLoggedin,
     token,
+    telephone,
     email
   };
 };

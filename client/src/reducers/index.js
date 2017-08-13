@@ -25,6 +25,7 @@ export default (state = initialState, action) => {
         UserName: action.Username,
         isLoggedIn: action.isLoggedin,
         token: action.token,
+        telephone: action.telephone,
         email: action.email
       });
 
@@ -34,6 +35,7 @@ export default (state = initialState, action) => {
       isLoggedIn: action.isLoggedIn,
       token: '',
       email: '',
+      telephone: '',
       groups: []
     });
 
