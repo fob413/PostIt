@@ -12,9 +12,9 @@ class Groups extends React.Component {
   }
 
   componentWillMount() {
-    let test = this.store.getState().groups;
+    let loadGroups = this.store.getState().groups;
     this.setState({
-      groups: test
+      groups: loadGroups
     });
   }
 
@@ -40,8 +40,8 @@ class Groups extends React.Component {
       );
     } else {
       return(
-        <div>
-          <p>CREATE YOUR FIRST GROUP</p>
+        <div className="center-align">
+          <h4>CREATE YOUR FIRST GROUP</h4>
         </div>
       );
     }

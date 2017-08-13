@@ -3,18 +3,25 @@ import React, {PropTypes} from 'react';
 class NewGroup extends React.Component {
   constructor(props){
     super(props);
+    this.createNewGroup = this.props.createNewGroup;
     this.onCreateGroup = this.onCreateGroup.bind(this);
     this.onCancelCreate = this.onCancelCreate.bind(this);
   }
 
   onCreateGroup(e) {
+    const {_groupName} = this.refs;
     e.preventDefault();
+    console.log(_groupName.value);
     alert('lets create a new group');
+    this.createNewGroup(_groupName.value);
+    _groupName.value = '';
   }
 
   onCancelCreate(e) {
+    const {_groupName} = this.refs;
     e.preventDefault();
-    this.props.toggleCreateGroup(); 
+    this.props.toggleCreateGroup();
+    _groupName.value = '';
   }
 
   render() {
@@ -25,21 +32,16 @@ class NewGroup extends React.Component {
           <div className="row">
             <div className="input-field col s12">
               <input 
+                ref="_groupName"
                 className="validate"
                 id="group-name"
                 type="text"
               />
-              <label htmlFor="group-name" >Group Name</label>
-            </div>
-          </div>
-          <div className="row">
-            <div className="input-field col s12">
-              <input 
-                className="validate"
-                id="group-description"
-                type="text"
-              />
-              <label htmlFor="group-name" >Group Description</label>
+              <label
+                htmlFor="group-name" 
+              >
+                Group Name
+              </label>
             </div>
           </div>
           <div className="row">
