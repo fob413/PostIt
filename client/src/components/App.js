@@ -42,16 +42,17 @@ class App extends React.Component {
   * @param {string} email of intending user
   * @param {password} password of the intending user
   */
-  signUpUser(UserName, email, password) {
+  signUpUser(UserName, email, password, telephone) {
     if (UserName.length > 0 && email.length > 0 && password.length > 0){
       axios.post('api/user/signup', {
         UserName,
         email,
-        password
+        password,
+        telephone
       })
       .then(res => {
         alert('Successfully Signed Up');
-        this.store.dispatch(signUp(res.data.UserName, res.data.isLoggedin, res.data.token, res.data.email));
+        this.store.dispatch(signUp(res.data.UserName, res.data.isLoggedin, res.data.token, res.data.email, res.data.telephone));
       })
       .catch(err => {
         alert(err.message);

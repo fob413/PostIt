@@ -3,6 +3,7 @@ import C from '../constants';
 const initialState = {
   UserName: '',
   email: '',
+  telephone: '',
   isLoggedIn: false,
   token: '',
   groups: []
@@ -15,7 +16,8 @@ export default (state = initialState, action) => {
         UserName: action.Username,
         isLoggedIn: action.isLoggedin,
         token: action.token,
-        email: action.email
+        email: action.email,
+        telephone: action.telephone
       });
 
     case C.SIGN_IN:

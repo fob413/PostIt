@@ -15,12 +15,13 @@ class Signup extends React.Component {
   * @param {password} _password is the intending users password
   */
   onSignUp(e) {
-    const {_userName, _email, _password} = this.refs;
+    const {_userName, _email, _password, _telephone} = this.refs;
     e.preventDefault();
-    if (_userName.value.length > 0 && _email.value.length && _password.value.length > 0) {
-      this.props.signUpUser(_userName.value, _email.value, _password.value);
+    if (_userName.value.length > 0 && _email.value.length 
+        && _password.value.length > 0 && (_telephone.value.length > 0 && !isNaN(_telephone.value))) {
+      this.props.signUpUser(_userName.value, _email.value, _password.value, _telephone.value);
     } else {
-      console.log('One of the fields in the form is empty');
+      console.log('One of the fields in the form is empty or Incorrect');
     }
   }
 
@@ -67,7 +68,21 @@ class Signup extends React.Component {
                 </div>
               </div>
 
-              <div className="input-field col s12 m12">
+              <div className="input-field col s6 m6">
+                <input 
+                  ref="_telephone"
+                  className="validate"
+                  type="tel"
+                  id="telephone"
+                  data-error="wrong"
+                  data-success="right"
+                />
+                <label htmlFor="telephone">
+                  Telephone
+                </label>
+              </div>
+
+              <div className="input-field col s6 m6">
                 <input 
                   ref="_password"
                   className="validate"
