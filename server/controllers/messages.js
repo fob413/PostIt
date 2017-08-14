@@ -1,9 +1,11 @@
 import db from '../models/index';
+import jwt from 'jsonwebtoken';
 
 const Users = db.Users;
 const Members = db.Members;
 const Message = db.Messages;
 const Groups = db.Groups;
+const secret = process.env.SECRET_TOKEN;
 
 // const message = require('../models').Messages;
 // const Users = require('../models/').Users;
@@ -125,66 +127,166 @@ module.exports = {
   // },
 
   listMessages(req, res) {
-    return Groups
-    .findOne({
-      where: {
-        id: req.params.groupId
-      }
-    })
-    .then((group) => {
-      if (!group) {
-        res.status(400).send({
-          message: 'Group does not exist'
-        });
-      } else {
-        return Users
-        .findOne({
-          where: {
-            id: req.headers['user-id']
-          }
-        })
-        .then((user) => {
-          if (user) {
-            if (user.isLoggedin) {
-              return Members
-              .findOne({
-                where: {
-                  groupId: req.params.groupId,
-                  userId: req.headers['user-id']
-                }
-              }).then((member) => {
-                if (!member) {
-                  res.status(400).send({
-                    message: 'Not a member of this group'
-                  });
-                } else {
-                  Message.findAll({
-                    where: {
-                      groupId: req.params.groupId
-                    }
-                  })
-                  .then((groupMessages) => {
-                    res.status(200).send(groupMessages);
-                  })
-                  .catch((error) => {
-                    res.status(400).send(error.message);
-                  });
-                }
-              });
+    if (req.header('x-auth')) {
+      const token = req.header('x-auth');
+      jwt.verify(token, secret, (err, decoded) => {
+        if(err) {
+          return res.status(403).send({
+            success: false,
+            message: 'failed to authenticate token'
+          });
+        } else {
+          req.decoded = decoded;
+          return Users
+          .findOne({
+            where: {
+              UserName: req.decoded.UserName
+            }
+          })
+          .then((user) => {
+            if (user) {
+              if (user.isLoggedin) {
+                return Groups.findOne({
+                  where: {
+                    id: req.params.groupId
+                  }
+                })
+                .then((group) => {
+                  if (!group) {
+                    return res.status(400).send({
+                      success: false,
+                      message: 'Group does not exist'
+                    });
+                  } else {
+                    return Members
+                    .findOne({
+                      where: {
+                        userId: user.id,
+                        groupId: req.params.groupId
+                      }
+                    })
+                    .then((member) => {
+                      if(!member) {
+                        return res.status(400).send({
+                          success: false,
+                          message: 'Not a member of this group'
+                        });
+                      } else {
+                        return Message
+                        .findAll({
+                          where: {
+                            groupId: req.params.groupId
+                          }
+                        })
+                        .then((groupMessages) => {
+                          res.status(200).send(groupMessages);
+                        })
+                        .catch(err => res.status(400).send({
+                          success: false,
+                          message: err.message
+                        }));
+                      }
+                    })
+                    .catch(err => res.status(400).send({
+                      success: false,
+                      message: err.message
+                    }));
+                  }
+                })
+                .catch(err => res.status(400).send({
+                  success: false,
+                  message: err.message
+                }));
+              } else {
+                return res.status(401).send({
+                  success: false,
+                  message: 'Sign in to access this service'
+                });
+              }
             } else {
-              res.status(400).json({
-                message: 'Sign in to access this service',
+              return res.status(401).send({
+                success: false,
+                message: 'Sign Up to access this service'
               });
             }
-          } else {
-            res.status(401).send({
-              message: 'Sign up to access this service'
+          })
+          .catch(err => {
+            return res.status(400).send({
+              success: false,
+              message: err.message
             });
-          }
-        });
-      }
-    });
+          });
+        }
+      })
+    } else {
+      return res.status(403).send({
+        success: false,
+        message: 'no token provided'
+      });
+    }
   },
+
+  // listMessages(req, res) {
+  //   return Groups
+  //   .findOne({
+  //     where: {
+  //       id: req.params.groupId
+  //     }
+  //   })
+  //   .then((group) => {
+  //     if (!group) {
+  //       res.status(400).send({
+  //         message: 'Group does not exist'
+  //       });
+  //     } else {
+  //       return Users
+  //       .findOne({
+  //         where: {
+  //           id: req.headers['user-id']
+  //         }
+  //       })
+  //       .then((user) => {
+  //         if (user) {
+  //           if (user.isLoggedin) {
+  //             return Members
+  //             .findOne({
+  //               where: {
+  //                 groupId: req.params.groupId,
+  //                 userId: req.headers['user-id']
+  //               }
+  //             }).then((member) => {
+  //               if (!member) {
+  //                 res.status(400).send({
+  //                   message: 'Not a member of this group'
+  //                 });
+  //               } else {
+  //                 Message.findAll({
+  //                   where: {
+  //                     groupId: req.params.groupId
+  //                   }
+  //                 })
+  //                 .then((groupMessages) => {
+  //                   res.status(200).send(groupMessages);
+  //                 })
+  //                 .catch((error) => {
+  //                   res.status(400).send(error.message);
+  //                 });
+  //               }
+  //             });
+  //           } else {
+  //             res.status(400).json({
+  //               message: 'Sign in to access this service',
+  //             });
+  //           }
+  //         } else {
+  //           res.status(401).send({
+  //             message: 'Sign up to access this service'
+  //           });
+  //         }
+  //       });
+  //     }
+  //   });
+  // },
 
   list(req, res) {
     return Message
