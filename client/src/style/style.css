@@ -21,5 +21,21 @@
 }
 
 .profile{
-  margin-top: 20%;
+  margin-top: 10%;
+}
+
+.message{
+  border: 2px solid green;
+  padding: 10px;
+  height: 350px;
+  overflow-y: scroll;
+}
+
+.messageBoard{
+  margin-top: 50px
+}
+
+.sendMessage {
+  overflow-x: scroll;
+  width: 100px
 }
