@@ -27,9 +27,9 @@ class Groups extends React.Component {
     if (this.state.groups.length > 0) {
       return(
         <div>
-          {this.store.getState().groups.map((group) => {
+          {this.store.getState().groups.map((group, i) => {
             return (
-              <div className="row" key={group.id}>
+              <div className="row" key={i}>
                 <div className="col s12 m12">
                   <Group showGroup={group}/>
                 </div>

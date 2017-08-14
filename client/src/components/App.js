@@ -7,6 +7,7 @@ import CreateGroup from './broadcast/broadPage/creategroup';
 import BroadPage from './broadcast/broadPage/broadpage';
 import NavBar from './broadcast/broadPage/navbar';
 import Sample from './broadcast/broadPage/sample';
+import Profile from './broadcast/broadPage/profile';
 import '../style/style.css';
 
 class App extends React.Component {
@@ -14,7 +15,9 @@ class App extends React.Component {
     super(props);
     this.store = this.props.store;
     this.state = {
-      signup: true
+      signup: true,
+      dashBoard: true,
+      profileBoard: false
     };
 
     
@@ -22,6 +25,8 @@ class App extends React.Component {
     this.signUpUser = this.signUpUser.bind(this);
     this.signInUser = this.signInUser.bind(this);
     this.logoutUser = this.logoutUser.bind(this);
+    this.toggleDashBoard = this.toggleDashBoard.bind(this);
+    this.toggleProfileBoard = this.toggleProfileBoard.bind(this);
   }
 
   /*
@@ -33,6 +38,24 @@ class App extends React.Component {
       this.setState({signup: false});
     } else {
       this.setState({signup: true});
+    }
+  }
+
+  toggleDashBoard(e) {
+    // do something
+  }
+
+  toggleProfileBoard() {
+    if (this.state.profileBoard) {
+      this.setState({
+        profileBoard: false,
+        dashBoard: true
+      });
+    } else {
+      this.setState({
+        profileBoard: true,
+        dashBoard: false
+      });
     }
   }
 
@@ -120,8 +143,20 @@ class App extends React.Component {
     if (this.store.getState().isLoggedIn) {
       return(
         <div>
-          <NavBar logout={this.logoutUser}/>
-          <BroadPage store={this.store} />
+          <NavBar
+            logout={this.logoutUser}
+            toggleProfileBoard={this.toggleProfileBoard}
+          />
+          {this.state.dashBoard ? 
+            <div>
+              <BroadPage
+                store={this.store}
+              />
+            </div> :
+            <Profile
+              store={this.store}
+            />
+          }
         </div>
       );
     } else {
@@ -143,7 +178,7 @@ class App extends React.Component {
               signInUser = {this.signInUser}
             />
           </div>
-        )
+        );
       }
     }
   }

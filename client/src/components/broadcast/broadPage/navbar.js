@@ -4,6 +4,12 @@ class NavBar extends React.Component {
   constructor(props){
     super(props);
     this.logoutUser = this.logoutUser.bind(this);
+    this.userProfile = this.userProfile.bind(this);
+  }
+
+  userProfile(e) {
+    e.preventDefault();
+    this.props.toggleProfileBoard();
   }
 
   logoutUser(e){
@@ -25,14 +31,12 @@ class NavBar extends React.Component {
             </a>
             <ul className="left" id="nav-mobile">
               <li>
-                <a className="modal-trigger" href="#modal1">
-                  <i
-                    href="#modal1"
-                    className="modal-trigger white-text material-icons hoverable"
-                  >
-                    settings
-                  </i>
-                </a>
+                <i
+                  onClick={this.userProfile}
+                  className="modal-trigger white-text material-icons hoverable logout"
+                >
+                  settings
+                </i>
               </li>
             </ul>
 
@@ -42,66 +46,7 @@ class NavBar extends React.Component {
               </li>
             </ul>
           </div>
-        </nav>
-
-        <div id="modal1" className="modal">
-          <div className="modal-content">
-            <h4>USER PROFILE</h4>
-
-            <form>
-
-              <div className="row">
-                <div className="input-field col s12 m12">
-                  <input 
-                    className="validate"
-                    type="text"
-                    id="userName"
-                    data-error="wrong"
-                    data-success="right"
-                  />
-                  <label htmlFor="userName">Username</label>
-                </div>
-              </div>
-
-              <div className="row">
-                <div className="input-field col s12 m12">
-                  <input 
-                    className="validate"
-                    type="email"
-                    id="email"
-                    data-error="wrong"
-                    data-success="right"
-                  />
-                  <label htmlFor="email">Email</label>
-                </div>
-              </div>
-
-              <div className="row">
-                <div className="input-field col s12 m12">
-                  <input 
-                    className="validate"
-                    type="text"
-                    id="phoneNumber"
-                    data-error="wrong"
-                    data-success="right"
-                  />
-                  <label htmlFor="phoneNumber">Phone Number</label>
-                </div>
-              </div>
-
-              <div className="modal-footer">
-                <button
-                  className="btn-large green darken-4 waves-effect"
-                  type="submit"
-                  name="action"
-                >
-                  Submit
-                </button>
-              </div>
-
-            </form>
-          </div>
-        </div>
+        </nav>  
       </div>
     )
   }
@@ -112,6 +57,7 @@ class NavBar extends React.Component {
 */
 NavBar.propTypes = {
   logout: PropTypes.func.isRequired,
+  toggleProfileBoard: PropTypes.func.isRequired
 };
 
 export default NavBar;
