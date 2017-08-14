@@ -40,7 +40,9 @@ export default (state = initialState, action) => {
     });
 
     case C.GROUPS_LIST:
-      return Object.assign({}, state, state.groups.push(action.group));
+      return Object.assign({}, state, {
+        groups: action.groups
+      });
 
     default:
       return state;

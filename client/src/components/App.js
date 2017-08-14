@@ -17,7 +17,8 @@ class App extends React.Component {
     this.state = {
       signup: true,
       dashBoard: true,
-      profileBoard: false
+      profileBoard: false,
+      messageBoard: false
     };
 
     
@@ -27,6 +28,11 @@ class App extends React.Component {
     this.logoutUser = this.logoutUser.bind(this);
     this.toggleDashBoard = this.toggleDashBoard.bind(this);
     this.toggleProfileBoard = this.toggleProfileBoard.bind(this);
+    this.toggleMessageBoard = this.toggleMessageBoard.bind(this);
+  }
+
+  toggleMessageBoard() {
+    // do something
   }
 
   /*
@@ -157,9 +163,15 @@ class App extends React.Component {
                 store={this.store}
               />
             </div> :
-            <Profile
+            this.state.messageBoard ?
+            
+            <h1>message board</h1> :
+            
+            <div>
+              <Profile
               store={this.store}
             />
+            </div>
           }
         </div>
       );

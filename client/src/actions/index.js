@@ -29,9 +29,9 @@ export const signOut = (isLoggedIn) => {
   };
 };
 
-export const groupList = (group) => {
+export const groupList = (groups) => {
   return {
     type: C.GROUPS_LIST,
-    group
+    groups
   };
 };

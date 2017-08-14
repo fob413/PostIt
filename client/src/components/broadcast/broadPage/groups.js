@@ -5,17 +5,7 @@ class Groups extends React.Component {
   constructor(props){
     super(props);
     this.store = this.props.store;
-    this.state = {
-      groups : []
-    };
     this.log = this.log.bind(this);
-  }
-
-  componentWillMount() {
-    let loadGroups = this.store.getState().groups;
-    this.setState({
-      groups: loadGroups
-    });
   }
 
   log(e){
@@ -24,14 +14,14 @@ class Groups extends React.Component {
   }
 
   render() {
-    if (this.state.groups.length > 0) {
+    if (this.store.getState().groups.length > 0) {
       return(
         <div>
           {this.store.getState().groups.map((group, i) => {
             return (
               <div className="row" key={i}>
                 <div className="col s12 m12">
-                  <Group showGroup={group}/>
+                  <Group showGroup={group.Group}/>
                 </div>
               </div>
             )

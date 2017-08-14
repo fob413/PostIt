@@ -29,10 +29,7 @@ class BroadPage extends React.Component{
 
     axios.get('api/group/list', config)
     .then(res => {
-      const g = res.data.members.length;
-      for (let i = 0; i < g; i++ ){
-        this.store.dispatch(groupList(res.data.members[i].Group));
-      }
+      this.store.dispatch(groupList(res.data.members));
     })
     .catch( err => {
       alert(`An error has occured while loading the groups ${err}`);
