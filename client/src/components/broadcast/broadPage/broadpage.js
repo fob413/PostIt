@@ -12,6 +12,7 @@ class BroadPage extends React.Component{
     this.store = this.props.store;
     this.state = {
       createGroup: false,
+      groups: []
     };
     this.toggleCreateGroup = this.toggleCreateGroup.bind(this);
     this.loadGroupList = this.loadGroupList.bind(this);
@@ -30,6 +31,9 @@ class BroadPage extends React.Component{
     axios.get('api/group/list', config)
     .then(res => {
       this.store.dispatch(groupList(res.data.members));
+      this.setState({
+        groups: this.store.getState().groups
+      });
     })
     .catch( err => {
       alert(`An error has occured while loading the groups ${err}`);
@@ -45,7 +49,7 @@ class BroadPage extends React.Component{
       GroupName
     }, config)
     .then(res => {
-      this.store.dispatch(groupList(res.data));
+      this.loadGroupList();
     })
     .catch(err => {
       alert(`An error has occured while creating Group ${err}`);
@@ -75,7 +79,11 @@ class BroadPage extends React.Component{
           createGroup={this.state.createGroup}
         />
         <SearchGroups />
-        <Groups store={this.store} />
+        <Groups
+          store={this.store}
+          groups={this.state.groups}
+          toggleMessageBoard={this.props.toggleMessageBoard}
+        />
       </div>
     );
   }
@@ -85,7 +93,8 @@ class BroadPage extends React.Component{
 * Validation of the components properties
 */
 BroadPage.propTypes = {
-  store: PropTypes.object.isRequired
+  store: PropTypes.object.isRequired,
+  toggleMessageBoard: PropTypes.func.isRequired
 };
 
 export default BroadPage;

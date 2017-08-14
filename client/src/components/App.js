@@ -8,6 +8,7 @@ import BroadPage from './broadcast/broadPage/broadpage';
 import NavBar from './broadcast/broadPage/navbar';
 import Sample from './broadcast/broadPage/sample';
 import Profile from './broadcast/broadPage/profile';
+import MessageBoard from './broadcast/messagePage/messageBoard';;
 import '../style/style.css';
 
 class App extends React.Component {
@@ -32,7 +33,19 @@ class App extends React.Component {
   }
 
   toggleMessageBoard() {
-    // do something
+    if (!this.state.messageBoard) {
+      this.setState({
+        profileBoard: false,
+        dashBoard: false,
+        messageBoard: true
+      });
+    } else {
+      this.setState({
+        profileBoard: false,
+        dashBoard: true,
+        messageBoard: false
+      });
+    }
   }
 
   /*
@@ -55,12 +68,14 @@ class App extends React.Component {
     if (this.state.profileBoard) {
       this.setState({
         profileBoard: false,
-        dashBoard: true
+        dashBoard: true,
+        messageBoard: false
       });
     } else {
       this.setState({
         profileBoard: true,
-        dashBoard: false
+        dashBoard: false,
+        messageBoard: false
       });
     }
   }
@@ -120,7 +135,6 @@ class App extends React.Component {
           res.data.email,
           res.data.telephone
         ));
-        console.log(this.store.getState());
       })
       .catch(err => {
         console.log('===>>>>>>', err.message);
@@ -161,11 +175,14 @@ class App extends React.Component {
             <div>
               <BroadPage
                 store={this.store}
+                toggleMessageBoard={this.toggleMessageBoard}
               />
             </div> :
             this.state.messageBoard ?
             
-            <h1>message board</h1> :
+            <div>
+              <MessageBoard />
+            </div> :
             
             <div>
               <Profile

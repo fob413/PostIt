@@ -3,6 +3,12 @@ import React, {PropTypes} from 'react';
 class Group extends React.Component{
   constructor(props) {
     super(props);
+    this.test = this.test.bind(this);
+  }
+
+  test(e) {
+    e.preventDefault();
+    this.props.toggleMessageBoard();
   }
   render() {
     const group = this.props.showGroup;
@@ -16,7 +22,7 @@ class Group extends React.Component{
           <span className="card-title" style={bold}>{group.GroupName}</span>
         </div>
         <div className="card-action">
-          <span className="white-text click" style={bold}>GO TO GROUP</span>
+          <span onClick={this.test} className="white-text click" style={bold}>GO TO GROUP</span>
         </div>
       </div>
     );
@@ -27,7 +33,8 @@ class Group extends React.Component{
 * Validation of the components properties
 */
 Group.propTypes = {
-  showGroup: PropTypes.object.isRequired
+  showGroup: PropTypes.object.isRequired,
+  toggleMessageBoard: PropTypes.func.isRequired
 };
 
 export default Group;

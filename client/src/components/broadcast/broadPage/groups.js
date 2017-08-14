@@ -14,17 +14,20 @@ class Groups extends React.Component {
   }
 
   render() {
-    if (this.store.getState().groups.length > 0) {
+    if (this.props.groups.length > 0) {
       return(
         <div>
-          {this.store.getState().groups.map((group, i) => {
+          {this.props.groups.map((group, i) => {
             return (
               <div className="row" key={i}>
                 <div className="col s12 m12">
-                  <Group showGroup={group.Group}/>
+                  <Group
+                    showGroup={group.Group}
+                    toggleMessageBoard={this.props.toggleMessageBoard}
+                  />
                 </div>
               </div>
-            )
+            );
           })}
         </div>
       );
@@ -42,7 +45,9 @@ class Groups extends React.Component {
 * Validation of the components properties
 */
 Groups.propTypes = {
-  groupList: PropTypes.array
+  groupList: PropTypes.array,
+  groups: PropTypes.array,
+  toggleMessageBoard: PropTypes.func.isRequired
 };
 
 export default Groups;
