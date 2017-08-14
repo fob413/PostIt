@@ -132,6 +132,10 @@ class App extends React.Component {
     axios.get('api/user/signout', config)
     .then(res => {
       this.store.dispatch(signOut(res.data.isLoggedin));
+      this.setState({
+        dashBoard: true,
+        profileBoard: false
+      });
     })
     .catch(err => {
       alert(`${err.message} Please try again later!`);
