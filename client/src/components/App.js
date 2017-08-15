@@ -34,13 +34,14 @@ class App extends React.Component {
     this.toggleProfileBoard = this.toggleProfileBoard.bind(this);
     this.toggleMessageBoard = this.toggleMessageBoard.bind(this);
     this.sendMessage = this.sendMessage.bind(this);
+    this.createNewGroup = this.createNewGroup.bind(this);
   }
 
   createNewGroup(GroupName) {
-    console.log('i got here about to create a new group');
     const config = {
       headers: {'x-auth': this.store.getState().token}
     };
+    console.log('gotten token');
 
     axios.post('api/group', {
       GroupName

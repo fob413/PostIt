@@ -15,7 +15,7 @@ class BroadPage extends React.Component{
       groups: []
     };
     this.toggleCreateGroup = this.toggleCreateGroup.bind(this);
-    this.createNewGroup = this.createNewGroup.bind(this);
+    //this.createNewGroup = this.createNewGroup.bind(this);
     this.loadMessages = this.loadMessages.bind(this);
   }
 
@@ -37,21 +37,21 @@ class BroadPage extends React.Component{
     });
   }
 
-  createNewGroup(GroupName) {
-    const config = {
-      headers: {'x-auth': this.store.getState().token}
-    };
+  // createNewGroup(GroupName) {
+  //   const config = {
+  //     headers: {'x-auth': this.store.getState().token}
+  //   };
 
-    axios.post('api/group', {
-      GroupName
-    }, config)
-    .then(res => {
-      this.loadGroupList();
-    })
-    .catch(err => {
-      alert(`An error has occured while creating Group ${err}`);
-    });
-  }
+  //   axios.post('api/group', {
+  //     GroupName
+  //   }, config)
+  //   .then(res => {
+  //     this.loadGroupList();
+  //   })
+  //   .catch(err => {
+  //     alert(`An error has occured while creating Group ${err}`);
+  //   });
+  // }
 
   toggleCreateGroup(){
     const {createGroup} = this.state;
