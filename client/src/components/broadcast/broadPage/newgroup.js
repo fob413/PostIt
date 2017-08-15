@@ -27,7 +27,7 @@ class NewGroup extends React.Component {
     const {createGroup, toggleCreateGroup} = this.props;
     return (
       <div className={`row ${createGroup ? 'show' : 'hide'}`}>
-        <form className="col s12">
+        <form className="col s12" onSubmit={this.onCreateGroup}>
           <div className="row">
             <div className="input-field col s12">
               <input 
@@ -57,7 +57,6 @@ class NewGroup extends React.Component {
                 className="right btn-large green darken-4 waves effect"
                 type="submit"
                 name="action"
-                onClick={this.onCreateGroup}
               >
                 Create
               </button>

@@ -39,3 +39,7 @@
   overflow-x: scroll;
   width: 100px
 }
+
+.boardMessage{
+  font-size: 10px;
+}

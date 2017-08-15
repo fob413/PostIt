@@ -1,4 +1,5 @@
 import React, {PropTypes} from 'react';
+import Message from '../messagePage/message';
 
 class Group extends React.Component{
   constructor(props) {
@@ -15,12 +16,23 @@ class Group extends React.Component{
     const bold = {
       fontWeight: "bold"
     };
-
+    console.log(group.Messages)
     return(
       <div className="card green darken-1">
         <div className="card-content white-text">
           <span className="card-title" style={bold}>{group.GroupName}</span>
         </div>
+        {group.Messages.map((message, i) => {
+          return (
+            <div key={i}>
+              <Message
+                messageContent={message.content}
+                messageAuthor={message.authorsName}
+              />
+            </div>
+          );
+        })}
+        <Message/>
         <div className="card-action">
           <span onClick={this.gotoGroup} className="white-text click" style={bold}>GO TO GROUP</span>
         </div>

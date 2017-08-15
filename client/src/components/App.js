@@ -40,7 +40,6 @@ class App extends React.Component {
     const config = {
       headers: {'x-auth': this.store.getState().token}
     };
-    console.log('gotten token');
 
     axios.post('api/group', {
       GroupName
@@ -242,6 +241,8 @@ class App extends React.Component {
               <MessageBoard
                 toggleMessageBoard={this.toggleMessageBoard}
                 sendMessage={this.sendMessage}
+                store={this.store}
+                currentGroup={this.state.currentGroup}
               />
             </div> :
             

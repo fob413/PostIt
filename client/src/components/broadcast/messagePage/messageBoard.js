@@ -3,6 +3,8 @@ import React, {PropTypes} from 'react';
 class MessageBoard extends React.Component {
   constructor(props) {
     super(props);
+    this.store = this.props.store;
+    this.currentGroup = this.props.currentGroup;
     this.onSend = this.onSend.bind(this);
   }
 
