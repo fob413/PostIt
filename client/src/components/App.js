@@ -36,8 +36,19 @@ class App extends React.Component {
 
   sendMessage(message, priority){
     let {currentGroup} = this.state;
-    console.log('lets send a message');
-    console.log(`message to be sent: ${message} \n priority level of: ${priority} \n group id of ${currentGroup}`)
+    const config = {
+      headers: {'x-auth': this.store.getState().token}
+    };
+    console.log(priority);
+    axios.post(`api/group/${currentGroup}/message`, {
+      content: message
+    }, config)
+    .then(res => {
+      console.log(res.data);
+    })
+    .catch(err => {
+      console.log(`${err.response.data.message}`);
+    });
   }
 
   toggleMessageBoard(currentGroup) {

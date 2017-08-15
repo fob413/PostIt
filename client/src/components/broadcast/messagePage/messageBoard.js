@@ -9,7 +9,10 @@ class MessageBoard extends React.Component {
   onSend(e){
     const {_message, _priority} = this.refs;
     e.preventDefault();
-    this.props.sendMessage(_message.value, _priority.value, 1);
+    _message.value = _message.value.trim();
+    if (_message.value.length > 0) {
+      this.props.sendMessage(_message.value, _priority.value);
+    }
   }
 
 
