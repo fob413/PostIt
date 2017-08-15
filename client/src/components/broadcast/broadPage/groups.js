@@ -18,7 +18,6 @@ class Groups extends React.Component {
       return(
         <div>
           {this.props.groups.map((group, i) => {
-            this.props.loadMessages(group.Group.id);
             return (
               <div className="row" key={i}>
                 <div className="col s12 m12">
@@ -49,7 +48,6 @@ Groups.propTypes = {
   groupList: PropTypes.array,
   groups: PropTypes.array,
   toggleMessageBoard: PropTypes.func.isRequired,
-  loadMessages: PropTypes.func.isRequired
 };
 
 export default Groups;

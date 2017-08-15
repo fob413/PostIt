@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken';
 const Users = db.Users;
 const Groups = db.Groups;
 const Members = db.Members;
+const Messages = db.Messages;
 const secret = process.env.SECRET_TOKEN;
 
 export default {
@@ -103,7 +104,16 @@ export default {
                 where: {
                   userId: user.id
                 },
-                include: [{ model: Groups, attributes: ['id', 'GroupName'] }]
+                include: [
+                  { 
+                    model: Groups, 
+                    attributes: ['id', 'GroupName'],
+                    include: [{
+                      model: Messages,
+                      attributes: ['id', 'content', 'authorsName']
+                    }]
+                  }
+                ]
               })
               .then(members => {
                 res.send({

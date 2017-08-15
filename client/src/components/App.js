@@ -22,7 +22,6 @@ class App extends React.Component {
       dashBoard: true,
       profileBoard: false,
       messageBoard: false,
-      currentGroup: ''
     };
 
     
@@ -35,21 +34,6 @@ class App extends React.Component {
     this.toggleMessageBoard = this.toggleMessageBoard.bind(this);
     this.sendMessage = this.sendMessage.bind(this);
     this.createNewGroup = this.createNewGroup.bind(this);
-    this.loadMessages = this.loadMessages.bind(this);
-  }
-
-  loadMessages(groupId) {
-     const config = {
-      headers: {'x-auth': this.store.getState().token}
-    };
-
-    axios.get(`api/group/${groupId}/messages`, config)
-    .then(res => {
-      console.log(res.data);
-    })
-    .catch(err => {
-      alert(`${err.message} Please try again later!`);
-    });
   }
 
   createNewGroup(GroupName) {
@@ -250,7 +234,6 @@ class App extends React.Component {
                 toggleMessageBoard={this.toggleMessageBoard}
                 loadGroupList={this.loadGroupList}
                 createNewGroup={this.createNewGroup}
-                loadMessages={this.loadMessages}
               />
             </div> :
             this.state.messageBoard ?

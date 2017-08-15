@@ -48,7 +48,6 @@ class BroadPage extends React.Component{
           store={this.store}
           groups={this.store.getState().groups}
           toggleMessageBoard={this.props.toggleMessageBoard}
-          loadMessages={this.props.loadMessages}
         />
       </div>
     );
@@ -62,8 +61,7 @@ BroadPage.propTypes = {
   store: PropTypes.object.isRequired,
   toggleMessageBoard: PropTypes.func.isRequired,
   loadGroupList: PropTypes.func.isRequired,
-  createNewGroup: PropTypes.func.isRequired,
-  loadMessages: PropTypes.func.isRequired
+  createNewGroup: PropTypes.func.isRequired
 };
 
 export default BroadPage;
