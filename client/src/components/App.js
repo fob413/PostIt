@@ -19,7 +19,8 @@ class App extends React.Component {
       signup: true,
       dashBoard: true,
       profileBoard: false,
-      messageBoard: false
+      messageBoard: false,
+      currentGroup: ''
     };
 
     
@@ -30,20 +31,30 @@ class App extends React.Component {
     this.toggleDashBoard = this.toggleDashBoard.bind(this);
     this.toggleProfileBoard = this.toggleProfileBoard.bind(this);
     this.toggleMessageBoard = this.toggleMessageBoard.bind(this);
+    this.sendMessage = this.sendMessage.bind(this);
   }
 
-  toggleMessageBoard() {
+  sendMessage(message, priority){
+    let {currentGroup} = this.state;
+    console.log('lets send a message');
+    console.log(`message to be sent: ${message} \n priority level of: ${priority} \n group id of ${currentGroup}`)
+  }
+
+  toggleMessageBoard(currentGroup) {
     if (!this.state.messageBoard) {
       this.setState({
         profileBoard: false,
         dashBoard: false,
-        messageBoard: true
-      });
+        messageBoard: true,
+        currentGroup
+      })
+      console.log(this.state.currentGroup);
     } else {
       this.setState({
         profileBoard: false,
         dashBoard: true,
-        messageBoard: false
+        messageBoard: false,
+        currentGroup: ''
       });
     }
   }
@@ -182,7 +193,10 @@ class App extends React.Component {
             this.state.messageBoard ?
             
             <div>
-              <MessageBoard />
+              <MessageBoard
+                toggleMessageBoard={this.toggleMessageBoard}
+                sendMessage={this.sendMessage}
+              />
             </div> :
             
             <div>

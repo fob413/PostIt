@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 
 class MessageBoard extends React.Component {
   constructor(props) {
@@ -9,8 +9,7 @@ class MessageBoard extends React.Component {
   onSend(e){
     const {_message, _priority} = this.refs;
     e.preventDefault();
-    alert(_message.value);
-    console.log(_priority.value);
+    this.props.sendMessage(_message.value, _priority.value, 1);
   }
 
 
@@ -18,6 +17,13 @@ class MessageBoard extends React.Component {
     return (
       <div className="container">
         <div className="row messageBoard">
+        <img
+        width="30px"
+          alt="back"
+          src={require("../../../image/back.png")}
+          className="click"
+          onClick={this.props.toggleMessageBoard}
+        />
           <div className="col s12">
             <div className="col s8">
               <div className="message">
@@ -77,6 +83,11 @@ class MessageBoard extends React.Component {
       </div>
     );
   }
+}
+
+MessageBoard.propTypes = {
+  sendMessage: PropTypes.func.isRequired,
+  toggleMessageBoard: PropTypes.func.isRequired
 }
 
 export default MessageBoard;

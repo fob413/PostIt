@@ -3,12 +3,12 @@ import React, {PropTypes} from 'react';
 class Group extends React.Component{
   constructor(props) {
     super(props);
-    this.test = this.test.bind(this);
+    this.gotoGroup = this.gotoGroup.bind(this);
   }
 
-  test(e) {
+  gotoGroup(e) {
     e.preventDefault();
-    this.props.toggleMessageBoard();
+    this.props.toggleMessageBoard(this.props.showGroup.id);
   }
   render() {
     const group = this.props.showGroup;
@@ -22,7 +22,7 @@ class Group extends React.Component{
           <span className="card-title" style={bold}>{group.GroupName}</span>
         </div>
         <div className="card-action">
-          <span onClick={this.test} className="white-text click" style={bold}>GO TO GROUP</span>
+          <span onClick={this.gotoGroup} className="white-text click" style={bold}>GO TO GROUP</span>
         </div>
       </div>
     );
