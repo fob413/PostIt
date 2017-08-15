@@ -10,6 +10,8 @@ import Sample from './broadcast/broadPage/sample';
 import Profile from './broadcast/broadPage/profile';
 import MessageBoard from './broadcast/messagePage/messageBoard';;
 import '../style/style.css';
+import '../style/materialize/css/materialize.min.css';
+import '../style/materialize/js/materialize.min';
 
 class App extends React.Component {
   constructor(props){
@@ -79,6 +81,7 @@ class App extends React.Component {
       this.setState({signup: false});
     } else {
       this.setState({signup: true});
+      Materialize.toast('I am a toast!', 4000);
     }
   }
 
