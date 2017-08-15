@@ -15,43 +15,11 @@ class BroadPage extends React.Component{
       groups: []
     };
     this.toggleCreateGroup = this.toggleCreateGroup.bind(this);
-    //this.createNewGroup = this.createNewGroup.bind(this);
-    this.loadMessages = this.loadMessages.bind(this);
   }
 
   componentWillMount() {
     this.props.loadGroupList();
   }
-
-  loadMessages(groupId) {
-     const config = {
-      headers: {'x-auth': this.store.getState().token}
-    };
-
-    axios.get(`api/group/${groupId}/messages`, config)
-    .then(res => {
-      console.log(res.data);
-    })
-    .catch(err => {
-      alert(`${err.message} Please try again later!`);
-    });
-  }
-
-  // createNewGroup(GroupName) {
-  //   const config = {
-  //     headers: {'x-auth': this.store.getState().token}
-  //   };
-
-  //   axios.post('api/group', {
-  //     GroupName
-  //   }, config)
-  //   .then(res => {
-  //     this.loadGroupList();
-  //   })
-  //   .catch(err => {
-  //     alert(`An error has occured while creating Group ${err}`);
-  //   });
-  // }
 
   toggleCreateGroup(){
     const {createGroup} = this.state;
@@ -80,7 +48,7 @@ class BroadPage extends React.Component{
           store={this.store}
           groups={this.store.getState().groups}
           toggleMessageBoard={this.props.toggleMessageBoard}
-          loadMessages={this.loadMessages}
+          loadMessages={this.props.loadMessages}
         />
       </div>
     );
@@ -94,7 +62,8 @@ BroadPage.propTypes = {
   store: PropTypes.object.isRequired,
   toggleMessageBoard: PropTypes.func.isRequired,
   loadGroupList: PropTypes.func.isRequired,
-  createNewGroup: PropTypes.func.isRequired
+  createNewGroup: PropTypes.func.isRequired,
+  loadMessages: PropTypes.func.isRequired
 };
 
 export default BroadPage;
