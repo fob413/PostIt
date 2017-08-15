@@ -17,6 +17,7 @@ class BroadPage extends React.Component{
     this.toggleCreateGroup = this.toggleCreateGroup.bind(this);
     this.loadGroupList = this.loadGroupList.bind(this);
     this.createNewGroup = this.createNewGroup.bind(this);
+    this.loadMessages = this.loadMessages.bind(this);
   }
 
   componentWillMount() {
@@ -37,6 +38,20 @@ class BroadPage extends React.Component{
     })
     .catch( err => {
       alert(`An error has occured while loading the groups ${err}`);
+    });
+  }
+
+  loadMessages(groupId) {
+     const config = {
+      headers: {'x-auth': this.store.getState().token}
+    };
+
+    axios.get(`api/group/${groupId}/messages`, config)
+    .then(res => {
+      console.log(res.data);
+    })
+    .catch(err => {
+      alert(`${err.message} Please try again later!`);
     });
   }
 
@@ -83,6 +98,7 @@ class BroadPage extends React.Component{
           store={this.store}
           groups={this.state.groups}
           toggleMessageBoard={this.props.toggleMessageBoard}
+          loadMessages={this.loadMessages}
         />
       </div>
     );

@@ -18,6 +18,7 @@ class Groups extends React.Component {
       return(
         <div>
           {this.props.groups.map((group, i) => {
+            this.props.loadMessages(group.Group.id);
             return (
               <div className="row" key={i}>
                 <div className="col s12 m12">

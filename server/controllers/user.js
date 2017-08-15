@@ -109,7 +109,8 @@ export default {
               console.log(err);
               res.status(400).send({
               message: err.message
-            })}
+            });
+          }
           );
           }
         } else {

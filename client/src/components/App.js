@@ -164,6 +164,7 @@ class App extends React.Component {
 
   render() {
     const {signup} = this.state;
+    console.log(this.store.getState());
     if (this.store.getState().isLoggedIn) {
       return(
         <div>
