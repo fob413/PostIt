@@ -81,7 +81,7 @@ class App extends React.Component {
       this.setState({signup: false});
     } else {
       this.setState({signup: true});
-      Materialize.toast('I am a toast!', 4000);
+      // Materialize.toast('I am a toast!', 4000);
     }
   }
 
@@ -189,7 +189,6 @@ class App extends React.Component {
 
   render() {
     const {signup} = this.state;
-    console.log(this.store.getState());
     if (this.store.getState().isLoggedIn) {
       return(
         <div>
