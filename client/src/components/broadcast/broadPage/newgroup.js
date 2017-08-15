@@ -11,7 +11,6 @@ class NewGroup extends React.Component {
   onCreateGroup(e) {
     const {_groupName} = this.refs;
     e.preventDefault();
-    alert('lets create a new group');
     this.createNewGroup(_groupName.value);
     this.props.toggleCreateGroup();
     _groupName.value = '';

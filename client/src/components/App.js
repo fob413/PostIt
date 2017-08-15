@@ -37,6 +37,7 @@ class App extends React.Component {
   }
 
   createNewGroup(GroupName) {
+    console.log('i got here about to create a new group');
     const config = {
       headers: {'x-auth': this.store.getState().token}
     };
@@ -232,6 +233,7 @@ class App extends React.Component {
                 store={this.store}
                 toggleMessageBoard={this.toggleMessageBoard}
                 loadGroupList={this.loadGroupList}
+                createNewGroup={this.createNewGroup}
               />
             </div> :
             this.state.messageBoard ?

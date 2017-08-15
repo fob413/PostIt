@@ -71,7 +71,7 @@ class BroadPage extends React.Component{
       <div className="container">
         <CreateGroup toggleCreateGroup={this.toggleCreateGroup} />
         <NewGroup
-          createNewGroup={this.createNewGroup}
+          createNewGroup={this.props.createNewGroup}
           toggleCreateGroup={this.toggleCreateGroup}
           createGroup={this.state.createGroup}
         />
@@ -93,7 +93,8 @@ class BroadPage extends React.Component{
 BroadPage.propTypes = {
   store: PropTypes.object.isRequired,
   toggleMessageBoard: PropTypes.func.isRequired,
-  loadGroupList: PropTypes.func.isRequired
+  loadGroupList: PropTypes.func.isRequired,
+  createNewGroup: PropTypes.func.isRequired
 };
 
 export default BroadPage;
