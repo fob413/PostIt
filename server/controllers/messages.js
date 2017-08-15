@@ -10,7 +10,7 @@ const secret = process.env.SECRET_TOKEN;
 // const message = require('../models').Messages;
 // const Users = require('../models/').Users;
 
-module.exports = {
+export default {
 
   sendMessage(req, res) {
     if (req.header('x-auth')) {

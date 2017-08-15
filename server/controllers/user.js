@@ -20,9 +20,55 @@ const invalid = {
 
 export default {
   list(req, res) {
-    return Users
-    .all()
-    .then(user => res.status(200).send(user));
+    // return Users
+    // .all()
+    // .then(user => res.status(200).send(user));
+
+    if (req.header('x-auth')) {
+      const token = req.header('x-auth');
+      jwt.verify(token, secret, (err, decoded) => {
+        if (err) {
+          return res.json({
+            success: false,
+            message: 'failed to authenticaate token'
+          });
+        } else {
+          req.decoded = decoded;
+          return Users
+          .findOne({
+            where: {
+              UserName: req.decoded.UserName
+            }
+          })
+          .then(user => {
+            if(user.isLoggedin){
+              Users.all( {
+                attributes:['id','UserName']
+              })
+              .then(allUsers => res.status(200).send(allUsers))
+              .catch(err => res.status(400).send({
+                success: false,
+                message: err.message
+              }));
+            } else {
+              return res.status(401).send({
+                success: false,
+                message: 'Login to access this service'
+              });
+            }
+          })
+          .catch(err => res.status(400).send({
+            success: false,
+            error: err.message
+          }));
+        }
+      });
+    } else {
+      return res.status(403).send({
+        success: false,
+        message: 'no token provided'
+      });
+    }
   },
 
   create(req, res) {

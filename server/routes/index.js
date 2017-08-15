@@ -34,11 +34,17 @@ module.exports = (app) => {
   // signout a user from the application
   app.get('/api/user/signout', usersController.signout);
 
+  // list all the users on the platform
+  app.get('/api/users/list', usersController.list);
+
   // creates a new group on the application
   app.post('/api/group', groupsController.create);
 
   // add a user to a particular group
   app.post('/api/group/:groupId/user', membersController.create);
+
+  // list users in a particular group
+  app.get('/api/group/:groupId/user/list', membersController.listGroupUsers);
 
   // logged in users retrieve groups they have been added to
   app.get('/api/group/list', groupsController.listGroups);
@@ -55,7 +61,6 @@ module.exports = (app) => {
   // list out all the available groups on the application
   // app.get('/api/group/list', groupsController.list);
   // to be removed list out all the registered users
-  app.get('/api/user', usersController.list);
   app.get('/api/clear/users', clearController.clearUsers);
   app.get('/api/clear/groups', clearController.clearGroups);
   app.get('/api/clear/members', clearController.clearMembers);
