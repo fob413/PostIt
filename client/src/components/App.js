@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react';
 import axios from 'axios';
 import Signup from './index/signup/signup';
 import Signin from './index/signin/signin';
-import {signUp, signIn, signOut} from '../actions';
+import {signUp, signIn, signOut, groupList} from '../actions';
 import CreateGroup from './broadcast/broadPage/creategroup';
 import BroadPage from './broadcast/broadPage/broadpage';
 import NavBar from './broadcast/broadPage/navbar';
@@ -34,6 +34,36 @@ class App extends React.Component {
     this.toggleProfileBoard = this.toggleProfileBoard.bind(this);
     this.toggleMessageBoard = this.toggleMessageBoard.bind(this);
     this.sendMessage = this.sendMessage.bind(this);
+  }
+
+  createNewGroup(GroupName) {
+    const config = {
+      headers: {'x-auth': this.store.getState().token}
+    };
+
+    axios.post('api/group', {
+      GroupName
+    }, config)
+    .then(res => {
+      this.loadGroupList();
+    })
+    .catch(err => {
+      alert(`An error has occured while creating Group ${err}`);
+    });
+  }
+
+  loadGroupList() {
+    const config = {
+      headers: {'x-auth': this.store.getState().token}
+    };
+
+    axios.get('api/group/list', config)
+    .then(res => {
+      this.store.dispatch(groupList(res.data.members));
+    })
+    .catch( err => {
+      alert(`An error has occured while loading the groups ${err}`);
+    });
   }
 
   sendMessage(message, priority){
@@ -201,6 +231,7 @@ class App extends React.Component {
               <BroadPage
                 store={this.store}
                 toggleMessageBoard={this.toggleMessageBoard}
+                loadGroupList={this.loadGroupList}
               />
             </div> :
             this.state.messageBoard ?
