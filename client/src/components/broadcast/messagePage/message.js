@@ -6,7 +6,6 @@ class Message extends React.Component{
   }
 
   render () {
-    console.log(`the message obtained from above ${this.props.message}`);
     return(
       <div className="container boardMessage">
         <i className="material-icons">message</i>

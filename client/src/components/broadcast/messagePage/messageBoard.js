@@ -1,11 +1,36 @@
 import React, {PropTypes} from 'react';
+import DisplayMessage from './displayMessage';
 
 class MessageBoard extends React.Component {
   constructor(props) {
     super(props);
     this.store = this.props.store;
+    this.groups = this.props.store.getState().groups;
     this.currentGroup = this.props.currentGroup;
     this.onSend = this.onSend.bind(this);
+    this.state = ({
+      messages: []
+    });
+    this.loadMessages = this.loadMessages.bind(this);
+  }
+
+  componentWillMount(){
+    console.log('i just got mounted');
+    this.loadMessages();
+  }
+
+  componentWillUnmount(){
+    console.log('unmounting now');
+  }
+
+  loadMessages(){
+    this.groups.map((group, i) => {
+      if (group.groupId == this.currentGroup){
+        this.setState({
+          messages: group.Group.Messages
+        });
+      }
+    });
   }
 
   onSend(e){
@@ -32,7 +57,18 @@ class MessageBoard extends React.Component {
           <div className="col s12">
             <div className="col s8">
               <div className="message">
-                message side prolly
+                <ul className="collection">
+                  {this.state.messages.map((message, i) => {
+                    return (
+                      <div key={i}>
+                        <DisplayMessage
+                          content={message.content}
+                          author={message.authorsName}
+                        />
+                      </div>
+                    );
+                  })}
+                </ul>
               </div>
 
               <div className="row">
