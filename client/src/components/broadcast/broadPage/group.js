@@ -9,7 +9,7 @@ class Group extends React.Component{
 
   gotoGroup(e) {
     e.preventDefault();
-    this.props.toggleMessageBoard(this.props.showGroup.id);
+    console.log('open this group');
   }
   render() {
     const group = this.props.showGroup;
@@ -44,8 +44,7 @@ class Group extends React.Component{
 * Validation of the components properties
 */
 Group.propTypes = {
-  showGroup: PropTypes.object.isRequired,
-  toggleMessageBoard: PropTypes.func.isRequired
+  showGroup: PropTypes.object.isRequired
 };
 
 export default Group;

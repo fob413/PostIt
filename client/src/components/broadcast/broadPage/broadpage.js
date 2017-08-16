@@ -11,7 +11,8 @@ class BroadPage extends React.Component{
   constructor(props) {
     super(props);
     this.state = {
-      createGroup: false
+      createGroup: false,
+      Groups: this.props.groups
     };
     this.toggleCreateGroup = this.toggleCreateGroup.bind(this);
     this.onCreateGroup = this.onCreateGroup.bind(this);
@@ -23,6 +24,12 @@ class BroadPage extends React.Component{
     }else{
       this.props.loadGroups();
     }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      Groups: nextProps
+    });
   }
 
   onCreateGroup(groupname){
@@ -57,7 +64,7 @@ class BroadPage extends React.Component{
           onCreateGroup={this.onCreateGroup}
         />
         <SearchGroups />
-        <Groups/>
+        <Groups groups={this.state.Groups}/>
       </div>
     );
   }
@@ -69,4 +76,13 @@ class BroadPage extends React.Component{
 BroadPage.propTypes = {
 };
 
-export default connect(null, { loadGroups, createNewGroup })(BroadPage);
+const mapStateToProps = state => (
+  {
+    groups: state.Groups
+  }
+);
+
+export default connect(
+  mapStateToProps,
+  { loadGroups, createNewGroup }
+)(BroadPage);
