@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import { loadGroups } from '../../../actions/groupsActions';
+import { loadGroups, createNewGroup } from '../../../actions/groupsActions';
 import CreateGroup from './creategroup';
 import SearchGroups from './searchgroups';
 import Groups from './groups';
@@ -14,6 +14,7 @@ class BroadPage extends React.Component{
       createGroup: false
     };
     this.toggleCreateGroup = this.toggleCreateGroup.bind(this);
+    this.onCreateGroup = this.onCreateGroup.bind(this);
   }
 
   componentWillMount() {
@@ -22,6 +23,10 @@ class BroadPage extends React.Component{
     }else{
       this.props.loadGroups();
     }
+  }
+
+  onCreateGroup(groupname){
+    this.props.createNewGroup(groupname);
   }
 
 
@@ -45,6 +50,7 @@ class BroadPage extends React.Component{
         <NewGroup
           toggleCreateGroup={this.toggleCreateGroup}
           createGroup={this.state.createGroup}
+          onCreateGroup={this.onCreateGroup}
         />
         <SearchGroups />
         <Groups/>
@@ -59,4 +65,4 @@ class BroadPage extends React.Component{
 BroadPage.propTypes = {
 };
 
-export default connect(null, { loadGroups })(BroadPage);
+export default connect(null, { loadGroups, createNewGroup })(BroadPage);

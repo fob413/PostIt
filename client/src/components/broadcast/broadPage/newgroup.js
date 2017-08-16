@@ -3,7 +3,6 @@ import React, {PropTypes} from 'react';
 class NewGroup extends React.Component {
   constructor(props){
     super(props);
-    this.createNewGroup = this.props.createNewGroup;
     this.onCreateGroup = this.onCreateGroup.bind(this);
     this.onCancelCreate = this.onCancelCreate.bind(this);
   }
@@ -11,9 +10,15 @@ class NewGroup extends React.Component {
   onCreateGroup(e) {
     const {_groupName} = this.refs;
     e.preventDefault();
-    this.createNewGroup(_groupName.value);
-    this.props.toggleCreateGroup();
-    _groupName.value = '';
+    let groupname = _groupName.value.trim();
+    if(groupname && groupname.length > 0) {
+      this.props.toggleCreateGroup();
+      this.props.onCreateGroup(groupname);
+      _groupName.value = '';
+    } else {
+      console.log('Group name should not be empty');
+    }
+    
   }
 
   onCancelCreate(e) {
@@ -70,7 +75,8 @@ class NewGroup extends React.Component {
 
 NewGroup.propTypes = {
   createGroup : PropTypes.bool.isRequired,
-  toggleCreateGroup: PropTypes.func.isRequired
+  toggleCreateGroup: PropTypes.func.isRequired,
+  onCreateGroup: PropTypes.func.isRequired
 };
 
 export default NewGroup;
