@@ -1,4 +1,5 @@
 import React, {PropTypes} from 'react';
+import { connect } from 'react-redux';
 
 class Profile extends React.Component {
   constructor(props) {
@@ -17,6 +18,8 @@ class Profile extends React.Component {
         email: localStorage.getItem('email'),
         telephone: localStorage.getItem('telephone')
       }); 
+    } else {
+      this.props.history.push('/signin');
     }
   }
   render() {

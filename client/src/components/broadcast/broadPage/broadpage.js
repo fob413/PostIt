@@ -17,7 +17,11 @@ class BroadPage extends React.Component{
   }
 
   componentWillMount() {
-    this.props.loadGroups();
+    if(!localStorage.getItem('x-auth')){
+      this.props.history.push('/');
+    }else{
+      this.props.loadGroups();
+    }
   }
 
 
@@ -53,7 +57,6 @@ class BroadPage extends React.Component{
 * Validation of the components properties
 */
 BroadPage.propTypes = {
-  createNewGroup: PropTypes.func.isRequired
 };
 
 export default connect(null, { loadGroups })(BroadPage);
