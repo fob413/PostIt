@@ -1,4 +1,4 @@
-import { SIGN_IN, SIGN_OUT, SIGN_UP, GROUPS_LIST } from '../constants';
+import { SIGN_IN, SIGN_OUT, SIGN_UP } from '../constants';
 
 const initialState = {
   UserName: '',
@@ -38,11 +38,6 @@ export default (state = initialState, action) => {
       telephone: '',
       groups: []
     });
-
-    case GROUPS_LIST:
-      return Object.assign({}, state, {
-        groups: action.groups
-      });
 
     default:
       return state;

@@ -33,6 +33,7 @@ export function createNewGroup(GroupName) {
     )
     .then(({ data }) => {
       console.log(data);
+      return true;
     }, (err) => {
       console.log(err.message);
     });

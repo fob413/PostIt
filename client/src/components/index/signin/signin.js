@@ -33,7 +33,7 @@ class Signin extends React.Component {
       if (res) {
         this.props.history.push('/broadpage');
       }
-    })
+    });
   }
 
   render() {

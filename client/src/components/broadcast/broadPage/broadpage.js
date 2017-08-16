@@ -26,7 +26,11 @@ class BroadPage extends React.Component{
   }
 
   onCreateGroup(groupname){
-    this.props.createNewGroup(groupname);
+    this.props.createNewGroup(groupname).then((res) => {
+      if (res) {
+        this.props.loadGroups();
+      }
+    });
   }
 
 
