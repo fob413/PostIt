@@ -1,4 +1,4 @@
-import React, {PropTyoes} from 'react';
+import React, {PropTypes} from 'react';
 
 class Message extends React.Component{
   constructor(props){
@@ -15,5 +15,9 @@ class Message extends React.Component{
     );
   }
 }
+
+Message.propTypes = {
+  messageContent: PropTypes.string.isRequired
+};
 
 export default Message;

@@ -4,32 +4,9 @@ import DisplayMessage from './displayMessage';
 class MessageBoard extends React.Component {
   constructor(props) {
     super(props);
-    this.store = this.props.store;
-    this.groups = this.props.store.getState().groups;
-    this.currentGroup = this.props.currentGroup;
     this.onSend = this.onSend.bind(this);
     this.state = ({
       messages: []
-    });
-    this.loadMessages = this.loadMessages.bind(this);
-  }
-
-  componentWillMount(){
-    console.log('i just got mounted');
-    this.loadMessages();
-  }
-
-  componentWillUnmount(){
-    console.log('unmounting now');
-  }
-
-  loadMessages(){
-    this.groups.map((group, i) => {
-      if (group.groupId == this.currentGroup){
-        this.setState({
-          messages: group.Group.Messages
-        });
-      }
     });
   }
 
@@ -38,8 +15,9 @@ class MessageBoard extends React.Component {
     e.preventDefault();
     _message.value = _message.value.trim();
     if (_message.value.length > 0) {
-      this.props.sendMessage(_message.value, _priority.value);
+      alert(_message.value, _priority.value);
     }
+    _message.value = "";
   }
 
 
@@ -50,9 +28,8 @@ class MessageBoard extends React.Component {
         <img
         width="30px"
           alt="back"
-          src={require("../../../image/back.png")}
+          src={require("../../image/back.png")}
           className="click"
-          onClick={this.props.toggleMessageBoard}
         />
           <div className="col s12">
             <div className="col s8">

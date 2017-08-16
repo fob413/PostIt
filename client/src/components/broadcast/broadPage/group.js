@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import Message from '../messagePage/message';
+import Message from '../../messagePage/message';
 
 class Group extends React.Component{
   constructor(props) {

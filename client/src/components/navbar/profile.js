@@ -3,7 +3,6 @@ import React, {PropTypes} from 'react';
 class Profile extends React.Component {
   constructor(props) {
     super(props);
-    this.store = this.props.store;
   }
   render() {
     return (
@@ -13,28 +12,28 @@ class Profile extends React.Component {
             <img
               className="circle"
               alt="PostIt Logo"
-              src={require("../../../image/name.png")}
+              src={require("../../image/name.png")}
               />
             <span>User Name</span>
-            <p>{this.store.getState().UserName}</p>
+            <p>[Placeholder for user name]</p>
           </li>
           <li className="collection-item avatar">
             <img
               className="circle"
               alt="PostIt Logo"
-              src={require("../../../image/mail.png")}
+              src={require("../../image/mail.png")}
               />
             <span>Email</span>
-            <p>{this.store.getState().email}</p>
+            <p>[Placeholder for user email]</p>
           </li>
           <li className="collection-item avatar">
             <img
               className="circle"
               alt="PostIt Logo"
-              src={require("../../../image/number.png")}
+              src={require("../../image/number.png")}
               />
             <span>Phone Number</span>
-            <p>{this.store.getState().telephone}</p>
+            <p>[Placeholder for user phone number]</p>
           </li>
         </ul>
       </div>

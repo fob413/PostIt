@@ -9,17 +9,12 @@ import NewGroup from './newgroup';
 class BroadPage extends React.Component{
   constructor(props) {
     super(props);
-    this.store = this.props.store;
     this.state = {
-      createGroup: false,
-      groups: []
+      createGroup: false
     };
     this.toggleCreateGroup = this.toggleCreateGroup.bind(this);
   }
 
-  componentWillMount() {
-    this.props.loadGroupList();
-  }
 
   toggleCreateGroup(){
     const {createGroup} = this.state;
@@ -39,16 +34,11 @@ class BroadPage extends React.Component{
       <div className="container">
         <CreateGroup toggleCreateGroup={this.toggleCreateGroup} />
         <NewGroup
-          createNewGroup={this.props.createNewGroup}
           toggleCreateGroup={this.toggleCreateGroup}
           createGroup={this.state.createGroup}
         />
         <SearchGroups />
-        <Groups
-          store={this.store}
-          groups={this.store.getState().groups}
-          toggleMessageBoard={this.props.toggleMessageBoard}
-        />
+        <Groups/>
       </div>
     );
   }

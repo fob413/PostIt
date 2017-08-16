@@ -1,29 +1,11 @@
 import React, {PropTypes} from 'react';
-import {Link} from 'react-router';
+import {Link} from 'react-router-dom';
 
-class Signup extends React.Component {
+class SignUp extends React.Component {
   constructor(props) {
     super(props);
-    
-    this.onSignUp = this.onSignUp.bind(this);
   }
 
-  /*
-  * function signs up a new user
-  * @param {string} _userName is the intending users name
-  * @param {string} _email is the intending users mail
-  * @param {password} _password is the intending users password
-  */
-  onSignUp(e) {
-    const {_userName, _email, _password, _telephone} = this.refs;
-    e.preventDefault();
-    if (_userName.value.length > 0 && _email.value.length 
-        && _password.value.length > 0 && (_telephone.value.length > 0 && !isNaN(_telephone.value))) {
-      this.props.signUpUser(_userName.value, _email.value, _password.value, _telephone.value);
-    } else {
-      console.log('One of the fields in the form is empty or Incorrect');
-    }
-  }
 
   render() {
     return (
@@ -37,7 +19,7 @@ class Signup extends React.Component {
 
         <div className="row">
           <div className="container col s12">
-            <form onSubmit={this.onSignUp}>
+            <form>
               <div className="row">
                 <div className="input-field col s12 m6">
                   <input
@@ -51,7 +33,7 @@ class Signup extends React.Component {
                   <label htmlFor="userName">
                     Username
                   </label>
-                </div>
+                </div>  
 
                 <div className="input-field col s12 m6">
                   <input
@@ -66,23 +48,22 @@ class Signup extends React.Component {
                     Email
                   </label>
                 </div>
-              </div>
 
-              <div className="input-field col s6 m6">
-                <input 
-                  ref="_telephone"
-                  className="validate"
-                  type="tel"
-                  id="telephone"
-                  data-error="wrong"
-                  data-success="right"
-                />
-                <label htmlFor="telephone">
-                  Telephone
-                </label>
-              </div>
+                <div className="input-field col s6 m6">
+                  <input 
+                    ref="_telephone"
+                    className="validate"
+                    type="tel"
+                    id="telephone"
+                    data-error="wrong"
+                    data-success="right"
+                  />
+                  <label htmlFor="telephone">
+                    Telephone
+                  </label>
+                </div>
 
-              <div className="input-field col s6 m6">
+                <div className="input-field col s6 m6">
                 <input 
                   ref="_password"
                   className="validate"
@@ -95,6 +76,8 @@ class Signup extends React.Component {
                   Password
                 </label>
               </div>
+              
+              </div>
 
               <div className="row center-align">
                 <button
@@ -103,35 +86,30 @@ class Signup extends React.Component {
                   name="action"
                 >
                   Sign Up
+                  <i className="material-icons right">send</i>
                 </button>
               </div>
 
             </form>
           </div>
         </div>
+
         <div className="center-align">
           <p>
             OR
             <br />
             <a
               className="green-text text-darken-1 signButton"
-              onClick={this.props.toggleSignUp}
             >
-            Sign In
+            <Link className="green-text text-darken-1" to="SignIn">Sign In</Link>
             </a>
           </p>
         </div>
+
       </div>
     );
   }
 }
 
-/*
-* Validation of the components properties
-*/
-Signup.propTypes ={
-  toggleSignUp: PropTypes.func.isRequired,
-  signUpUser: PropTypes.func.isRequired
-};
 
-export default Signup;
+export default SignUp;

@@ -1,26 +1,9 @@
 import React, {PropTypes} from 'react';
+import {Link} from 'react-router-dom';
 
 class Signin extends React.Component {
   constructor(props) {
     super(props);
-    this.store = this.props.store;
-
-    this.onSignIn = this.onSignIn.bind(this);
-  }
-
-  /*
-  * function signs in a user
-  * @param {string} _userName is the user name of the user
-  * @param {password} _password is the password of the user
-  */
-  onSignIn(e) {
-    const {_userName, _password} = this.refs;
-    e.preventDefault();
-    if (_userName.value.length > 0 && _password.value.length > 0) {
-      this.props.signInUser(_userName.value, _password.value);
-    } else {
-      alert(`Some fields are empty.`);
-    }
   }
 
   render() {
@@ -35,7 +18,7 @@ class Signin extends React.Component {
 
         <div className="row">
           <div className="container col s12">
-            <form onSubmit={this.onSignIn}>
+            <form>
               <div className="row">
                 <div className="input-field col s12 m12">
                   <input
@@ -50,7 +33,6 @@ class Signin extends React.Component {
                     Username
                   </label>
                 </div>
-              </div>
 
               <div className="input-field col s12 m12">
                 <input 
@@ -66,6 +48,8 @@ class Signin extends React.Component {
                 </label>
               </div>
 
+              </div>
+
               <div className="row center-align">
                 <button
                   className="btn-large green darken-4 waves effect"
@@ -73,6 +57,7 @@ class Signin extends React.Component {
                   name="action"
                 >
                   Sign In
+                  <i className="material-icons right">send</i>
                 </button>
               </div>
             </form>
@@ -84,9 +69,8 @@ class Signin extends React.Component {
             <br />
             <a
               className="green-text text-darken-1 signButton"
-              onClick={this.props.toggleSignUp}
             >
-              Sign Up
+              <Link className="green-text text-darken-1" to="/">Sign Up</Link>
             </a>
           </p>
         </div>
@@ -95,13 +79,5 @@ class Signin extends React.Component {
   }
 }
 
-/*
-* Validation of the components properties
-*/
-Signin.propTypes ={
-  toggleSignUp: PropTypes.func.isRequired,
-  signInUser: PropTypes.func.isRequired,
-  store: PropTypes.object.isRequired
-};
 
 export default Signin; 
