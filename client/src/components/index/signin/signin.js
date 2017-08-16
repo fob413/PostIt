@@ -1,9 +1,33 @@
 import React, {PropTypes} from 'react';
-import {Link} from 'react-router-dom';
+import {Link, withRouter} from 'react-router-dom';
+import { connect } from 'react-redux';
+import { signUserIn } from '../../../actions/authActions';
 
 class Signin extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      UserName: '',
+      password: ''
+    };
+
+    this.onChange = this.onChange.bind(this);
+    this.handleSignIn = this.handleSignIn.bind(this);
+  }
+
+  onChange(e){
+    this.setState({
+      [e.target.name]: e.target.value
+    });
+  }
+  
+  handleSignIn(e){
+    e.preventDefault();
+    this.props.signUserIn(this.state).then((res) => {
+      if (res) {
+        this.props.history.push('/broadpage');
+      }
+    })
   }
 
   render() {
@@ -22,12 +46,13 @@ class Signin extends React.Component {
               <div className="row">
                 <div className="input-field col s12 m12">
                   <input
-                    ref="_userName"
+                    name="UserName"
                     className="validate"
                     type="text"
                     id="userName"
                     data-error="wrong"
                     data-success="right"
+                    onChange={this.onChange}
                   />
                   <label htmlFor="userName">
                     Username
@@ -36,12 +61,13 @@ class Signin extends React.Component {
 
               <div className="input-field col s12 m12">
                 <input 
-                  ref="_password"
+                  name="password"
                   className="validate"
                   type="password"
                   id="password"
                   data-error="wrong"
                   data-success="right"
+                  onChange={this.onChange}
                 />
                 <label htmlFor="password">
                   Password
@@ -53,8 +79,8 @@ class Signin extends React.Component {
               <div className="row center-align">
                 <button
                   className="btn-large green darken-4 waves effect"
-                  type="submit"
                   name="action"
+                  onClick={this.handleSignIn}
                 >
                   Sign In
                   <i className="material-icons right">send</i>
@@ -80,4 +106,4 @@ class Signin extends React.Component {
 }
 
 
-export default Signin; 
+export default connect(null, { signUserIn })(withRouter(Signin));

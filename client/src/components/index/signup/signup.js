@@ -1,9 +1,35 @@
 import React, {PropTypes} from 'react';
-import {Link} from 'react-router-dom';
+import {Link, withRouter} from 'react-router-dom';
+import { connect } from 'react-redux';
+import { signUserUp } from '../../../actions/authActions';
 
 class SignUp extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      UserName: '',
+      email: '',
+      telephone: '',
+      password: ''
+    };
+
+    this.onChange = this.onChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  onChange(e) {
+    this.setState({
+      [e.target.name]: e.target.value
+    });
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+    this.props.signUserUp(this.state).then((res) => {
+      if (res) {
+        this.props.history.push('/broadpage');
+      }
+    });
   }
 
 
@@ -23,12 +49,13 @@ class SignUp extends React.Component {
               <div className="row">
                 <div className="input-field col s12 m6">
                   <input
-                    ref="_userName"
+                    name="UserName"
                     className="validate"
                     type="text"
                     id="userName"
                     data-error="wrong"
                     data-success="right"
+                    onChange={this.onChange}
                   />
                   <label htmlFor="userName">
                     Username
@@ -37,12 +64,13 @@ class SignUp extends React.Component {
 
                 <div className="input-field col s12 m6">
                   <input
-                    ref="_email"
+                    name="email"
                     className="validate"
                     type="email"
                     id="email"
                     data-error="wrong"
                     data-success="right"
+                    onChange={this.onChange}
                   />
                   <label htmlFor="email">
                     Email
@@ -51,12 +79,13 @@ class SignUp extends React.Component {
 
                 <div className="input-field col s6 m6">
                   <input 
-                    ref="_telephone"
+                    name="telephone"
                     className="validate"
                     type="tel"
                     id="telephone"
                     data-error="wrong"
                     data-success="right"
+                    onChange={this.onChange}
                   />
                   <label htmlFor="telephone">
                     Telephone
@@ -65,12 +94,13 @@ class SignUp extends React.Component {
 
                 <div className="input-field col s6 m6">
                 <input 
-                  ref="_password"
+                  name="password"
                   className="validate"
                   type="password"
                   id="password"
                   data-error="wrong"
                   data-success="right"
+                  onChange={this.onChange}
                 />
                 <label htmlFor="password">
                   Password
@@ -82,8 +112,8 @@ class SignUp extends React.Component {
               <div className="row center-align">
                 <button
                   className="btn-large green darken-4 waves effect"
-                  type="submit"
                   name="action"
+                  onClick={this.handleSubmit}
                 >
                   Sign Up
                   <i className="material-icons right">send</i>
@@ -112,4 +142,4 @@ class SignUp extends React.Component {
 }
 
 
-export default SignUp;
+export default connect(null, { signUserUp })(withRouter(SignUp));

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { createBrowserHistory } from 'history';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { connect } from 'react-redux';
 import SignUp from '../components/index/signup/signup';
 import SignIn from '../components/index/signin/signin';
 import PageNotFound from '../components/pagenotfound/pagenotfound';
@@ -24,13 +23,12 @@ const Footer = () => (
 const App = (props) => (
   <Router history={history}>
     <div>
-      { props.auth.isLoggedIn && <Navbar/>}
+      <Navbar/>
         <Switch>
           <Route exact path="/" component={SignUp} />
           <Route path="/signin" component={SignIn} />
           <Route path="/broadpage" component={BroadPage} />
           <Route path="/messageboard" component={MessageBoard} />
-          <Route path="/groups" component={() => <h3>Groups</h3>} />
           <Route path="/profile" component={Profile} />
           <Route component={PageNotFound} />
         </Switch>
@@ -38,10 +36,4 @@ const App = (props) => (
   </Router>
 );
 
-const mapStateToProps = state => (
- {
-    auth: state.MyApp
- }
-);
-
-export default connect(mapStateToProps, {})(App);
+export default App;

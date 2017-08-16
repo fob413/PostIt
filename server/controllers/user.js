@@ -87,7 +87,7 @@ export default {
               const token = jwt.sign({
                 UserName: user.UserName,
                 email: user.email
-              }, secret, { expiresIn: '1 day'});
+              }, secret);
               res.status(201).json({
                 UserName: user.UserName,
                 email: user.email,

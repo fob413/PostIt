@@ -1,45 +1,45 @@
-import C from '../constants';
+import { SIGN_IN, SIGN_OUT, SIGN_UP, GROUPS_LIST } from '../constants';
 
 const initialState = {
   UserName: '',
   email: '',
   telephone: '',
-  isLoggedIn: true,
+  isLoggedIn: false,
   token: '',
   groups: []
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case C.SIGN_UP:
+    case SIGN_UP:
       return Object.assign({}, state, {
-        UserName: action.Username,
-        isLoggedIn: action.isLoggedin,
-        token: action.token,
-        email: action.email,
-        telephone: action.telephone
+        UserName: action.data.Username,
+        isLoggedIn: action.data.isLoggedin,
+        token: action.data.token,
+        email: action.data.email,
+        telephone: action.data.telephone
       });
 
-    case C.SIGN_IN:
+    case SIGN_IN:
       return Object.assign({}, state, {
-        UserName: action.Username,
-        isLoggedIn: action.isLoggedin,
-        token: action.token,
-        telephone: action.telephone,
-        email: action.email
+        UserName: action.data.Username,
+        isLoggedIn: action.data.isLoggedin,
+        token: action.data.token,
+        telephone: action.data.telephone,
+        email: action.data.email
       });
 
-    case C.SIGN_OUT:
+    case SIGN_OUT:
     return Object.assign({}, state, {
       UserName: '',
-      isLoggedIn: action.isLoggedIn,
+      isLoggedIn: action.data.isLoggedIn,
       token: '',
       email: '',
       telephone: '',
       groups: []
     });
 
-    case C.GROUPS_LIST:
+    case GROUPS_LIST:
       return Object.assign({}, state, {
         groups: action.groups
       });
