@@ -1,4 +1,5 @@
 import React, {PropTypes} from 'react';
+import { Link } from 'react-router-dom';
 import DisplayMessage from './displayMessage';
 
 class MessageBoard extends React.Component {
@@ -25,12 +26,14 @@ class MessageBoard extends React.Component {
     return (
       <div className="container">
         <div className="row messageBoard">
-        <img
-        width="30px"
-          alt="back"
-          src={require("../../image/back.png")}
-          className="click"
-        />
+        <Link to="/broadpage">
+          <img
+          width="30px"
+            alt="back"
+            src={require("../../image/back.png")}
+            className="click"
+          />
+        </Link>
           <div className="col s12">
             <div className="col s8">
               <div className="message">
