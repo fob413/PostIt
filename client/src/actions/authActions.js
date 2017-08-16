@@ -22,6 +22,9 @@ export function signUserUp(user) {
   ).then(({ data }) => {
     dispatch(signUpSuccess(data));
     localStorage.setItem('x-auth', data.token);
+    localStorage.setItem('username', data.UserName);
+    localStorage.setItem('email', data.email);
+    localStorage.setItem('telephone', data.telephone);
     return true;
   }, (err) => {
     console.log(err.message);
@@ -36,6 +39,9 @@ export function signUserOut() {
   )
   .then(({ data }) => {
     localStorage.removeItem('x-auth');
+    localStorage.removeItem('username');
+    localStorage.removeItem('email');
+    localStorage.removeItem('telephone');
     dispatch(signOutSuccess(data));
     return true;
   }, (err) => {
@@ -52,6 +58,9 @@ export function signUserIn(user) {
     .then(({ data }) => {
       dispatch(signInSuccess(data));
       localStorage.setItem('x-auth', data.token);
+      localStorage.setItem('username', data.UserName);
+      localStorage.setItem('email', data.email);
+      localStorage.setItem('telephone', data.telephone);
       return true;
     }, (err) => {
       console.log(err.message);

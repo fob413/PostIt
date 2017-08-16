@@ -17,6 +17,12 @@ class SignUp extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  componentWillMount(){
+    if(localStorage.getItem('x-auth')){
+      this.props.history.push('/broadpage');
+    }
+  }
+
   onChange(e) {
     this.setState({
       [e.target.name]: e.target.value

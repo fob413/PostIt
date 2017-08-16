@@ -15,6 +15,12 @@ class Signin extends React.Component {
     this.handleSignIn = this.handleSignIn.bind(this);
   }
 
+  componentWillMount(){
+    if(localStorage.getItem('x-auth')){
+      this.props.history.push('/broadpage');
+    }
+  }
+
   onChange(e){
     this.setState({
       [e.target.name]: e.target.value
