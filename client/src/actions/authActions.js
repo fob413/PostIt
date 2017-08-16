@@ -48,11 +48,9 @@ export function signUserOut() {
     console.log(err.message);
   }) 
   );
-  // console.log('signing out');
 }
 
 export function signUserIn(user) {
-  console.log('sign in user');
   return dispatch => (
     axios.post('api/user/signin', user))
     .then(({ data }) => {

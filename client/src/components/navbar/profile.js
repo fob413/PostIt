@@ -3,6 +3,21 @@ import React, {PropTypes} from 'react';
 class Profile extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      username: '',
+      email: '',
+      telephone: ''
+    };
+  }
+
+  componentWillMount(){
+    if(localStorage.getItem('x-auth')){
+      this.setState({
+        username: localStorage.getItem('username'),
+        email: localStorage.getItem('email'),
+        telephone: localStorage.getItem('telephone')
+      }); 
+    }
   }
   render() {
     return (
@@ -15,7 +30,7 @@ class Profile extends React.Component {
               src={require("../../image/name.png")}
               />
             <span>User Name</span>
-            <p>[Placeholder for user name]</p>
+            <p>{this.state.username}</p>
           </li>
           <li className="collection-item avatar">
             <img
@@ -24,7 +39,7 @@ class Profile extends React.Component {
               src={require("../../image/mail.png")}
               />
             <span>Email</span>
-            <p>[Placeholder for user email]</p>
+            <p>{this.state.email}</p>
           </li>
           <li className="collection-item avatar">
             <img
@@ -33,7 +48,7 @@ class Profile extends React.Component {
               src={require("../../image/number.png")}
               />
             <span>Phone Number</span>
-            <p>[Placeholder for user phone number]</p>
+            <p>{this.state.telephone}</p>
           </li>
         </ul>
       </div>

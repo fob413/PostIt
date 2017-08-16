@@ -52,11 +52,13 @@ class NavBar extends React.Component {
           <nav>
             <div className="nav-wrapper green darken-4">
               <a className="brand-logo center" href="#">
+              <Link to="/broadpage">
                 <img
                   width="70px"
                   alt="PostIt Logo"
                   src={require("../../image/postitL.png")}
                 />
+              </Link>
               </a>
               <ul className="left" id="nav-mobile">
                 <li>
