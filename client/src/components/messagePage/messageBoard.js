@@ -16,7 +16,7 @@ class MessageBoard extends React.Component {
     authenticateUser()
     .then(status=>{
       // reload message content from local storage
-      // this.props.history.push('/broadpage');
+      this.props.history.push('/broadpage');
     })
     .catch(err=>{
       this.props.history.push('/signin');
