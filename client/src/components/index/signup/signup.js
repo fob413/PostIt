@@ -19,9 +19,14 @@ class SignUp extends React.Component {
   }
 
   componentWillMount(){
-    if(localStorage.getItem('x-auth')){
+    authenticateUser()
+    .then(status=>{
       this.props.history.push('/broadpage');
-    }
+    })
+    .catch(err=>{
+      console.log(err);
+    
+    });
   }
 
   onChange(e) {

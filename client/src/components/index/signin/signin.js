@@ -24,7 +24,6 @@ class Signin extends React.Component {
   componentWillMount(){
     authenticateUser()
     .then(status=>{
-      console.log(status);
       this.props.history.push('/broadpage');
     })
     .catch(err=>{

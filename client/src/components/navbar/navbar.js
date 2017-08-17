@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { signUserOut } from '../../actions/authActions';
+import { authenticateUser } from '../auth';
 // import { unloadGroups } from '../../actions/groupsActions';
 
 class NavBar extends React.Component {
@@ -15,12 +16,25 @@ class NavBar extends React.Component {
   }
 
   componentWillMount(){
-    if(localStorage.getItem('x-auth')){
-      console.log('user logged in');
+    // if(localStorage.getItem('x-auth')){
+    //   console.log('user logged in');
+    //   this.setState({
+    //     isAuth: true
+    //   });
+    // }
+    authenticateUser()
+    .then(status=>{
       this.setState({
         isAuth: true
       });
-    }
+    })
+    .catch(err=>{
+      console.log(err);
+      this.setState({
+        isAuth: false
+      })
+    
+    });
   }
 
   componentWillReceiveProps(nextProps) {

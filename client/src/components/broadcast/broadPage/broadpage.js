@@ -6,6 +6,7 @@ import CreateGroup from './creategroup';
 import SearchGroups from './searchgroups';
 import Groups from './groups';
 import NewGroup from './newgroup';
+import { authenticateUser } from '../../auth';
 
 class BroadPage extends React.Component{
   constructor(props) {
@@ -19,11 +20,19 @@ class BroadPage extends React.Component{
   }
 
   componentWillMount() {
-    if(!localStorage.getItem('x-auth')){
-      this.props.history.push('/');
-    }else{
-      this.props.loadGroups();
-    }
+    // if(!localStorage.getItem('x-auth')){
+    //   this.props.history.push('/');
+    // }else{
+    //   this.props.loadGroups();
+    // }
+    authenticateUser()
+    .then(status=>{
+      this.props.history.push('/broadpage');
+    })
+    .catch(err=>{
+      console.log(err);
+      this.props.history.push('/signin');
+    });
   }
 
   componentWillReceiveProps(nextProps) {
