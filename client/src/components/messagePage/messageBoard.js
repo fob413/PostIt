@@ -122,6 +122,6 @@ class MessageBoard extends React.Component {
 MessageBoard.propTypes = {
   sendMessage: PropTypes.func.isRequired,
   toggleMessageBoard: PropTypes.func.isRequired
-}
+};
 
 export default MessageBoard;

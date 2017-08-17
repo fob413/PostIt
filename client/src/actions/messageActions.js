@@ -7,7 +7,8 @@ const loadGroupId = data => ({
 });
 
 export function loadCurrentGroup(groupId) {
-  console.log(groupId);
-  console.log('load group id');
+  return dispatch => (
+    dispatch(loadGroupId(groupId))
+  );
   // return dispatchEvent(loadGroupId(groupId));
 }

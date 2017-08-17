@@ -18,15 +18,15 @@ class Group extends React.Component{
   gotoGroup(e) {
     e.preventDefault();
     console.log('clicked');
-    // console.log(`group id: ${this.state.groupId}`);
-    // this.props.loadCurrentGroup(this.state.groupId);
-    // this.props.history.push('/messageboard');
+    this.props.loadCurrentGroup(this.props.showGroup.id);
+    this.props.history.push('/messageboard');
   }
   render() {
     const group = this.props.showGroup;
     const bold = {
       fontWeight: "bold"
     };
+    console.log(`from group ${group.id}`);
     return(
       <div className="card green darken-1">
         <div className="card-content white-text">

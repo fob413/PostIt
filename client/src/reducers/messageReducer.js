@@ -14,7 +14,7 @@ export default (state = initialState, action) => {
 
       case CURRENT_GROUP:
         return Object.assign({}, state, {
-          groupId: action.groupId
+          groupId: action.data
         });
 
     default:

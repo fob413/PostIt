@@ -16,6 +16,8 @@ let store = createStore(
   )
 );
 
+console.log('loaded here');
+
 ReactDOM.render(
   <Provider store={store} >
     <Router>
