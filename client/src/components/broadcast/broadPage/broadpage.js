@@ -27,8 +27,9 @@ class BroadPage extends React.Component{
   }
 
   componentWillReceiveProps(nextProps) {
+    console.log(nextProps.groups)
     this.setState({
-      Groups: nextProps
+      Groups: nextProps.groups
     });
   }
 

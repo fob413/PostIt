@@ -1,15 +1,26 @@
 import React, {PropTypes} from 'react';
+import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 import Message from '../../messagePage/message';
+import { loadCurrentGroup } from '../../../actions/messageActions';
 
 class Group extends React.Component{
   constructor(props) {
     super(props);
+
+    this.state = {
+      groupId: ''
+    };
+    
     this.gotoGroup = this.gotoGroup.bind(this);
   }
 
   gotoGroup(e) {
     e.preventDefault();
-    console.log('open this group');
+    console.log('clicked');
+    // console.log(`group id: ${this.state.groupId}`);
+    // this.props.loadCurrentGroup(this.state.groupId);
+    // this.props.history.push('/messageboard');
   }
   render() {
     const group = this.props.showGroup;
@@ -22,12 +33,16 @@ class Group extends React.Component{
           <span className="card-title" style={bold}>{group.GroupName}</span>
         </div>
         {group.Messages.map((message, i) => {
+          this.setState({
+            groupId: message.groupId
+          });
           return (
             <div key={i}>
               <Message
                 messageContent={message.content}
                 messageAuthor={message.authorsName}
               />
+              {console.log(message.groupId)}
             </div>
           );
         })}
@@ -47,4 +62,4 @@ Group.propTypes = {
   showGroup: PropTypes.object.isRequired
 };
 
-export default Group;
+export default connect(null, { loadCurrentGroup }) (withRouter(Group));

@@ -12,6 +12,12 @@ class Groups extends React.Component {
     this.log = this.log.bind(this);
   }
 
+  componentWillReceiveProps(nextProps){
+    this.setState({
+      Groups: nextProps.groups
+    });
+  }
+
   log(e){
     e.preventDefault();
     alert('something about alerting state groups');

@@ -39,3 +39,7 @@ export function createNewGroup(GroupName) {
     });
   };
 }
+
+export function unloadGroups() {
+  console.log('time to unload groups');
+}

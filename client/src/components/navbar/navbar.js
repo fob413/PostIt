@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { signUserOut } from '../../actions/authActions';
+// import { unloadGroups } from '../../actions/groupsActions';
 
 class NavBar extends React.Component {
   constructor(props){
@@ -36,6 +37,7 @@ class NavBar extends React.Component {
         this.setState({
           isAuth: false
         });
+        //this.props.unloadGroups();
         this.props.history.push('/signin');
       }
     });
@@ -98,7 +100,8 @@ NavBar.propTypes = {
 
 const mapStateToProps = state => (
  {
-    auth: state.MyApp
+    auth: state.MyApp,
+    //groups: state.Groups
  }
 );
 
