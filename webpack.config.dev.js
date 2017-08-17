@@ -23,6 +23,12 @@ export default {
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin()
   ],
+  node: {
+    net: 'empty',
+    tls: 'empty',
+    dns: 'empty',
+    fs: 'empty'
+  },
   module: {
     loaders: [
       {test: /\.js$/, include: path.join(__dirname, './client/src'), loaders: ['babel']},

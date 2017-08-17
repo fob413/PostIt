@@ -2,6 +2,10 @@ import React, {PropTypes} from 'react';
 import {Link, withRouter} from 'react-router-dom';
 import { connect } from 'react-redux';
 import { signUserIn } from '../../../actions/authActions';
+import jwt from 'jsonwebtoken';
+
+
+const secret = process.env.SECRET_TOKEN;
 
 class Signin extends React.Component {
   constructor(props) {
@@ -16,8 +20,17 @@ class Signin extends React.Component {
   }
 
   componentWillMount(){
+    console.log(secret);
     if(localStorage.getItem('x-auth')){
-      this.props.history.push('/broadpage');
+      let token = localStorage.getItem('x-auth');
+      jwt.verify(token, secret, (err, decoded) => {
+        if (err) {
+          console.log(`failed to decode ${err}`);
+        } else {
+        console.log(`success ${decoded}`);
+        }
+      });
+      // this.props.history.push('/broadpage');
     }
   }
 
