@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react';
 import { Link } from 'react-router-dom';
+import { authenticateUser } from '../auth';
 import DisplayMessage from './displayMessage';
 
 class MessageBoard extends React.Component {
@@ -8,6 +9,18 @@ class MessageBoard extends React.Component {
     this.onSend = this.onSend.bind(this);
     this.state = ({
       messages: []
+    });
+  }
+
+  componentWillMount() {
+    authenticateUser()
+    .then(status=>{
+      // reload message content from local storage
+      // this.props.history.push('/broadpage');
+    })
+    .catch(err=>{
+      this.props.history.push('/signin');
+    
     });
   }
 

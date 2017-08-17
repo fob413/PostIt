@@ -58,9 +58,6 @@ class NavBar extends React.Component {
   }
 
   render() {
-    if(localStorage.getItem('x-auth')){
-      console.log('you are logged in');
-    }
     const { isAuth } = this.state;
     return (
       <div>
