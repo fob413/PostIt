@@ -86,7 +86,8 @@ export default {
             .then((user) => {
               const token = jwt.sign({
                 UserName: user.UserName,
-                email: user.email
+                email: user.email,
+                telephone: user.telephone
               }, secret);
               res.status(201).json({
                 UserName: user.UserName,
@@ -141,7 +142,8 @@ export default {
             .then(() => {
               const token = jwt.sign({
                 UserName: user.UserName,
-                email: user.email
+                email: user.email,
+                telephone: user.telephone
               }, secret, {expiresIn: '1 day'});
               res.status(201).json({
                 UserName: user.UserName,

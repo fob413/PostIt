@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react';
 import {Link, withRouter} from 'react-router-dom';
 import { connect } from 'react-redux';
 import { signUserUp } from '../../../actions/authActions';
+import { authenticateUser } from '../../auth';
 
 class SignUp extends React.Component {
   constructor(props) {

@@ -3,9 +3,11 @@ import {Link, withRouter} from 'react-router-dom';
 import { connect } from 'react-redux';
 import { signUserIn } from '../../../actions/authActions';
 import jwt from 'jsonwebtoken';
+import {secret} from '../../config.js';
+import { authenticateUser } from '../../auth';
 
 
-const secret = process.env.SECRET_TOKEN;
+// const secret = process.env.SECRET_TOKEN;
 
 class Signin extends React.Component {
   constructor(props) {
@@ -20,18 +22,29 @@ class Signin extends React.Component {
   }
 
   componentWillMount(){
-    console.log(secret);
-    if(localStorage.getItem('x-auth')){
-      let token = localStorage.getItem('x-auth');
-      jwt.verify(token, secret, (err, decoded) => {
-        if (err) {
-          console.log(`failed to decode ${err}`);
-        } else {
-        console.log(`success ${decoded}`);
-        }
-      });
-      // this.props.history.push('/broadpage');
-    }
+    authenticateUser()
+    .then(status=>{
+      console.log(status);
+      this.props.history.push('/broadpage');
+    })
+    .catch(err=>{
+      console.log(err);
+    
+    });
+    // if(localStorage.getItem('x-auth')){
+    //   let token = localStorage.getItem('x-auth');
+    //   jwt.verify(token, secret, (err, decoded) => {
+    //     if (err) {
+    //       console.log(`failed to decode ${err}`);
+    //       localStorage.removeItem('x-auth');
+    //       localStorage.removeItem('email');
+    //       localStorage.removeItem('telephone');
+    //       localStorage.removeItem('username');
+    //     } else {
+    //       this.props.history.push('/broadpage');
+    //     }
+    //   });
+    // }
   }
 
   onChange(e){
