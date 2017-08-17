@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { SIGN_UP, SIGN_IN, SIGN_OUT } from '../constants';
+import { SIGN_UP, SIGN_IN, SIGN_OUT, RELOAD_USER_IN } from '../constants';
 
 const signUpSuccess = data => ({
   type: SIGN_UP,
@@ -14,6 +14,12 @@ const signInSuccess = data => ({
 const signOutSuccess = data => ({
   type: SIGN_OUT,
   data
+});
+
+const reloadUserInSuccess = (UserName, email, telephone) => ({
+  type: RELOAD_USER_IN,
+  UserName,
+  email, telephone
 });
 
 export function signUserUp(user) {
@@ -56,11 +62,14 @@ export function signUserIn(user) {
     .then(({ data }) => {
       dispatch(signInSuccess(data));
       localStorage.setItem('x-auth', data.token);
-      localStorage.setItem('username', data.UserName);
-      localStorage.setItem('email', data.email);
-      localStorage.setItem('telephone', data.telephone);
       return true;
     }, (err) => {
       console.log(err.message);
     });
+}
+
+export function reloadUserIn(UserName, email, telephone) {
+  return dispatch => (
+    dispatch(reloadUserInSuccess(UserName, email, telephone))
+  );
 }

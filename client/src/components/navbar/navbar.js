@@ -3,7 +3,7 @@ import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { signUserOut } from '../../actions/authActions';
 import { authenticateUser } from '../auth';
-// import { unloadGroups } from '../../actions/groupsActions';
+import { unloadGroups } from '../../actions/groupsActions';
 
 class NavBar extends React.Component {
   constructor(props){
@@ -27,6 +27,7 @@ class NavBar extends React.Component {
       this.setState({
         isAuth: true
       });
+      console.log('should update here');
     })
     .catch(err=>{
       console.log(err);

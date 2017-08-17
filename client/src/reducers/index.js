@@ -1,4 +1,4 @@
-import { SIGN_IN, SIGN_OUT, SIGN_UP } from '../constants';
+import { SIGN_IN, SIGN_OUT, SIGN_UP, RELOAD_USER_IN } from '../constants';
 
 const initialState = {
   UserName: '',
@@ -37,6 +37,14 @@ export default (state = initialState, action) => {
       email: '',
       telephone: '',
       groups: []
+    });
+
+    case RELOAD_USER_IN:
+    return Object.assign({}, state, {
+      UserName: action.UserName,
+      email: action.email,
+      telephone: action.telephone,
+      isLoggedIn: true
     });
 
     default:

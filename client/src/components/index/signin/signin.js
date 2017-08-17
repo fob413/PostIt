@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import {Link, withRouter} from 'react-router-dom';
 import { connect } from 'react-redux';
-import { signUserIn } from '../../../actions/authActions';
+import { signUserIn, reloadUserIn } from '../../../actions/authActions';
 import jwt from 'jsonwebtoken';
 import {secret} from '../../config.js';
 import { authenticateUser } from '../../auth';
@@ -24,6 +24,7 @@ class Signin extends React.Component {
   componentWillMount(){
     authenticateUser()
     .then(status=>{
+      this.props.reloadUserIn(status.UserName, status.email, status.telephone);
       this.props.history.push('/broadpage');
     })
     .catch(err=>{
@@ -136,5 +137,14 @@ class Signin extends React.Component {
   }
 }
 
+const mapStateToProps = state => (
+  {
+    auth: state.MyApp
+  }
+);
 
-export default connect(null, { signUserIn })(withRouter(Signin));
+
+export default connect(
+  mapStateToProps, 
+  { signUserIn, reloadUserIn }
+)(withRouter(Signin));

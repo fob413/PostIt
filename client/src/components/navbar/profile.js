@@ -5,24 +5,35 @@ class Profile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: '',
-      email: '',
-      telephone: ''
+      username: this.props.auth.UserName,
+      email: this.props.auth.email,
+      telephone: this.props.auth.telephone
     };
   }
 
   componentWillMount(){
     if(localStorage.getItem('x-auth')){
       this.setState({
-        username: localStorage.getItem('username'),
-        email: localStorage.getItem('email'),
-        telephone: localStorage.getItem('telephone')
+        username: this.props.auth.UserName,
+        email: this.props.auth.email,
+        telephone: this.props.auth.telephone
       }); 
     } else {
       this.props.history.push('/signin');
     }
   }
+
+  componentWillReceiveProps(nextProps) {
+    console.log('nextProps');
+    this.setState({
+      username: nextProps.auth.UserName,
+      email: this.props.auth.email,
+      telephone: this.props.auth.telephone
+    });
+  }
+
   render() {
+    console.log(this.state);
     return (
       <div className="container profile">
         <ul className="collection">
@@ -59,4 +70,10 @@ class Profile extends React.Component {
   }
 }
 
-export default Profile;
+const mapStateToProps = state => (
+  {
+    auth: state.MyApp
+  }
+);
+
+export default connect(mapStateToProps, {})(Profile);

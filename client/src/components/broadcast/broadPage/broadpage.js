@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { loadGroups, createNewGroup } from '../../../actions/groupsActions';
+import { reloadUserIn } from '../../../actions/authActions';
 import CreateGroup from './creategroup';
 import SearchGroups from './searchgroups';
 import Groups from './groups';
@@ -27,7 +28,9 @@ class BroadPage extends React.Component{
     // }
     authenticateUser()
     .then(status=>{
+      this.props.reloadUserIn(status.UserName, status.email, status.telephone);
       this.props.history.push('/broadpage');
+      this.props.loadGroups();
     })
     .catch(err=>{
       console.log(err);
@@ -36,18 +39,13 @@ class BroadPage extends React.Component{
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps.groups)
     this.setState({
       Groups: nextProps.groups
     });
   }
 
   onCreateGroup(groupname){
-    this.props.createNewGroup(groupname).then((res) => {
-      if (res) {
-        this.props.loadGroups();
-      }
-    });
+    this.props.createNewGroup(groupname);
   }
 
 
@@ -94,5 +92,5 @@ const mapStateToProps = state => (
 
 export default connect(
   mapStateToProps,
-  { loadGroups, createNewGroup }
+  { loadGroups, createNewGroup, reloadUserIn }
 )(BroadPage);

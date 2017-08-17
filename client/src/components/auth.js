@@ -8,18 +8,13 @@ export function authenticateUser() {
         jwt.verify(token, secret, (err, decoded) => {
           if (err) {
             localStorage.removeItem('x-auth');
-            localStorage.removeItem('email');
-            localStorage.removeItem('telephone');
-            localStorage.removeItem('username');
             reject(false);
           } else {
-            localStorage.setItem("username", decoded.UserName);
-            localStorage.setItem("email", decoded.email);
-            localStorage.setItem("telephone", decoded.telephone);
-            resolve(true);
+            resolve(decoded);
           }
         });
       } else {
+        localStorage.removeItem('x-auth');
         reject(false);
       }
   });
