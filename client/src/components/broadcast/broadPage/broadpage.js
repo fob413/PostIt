@@ -14,7 +14,8 @@ class BroadPage extends React.Component{
     super(props);
     this.state = {
       createGroup: false,
-      Groups: this.props.groups
+      Groups: this.props.groups,
+      isLoggedIn: this.props.auth.isLoggedIn
     };
     this.toggleCreateGroup = this.toggleCreateGroup.bind(this);
     this.onCreateGroup = this.onCreateGroup.bind(this);
@@ -27,21 +28,28 @@ class BroadPage extends React.Component{
     //   this.props.loadGroups();
     // }
     authenticateUser()
-    .then(status=>{
-      this.props.reloadUserIn(status.UserName, status.email, status.telephone);
-      this.props.history.push('/broadpage');
-      this.props.loadGroups();
-    })
-    .catch(err=>{
-      console.log(err);
-      this.props.history.push('/signin');
-    });
+    // .then(status=>{
+    //   this.props.reloadUserIn(status.UserName, status.email, status.telephone);
+    //   this.props.history.push('/broadpage');
+    //   this.props.loadGroups();
+    // })
+    // .catch(err=>{
+    //   console.log(err);
+    //   this.props.history.push('/signin');
+    // });
   }
 
   componentWillReceiveProps(nextProps) {
     this.setState({
-      Groups: nextProps.groups
+      Groups: nextProps.groups,
+      isLoggedIn:nextProps.auth.isLoggedIn
     });
+  }
+  
+  componentDidMount() {
+    if(!this.props.auth.isLoggedIn){
+      this.props.history.push('/signin');
+    }
   }
 
   onCreateGroup(groupname){
@@ -86,6 +94,7 @@ BroadPage.propTypes = {
 
 const mapStateToProps = state => (
   {
+    auth: state.MyApp,
     groups: state.Groups
   }
 );

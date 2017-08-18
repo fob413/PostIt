@@ -13,14 +13,6 @@ import '../style/style.css';
 
 const history = createBrowserHistory();
 
-const Header = () => (
-  <h3>This is my Header</h3>
-);
-
-const Footer = () => (
-  <h3>This is my Footer</h3>
-);
-
 const App = (props) => (
   <Router history={history}>
     <div>

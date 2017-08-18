@@ -22,20 +22,19 @@ class NavBar extends React.Component {
     //     isAuth: true
     //   });
     // }
-    authenticateUser()
-    .then(status=>{
-      this.setState({
-        isAuth: true
-      });
-      console.log('should update here');
-    })
-    .catch(err=>{
-      console.log(err);
-      this.setState({
-        isAuth: false
-      })
+    // authenticateUser()
+    // .then(status=>{
+    //   this.setState({
+    //     isAuth: true
+    //   });
+    // })
+    // .catch(err=>{
+    //   console.log(err);
+    //   this.setState({
+    //     isAuth: false
+    //   })
     
-    });
+    // });
   }
 
   componentWillReceiveProps(nextProps) {

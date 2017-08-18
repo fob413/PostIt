@@ -7,8 +7,10 @@ import thunk from 'redux-thunk';
 import App from './components/App';
 import rootReducer from './reducers/rootReducer';
 import 'react-materialize';
+import { authenticateUser } from './components/auth';
+import { RELOAD_USER_IN } from './constants';
 
-let store = createStore(
+const store = createStore(
   rootReducer,
   compose(
     applyMiddleware(thunk),
@@ -16,7 +18,12 @@ let store = createStore(
   )
 );
 
-console.log('loaded here');
+if (localStorage.getItem('x-auth')) {
+  authenticateUser(localStorage.getItem('x-auth'), store.dispatch);
+}
+
+store.subscribe(() => 
+console.log('ndjnjndj', store.getState()))
 
 ReactDOM.render(
   <Provider store={store} >

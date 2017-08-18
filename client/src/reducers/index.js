@@ -41,9 +41,9 @@ export default (state = initialState, action) => {
 
     case RELOAD_USER_IN:
     return Object.assign({}, state, {
-      UserName: action.UserName,
-      email: action.email,
-      telephone: action.telephone,
+      UserName: action.data.UserName,
+      email: action.data.email,
+      telephone: action.data.telephone,
       isLoggedIn: true
     });
 

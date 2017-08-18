@@ -14,7 +14,8 @@ class Signin extends React.Component {
     super(props);
     this.state = {
       UserName: '',
-      password: ''
+      password: '',
+      isLoggedIn: this.props.auth.isLoggedIn
     };
 
     this.onChange = this.onChange.bind(this);
@@ -22,29 +23,28 @@ class Signin extends React.Component {
   }
 
   componentWillMount(){
-    authenticateUser()
-    .then(status=>{
-      this.props.reloadUserIn(status.UserName, status.email, status.telephone);
-      this.props.history.push('/broadpage');
-    })
-    .catch(err=>{
-      console.log(err);
+    // authenticateUser()
+    // .then(status=>{
+    //   this.props.reloadUserIn(status.UserName, status.email, status.telephone);
+    //   this.props.history.push('/broadpage');
+    // })
+    // .catch(err=>{
+    //   console.log(err);
     
+    // });
+  }
+  componentWillReceiveProps(nextProps){
+    this.setState({
+      isLoggedIn: nextProps.auth.isLoggedIn
     });
-    // if(localStorage.getItem('x-auth')){
-    //   let token = localStorage.getItem('x-auth');
-    //   jwt.verify(token, secret, (err, decoded) => {
-    //     if (err) {
-    //       console.log(`failed to decode ${err}`);
-    //       localStorage.removeItem('x-auth');
-    //       localStorage.removeItem('email');
-    //       localStorage.removeItem('telephone');
-    //       localStorage.removeItem('username');
-    //     } else {
-    //       this.props.history.push('/broadpage');
-    //     }
-    //   });
-    // }
+    console.log('updating state');
+  }
+
+  componentDidMount() {
+    console.log(`on component did mount: ${this.props.auth.isLoggedIn}`);
+    if (this.props.auth.isLoggedIn){
+      this.props.history.push('/broadpage');
+    }
   }
 
   onChange(e){
@@ -63,6 +63,7 @@ class Signin extends React.Component {
   }
 
   render() {
+    console.log(`component on render: ${this.props.auth.isLoggedIn}`);
     return (
       <div className="container">
         <div className="row center-align">
