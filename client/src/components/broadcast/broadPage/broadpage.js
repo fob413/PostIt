@@ -50,6 +50,7 @@ class BroadPage extends React.Component{
     if(!this.props.auth.isLoggedIn){
       this.props.history.push('/signin');
     }
+    this.props.loadGroups();
   }
 
   onCreateGroup(groupname){
@@ -71,6 +72,7 @@ class BroadPage extends React.Component{
   }
 
   render() {
+    console.log(this.state.Groups)
     return (
       <div className="container">
         <CreateGroup toggleCreateGroup={this.toggleCreateGroup} />

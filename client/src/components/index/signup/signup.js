@@ -11,7 +11,8 @@ class SignUp extends React.Component {
       UserName: '',
       email: '',
       telephone: '',
-      password: ''
+      password: '',
+      isLoggedIn: this.props.auth.isLoggedIn
     };
 
     this.onChange = this.onChange.bind(this);
@@ -19,15 +20,28 @@ class SignUp extends React.Component {
   }
 
   componentWillMount(){
-    authenticateUser()
-    .then(status=>{
-      this.props.history.push('/broadpage');
-    })
-    .catch(err=>{
-      console.log(err);
+    // authenticateUser()
+    // .then(status=>{
+    //   this.props.history.push('/broadpage');
+    // })
+    // .catch(err=>{
+    //   console.log(err);
     
+    // });
+  }
+
+  componentDidMount () {
+    if (this.props.auth.isLoggedIn){
+      this.props.history.push('/broadpage');
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      isLoggedIn: nextProps.auth.isLoggedIn
     });
   }
+
 
   onChange(e) {
     this.setState({
@@ -153,5 +167,13 @@ class SignUp extends React.Component {
   }
 }
 
+const mapStateToProps = state => (
+  {
+    auth: state.MyApp
+  }
+);
 
-export default connect(null, { signUserUp })(withRouter(SignUp));
+export default connect(
+  mapStateToProps, 
+  { signUserUp }
+)(withRouter(SignUp));

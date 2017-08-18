@@ -23,6 +23,7 @@ class Signin extends React.Component {
   }
 
   componentWillMount(){
+     console.log(`on component will mount: ${this.props.auth.isLoggedIn}`);
     // authenticateUser()
     // .then(status=>{
     //   this.props.reloadUserIn(status.UserName, status.email, status.telephone);
@@ -33,6 +34,7 @@ class Signin extends React.Component {
     
     // });
   }
+
   componentWillReceiveProps(nextProps){
     this.setState({
       isLoggedIn: nextProps.auth.isLoggedIn
