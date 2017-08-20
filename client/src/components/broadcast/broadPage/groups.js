@@ -6,7 +6,8 @@ class Groups extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      Groups: this.props.groups
+      Groups: this.props.groups,
+      test: 1
     };
 
     this.log = this.log.bind(this);
@@ -24,29 +25,28 @@ class Groups extends React.Component {
   }
 
   render() {
-    if (this.state.Groups.length > 0) {
-      return(
-        <div>
-          {this.state.Groups.map((group, i) => {
-            return (
-              <div className="row" key={i}>
-                <div className="col s12 m12">
-                  <Group
-                    showGroup={group.Group}
-                  />
+    return (
+      <div>
+        {(this.state.Groups.length > 0) ?
+          <div>
+            {this.state.Groups.map((group, i) => {
+              return (
+                <div className="row" key={i}>
+                  <div className="col s12 m12">
+                    <Group 
+                      showGroup={group.Group}
+                    />
+                  </div>
                 </div>
-              </div>
-            );
-          })}
-        </div>
-      );
-    } else {
-      return(
-        <div className="center-align">
-          <h4>CREATE YOUR FIRST GROUP</h4>
-        </div>
-      );
-    }
+              );
+            })}
+          </div> :
+          <div className="center-align">
+            <h4>CREATE YOUR FIRST GROUP</h4>
+          </div>
+        }
+      </div>
+    );
   }
 }
 

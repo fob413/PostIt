@@ -47,6 +47,7 @@ class NavBar extends React.Component {
     e.preventDefault();
     this.props.signUserOut()
     .then((res) => {
+      this.props.unloadGroups();
       if (res) {
         this.setState({
           isAuth: false
@@ -64,15 +65,15 @@ class NavBar extends React.Component {
         {isAuth && (
           <nav>
             <div className="nav-wrapper green darken-4">
-              <a className="brand-logo center" href="#">
-              <Link to="/broadpage">
+           
+              <Link className="brand-logo center" to="/broadpage">
                 <img
                   width="70px"
                   alt="PostIt Logo"
                   src={require("../../image/postitL.png")}
                 />
               </Link>
-              </a>
+            
               <ul className="left" id="nav-mobile">
                 <li>
                   <Link to="/profile">
@@ -112,8 +113,8 @@ NavBar.propTypes = {
 const mapStateToProps = state => (
  {
     auth: state.MyApp,
-    //groups: state.Groups
+    groups: state.Groups
  }
 );
 
-export default connect(mapStateToProps, { signUserOut })(withRouter(NavBar));
+export default connect(mapStateToProps, { signUserOut, unloadGroups })(withRouter(NavBar));

@@ -43,3 +43,9 @@
 .boardMessage{
   font-size: 10px;
 }
+
+.addUser{
+  height: 400px;
+  overflow-x: scroll;
+  border: 0.5px solid black;
+}

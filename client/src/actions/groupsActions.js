@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { LOAD_GROUPS } from '../constants';
+import { LOAD_GROUPS, UNLOAD_GROUPS  } from '../constants';
 
 const loadGroupSuccess = data => ({
   type: LOAD_GROUPS,
@@ -8,6 +8,10 @@ const loadGroupSuccess = data => ({
 
 const createGroupSuccess = data => ({
   // do something
+})
+
+const unloadGroupsSuccess = data => ({
+  type: UNLOAD_GROUPS
 })
 
 export function loadGroups() {
@@ -26,13 +30,12 @@ export function loadGroups() {
 
 export function createNewGroup(GroupName) {
   return dispatch => {
-    axios.post(
+   return axios.post(
       'api/group',
       {GroupName},
       {headers: {'x-auth': localStorage.getItem('x-auth')}}
     )
     .then(({ data }) => {
-      console.log(data);
       return true;
     }, (err) => {
       console.log(err.message);
@@ -41,5 +44,7 @@ export function createNewGroup(GroupName) {
 }
 
 export function unloadGroups() {
-  console.log('time to unload groups');
+  return dispatch => (
+    dispatch(unloadGroupsSuccess())
+  );
 }

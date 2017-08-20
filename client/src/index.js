@@ -22,9 +22,6 @@ if (localStorage.getItem('x-auth')) {
   authenticateUser(localStorage.getItem('x-auth'), store.dispatch);
 }
 
-store.subscribe(() => 
-console.log('ndjnjndj', store.getState()))
-
 ReactDOM.render(
   <Provider store={store} >
     <Router>

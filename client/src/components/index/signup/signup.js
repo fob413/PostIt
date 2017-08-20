@@ -40,6 +40,9 @@ class SignUp extends React.Component {
     this.setState({
       isLoggedIn: nextProps.auth.isLoggedIn
     });
+    if (nextProps.auth.isLoggedIn){
+      this.props.history.push('/broadpage');
+    }
   }
 
 

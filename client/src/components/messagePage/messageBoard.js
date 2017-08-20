@@ -1,27 +1,48 @@
 import React, {PropTypes} from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 import { authenticateUser } from '../auth';
 import DisplayMessage from './displayMessage';
+import PlatformUsers from './platformUsers';
+import { 
+  sendMessage, 
+  loadGroupMessages, 
+  loadPlatformUsers,
+  loadGroupUsers
+} from '../../actions/messageActions';
 
 class MessageBoard extends React.Component {
   constructor(props) {
     super(props);
     this.onSend = this.onSend.bind(this);
     this.state = ({
-      messages: []
+      groupId: this.props.Messages.groupId,
+      messages: [],
+      PlatformUsers: [],
+      isLoggedIn: this.props.auth.isLoggedIn,
+      addUser: "",
+      groupUsers: []
     });
+
+    this.inputUser = this.inputUser.bind(this);
   }
 
-  componentWillMount() {
-    authenticateUser()
-    .then(status=>{
-      // reload message content from local storage
-      this.props.history.push('/broadpage');
-    })
-    .catch(err=>{
-      this.props.history.push('/signin');
-    
+  componentDidMount() {
+    this.props.loadGroupMessages(this.state.groupId);
+    this.props.loadPlatformUsers();
+    this.props.loadGroupUsers(this.state.groupId);
+  }
+
+  componentWillReceiveProps(nextProps){
+    this.setState({
+      isLoggedIn: nextProps.auth.isLoggedIn,
+      messages: nextProps.Messages.messages,
+      PlatformUsers: nextProps.Messages.PlatformUsers,
+      groupUsers: nextProps.Messages.groupUsers
     });
+    if (!nextProps.auth.isLoggedIn) {
+      this.props.history.push('/broadpage');
+    }
   }
 
   onSend(e){
@@ -30,8 +51,19 @@ class MessageBoard extends React.Component {
     _message.value = _message.value.trim();
     if (_message.value.length > 0) {
       alert(_message.value, _priority.value);
+      this.props.sendMessage(_message.value, this.props.Messages.groupId)
+      .then(() => this.props.loadGroupMessages(this.state.groupId),
+      err => console.log(err));
     }
     _message.value = "";
+  }
+
+  inputUser() {
+    const { _user } = this.refs;
+    _user.value = _user.value.trim();
+    this.setState({
+      addUser: _user.value
+    });
   }
 
 
@@ -51,16 +83,18 @@ class MessageBoard extends React.Component {
             <div className="col s8">
               <div className="message">
                 <ul className="collection">
-                  {this.state.messages.map((message, i) => {
-                    return (
-                      <div key={i}>
-                        <DisplayMessage
-                          content={message.content}
-                          author={message.authorsName}
-                        />
-                      </div>
-                    );
-                  })}
+                  {(this.state.messages.length > 0) &&
+                    this.state.messages.map((message, i) => {
+                      return (
+                        <div key={i}>
+                          <DisplayMessage
+                            content={message.content}
+                            author={message.authorsName}
+                          />
+                        </div>
+                      );
+                    })
+                  }
                 </ul>
               </div>
 
@@ -104,13 +138,43 @@ class MessageBoard extends React.Component {
                 <form className="col s12">
                   <div className="row">
                     <input
+                      ref="_user"
                       className="validate"
                       type="text"
                       placeholder="Add User"
+                      onChange={this.inputUser}
                     />
                   </div>
                 </form>
               </div>
+
+              {(this.state.addUser.length > 0) && 
+                <div>
+                  {(this.state.PlatformUsers.length > 0) && 
+                  <ul className="collection">
+                    {this.state.PlatformUsers.map((platformUser, i) => {
+                      return(
+                        <PlatformUsers key={i} platformUser={platformUser} />
+                      );
+                    })}
+                  </ul>
+                  }
+                </div>
+              }
+
+              {this.state.groupUsers.length > 0 &&
+                <div>
+                  {this.state.groupUsers.map((user, i) => {
+                    return (
+                      <ul className="collection" key={i}>
+                        <li className="collection-item">
+                          {user.User.UserName}
+                        </li>
+                      </ul>
+                    )
+                  })}
+                </div>
+              }
             </div>
           </div>
         </div>
@@ -121,7 +185,19 @@ class MessageBoard extends React.Component {
 
 MessageBoard.propTypes = {
   sendMessage: PropTypes.func.isRequired,
-  toggleMessageBoard: PropTypes.func.isRequired
+  loadGroupMessages: PropTypes.func.isRequired,
+  loadPlatformUsers: PropTypes.func.isRequired,
+  loadGroupUsers: PropTypes.func.isRequired
 };
 
-export default MessageBoard;
+const mapStateToProps = state => (
+  {
+    auth: state.MyApp,
+    Messages: state.Messages
+  }
+);
+
+export default connect(
+  mapStateToProps,
+  { sendMessage, loadGroupMessages, loadPlatformUsers, loadGroupUsers }
+) (withRouter(MessageBoard));

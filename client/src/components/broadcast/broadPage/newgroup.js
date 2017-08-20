@@ -13,7 +13,7 @@ class NewGroup extends React.Component {
     let groupname = _groupName.value.trim();
     if(groupname && groupname.length > 0) {
       this.props.toggleCreateGroup();
-      this.props.onCreateGroup(groupname);
+      // this.props.onCreateGroup(groupname);
       _groupName.value = '';
     } else {
       console.log('Group name should not be empty');

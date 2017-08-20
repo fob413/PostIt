@@ -23,7 +23,6 @@ import { RELOAD_USER_IN } from '../constants';
 
 export function authenticateUser(token, dispatch) {
   jwt.verify(token, secret, (err, decoded) => {
-    console.log('First')
     if (!err) {
       const data = {
         UserName : decoded.UserName,

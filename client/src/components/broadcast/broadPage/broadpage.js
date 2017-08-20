@@ -27,7 +27,7 @@ class BroadPage extends React.Component{
     // }else{
     //   this.props.loadGroups();
     // }
-    authenticateUser()
+    // authenticateUser()
     // .then(status=>{
     //   this.props.reloadUserIn(status.UserName, status.email, status.telephone);
     //   this.props.history.push('/broadpage');
@@ -38,13 +38,6 @@ class BroadPage extends React.Component{
     //   this.props.history.push('/signin');
     // });
   }
-
-  componentWillReceiveProps(nextProps) {
-    this.setState({
-      Groups: nextProps.groups,
-      isLoggedIn:nextProps.auth.isLoggedIn
-    });
-  }
   
   componentDidMount() {
     if(!this.props.auth.isLoggedIn){
@@ -53,8 +46,15 @@ class BroadPage extends React.Component{
     this.props.loadGroups();
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      Groups: nextProps.groups,
+      isLoggedIn:nextProps.auth.isLoggedIn
+    });
+  }
+
   onCreateGroup(groupname){
-    this.props.createNewGroup(groupname);
+    this.props.createNewGroup(groupname).then(() => this.props.loadGroups());
   }
 
 
@@ -72,7 +72,6 @@ class BroadPage extends React.Component{
   }
 
   render() {
-    console.log(this.state.Groups)
     return (
       <div className="container">
         <CreateGroup toggleCreateGroup={this.toggleCreateGroup} />
@@ -92,6 +91,8 @@ class BroadPage extends React.Component{
 * Validation of the components properties
 */
 BroadPage.propTypes = {
+  loadGroups: PropTypes.func.isRequired,
+  createNewGroup: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => (

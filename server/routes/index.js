@@ -53,7 +53,7 @@ module.exports = (app) => {
   // app.post('/api/group/:groupId/message', messagesController.create);
   app.post('/api/group/:groupId/message', messagesController.sendMessage);
 
-  // logged in users retrieve their messages
+  // logged in users retrieve their messages in a particular group
   app.get('/api/group/:groupId/messages', messagesController.listMessages);
 
   // list all the members

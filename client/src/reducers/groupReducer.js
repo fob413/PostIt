@@ -1,7 +1,7 @@
-import { LOAD_GROUPS } from '../constants';
+import { LOAD_GROUPS, UNLOAD_GROUPS } from '../constants';
 
 const initialState = {
-  Groups: []
+  Groups: [ ]
 };
 
 export default (state = initialState, action) => {
@@ -10,6 +10,11 @@ export default (state = initialState, action) => {
       return [
         ...action.data
       ];
+
+      case UNLOAD_GROUPS:
+        return {
+          Groups: []
+        };
 
     default:
       return state;

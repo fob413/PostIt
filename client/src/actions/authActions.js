@@ -19,7 +19,8 @@ const signOutSuccess = data => ({
 const reloadUserInSuccess = (UserName, email, telephone) => ({
   type: RELOAD_USER_IN,
   UserName,
-  email, telephone
+  email,
+  telephone
 });
 
 export function signUserUp(user) {

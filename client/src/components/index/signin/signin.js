@@ -2,7 +2,6 @@ import React, {PropTypes} from 'react';
 import {Link, withRouter} from 'react-router-dom';
 import { connect } from 'react-redux';
 import { signUserIn, reloadUserIn } from '../../../actions/authActions';
-import jwt from 'jsonwebtoken';
 import {secret} from '../../config.js';
 import { authenticateUser } from '../../auth';
 
@@ -22,29 +21,17 @@ class Signin extends React.Component {
     this.handleSignIn = this.handleSignIn.bind(this);
   }
 
-  componentWillMount(){
-     console.log(`on component will mount: ${this.props.auth.isLoggedIn}`);
-    // authenticateUser()
-    // .then(status=>{
-    //   this.props.reloadUserIn(status.UserName, status.email, status.telephone);
-    //   this.props.history.push('/broadpage');
-    // })
-    // .catch(err=>{
-    //   console.log(err);
-    
-    // });
+  componentDidMount() {
+    if (this.props.auth.isLoggedIn){
+      this.props.history.push('/broadpage');
+    }
   }
 
   componentWillReceiveProps(nextProps){
     this.setState({
       isLoggedIn: nextProps.auth.isLoggedIn
     });
-    console.log('updating state');
-  }
-
-  componentDidMount() {
-    console.log(`on component did mount: ${this.props.auth.isLoggedIn}`);
-    if (this.props.auth.isLoggedIn){
+    if (nextProps.auth.isLoggedIn) {
       this.props.history.push('/broadpage');
     }
   }
@@ -61,11 +48,10 @@ class Signin extends React.Component {
       if (res) {
         this.props.history.push('/broadpage');
       }
-    });
+    }, err => console.log(err));
   }
 
   render() {
-    console.log(`component on render: ${this.props.auth.isLoggedIn}`);
     return (
       <div className="container">
         <div className="row center-align">
