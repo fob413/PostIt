@@ -18,13 +18,15 @@ class MessageBoard extends React.Component {
     this.state = ({
       groupId: this.props.Messages.groupId,
       messages: [],
-      PlatformUsers: [],
       isLoggedIn: this.props.auth.isLoggedIn,
       addUser: "",
-      groupUsers: []
+      PlatformUsers: [],
+      groupUsers: [],
+      otherUsers: []
     });
 
     this.inputUser = this.inputUser.bind(this);
+    this.filterUsers = this.filterUsers.bind(this);
   }
 
   componentDidMount() {
@@ -43,6 +45,11 @@ class MessageBoard extends React.Component {
     if (!nextProps.auth.isLoggedIn) {
       this.props.history.push('/broadpage');
     }
+  }
+
+  componentDidUpdate() {
+    // this.filterUsers();
+    console.log('here');
   }
 
   onSend(e){
@@ -66,8 +73,27 @@ class MessageBoard extends React.Component {
     });
   }
 
+  filterUsers(){
+    let filteredUsers = [];
+    this.state.PlatformUsers.forEach((pUser) => {
+      let condition = false;
+      this.state.groupUsers.forEach((gUser) => {
+        if (pUser.UserName == gUser.User.UserName){
+          condition = true;
+        }
+      });
+      if(!condition) {
+        filteredUsers.push(pUser);
+      }
+    });
+    this.setState({
+      otherUsers: filteredUsers
+    });
+  }
+
 
   render () {
+    console.log(this.state.otherUsers);
     return (
       <div className="container">
         <div className="row messageBoard">
