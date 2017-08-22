@@ -21,12 +21,30 @@ PostIt is a simple application that allows friends and colleagues create groups 
   - Critical: in-app, email and sms notifications
 * Users can see other users a group that have read messages sent out
 
-## Template Images
-![Sign Up](https://github.com/fob413/PostIt/blob/newDatabaseBadge/template/image/Tsignup.png)
-![Sign In](https://github.com/fob413/PostIt/blob/newDatabaseBadge/template/image/Tsignin.png)
-![Message Board](https://github.com/fob413/PostIt/blob/newDatabaseBadge/template/image/Tmessageboard.png)
-![Create Group](https://github.com/fob413/PostIt/blob/newDatabaseBadge/template/image/Tcreategroup.png)
-![Post Message](https://github.com/fob413/PostIt/blob/newDatabaseBadge/template/image/Tpostmessage.png)
+## Installation
+- Clone the repository
+- Install NodeJs
+- Install Postgres
+- Navigate to directory `cd PostIt`
+- Install the application's dependencies `npm install`
+- Setup Database according to setting in `server/config/config.json`
+- Migrate to database `sequelize db:migrate`
+- To start the application, run `npm start`
+
+## Built With
+### Front End
+- React
+- Redux
+- React Materialize
+
+### Back End
+- Node
+- Express
+- Sequelize
+- Postgres
+
+## Tests
+Tests were run with Mocha and Chai on all functions and Api routes
 
 ## Api Routes
 1. Api routes for users to create accounts and login to the application
@@ -70,14 +88,12 @@ GET:/api/group/<groupid>/messages
 - userId (req-header['user-id'])
 - groupId (req.params.groupId)
 
-## Built With
-UserInterface - Built with HTML, CSS, BOOTSTRAP 
-- NodeJs - Runs Javascript on server
-- Express - Web application framework that provides features for the application
-- Babel - Used to transpile Javascript written in ES6 down to ES5
-
-## Tests
-Tests were run with Mocha and Chai on all functions and Api routes
+## Template Images
+![Sign Up](https://github.com/fob413/PostIt/blob/newDatabaseBadge/template/image/Tsignup.png)
+![Sign In](https://github.com/fob413/PostIt/blob/newDatabaseBadge/template/image/Tsignin.png)
+![Message Board](https://github.com/fob413/PostIt/blob/newDatabaseBadge/template/image/Tmessageboard.png)
+![Create Group](https://github.com/fob413/PostIt/blob/newDatabaseBadge/template/image/Tcreategroup.png)
+![Post Message](https://github.com/fob413/PostIt/blob/newDatabaseBadge/template/image/Tpostmessage.png)
 
 ### Author
 Funsho Oluyole-Balogun
