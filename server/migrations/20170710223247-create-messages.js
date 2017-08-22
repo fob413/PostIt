@@ -15,6 +15,11 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
+      priorityValue: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        defaultValue: 'NORMAL'
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

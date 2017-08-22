@@ -1,5 +1,6 @@
 import db from '../models/index';
 import jwt from 'jsonwebtoken';
+import { sendMail, sendSMS } from './priority';
 
 const Users = db.Users;
 const Members = db.Members;
@@ -52,6 +53,7 @@ export default {
                       }
                     })
                     .then((member) => {
+                      console.log(req.body.priority);
                       if(!member) {
                         return res.status(400).send({
                           success: false,
@@ -63,9 +65,37 @@ export default {
                           authorsName: user.UserName,
                           content: req.body.content,
                           groupId: req.params.groupId,
-                          userId: user.id
+                          userId: user.id,
+                          priorityValue: req.body.priority
                         })
-                        .then(messages => res.status(201).send(messages))
+                        .then(messages => {
+                          Members
+                          .findAll({
+                            where: {
+                              groupId: req.params.groupId
+                            },
+                            attributes: ['userId'],
+                            include: [
+                              {
+                                model: Users,
+                                attributes: ['UserName', 'telephone', 'email']
+                              }
+                            ]
+                          }).then((users) => {
+                            console.log('extra features below');
+                            if ( req.body.priority == 'URGENT' ){
+                              sendMail(users, messages.content);
+                            }
+                            if (req.body.priority == 'CRITICAL') {
+                              sendMail(users, messages.content);
+                              sendSMS(users, messages.content);
+                            }
+                            res.status(201).send(messages);
+                          })
+                          .catch(err => {
+                            res.status(400).send(err.message);
+                          });
+                        })
                         .catch(err => res.status(400).send({
                           success: false,
                           message: err.message

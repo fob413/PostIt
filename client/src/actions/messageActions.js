@@ -33,14 +33,16 @@ export function loadCurrentGroup(groupId) {
   );
 }
 
-export function sendMessage(message, groupId) {
+export function sendMessage(message, groupId, priority) {
   return dispatch => {
     return axios.post(
       `api/group/${groupId}/message`,
-      {content: message},
+      {content: message, priority: priority},
       {headers: {'x-auth': localStorage.getItem('x-auth')}}
     )
     .then(({ data }) => {
+      console.log(message);
+      console.log(priority);
       return true;
     }, (err) => {
       console.log(err.message);

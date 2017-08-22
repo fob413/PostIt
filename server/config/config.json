@@ -11,7 +11,7 @@
   },
   "test": {
     "dialect": "postgres",
-    "use_env_variable": "DATABASE_URL",
+    "use_env_variable": "TEST_URL",
     "secret": "randomsecret"
   }
 }

@@ -57,10 +57,14 @@ class MessageBoard extends React.Component {
     e.preventDefault();
     _message.value = _message.value.trim();
     if (_message.value.length > 0) {
-      alert(_message.value, _priority.value);
-      this.props.sendMessage(_message.value, this.props.Messages.groupId)
+      this.props.sendMessage(
+        _message.value, 
+        this.props.Messages.groupId, 
+        _priority.value
+      )
       .then(() => this.props.loadGroupMessages(this.state.groupId),
       err => console.log(err));
+      _priority.value = "NORMAL";
     }
     _message.value = "";
   }
@@ -99,7 +103,7 @@ class MessageBoard extends React.Component {
         <div className="row messageBoard">
         <Link to="/broadpage">
           <img
-          width="30px"
+          width="70px"
             alt="back"
             src={require("../../image/back.png")}
             className="click"
@@ -141,9 +145,9 @@ class MessageBoard extends React.Component {
                       ref="_priority" 
                       className="browser-default"
                     >
-                      <option value="1">Normal</option>
-                      <option value="2">Urgent</option>
-                      <option value="3">Critical</option>
+                      <option value="NORMAL">Normal</option>
+                      <option value="URGENT">Urgent</option>
+                      <option value="CRITICAL">Critical</option>
                     </select>
                   </div>
                   
