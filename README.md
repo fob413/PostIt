@@ -45,6 +45,8 @@ PostIt is a simple application that allows friends and colleagues create groups 
 
 ## Tests
 Tests were run with Mocha and Chai on all functions and Api routes
+### Run Tests
+- After Installation of the application, run `npm test`
 
 ## Api Routes
 1. Api routes for users to create accounts and login to the application
