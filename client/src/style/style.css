@@ -49,3 +49,11 @@
   overflow-x: scroll;
   border: 0.5px solid black;
 }
+
+.hide{
+  display: none;
+}
+
+.show{
+  display: block;
+}

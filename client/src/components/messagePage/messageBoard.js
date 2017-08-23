@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { authenticateUser } from '../auth';
+import $ from 'jquery';
 import DisplayMessage from './displayMessage';
 import PlatformUsers from './platformUsers';
 import { 
@@ -22,7 +23,7 @@ class MessageBoard extends React.Component {
       addUser: "",
       PlatformUsers: [],
       groupUsers: [],
-      otherUsers: []
+      otherUsers: [],
     });
 
     this.inputUser = this.inputUser.bind(this);
@@ -49,7 +50,7 @@ class MessageBoard extends React.Component {
 
   componentDidUpdate() {
     // this.filterUsers();
-    console.log('here');
+    // console.log('here');
   }
 
   onSend(e){
@@ -97,7 +98,18 @@ class MessageBoard extends React.Component {
 
 
   render () {
-    console.log(this.state.otherUsers);
+    $(() => {
+      $('body #input').on('focus', () => {
+        $('#hide').removeClass('hide');
+        $('#hide').addClass('show');
+      });
+
+      $('body #input').on('focusout', () => {
+        $('#hide').removeClass('show');
+        $('#hide').addClass('hide');
+      })
+    });
+
     return (
       <div className="container">
         <div className="row messageBoard">
@@ -168,6 +180,7 @@ class MessageBoard extends React.Component {
                 <form className="col s12">
                   <div className="row">
                     <input
+                      id="input"
                       ref="_user"
                       className="validate"
                       type="text"
@@ -178,19 +191,20 @@ class MessageBoard extends React.Component {
                 </form>
               </div>
 
-              {(this.state.addUser.length > 0) && 
-                <div>
-                  {(this.state.PlatformUsers.length > 0) && 
-                  <ul className="collection">
-                    {this.state.PlatformUsers.map((platformUser, i) => {
-                      return(
-                        <PlatformUsers key={i} platformUser={platformUser} />
-                      );
-                    })}
-                  </ul>
-                  }
-                </div>
-              }
+              <div id="hide" className="hide">
+                {(this.state.PlatformUsers.length > 0) && 
+                <ul className="collection">
+                  {this.state.PlatformUsers.filter((item) => {
+                    return item.UserName.startsWith(this.state.addUser);
+                  })
+                  .map((platformUser, i) => {
+                    return(
+                      <PlatformUsers key={i} platformUser={platformUser} />
+                    );
+                  })}
+                </ul>
+                }
+              </div>
 
               {this.state.groupUsers.length > 0 &&
                 <div>

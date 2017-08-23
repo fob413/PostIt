@@ -80,7 +80,6 @@ class BroadPage extends React.Component{
           createGroup={this.state.createGroup}
           onCreateGroup={this.onCreateGroup}
         />
-        <SearchGroups />
         <Groups groups={this.state.Groups}/>
       </div>
     );
