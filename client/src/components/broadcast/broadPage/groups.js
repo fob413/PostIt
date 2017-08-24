@@ -33,7 +33,9 @@ class Groups extends React.Component {
         {(this.state.Groups.length > 0) ?
           <div>
             {this.state.Groups.filter((item) => {
-              return item.Group.GroupName.toLowerCase().startsWith(this.state.search.toLowerCase());
+              return item.Group.GroupName
+              .toLowerCase()
+              .startsWith(this.state.search.toLowerCase());
             })
             .map((group, i) => {
               return (

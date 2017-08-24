@@ -57,3 +57,11 @@
 .show{
   display: block;
 }
+
+.forgotInput{
+  margin: auto;
+}
+
+.forgotBold{
+  font-weight: bold
+}

@@ -97,6 +97,10 @@ class Signin extends React.Component {
 
               </div>
 
+              <div>
+                <Link className="green-text text-darken-1" to="/reset/password">Forgot Password?</Link>
+              </div>
+
               <div className="row center-align">
                 <button
                   className="btn-large green darken-4 waves effect"

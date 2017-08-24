@@ -27,6 +27,14 @@ module.exports = {
         allowNull: false,
         unique: true,
       },
+      resetPasswordToken: {
+        type: Sequelize.STRING,
+        allowNull: true
+      },
+      expiryTime: {
+        type: Sequelize.STRING,
+        allowNull: true
+      },
       isLoggedin: {
         type: Sequelize.BOOLEAN,
         defaultValue: true,

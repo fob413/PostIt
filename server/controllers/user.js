@@ -1,6 +1,8 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import db from '../models/index';
+import crypto from 'crypto';
+import { sendResetMail } from './priority';
 
 require('dotenv').config();
 
@@ -20,9 +22,6 @@ const invalid = {
 
 export default {
   list(req, res) {
-    // return Users
-    // .all()
-    // .then(user => res.status(200).send(user));
 
     if (req.header('x-auth')) {
       const token = req.header('x-auth');
@@ -211,6 +210,56 @@ export default {
       return res.status(403).send({
         success: false,
         message: 'no token provided'
+      });
+    }
+  },
+
+  forgot(req, res) {
+    if (!req.body.email) {
+      res.status(400).send({
+        success: false,
+        message: 'No email provided'
+      });
+    } else {
+      return Users.findOne({
+        where: {
+          email: req.body.email
+        }
+      })
+      .then(user => {
+        if (!user) {
+          res.status(400).send({
+            success: false,
+            message: 'user not found'
+          });
+        } else {
+          const token = crypto.randomBytes(20).toString('hex');
+          user.update({
+            resetPasswordToken: token,
+            expiryTime: Date.now() + 3600000
+          }, err => {
+            res.status(400).send({
+              success: false,
+              message: err.message
+            });
+          })
+          .then(updatedUser => {
+            res.send({
+              success: true
+            });
+            sendResetMail(updatedUser.resetPasswordToken, updatedUser.email, req.headers.host);
+          }, err => {
+            res.status(400).send({
+              success: false,
+              message: err.message
+            });
+          });
+        }
+      }, err => {
+        res.status(400).send({
+          success: false,
+          message: err.message
+        });
       });
     }
   }

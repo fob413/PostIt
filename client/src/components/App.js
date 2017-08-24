@@ -8,6 +8,7 @@ import BroadPage from '../components/broadcast/broadPage/broadpage';
 import Navbar from '../components/navbar/navbar';
 import Profile from '../components/navbar/profile';
 import MessageBoard from '../components/messagePage/messageBoard';
+import Reset from '../components/index/password/reset';
 import { authenticateUser } from './auth';
 import '../style/style.css';
 
@@ -23,6 +24,7 @@ const App = (props) => (
           <Route path="/broadpage" component={BroadPage} />
           <Route path="/messageboard" component={MessageBoard} />
           <Route path="/profile" component={Profile} />
+          <Route path="/reset/password" component={Reset} />
           <Route component={PageNotFound} />
         </Switch>
     </div>

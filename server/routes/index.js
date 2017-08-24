@@ -6,10 +6,13 @@ import messagesController from '../controllers/messages';
 import clearController from '../controllers/clear';
 
 module.exports = (app) => {
-  // a get all for the starty page of the app
-  app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '../../client/src/index.html'));
-  });
+  app.get('/*', (req, res) => {
+    console.log('I got here');
+      res.status(200)
+      .sendFile(
+      path.join(__dirname, '../index.html'
+    ));
+  });  
 
   // a get all api for users signup
   app.get('/api/user/signup', (req, res) => res.status(200).send({
@@ -33,6 +36,9 @@ module.exports = (app) => {
 
   // signout a user from the application
   app.get('/api/user/signout', usersController.signout);
+
+  // forgot password api for the user
+  app.post('/api/forgot/password', usersController.forgot);
 
   // list all the users on the platform
   app.get('/api/users/list', usersController.list);
@@ -67,4 +73,5 @@ module.exports = (app) => {
   app.get('/api/clear/messages', clearController.clearMessages);
   // list all the messages
   // app.get('/api/group/:groupId/message', messagesController.list);
+  // a get all for the starty page of the app
 };
