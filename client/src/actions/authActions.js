@@ -27,9 +27,8 @@ export function signUserUp(user) {
   return dispatch => (
     axios.post('/api/user/signup', user)
   ).then(({ data }) => {
-    console.log(data.UserName);
-    dispatch(signUpSuccess(data));
     localStorage.setItem('x-auth', data.token);
+    dispatch(signUpSuccess(data));
     return true;
   }, (err) => {
     console.log(err.message);

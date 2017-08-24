@@ -26,7 +26,6 @@ class Group extends React.Component{
     const bold = {
       fontWeight: "bold"
     };
-    console.log(group.Messages);
     return (
       <div className="card green darken-1">
         <div className="card-content white-text">

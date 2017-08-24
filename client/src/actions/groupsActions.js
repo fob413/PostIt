@@ -21,7 +21,6 @@ export function loadGroups() {
       {headers: {'x-auth': localStorage.getItem('x-auth')}}
     )
     .then(({ data }) => {
-      console.log(data);
       dispatch(loadGroupSuccess(data.members));
     }, (err) => {
       console.log(err.message);

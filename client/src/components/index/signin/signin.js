@@ -2,11 +2,9 @@ import React, {PropTypes} from 'react';
 import {Link, withRouter} from 'react-router-dom';
 import { connect } from 'react-redux';
 import { signUserIn, reloadUserIn } from '../../../actions/authActions';
-import {secret} from '../../config.js';
 import { authenticateUser } from '../../auth';
 
 
-// const secret = process.env.SECRET_TOKEN;
 
 class Signin extends React.Component {
   constructor(props) {

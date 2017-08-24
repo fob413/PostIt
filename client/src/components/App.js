@@ -9,6 +9,7 @@ import Navbar from '../components/navbar/navbar';
 import Profile from '../components/navbar/profile';
 import MessageBoard from '../components/messagePage/messageBoard';
 import Reset from '../components/index/password/reset';
+import ResetPassword from '../components/index/password/resetPassword';
 import { authenticateUser } from './auth';
 import '../style/style.css';
 
@@ -25,6 +26,7 @@ const App = (props) => (
           <Route path="/messageboard" component={MessageBoard} />
           <Route path="/profile" component={Profile} />
           <Route path="/reset/password" component={Reset} />
+          <Route path="/reset/:token" component={ResetPassword} />
           <Route component={PageNotFound} />
         </Switch>
     </div>
