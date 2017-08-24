@@ -47,9 +47,9 @@ module.exports = {
     publicPath: '/',
     filename: 'bundle.js'
   },
-  devServer: {
-    contentBase: './client/src'
-  },
+  // devServer: {
+  //   contentBase: './client/src'
+  // },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin()

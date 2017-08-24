@@ -56,8 +56,8 @@ export function signUserIn(user) {
   return dispatch => (
     axios.post('api/user/signin', user))
     .then(({ data }) => {
-      dispatch(signInSuccess(data));
       localStorage.setItem('x-auth', data.token);
+      dispatch(signInSuccess(data));
       return true;
     }, (err) => {
       console.log(err.message);

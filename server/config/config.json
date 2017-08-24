@@ -1,8 +1,11 @@
 {
   "development": {
-    "dialect": "postgres",
-    "use_env_variable": "DATABASE_URL",
-    "secret": "randomsecret"
+    "username": "funsho",
+    "password": null,
+    "database": "postit",
+    "host": "127.0.0.1",
+    "port": 5432,
+    "dialect": "postgres"
   },
   "production": {
     "dialect": "postgres",

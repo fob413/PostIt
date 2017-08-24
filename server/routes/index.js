@@ -5,15 +5,7 @@ import membersController from '../controllers/members';
 import messagesController from '../controllers/messages';
 import clearController from '../controllers/clear';
 
-module.exports = (app) => {
-  app.get('/*', (req, res) => {
-    console.log('I got here');
-      res.status(200)
-      .sendFile(
-      path.join(__dirname, '../index.html'
-    ));
-  });  
-
+module.exports = (app) => { 
   // a get all api for users signup
   app.get('/api/user/signup', (req, res) => res.status(200).send({
     message: 'Hi, Welcome to PostIt',
@@ -74,4 +66,10 @@ module.exports = (app) => {
   // list all the messages
   // app.get('/api/group/:groupId/message', messagesController.list);
   // a get all for the starty page of the app
+  app.get('/*', (req, res) => {
+      res.status(200)
+      .sendFile(
+      path.join(__dirname, '../index.html'
+    ));
+  }); 
 };
