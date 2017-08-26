@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import db from '../models/index';
 import crypto from 'crypto';
-import { sendResetMail } from './priority';
+import { sendResetMail, sendSuccessfulResetMail } from './priority';
 
 require('dotenv').config();
 
@@ -16,6 +16,7 @@ const Users = db.Users;
 
 // message sent for invalid inputs
 const invalid = {
+  success: false,
   message: 'Invalid Credentials'
 };
 
@@ -89,6 +90,7 @@ export default {
                 telephone: user.telephone
               }, secret);
               res.status(201).json({
+                success: true,
                 UserName: user.UserName,
                 email: user.email,
                 isLoggedin: user.isLoggedin,
@@ -97,25 +99,30 @@ export default {
               });
             })
             .catch(err => res.status(400).send({
+              success: false,
               message: err.message
             }));
           } else {
             res.status(400).send({
+              success: false,
               message: 'Telephone must be a numbers of 11 characters'
             });
           }
         } else {
           res.status(400).send({
+            success: false,
             message: 'Please input your phone number'
           });
         }
       } else {
         res.status(400).send({
+          success: false,
           message: 'Password must be at least 8 characters'
         });
       }
     } else {
       res.status(400).send({
+        success: false,
         message: 'Username cannot be an empty field'
       });
     }
@@ -145,6 +152,7 @@ export default {
                 telephone: user.telephone
               }, secret, {expiresIn: '1 day'});
               res.status(201).json({
+                success: true,
                 UserName: user.UserName,
                 email: user.email,
                 isLoggedin: user.isLoggedin,
@@ -155,6 +163,7 @@ export default {
             .catch(err =>  {
               console.log(err);
               res.status(400).send({
+                success: false,
               message: err.message
             });
           }
@@ -163,7 +172,6 @@ export default {
         } else {
           res.status(401).json(invalid)
           .catch(error => {
-            console.log(error);
             res.status(400).send(error.message)});
         }
       } else {
@@ -253,6 +261,105 @@ export default {
               success: false,
               message: err.message
             });
+          });
+        }
+      }, err => {
+        res.status(400).send({
+          success: false,
+          message: err.message
+        });
+      });
+    }
+  },
+
+  reset(req, res) {
+    return Users
+    .findOne({
+      where: {
+        resetPasswordToken: req.params.token
+      }
+    })
+    .then(user => {
+      if (!user) {
+        res.status(400).send({
+          success: false,
+          message: 'failed token authentication'
+        });
+      } else {
+        console.log(Date.now());
+        console.log(user.expiryTime);
+        if ((Date.now()) > user.expiryTime) {
+          user.update({
+            resetPasswordToken: null,
+            expiryTime: null
+          })
+          .then(() => {
+            res.status(400).send({success: false});
+          }, err => res.status(400).send(err.message));
+        } else {
+          if (req.body.newPassword &&
+            req.body.newPassword.length > 7 &&
+            req.body.confirmPassword &&
+            req.body.confirmPassword.length > 7 &&
+            (req.body.newPassword == req.body.confirmPassword)
+          ) {
+            user.update({
+              password: bcrypt.hashSync(req.body.confirmPassword, 11),
+              resetPasswordToken: null,
+              expiryTime: null
+            })
+            .then(updatedUser => {
+              sendSuccessfulResetMail(updatedUser.email);
+              res.status(201).send({
+                success: true,
+                message: 'successfully updated password'
+              });
+            }, err => {
+              res.status(400).send({
+                success: false,
+                message: err.message
+              });
+            });
+          } else {
+            res.status(400).send({
+              success: false,
+              message: 'invalid passwords'
+            });
+          }
+        }
+      }
+    }, err => {
+      res.status(400).send({
+        success: false,
+        message: err.message
+      });
+    });
+  },
+
+  authToken(req, res) {
+    if (!req.body.token) {
+      res.status(400).send({
+        success: false,
+        message: 'No token provided'
+      });
+    } else {
+      return Users
+      .findOne({
+        where: {
+          resetPasswordToken: req.body.token
+        }
+      })
+      .then(user => {
+        if (!user) {
+          res.status(400).send({
+            success: false,
+            message: 'failed token authentication'
+          });
+        } else {
+          res.status(200).send({
+            success: true,
+            message: 'valid token',
+            UserName: user.UserName
           });
         }
       }, err => {

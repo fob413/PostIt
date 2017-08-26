@@ -89,7 +89,34 @@ export function sendResetMail(token, email, host){
       return console.log(error);
     }
     console.log(`Message ${info.messageId} send: ${info.response}`);
-    console.log('>>>>>>>>>>>>>>>>>message has been sent');
   });
 
+}
+
+export function sendSuccessfulResetMail(email) {
+  // create reusable transporter object using the default SMTP transport
+  const transporter = nodemailer.createTransport({
+    service: 'Gmail',
+    auth: {
+      user: 'fob1493@gmail.com',
+      pass: 'OuoeBlgn413'
+    }
+  });
+
+  // setup email data with unicode symbols
+  const mailOptions = {
+    from: '"PostIt" <fob1493@gmail.com>',
+    to: email,
+    subject: 'POSTIT PASSWORD CHANGE SUCCESSFUL',
+    text: `This email confirms that your new POSTIT password has been set.\n\n
+    You can now access your Account.`
+  };
+
+  // send mail with defined transport object
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      return console.log(error);
+    }
+    console.log(`Message ${info.messageId} send: ${info.response}`);
+  });
 }

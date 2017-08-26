@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { forgotPassword } from '../../../actions/resetPassActions';
 
 class Reset extends React.Component {
   constructor(props){
@@ -8,10 +10,40 @@ class Reset extends React.Component {
 
   onReset(e){
     e.preventDefault();
-    Materialize.toast(
-      'Check your mail for instructions',
-      4000,
-      'green darken-4');
+    const { _email } = this.refs;
+    _email.value = _email.value.trim();
+    
+    if (_email.value.length > 0) {
+      this.props.forgotPassword(_email.value)
+      .then((res) => {
+        if (res.success){
+          Materialize.toast(
+            'Check your mail for instructions',
+            4000,
+            'green darken-4');
+            _email.value='';
+        } else {
+          Materialize.toast(
+            res.message,
+            4000,
+            'red');
+        }
+        
+          
+      }, err => {
+        console.log(err);
+        Materialize.toast(
+          'An error occured',
+          4000,
+          'red');
+          _email.value='';
+      });
+    } else {
+      Materialize.toast(
+        'Invalid email',
+        4000,
+        'red');
+    }
   }
 
   render() {
@@ -27,6 +59,7 @@ class Reset extends React.Component {
 
         <div className="row forgotInput">
           <div className="row">
+            <div className="col s12 m2"></div>
             <div className="col s12 m8">
               <div className="card">
                 <div className="card-content">
@@ -39,7 +72,7 @@ class Reset extends React.Component {
                   </p>
                   <form onSubmit={this.onReset}>
                     <div className="input-field">
-                      <input id="email" type="email" className="validate" />
+                      <input ref="_email" id="email" type="email" className="validate" />
                       <label htmlFor="email" data-error="wrong" data-success="right">Enter Your Email</label>
                     </div>
                     <button className="btn waves-effect waves-light green darken-1" type="submit" name="action">
@@ -56,4 +89,15 @@ class Reset extends React.Component {
   }
 }
 
-export default Reset;
+const mapStateToProps = state => (
+  {
+
+  }
+);
+
+export default connect(
+  mapStateToProps,
+  {
+    forgotPassword
+  }
+)(Reset);

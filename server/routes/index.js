@@ -32,6 +32,12 @@ module.exports = (app) => {
   // forgot password api for the user
   app.post('/api/forgot/password', usersController.forgot);
 
+  // update user password
+  app.post('/api/reset/password/:token', usersController.reset);
+
+  // authenticate reset password token
+  app.post('/api/reset/token', usersController.authToken);
+
   // list all the users on the platform
   app.get('/api/users/list', usersController.list);
 

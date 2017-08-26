@@ -27,14 +27,27 @@ describe('user', () => {
   });
 */
 
+// function that clears out user database
+const clearUserDatabase = () => {
+  user.destroy({
+    where: {},
+    truncate: true,
+    restartIdentity: true,
+    cascade: true,
+  });
+};
+
+// sample user used for testing
+const testUser = {
+  UserName: 'Bayo',
+  email: 'bayo@yahoo.com',
+  password: 'abcdefghij',
+  telephone: '08138498175'
+};
+
 describe('user', () => {
   beforeEach((done) => {
-    user.destroy({
-      where: {},
-      truncate: true,
-      restartIdentity: true,
-      cascade: true,
-    });
+    clearUserDatabase();
     done();
   });
 
@@ -50,24 +63,15 @@ describe('user', () => {
   });
 });
 
+// test signup positive responses
 describe('SignUp Positive Responses', () => {
   beforeEach((done) => {
-    user.destroy({
-      where: {},
-      truncate: true,
-      restartIdentity: true,
-      cascade: true,
-    });
+    clearUserDatabase();
     done();
   });
 
   describe('POST /api/user/signup', () => {
     it('it should create a new user', (done) => {
-      const testUser = {
-        UserName: 'Bayo',
-        email: 'bayo@yahoo.com',
-        password: 'abcdefghij'
-      };
       chai.request(app)
       .post('/api/user/signup')
       .send(testUser)
@@ -77,61 +81,79 @@ describe('SignUp Positive Responses', () => {
       });
     });
 
-    // it('It should create a user with the email given', (done) => {
-    //   const testUser = {
-    //     UserName: 'Bayo',
-    //     email: 'bayo@yahoo.com',
-    //     password: 'abcdefghij'
-    //   };
-    //   chai.request(app)
-    //   .post('/api/user/signup')
-    //   .send(testUser)
-    //   .end((err, res) => {
-    //     res.should.have.status(201);
-    //     console.log(`=>>>>>>>> ${res.body}`);
-    //     expect(res.body.Username).to.equal('Bayo');
-    //     done();
-    //   });
-    // });
+    it('it should create a new user with status code 201', (done) => {
+      chai.request(app)
+      .post('/api/user/signup')
+      .send(testUser)
+      .end((err, res) => {
+        res.should.have.status(201);
+        done();
+      });
+    });
 
-    // it('It should create and user with the email given', (done) => {
-    //   const testUser = {
-    //     UserName: 'Bayo',
-    //     email: 'bayo@yahoo.com',
-    //     password: 'abcdefghij'
-    //   };
-    //   chai.request(app)
-    //   .post('/api/user/signup')
-    //   .send(testUser)
-    //   .end((err, res) => {
-    //     res.should.have.status(201);
-    //     expect(res.body.email).to.equal('bayo@yahoo.com');
-    //     done();
-    //   });
-    // });
+    it('It should create a user with the UserName given', (done) => {
+      chai.request(app)
+      .post('/api/user/signup')
+      .send(testUser)
+      .end((err, res) => {
+        res.should.have.status(201);
+        expect(res.body.UserName).to.equal('Bayo');
+        done();
+      });
+    });
+
+    it('It should create and user with the email given', (done) => {
+      chai.request(app)
+      .post('/api/user/signup')
+      .send(testUser)
+      .end((err, res) => {
+        res.should.have.status(201);
+        expect(res.body.email).to.equal('bayo@yahoo.com');
+        done();
+      });
+    });
+
+    it('It should create and user with the phone number given', (done) => {
+      chai.request(app)
+      .post('/api/user/signup')
+      .send(testUser)
+      .end((err, res) => {
+        res.should.have.status(201);
+        expect(res.body.telephone).to.equal('08138498175');
+        done();
+      });
+    });
+
+    it('It should create a user and return a token', (done) => {
+      chai.request(app)
+      .post('/api/user/signup')
+      .send(testUser)
+      .end((err, res) => {
+        res.should.have.status(201);
+        expect(res.body.token).to.be.a('string');
+        done();
+      });
+    });
+
+
   });
 });
 
 describe('SignUp Negative Responses', () => {
   beforeEach((done) => {
-    user.destroy({
-      where: {},
-      truncate: true,
-      restartIdentity: true,
-      cascade: true,
-    });
+    clearUserDatabase();
     done();
   });
 
   it(`It should return a status code of 500
   when UserName is not given`, (done) => {
-    const testUser = {
+    const testUser2 = {
       email: 'bayo@yahoo.com',
       password: 'abcdefghij'
     };
     chai.request(app)
     .post('/api/user/signup')
-    .send(testUser)
+    .send(testUser2)
     .end((err, res) => {
       res.should.have.status(500);
       done();
@@ -140,13 +162,13 @@ describe('SignUp Negative Responses', () => {
 
   it(`It should return a status code of 400
   when email is not given`, (done) => {
-    const testUser = {
+    const testUser2 = {
       UserName: 'Bayo',
       password: 'abcdefghij'
     };
     chai.request(app)
     .post('/api/user/signup')
-    .send(testUser)
+    .send(testUser2)
     .end((err, res) => {
       res.should.have.status(400);
       done();
@@ -155,14 +177,14 @@ describe('SignUp Negative Responses', () => {
 
   it(`It should return a status code of 400
   when password is less than 8 characters`, (done) => {
-    const testUser = {
+    const testUser2 = {
       UserName: 'Bayo',
       email: 'bayo@yahoo.com',
       password: 'abcd'
     };
     chai.request(app)
     .post('/api/user/signup')
-    .send(testUser)
+    .send(testUser2)
     .end((err, res) => {
       res.should.have.status(400);
       done();
