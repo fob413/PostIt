@@ -45,6 +45,12 @@ const testUser = {
   telephone: '08138498175'
 };
 
+// sample user to signin
+const testUser3 = {
+  UserName: 'Bayo',
+  password: 'abcdefghij'
+};
+
 describe('user', () => {
   beforeEach((done) => {
     clearUserDatabase();
@@ -63,6 +69,7 @@ describe('user', () => {
   });
 });
 
+// signup route tests
 // test signup positive responses
 describe('SignUp Positive Responses', () => {
   beforeEach((done) => {
@@ -145,7 +152,7 @@ describe('SignUp Negative Responses', () => {
     done();
   });
 
-  it(`It should return a status code of 500
+  it(`It should return a status code of 400
   when UserName is not given`, (done) => {
     const testUser2 = {
       email: 'bayo@yahoo.com',
@@ -155,7 +162,22 @@ describe('SignUp Negative Responses', () => {
     .post('/api/user/signup')
     .send(testUser2)
     .end((err, res) => {
-      res.should.have.status(500);
+      res.should.have.status(400);
+      done();
+    });
+  });
+
+  it(`It should return a message about UserName not given`, (done) => {
+    const testUser2 = {
+      email: 'bayo@yahoo.com',
+      password: 'abcdefghij',
+      telephone: '08138498175'
+    };
+    chai.request(app)
+    .post('/api/user/signup')
+    .send(testUser2)
+    .end((err, res) => {
+      expect(res.body.message).to.equal('Username not given');
       done();
     });
   });
@@ -164,6 +186,73 @@ describe('SignUp Negative Responses', () => {
   when email is not given`, (done) => {
     const testUser2 = {
       UserName: 'Bayo',
+      password: 'abcdefghij',
+      telephone: '08138498175'
+    };
+    chai.request(app)
+    .post('/api/user/signup')
+    .send(testUser2)
+    .end((err, res) => {
+      res.should.have.status(400);
+      done();
+    });
+  });
+
+  it(`It should return a message about email not given
+  when email is not given`, (done) => {
+    const testUser2 = {
+      UserName: 'Bayo',
+      password: 'abcdefghij',
+      telephone: '08138498175'
+    };
+    chai.request(app)
+    .post('/api/user/signup')
+    .send(testUser2)
+    .end((err, res) => {
+      expect(res.body.message).to.equal('Email not given');
+      done();
+    });
+  });
+
+  it(`It should return a status code of 400
+  when password is less than 8 characters`, (done) => {
+    const testUser2 = {
+      UserName: 'Bayo',
+      email: 'bayo@yahoo.com',
+      password: 'abcd',
+      telephone: '08138498175'
+    };
+    chai.request(app)
+    .post('/api/user/signup')
+    .send(testUser2)
+    .end((err, res) => {
+      res.should.have.status(400);
+      done();
+    });
+  });
+
+  it(`It should return a message about password length
+  when password length is less than 8 characters`, (done) => {
+    const testUser2 = {
+      UserName: 'Bayo',
+      email: 'bayo@yahoo.com',
+      password: 'abcd',
+      telephone: '08138498175'
+    };
+    chai.request(app)
+    .post('/api/user/signup')
+    .send(testUser2)
+    .end((err, res) => {
+      expect(res.body.message).to.equal(`Password must be at least 8 characters`);
+      done();
+    });
+  });
+
+  it(`It should return a status code of 400 when 
+    telephone number is not given`, (done) => {
+    const testUser2 = {
+      UserName: 'Bayo',
+      email: 'bayo@yahoo.com',
       password: 'abcdefghij'
     };
     chai.request(app)
@@ -175,12 +264,29 @@ describe('SignUp Negative Responses', () => {
     });
   });
 
-  it(`It should return a status code of 400
-  when password is less than 8 characters`, (done) => {
+  it(`It should return a message when 
+  telephone number is not given`, (done) => {
+  const testUser2 = {
+    UserName: 'Bayo',
+    email: 'bayo@yahoo.com',
+    password: 'abcdefghij'
+  };
+  chai.request(app)
+  .post('/api/user/signup')
+  .send(testUser2)
+  .end((err, res) => {
+    expect(res.body.message).to.equal(`Please input your phone number`);
+    done();
+  });
+});
+
+  it(`It should return a status code of 400 when 
+    telephone number length is wrong`, (done) => {
     const testUser2 = {
       UserName: 'Bayo',
       email: 'bayo@yahoo.com',
-      password: 'abcd'
+      password: 'abcdefghij',
+      telephone: '12345'
     };
     chai.request(app)
     .post('/api/user/signup')
@@ -190,6 +296,91 @@ describe('SignUp Negative Responses', () => {
       done();
     });
   });
+
+  it(`It should return a a message when 
+  telephone number length is wrong`, (done) => {
+  const testUser2 = {
+    UserName: 'Bayo',
+    email: 'bayo@yahoo.com',
+    password: 'abcdefghij',
+    telephone: '12345'
+  };
+  chai.request(app)
+  .post('/api/user/signup')
+  .send(testUser2)
+  .end((err, res) => {
+    expect(res.body.message).to.equal(`Telephone must be a set of numbers of 11 characters`);
+    done();
+  });
+});
+
+  it(`It should return a status code of 400 when 
+  password is not given`, (done) => {
+  const testUser2 = {
+    UserName: 'Bayo',
+    email: 'bayo@yahoo.com',
+    telephone: '08138498175'
+  };
+  chai.request(app)
+  .post('/api/user/signup')
+  .send(testUser2)
+  .end((err, res) => {
+    res.should.have.status(400);
+    done();
+  });
+});
+
+it(`It should return a message when 
+  password is not given`, (done) => {
+  const testUser2 = {
+    UserName: 'Bayo',
+    email: 'bayo@yahoo.com',
+    telephone: '08138498175'
+  };
+  chai.request(app)
+  .post('/api/user/signup')
+  .send(testUser2)
+  .end((err, res) => {
+    expect(res.body.message).to.equal('Password must be at least 8 characters')
+    done();
+  });
+});
+
+});
+
+// tests for signin route
+describe('Signin route tests', () => {
+  before((done) => {
+    clearUserDatabase();
+    chai.request(app)
+    .post('/api/user/signup')
+    .send(testUser)
+    .end((err, res) => {
+      done();
+    });
+  });
+
+  // test signin positive responses
+  describe('Signin positive responses', () => {
+
+    it(`It should return a status code of 200 on successful signin`, (done) => {
+      chai.request(app)
+      .post('/api/user/signin')
+      .send(testUser3)
+      .end((err, res) => {
+        console.log('>>>>>>>>>>>>>>>>>>');
+        console.log(`token ${res.body.token}`);
+        console.log(`success: ${res.body.success}`);
+        // console.log(err)
+        console.log(res.body.status);
+        console.log(err.message);
+        res.should.have.status(200);
+        done();
+      });
+    });
+
+  });
+
 });
 
 describe('Group API works', () => {

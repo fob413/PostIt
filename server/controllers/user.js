@@ -72,58 +72,72 @@ export default {
   },
 
   create(req, res) {
-    if (req.body.UserName.length > 0) {
-      if (req.body.password.length > 7) {
-        if (req.body.telephone) {
-          if (req.body.telephone.length == 11 && !isNaN(req.body.telephone)) {
-            return Users
-            .create({
-              UserName: req.body.UserName,
-              password: bcrypt.hashSync(req.body.password, 11),
-              email: req.body.email,
-              telephone: req.body.telephone
-            })
-            .then((user) => {
-              const token = jwt.sign({
-                UserName: user.UserName,
-                email: user.email,
-                telephone: user.telephone
-              }, secret);
-              res.status(201).json({
-                success: true,
-                UserName: user.UserName,
-                email: user.email,
-                isLoggedin: user.isLoggedin,
-                telephone: user.telephone,
-                token
+    if ( req.body.UserName ) {
+      if (req.body.UserName.length > 0) {
+        if (req.body.password && req.body.password.length > 7) {
+          if (req.body.email) {
+            if (req.body.telephone) {
+              if (req.body.telephone.length == 11 && !isNaN(req.body.telephone)) {
+                return Users
+                .create({
+                  UserName: req.body.UserName,
+                  password: bcrypt.hashSync(req.body.password, 11),
+                  email: req.body.email,
+                  telephone: req.body.telephone
+                })
+                .then((user) => {
+                  const token = jwt.sign({
+                    UserName: user.UserName,
+                    email: user.email,
+                    telephone: user.telephone
+                  }, secret);
+                  res.status(201).json({
+                    success: true,
+                    UserName: user.UserName,
+                    email: user.email,
+                    isLoggedin: user.isLoggedin,
+                    telephone: user.telephone,
+                    token
+                  });
+                })
+                .catch(err => res.status(400).send({
+                  success: false,
+                  message: err.message
+                }));
+              } else {
+                res.status(400).send({
+                  success: false,
+                  message: 'Telephone must be a set of numbers of 11 characters'
+                });
+              }
+            } else {
+              res.status(400).send({
+                success: false,
+                message: 'Please input your phone number'
               });
-            })
-            .catch(err => res.status(400).send({
-              success: false,
-              message: err.message
-            }));
+            }
           } else {
             res.status(400).send({
               success: false,
-              message: 'Telephone must be a numbers of 11 characters'
+              message: 'Email not given'
             });
           }
         } else {
           res.status(400).send({
             success: false,
-            message: 'Please input your phone number'
+            message: 'Password must be at least 8 characters'
           });
         }
       } else {
         res.status(400).send({
           success: false,
-          message: 'Password must be at least 8 characters'
+          message: 'Username cannot be an empty field'
         });
       }
     } else {
       res.status(400).send({
         success: false,
-        message: 'Username cannot be an empty field'
+        message: 'Username not given'
       });
     }
   },
