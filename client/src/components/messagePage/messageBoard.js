@@ -124,20 +124,23 @@ class MessageBoard extends React.Component {
           <div className="col s12">
             <div className="col s8">
               <div className="message">
-                <ul className="collection">
-                  {(this.state.messages.length > 0) &&
-                    this.state.messages.map((message, i) => {
-                      return (
-                        <div key={i}>
-                          <DisplayMessage
-                            content={message.content}
-                            author={message.authorsName}
-                          />
-                        </div>
-                      );
-                    })
-                  }
-                </ul>
+                {(this.state.messages && 
+                this.state.messages.length > 0) &&
+                  <ul className="collection">
+                    {
+                      this.state.messages.map((message, i) => {
+                        return (
+                          <div key={i}>
+                            <DisplayMessage 
+                              content={message.content}
+                              author={message.authorsName}
+                            />
+                          </div>
+                        );
+                      })
+                    }
+                  </ul>
+                }
               </div>
 
               <div className="row">
@@ -192,7 +195,7 @@ class MessageBoard extends React.Component {
               </div>
 
               <div id="hide" className="hide">
-                {(this.state.PlatformUsers.length > 0) && 
+                {(this.state.PlatformUsers && this.state.PlatformUsers.length > 0) && 
                 <ul className="collection">
                   {this.state.PlatformUsers.filter((item) => {
                     return item.UserName.startsWith(this.state.addUser);
@@ -206,7 +209,7 @@ class MessageBoard extends React.Component {
                 }
               </div>
 
-              {this.state.groupUsers.length > 0 &&
+              {this.state.groupUsers && this.state.groupUsers.length > 0 &&
                 <div>
                   {this.state.groupUsers.map((user, i) => {
                     return (
@@ -215,7 +218,7 @@ class MessageBoard extends React.Component {
                           {user.User.UserName}
                         </li>
                       </ul>
-                    )
+                    );
                   })}
                 </div>
               }

@@ -164,7 +164,7 @@ export default {
                 UserName: user.UserName,
                 email: user.email,
                 telephone: user.telephone
-              }, secret, {expiresIn: '1 day'});
+              }, secret);
               res.status(201).json({
                 success: true,
                 UserName: user.UserName,
@@ -175,7 +175,6 @@ export default {
               });
             })
             .catch(err =>  {
-              console.log(err);
               res.status(400).send({
                 success: false,
               message: err.message
