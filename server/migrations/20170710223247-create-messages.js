@@ -20,6 +20,10 @@ module.exports = {
         allowNull: false,
         defaultValue: 'NORMAL'
       },
+      readby: {
+        type: Sequelize.STRING,
+        allowNull: true
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

@@ -12,6 +12,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
       defaultValue: 'NORMAL'
+    },
+    readby: {
+      type: DataTypes.STRING,
+      allowNull: true
     }
   }, {
     classMethods: {

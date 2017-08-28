@@ -60,6 +60,9 @@ module.exports = (app) => {
   // logged in users retrieve their messages in a particular group
   app.get('/api/group/:groupId/messages', messagesController.listMessages);
 
+  // updates messages that users have read
+  app.post('/api/group/:groupId/messages/read', messagesController.readMessages);
+
   // list all the members
   // app.get('/api/group/:groupId/user', membersController.list);
   // list out all the available groups on the application

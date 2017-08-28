@@ -246,6 +246,30 @@ export default {
     .all()
     .then(messages => res.status(200).send(messages))
     .catch(error => res.status(400).send(error.message));
+  },
+
+  readMessages(req, res) {
+    if (req.header('x-auth')) {
+      const token = req.header('x-auth');
+      jwt.verify(token, secret, (err, decoded) => {
+        if (err) {
+          return res.status(403).send({
+            success: false,
+            message: 'failed to authenticate token'
+          });
+        } else {
+          req.decoded = decoded;
+          return res.send({
+            message: req.decoded
+          });
+        }
+      });
+    } else {
+      return res.status(403).send({
+        success: false,
+        message: 'no token provided'
+      });
+    }
   }
 
 };
