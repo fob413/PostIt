@@ -165,7 +165,7 @@ export default {
                 email: user.email,
                 telephone: user.telephone
               }, secret);
-              res.status(201).json({
+              res.status(200).json({
                 success: true,
                 UserName: user.UserName,
                 email: user.email,
