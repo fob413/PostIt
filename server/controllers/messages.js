@@ -259,8 +259,45 @@ export default {
           });
         } else {
           req.decoded = decoded;
-          return res.send({
-            message: req.decoded
+          return Users.findOne({
+            where: {
+              id: req.decoded.UserName
+            }
+          })
+          .then ((user) => {
+            if (!user) {
+              return res.status(401).send({
+                success: false,
+                message: 'Sign Up to access this service'
+              });
+            } else {
+              if (!user.isLoggedin) {
+                return res.status(401).send({
+                  success: false,
+                  message: 'Sign in to access this service'
+                });
+              } else {
+                return Groups
+                .findOne({
+                  where: {
+                    userId: user.id,
+                    groupId: req.params.groupId
+                  }
+                })
+                .then((member) => {
+                  if (!member) {
+                    return res.status(400).send({
+                      success: false,
+                      message: 'Not a member of this group'
+                    });
+                  } else {
+                    return res.status(200).send({
+                      message: 'successfully reached this end point'
+                    });
+                  }
+                });
+              }
+            }
           });
         }
       });

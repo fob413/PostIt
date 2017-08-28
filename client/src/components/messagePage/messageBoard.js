@@ -31,9 +31,14 @@ class MessageBoard extends React.Component {
   }
 
   componentDidMount() {
-    this.props.loadGroupMessages(this.state.groupId);
-    this.props.loadPlatformUsers();
-    this.props.loadGroupUsers(this.state.groupId);
+    if (this.state.groupId){
+      this.props.loadGroupMessages(this.state.groupId);
+      this.props.loadPlatformUsers();
+      this.props.loadGroupUsers(this.state.groupId);
+    } else {
+      this.props.history.push('/broadpage');
+    }
+    
   }
 
   componentWillReceiveProps(nextProps){

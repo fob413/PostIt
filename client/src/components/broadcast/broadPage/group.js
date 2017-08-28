@@ -35,6 +35,7 @@ class Group extends React.Component{
           </span>
         </div>
 
+
         {(group.Messages.length > 0) ?
           <div className="container">
             <div className="collection">
