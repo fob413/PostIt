@@ -22,6 +22,19 @@ module.exports = {
         isEmail: true,
         unique: true,
       },
+      telephone: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        unique: true,
+      },
+      resetPasswordToken: {
+        type: Sequelize.STRING,
+        allowNull: true
+      },
+      expiryTime: {
+        type: Sequelize.STRING,
+        allowNull: true
+      },
       isLoggedin: {
         type: Sequelize.BOOLEAN,
         defaultValue: true,

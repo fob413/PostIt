@@ -15,6 +15,16 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
+      priorityValue: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        defaultValue: 'NORMAL'
+      },
+      readby: {
+        type: Sequelize.STRING,
+        allowNull: true,
+        defaultValue: ''
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

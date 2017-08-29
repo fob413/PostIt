@@ -19,3 +19,49 @@
 .click{
   cursor: pointer;
 }
+
+.profile{
+  margin-top: 10%;
+}
+
+.message{
+  border: 2px solid green;
+  padding: 10px;
+  height: 350px;
+  overflow-y: scroll;
+}
+
+.messageBoard{
+  margin-top: 0px
+}
+
+.sendMessage {
+  overflow-x: scroll;
+  width: 100px
+}
+
+.boardMessage{
+  font-size: 10px;
+}
+
+.addUser{
+  height: 400px;
+  overflow-x: scroll;
+  border: 0.5px solid black;
+}
+
+.hide{
+  display: none;
+}
+
+.show{
+  display: block;
+}
+
+.forgotInput{
+  margin: auto;
+}
+
+.forgotBold{
+  font-weight: bold
+}

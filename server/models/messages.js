@@ -7,6 +7,16 @@ module.exports = (sequelize, DataTypes) => {
     authorsName: {
       type: DataTypes.STRING,
       allowNull: false,
+    },
+    priorityValue: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue: 'NORMAL'
+    },
+    readby: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      defaultValue: ''
     }
   }, {
     classMethods: {

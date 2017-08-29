@@ -8,38 +8,44 @@ class NewGroup extends React.Component {
   }
 
   onCreateGroup(e) {
+    const {_groupName} = this.refs;
     e.preventDefault();
-    alert('lets create a new group');
+    let groupname = _groupName.value.trim();
+    if(groupname && groupname.length > 0) {
+      this.props.toggleCreateGroup();
+      this.props.onCreateGroup(groupname);
+      _groupName.value = '';
+    } else {
+      console.log('Group name should not be empty');
+    }
+    
   }
 
   onCancelCreate(e) {
+    const {_groupName} = this.refs;
     e.preventDefault();
-    this.props.toggleCreateGroup(); 
+    this.props.toggleCreateGroup();
+    _groupName.value = '';
   }
 
   render() {
     const {createGroup, toggleCreateGroup} = this.props;
     return (
       <div className={`row ${createGroup ? 'show' : 'hide'}`}>
-        <form className="col s12">
+        <form className="col s12" onSubmit={this.onCreateGroup}>
           <div className="row">
             <div className="input-field col s12">
               <input 
+                ref="_groupName"
                 className="validate"
                 id="group-name"
                 type="text"
               />
-              <label htmlFor="group-name" >Group Name</label>
-            </div>
-          </div>
-          <div className="row">
-            <div className="input-field col s12">
-              <input 
-                className="validate"
-                id="group-description"
-                type="text"
-              />
-              <label htmlFor="group-name" >Group Description</label>
+              <label
+                htmlFor="group-name" 
+              >
+                Group Name
+              </label>
             </div>
           </div>
           <div className="row">
@@ -56,7 +62,6 @@ class NewGroup extends React.Component {
                 className="right btn-large green darken-4 waves effect"
                 type="submit"
                 name="action"
-                onClick={this.onCreateGroup}
               >
                 Create
               </button>
@@ -70,7 +75,8 @@ class NewGroup extends React.Component {
 
 NewGroup.propTypes = {
   createGroup : PropTypes.bool.isRequired,
-  toggleCreateGroup: PropTypes.func.isRequired
+  toggleCreateGroup: PropTypes.func.isRequired,
+  onCreateGroup: PropTypes.func.isRequired
 };
 
 export default NewGroup;

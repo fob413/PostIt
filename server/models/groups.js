@@ -7,11 +7,6 @@ module.exports = (sequelize, DataTypes) => {
         args: true,
         message: 'Username must be unique.',
       },
-    },
-    Description: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      required: true,
     }
   }, {
     classMethods: {

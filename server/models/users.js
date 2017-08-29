@@ -25,6 +25,23 @@ module.exports = (sequelize, DataTypes) => {
         msg: 'Email must be unique.',
       },
     },
+    telephone: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      required: true,
+      unique: {
+        args: true,
+        msg: 'Telephone must be unique',
+      }
+    },
+    resetPasswordToken: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    expiryTime: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
     isLoggedin: {
       type: DataTypes.BOOLEAN,
       defaultValue: true,

@@ -1,26 +1,52 @@
 import React, {PropTypes} from 'react';
+import {Link, withRouter} from 'react-router-dom';
+import { connect } from 'react-redux';
+import { signUserIn, reloadUserIn } from '../../../actions/authActions';
+import { authenticateUser } from '../../auth';
+
+
 
 class Signin extends React.Component {
   constructor(props) {
     super(props);
-    this.store = this.props.store;
+    this.state = {
+      UserName: '',
+      password: '',
+      isLoggedIn: this.props.auth.isLoggedIn
+    };
 
-    this.onSignIn = this.onSignIn.bind(this);
+    this.onChange = this.onChange.bind(this);
+    this.handleSignIn = this.handleSignIn.bind(this);
   }
 
-  /*
-  * function signs in a user
-  * @param {string} _userName is the user name of the user
-  * @param {password} _password is the password of the user
-  */
-  onSignIn(e) {
-    const {_userName, _password} = this.refs;
-    e.preventDefault();
-    if (_userName.value.length > 0 && _password.value.length > 0) {
-      this.props.signInUser(_userName.value, _password.value);
-    } else {
-      alert(`Some fields are empty.`);
+  componentDidMount() {
+    if (this.props.auth.isLoggedIn){
+      this.props.history.push('/broadpage');
     }
+  }
+
+  componentWillReceiveProps(nextProps){
+    this.setState({
+      isLoggedIn: nextProps.auth.isLoggedIn
+    });
+    if (nextProps.auth.isLoggedIn) {
+      this.props.history.push('/broadpage');
+    }
+  }
+
+  onChange(e){
+    this.setState({
+      [e.target.name]: e.target.value
+    });
+  }
+  
+  handleSignIn(e){
+    e.preventDefault();
+    this.props.signUserIn(this.state).then((res) => {
+      if (res) {
+        this.props.history.push('/broadpage');
+      }
+    }, err => console.log(err));
   }
 
   render() {
@@ -35,44 +61,52 @@ class Signin extends React.Component {
 
         <div className="row">
           <div className="container col s12">
-            <form onSubmit={this.onSignIn}>
+            <form>
               <div className="row">
                 <div className="input-field col s12 m12">
                   <input
-                    ref="_userName"
+                    name="UserName"
                     className="validate"
                     type="text"
                     id="userName"
                     data-error="wrong"
                     data-success="right"
+                    onChange={this.onChange}
                   />
                   <label htmlFor="userName">
                     Username
                   </label>
                 </div>
-              </div>
 
               <div className="input-field col s12 m12">
                 <input 
-                  ref="_password"
+                  name="password"
                   className="validate"
                   type="password"
                   id="password"
                   data-error="wrong"
                   data-success="right"
+                  onChange={this.onChange}
                 />
                 <label htmlFor="password">
                   Password
                 </label>
               </div>
 
+              </div>
+
+              <div>
+                <Link className="green-text text-darken-1" to="/reset/password">Forgot Password?</Link>
+              </div>
+
               <div className="row center-align">
                 <button
                   className="btn-large green darken-4 waves effect"
-                  type="submit"
                   name="action"
+                  onClick={this.handleSignIn}
                 >
                   Sign In
+                  <i className="material-icons right">send</i>
                 </button>
               </div>
             </form>
@@ -82,12 +116,7 @@ class Signin extends React.Component {
           <p>
             OR
             <br />
-            <a
-              className="green-text text-darken-1 signButton"
-              onClick={this.props.toggleSignUp}
-            >
-              Sign Up
-            </a>
+            <Link className="green-text text-darken-1 signButton" to="/">Sign Up</Link>
           </p>
         </div>
       </div>
@@ -95,13 +124,14 @@ class Signin extends React.Component {
   }
 }
 
-/*
-* Validation of the components properties
-*/
-Signin.propTypes ={
-  toggleSignUp: PropTypes.func.isRequired,
-  signInUser: PropTypes.func.isRequired,
-  store: PropTypes.object.isRequired
-};
+const mapStateToProps = state => (
+  {
+    auth: state.MyApp
+  }
+);
 
-export default Signin; 
+
+export default connect(
+  mapStateToProps, 
+  { signUserIn, reloadUserIn }
+)(withRouter(Signin));

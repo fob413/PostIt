@@ -22,6 +22,10 @@ const compiler = webpack(config);
 // log requests to the console
 app.use(logger('dev'));
 
+const publicPath = express.static(path.join(__dirname, '../client/dist'));
+
+app.use('/', publicPath);
+
 // parse incoming requests data
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -34,10 +38,10 @@ app.use(require('webpack-hot-middleware')(compiler));
 require('./routes')(app);
 /* setup a default catch-all route that sends back a
 welcome message in json format*/
-app.get('*', (req, res) => {
+app.get('/*', (req, res) => {
     res.status(200)
     .sendFile(
-    path.join(__dirname, '../client/src/index.html'
+    path.join(__dirname, 'index.html'
   ));
 });
 
