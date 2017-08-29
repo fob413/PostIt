@@ -13,7 +13,6 @@ class PlatformUsers extends React.Component {
 
 addUser(e) {
   e.preventDefault();
-  console.log(this.props.platformUser.id);
   this.props.addUserToGroup(
     this.props.platformUser.id, 
     this.props.Messages.groupId

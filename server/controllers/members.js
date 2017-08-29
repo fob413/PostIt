@@ -208,7 +208,7 @@ export default {
                     return Members
                     .findAll({
                       where: {
-                        groupId: req.params.groupId
+                        groupId: req.u.groupId
                       },
                       attributes:['id', 'userId', 'groupId'],
                       include: [

@@ -28,6 +28,7 @@ class MessageBoard extends React.Component {
 
     this.inputUser = this.inputUser.bind(this);
     this.filterUsers = this.filterUsers.bind(this);
+    this.autoHide = this.autoHide.bind(this);
   }
 
   componentDidMount() {
@@ -101,8 +102,7 @@ class MessageBoard extends React.Component {
     });
   }
 
-
-  render () {
+  autoHide() {
     $(() => {
       $('body #input').on('focus', () => {
         $('#hide').removeClass('hide');
@@ -112,8 +112,14 @@ class MessageBoard extends React.Component {
       $('body #input').on('focusout', () => {
         $('#hide').removeClass('show');
         $('#hide').addClass('hide');
-      })
+      });
     });
+  }
+
+  render () {
+   this.autoHide();
+   console.log(this.autoHide);
+   console.log('something should be showing above me right now');
 
     return (
       <div className="container">
@@ -194,6 +200,7 @@ class MessageBoard extends React.Component {
                       type="text"
                       placeholder="Add User"
                       onChange={this.inputUser}
+                      onFocus={this.autoHide}
                     />
                   </div>
                 </form>

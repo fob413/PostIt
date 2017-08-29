@@ -11,6 +11,18 @@ const secret = process.env.SECRET_TOKEN;
 // const message = require('../models').Messages;
 // const Users = require('../models/').Users;
 
+// functino to check if a user has read a message
+const hasRead = (message,id) => {
+  let read = false;
+  message = message.split(",");
+  message.map(item => {
+    if (item == id){
+      read = true;
+    }
+  });
+  return read;
+};
+
 export default {
 
   sendMessage(req, res) {
@@ -261,7 +273,7 @@ export default {
           req.decoded = decoded;
           return Users.findOne({
             where: {
-              id: req.decoded.UserName
+              UserName: req.decoded.UserName
             }
           })
           .then ((user) => {
@@ -277,7 +289,7 @@ export default {
                   message: 'Sign in to access this service'
                 });
               } else {
-                return Groups
+                return Members
                 .findOne({
                   where: {
                     userId: user.id,
@@ -291,13 +303,43 @@ export default {
                       message: 'Not a member of this group'
                     });
                   } else {
-                    return res.status(200).send({
-                      message: 'successfully reached this end point'
+                    return Message
+                    .findAll({
+                      where: {
+                        groupId: req.params.groupId
+                      }
+                    })
+                    .then((message) => {
+                      message.map(item => {
+                        if (item.readby.length > 0) {
+                          if (!hasRead(item.readby, user.id)) {
+                            item.update(
+                              {readby: `${item.readby},${user.id}`}
+                            );
+                          }
+                          // item.update(
+                          //   {readby: `${item.readby},${user.id}`}
+                          // );
+                        } else {
+                          item.update(
+                          {readby: `${user.id}`}
+                        );
+                        }
+                      });
+                      res.status(201).send({
+                        success: true
+                      });
+                    }, err => {
+                      console.log(err);
                     });
                   }
+                }, err => {
+                  console.log(err);
                 });
               }
             }
+          }, err => {
+            console.log(err);
           });
         }
       });

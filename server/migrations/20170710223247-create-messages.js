@@ -22,7 +22,8 @@ module.exports = {
       },
       readby: {
         type: Sequelize.STRING,
-        allowNull: true
+        allowNull: true,
+        defaultValue: ''
       },
       createdAt: {
         allowNull: false,

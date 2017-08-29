@@ -157,11 +157,7 @@ class SignUp extends React.Component {
           <p>
             OR
             <br />
-            <a
-              className="green-text text-darken-1 signButton"
-            >
-            <Link className="green-text text-darken-1" to="SignIn">Sign In</Link>
-            </a>
+            <Link className="green-text text-darken-1 signButton" to="SignIn">Sign In</Link>
           </p>
         </div>
 
