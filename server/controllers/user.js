@@ -143,58 +143,61 @@ export default {
   },
 
   signin(req, res) {
-    return Users
-    .findOne({
-      where: {
-        UserName: req.body.UserName
-      }
-    })
-    .then((user) => {
-      if (user) {
-        if (req.body.password) {
-          if (!bcrypt.compareSync(req.body.password, user.password)) {
-            res.status(401).send(invalid);
-          } else {
-            return user
-            .update({
-              isLoggedin: true,
-            })
-            .then(() => {
-              const token = jwt.sign({
-                UserName: user.UserName,
-                email: user.email,
-                telephone: user.telephone
-              }, secret);
-              res.status(200).json({
-                success: true,
-                UserName: user.UserName,
-                email: user.email,
-                isLoggedin: user.isLoggedin,
-                telephone: user.telephone,
-                token
+    if (req.body.UserName && req.body.password) {
+      return Users
+      .findOne({
+        where: {
+          UserName: req.body.UserName
+        }
+      })
+      .then((user) => {
+        if (user) {
+          if (req.body.password) {
+            if (!bcrypt.compareSync(req.body.password, user.password)) {
+              res.status(401).send(invalid);
+            } else {
+              return user
+              .update({
+                isLoggedin: true,
+              })
+              .then(() => {
+                const token = jwt.sign({
+                  UserName: user.UserName,
+                  email: user.email,
+                  telephone: user.telephone
+                }, secret);
+                res.status(200).json({
+                  success: true,
+                  UserName: user.UserName,
+                  email: user.email,
+                  isLoggedin: user.isLoggedin,
+                  telephone: user.telephone,
+                  token
+                });
+              })
+              .catch(err =>  {
+                res.status(400).send({
+                  success: false,
+                message: err.message
               });
-            })
-            .catch(err =>  {
-              res.status(400).send({
-                success: false,
-              message: err.message
-            });
-          }
-          );
+            }
+            );
+            }
+          } else {
+            res.status(401).json(invalid);
           }
         } else {
-          res.status(401).json(invalid)
-          .catch(error => {
-            res.status(400).send(error.message)});
+          res.status(401).send(invalid);
         }
+      })
+      .catch(error => {
+        res.status(400).send(error.message)});
       } else {
-        res.status(401).send(invalid)
-        .catch(error => res.status(400).send(error.message));
+        res.status(400).send({
+          success: false,
+          message: 'Invalid Credentials'
+        });
       }
-    })
-    .catch(error => {
-      console.log(error);
-      res.status(400).send(error)});
   },
 
   signout(req, res) {
