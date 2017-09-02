@@ -174,6 +174,7 @@ export default {
 
 
   listGroupUsers(req, res) {
+    console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>', req.params.groupId);
     if (req.header('x-auth')) {
       const token = req.header('x-auth');
       jwt.verify(token, secret, (err, decoded) => {
@@ -208,7 +209,7 @@ export default {
                     return Members
                     .findAll({
                       where: {
-                        groupId: req.u.groupId
+                        groupId: req.params.groupId
                       },
                       attributes:['id', 'userId', 'groupId'],
                       include: [

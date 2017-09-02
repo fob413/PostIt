@@ -110,7 +110,7 @@ export default {
                     attributes: ['id', 'GroupName'],
                     include: [{
                       model: Messages,
-                      attributes: ['id', 'content', 'authorsName']
+                      attributes: ['id', 'content', 'authorsName', 'readby']
                     }]
                   }
                 ]

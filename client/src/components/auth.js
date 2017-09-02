@@ -27,7 +27,8 @@ export function authenticateUser(token, dispatch) {
       const data = {
         UserName : decoded.UserName,
         email : decoded.email,
-        telephone : decoded.telephone
+        telephone : decoded.telephone,
+        userId: decoded.userId
       };
       dispatch({
         type: RELOAD_USER_IN,

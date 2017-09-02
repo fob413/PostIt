@@ -317,9 +317,6 @@ export default {
                               {readby: `${item.readby},${user.id}`}
                             );
                           }
-                          // item.update(
-                          //   {readby: `${item.readby},${user.id}`}
-                          // );
                         } else {
                           item.update(
                           {readby: `${user.id}`}

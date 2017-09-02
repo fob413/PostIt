@@ -89,7 +89,8 @@ export default {
                   const token = jwt.sign({
                     UserName: user.UserName,
                     email: user.email,
-                    telephone: user.telephone
+                    telephone: user.telephone,
+                    userId: user.id
                   }, secret);
                   res.status(201).json({
                     success: true,
@@ -97,7 +98,8 @@ export default {
                     email: user.email,
                     isLoggedin: user.isLoggedin,
                     telephone: user.telephone,
-                    token
+                    token,
+                    userId: user.id
                   });
                 })
                 .catch(err => res.status(400).send({
@@ -164,7 +166,8 @@ export default {
                 const token = jwt.sign({
                   UserName: user.UserName,
                   email: user.email,
-                  telephone: user.telephone
+                  telephone: user.telephone,
+                  userId: user.id
                 }, secret);
                 res.status(200).json({
                   success: true,
@@ -172,7 +175,8 @@ export default {
                   email: user.email,
                   isLoggedin: user.isLoggedin,
                   telephone: user.telephone,
-                  token
+                  token,
+                  userId: user.id
                 });
               })
               .catch(err =>  {

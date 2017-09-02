@@ -9,7 +9,8 @@ import {
   sendMessage, 
   loadGroupMessages, 
   loadPlatformUsers,
-  loadGroupUsers
+  loadGroupUsers,
+  readMessages
 } from '../../actions/messageActions';
 
 class MessageBoard extends React.Component {
@@ -19,21 +20,26 @@ class MessageBoard extends React.Component {
     this.state = ({
       groupId: this.props.Messages.groupId,
       messages: [],
+      unreadMessages: [],
+      readMessages: [],
       isLoggedIn: this.props.auth.isLoggedIn,
       addUser: "",
       PlatformUsers: [],
       groupUsers: [],
       otherUsers: [],
+      unread: true,
+      userId: this.props.auth.userId
     });
 
     this.inputUser = this.inputUser.bind(this);
     this.filterUsers = this.filterUsers.bind(this);
     this.autoHide = this.autoHide.bind(this);
+    this.toggleUnread = this.toggleUnread.bind(this);
   }
 
   componentDidMount() {
     if (this.state.groupId){
-      this.props.loadGroupMessages(this.state.groupId);
+      this.props.loadGroupMessages(this.state.groupId, this.state.userId);
       this.props.loadPlatformUsers();
       this.props.loadGroupUsers(this.state.groupId);
     } else {
@@ -46,9 +52,12 @@ class MessageBoard extends React.Component {
     this.setState({
       isLoggedIn: nextProps.auth.isLoggedIn,
       messages: nextProps.Messages.messages,
+      unreadMessages: nextProps.Messages.unreadMessages,
+      readMessages: nextProps.Messages.readMessages,
       PlatformUsers: nextProps.Messages.PlatformUsers,
       groupUsers: nextProps.Messages.groupUsers
     });
+    this.props.readMessages(this.state.groupId);
     if (!nextProps.auth.isLoggedIn) {
       this.props.history.push('/broadpage');
     }
@@ -57,6 +66,10 @@ class MessageBoard extends React.Component {
   componentDidUpdate() {
     // this.filterUsers();
     // console.log('here');
+  }
+
+  componentWillUnmount() {
+    this.props.readMessages(this.state.groupId);
   }
 
   onSend(e){
@@ -69,7 +82,10 @@ class MessageBoard extends React.Component {
         this.props.Messages.groupId, 
         _priority.value
       )
-      .then(() => this.props.loadGroupMessages(this.state.groupId),
+      .then(() => this.props.loadGroupMessages(
+        this.state.groupId, 
+        this.state.userId
+      ),
       err => console.log(err));
       _priority.value = "NORMAL";
     }
@@ -102,6 +118,18 @@ class MessageBoard extends React.Component {
     });
   }
 
+  toggleUnread() {
+    if(this.state.unread){
+      this.setState({
+        unread: false
+      });
+    } else {
+      this.setState({
+        unread: true
+      });
+    }
+  }
+
   autoHide() {
     $(() => {
       $('body #input').on('focus', () => {
@@ -118,8 +146,6 @@ class MessageBoard extends React.Component {
 
   render () {
    this.autoHide();
-   console.log(this.autoHide);
-   console.log('something should be showing above me right now');
 
     return (
       <div className="container">
@@ -134,25 +160,71 @@ class MessageBoard extends React.Component {
         </Link>
           <div className="col s12">
             <div className="col s8">
-              <div className="message">
-                {(this.state.messages && 
-                this.state.messages.length > 0) &&
-                  <ul className="collection">
-                    {
-                      this.state.messages.map((message, i) => {
-                        return (
-                          <div key={i}>
-                            <DisplayMessage 
-                              content={message.content}
-                              author={message.authorsName}
-                            />
-                          </div>
-                        );
-                      })
+              
+            <div>
+              <div className="card-tabs">
+                <ul className="tabs tabs-fixed-width">
+                  <li 
+                    className={this.state.unread ?
+                    "tab click underline" :
+                    "tab click"}
+                    onClick={this.toggleUnread}
+                  >
+                    UNREAD MESSAGES
+                  </li>
+                  <li
+                    className={!this.state.unread ?
+                    "tab click underline" :
+                    "tab click"}
+                    onClick={this.toggleUnread}
+                  >
+                    READ MESSAGES
+                  </li>
+                </ul>
+              </div>
+
+              <div>
+                {(this.state.unread) ? 
+                  <div className="message">
+                    {this.state.unreadMessages &&
+                      this.state.unreadMessages.length > 0 ?
+                      <ul className="collection">
+                        {this.state.unreadMessages.map((message, i) => {
+                          return (
+                            <div key={i}>
+                              <DisplayMessage
+                                content={message.content}
+                                author={message.authorsName}
+                              />
+                            </div>
+                          );
+                        })}  
+                      </ul>:
+                      <div className="center-align">No new message</div>
                     }
-                  </ul>
+                  </div> :
+                  <div className="message">
+                    {(this.state.readMessages && 
+                    this.state.readMessages.length > 0) &&
+                      <ul className="collection">
+                        {
+                          this.state.readMessages.map((message, i) => {
+                            return (
+                              <div key={i}>
+                                <DisplayMessage 
+                                  content={message.content}
+                                  author={message.authorsName}
+                                />
+                              </div>
+                            );
+                          })
+                        }
+                      </ul>
+                    }
+                  </div>
                 }
               </div>
+            </div>
 
               <div className="row">
                 <form onSubmit={this.onSend}>
@@ -258,5 +330,10 @@ const mapStateToProps = state => (
 
 export default connect(
   mapStateToProps,
-  { sendMessage, loadGroupMessages, loadPlatformUsers, loadGroupUsers }
+  { 
+    sendMessage, 
+    loadGroupMessages, 
+    loadPlatformUsers, 
+    loadGroupUsers, 
+    readMessages }
 ) (withRouter(MessageBoard));

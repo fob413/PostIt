@@ -65,3 +65,9 @@
 .forgotBold{
   font-weight: bold
 }
+
+.underline{
+  text-decoration: underline;
+  font-weight: bold;
+  color: #004d40;
+}
