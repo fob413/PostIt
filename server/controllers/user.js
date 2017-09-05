@@ -22,12 +22,19 @@ const invalid = {
 
 
 export default {
+  /**
+   * api controller lists all the users on the platform
+   * @param {object} req 
+   * @param {object} res
+   * @return {void} 
+   */
   list(req, res) {
-
+    // token authentication
     if (req.header('x-auth')) {
       const token = req.header('x-auth');
       jwt.verify(token, secret, (err, decoded) => {
         if (err) {
+          // response for failed authentication
           return res.json({
             success: false,
             message: 'failed to authenticaate token'
@@ -64,6 +71,7 @@ export default {
         }
       });
     } else {
+      // response for failed authentication
       return res.status(403).send({
         success: false,
         message: 'no token provided'
@@ -71,80 +79,70 @@ export default {
     }
   },
 
+  /**
+   * api controller to signup a new user
+   * @param {object} req 
+   * @param {object} res
+   * @return {void} 
+   */
   create(req, res) {
-    if ( req.body.UserName ) {
-      if (req.body.UserName.length > 0) {
-        if (req.body.password && req.body.password.length > 7) {
-          if (req.body.email) {
-            if (req.body.telephone) {
-              if (req.body.telephone.length == 11 && !isNaN(req.body.telephone)) {
-                return Users
-                .create({
-                  UserName: req.body.UserName,
-                  password: bcrypt.hashSync(req.body.password, 11),
-                  email: req.body.email,
-                  telephone: req.body.telephone
-                })
-                .then((user) => {
-                  const token = jwt.sign({
-                    UserName: user.UserName,
-                    email: user.email,
-                    telephone: user.telephone,
-                    userId: user.id
-                  }, secret);
-                  res.status(201).json({
-                    success: true,
-                    UserName: user.UserName,
-                    email: user.email,
-                    isLoggedin: user.isLoggedin,
-                    telephone: user.telephone,
-                    token,
-                    userId: user.id
-                  });
-                })
-                .catch(err => res.status(400).send({
-                  success: false,
-                  message: err.message
-                }));
-              } else {
-                res.status(400).send({
-                  success: false,
-                  message: 'Telephone must be a set of numbers of 11 characters'
-                });
-              }
-            } else {
-              res.status(400).send({
-                success: false,
-                message: 'Please input your phone number'
-              });
-            }
-          } else {
-            res.status(400).send({
-              success: false,
-              message: 'Email not given'
-            });
-          }
-        } else {
-          res.status(400).send({
-            success: false,
-            message: 'Password must be at least 8 characters'
-          });
-        }
-      } else {
-        res.status(400).send({
-          success: false,
-          message: 'Username cannot be an empty field'
+    // check for edge cases
+    if (
+      req.body.UserName &&
+      req.body.UserName.length > 0 &&
+      req.body.password &&
+      req.body.password.length > 7 &&
+      req.body.email &&
+      req.body.telephone &&
+      req.body.telephone.length == 11 &&
+      !isNaN(req.body.telephone)
+    ) {
+      return Users
+      .create({
+        UserName: req.body.UserName,
+        password: bcrypt.hashSync(req.body.password, 11),
+        email: req.body.email,
+        telephone: req.body.telephone
+      })
+      .then((user) => {
+        // sign and return token
+        const token = jwt.sign({
+          UserName: user.UserName,
+          email: user.email,
+          telephone: user.telephone,
+          userId: user.id
+        }, secret);
+        res.status(201).json({
+          success: true,
+          UserName: user.UserName,
+          email: user.email,
+          isLoggedin: user.isLoggedin,
+          telephone: user.telephone,
+          token,
+          userId: user.id
         });
-      }
+      })
+      .catch(err => res.status(400).send({
+        success: false,
+        message: err.message
+      }));
     } else {
+      // response for failed signup
       res.status(400).send({
         success: false,
-        message: 'Username not given'
+        message: 'Invalid credentials'
       });
     }
   },
 
+  /**
+   * api controller to signin a user
+   * @param {object} req 
+   * @param {object} res
+   * @return {void} 
+   */
   signin(req, res) {
+    // check for username and password
     if (req.body.UserName && req.body.password) {
       return Users
       .findOne({
@@ -198,13 +196,21 @@ export default {
         res.status(400).send(error.message)});
       } else {
         res.status(400).send({
+          // response for failed signin
           success: false,
           message: 'Invalid Credentials'
         });
       }
   },
 
+  /**
+   * api controller to sign out a user fron the platform
+   * @param {object} req 
+   * @param {object} res
+   * @return {void} 
+   */
   signout(req, res) {
+    // authentication. Check and confirm token
     if (req.header('x-auth')){
       const token = req.headers['x-auth'];
       jwt.verify(token, secret, (err, decoded) => {
@@ -226,6 +232,8 @@ export default {
               isLoggedin: false
             })
             .then(res.status(200).send({
+              // response for successful signout
+              success: true,
               message: 'successfully logged out',
               isLoggedin: user.isLoggedin
             }))
@@ -236,13 +244,21 @@ export default {
       })
     } else {
       return res.status(403).send({
+        // response for failed authentication
         success: false,
         message: 'no token provided'
       });
     }
   },
 
+  /**
+   * api controller to send reset password link to mail
+   * @param {object} req 
+   * @param {object} res
+   * @return {void} 
+   */
   forgot(req, res) {
+    // check for email
     if (!req.body.email) {
       res.status(400).send({
         success: false,
@@ -292,6 +308,12 @@ export default {
     }
   },
 
+  /**
+   * api controller to reset password
+   * @param {object} req 
+   * @param {object} res
+   * @return {void} 
+   */
   reset(req, res) {
     return Users
     .findOne({
@@ -356,6 +378,12 @@ export default {
     });
   },
 
+  /**
+   * api controller to authenticate token on resetting password
+   * @param {object} req 
+   * @param {object} res
+   * @return {void} 
+   */
   authToken(req, res) {
     if (!req.body.token) {
       res.status(400).send({
@@ -377,9 +405,7 @@ export default {
           });
         } else {
           res.status(200).send({
-            success: true,
-            message: 'valid token',
-            UserName: user.UserName
+            U
           });
         }
       }, err => {

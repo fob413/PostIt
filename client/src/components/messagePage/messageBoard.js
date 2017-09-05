@@ -145,7 +145,7 @@ class MessageBoard extends React.Component {
   }
 
   render () {
-   this.autoHide();
+   // this.autoHide();
 
     return (
       <div className="container">
@@ -278,7 +278,7 @@ class MessageBoard extends React.Component {
                 </form>
               </div>
 
-              <div id="hide" className="hide">
+              <div id="hide" className="hid">
                 {(this.state.PlatformUsers && this.state.PlatformUsers.length > 0) && 
                 <ul className="collection">
                   {this.state.PlatformUsers.filter((item) => {

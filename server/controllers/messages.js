@@ -11,7 +11,12 @@ const secret = process.env.SECRET_TOKEN;
 // const message = require('../models').Messages;
 // const Users = require('../models/').Users;
 
-// functino to check if a user has read a message
+/**
+ * checks if a user has read a message
+ * @param {array} message array of users that have read the message
+ * @param {number} id current users id
+ * @return {boolean} user has either read the message of not
+ */
 const hasRead = (message,id) => {
   let read = false;
   message = message.split(",");
@@ -25,7 +30,14 @@ const hasRead = (message,id) => {
 
 export default {
 
+  /**
+   * api route to send a message to a group
+   * @param {object} req 
+   * @param {object} res 
+   * @return {void}
+   */
   sendMessage(req, res) {
+    // authentication
     if (req.header('x-auth')) {
       const token = req.header('x-auth');
       jwt.verify(token, secret, (err, decoded) => {
@@ -94,7 +106,6 @@ export default {
                               }
                             ]
                           }).then((users) => {
-                            console.log('extra features below');
                             if ( req.body.priority == 'URGENT' ){
                               sendMail(users, messages.content);
                             }
@@ -153,6 +164,12 @@ export default {
     }
   },
 
+  /**
+   * list messages in a particular group
+   * @param {object} req 
+   * @param {object} res 
+   * @return {void}
+   */
   listMessages(req, res) {
     if (req.header('x-auth')) {
       const token = req.header('x-auth');
@@ -253,6 +270,7 @@ export default {
     }
   },
 
+
   list(req, res) {
     return Message
     .all()
@@ -260,6 +278,12 @@ export default {
     .catch(error => res.status(400).send(error.message));
   },
 
+  /**
+   * api route to update messages a user has read
+   * @param {object} req 
+   * @param {object} res 
+   * @return {void}
+   */
   readMessages(req, res) {
     if (req.header('x-auth')) {
       const token = req.header('x-auth');

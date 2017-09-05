@@ -9,6 +9,12 @@ const secret = process.env.SECRET_TOKEN;
 
 export default {
 
+  /**
+   * create a new group
+   * @param {object} req 
+   * @param {object} res 
+   * @return {void}
+   */
   create(req, res) {
     if (req.header('x-auth')) {
       const token = req.header('x-auth');
@@ -80,6 +86,12 @@ export default {
     }
   },
 
+  /**
+   * list of groups a user belongs to
+   * @param {object} req 
+   * @param {object} res 
+   * @return {void}
+   */
   listGroups(req, res) {
     if (req.header('x-auth')) {
       const token = req.header('x-auth');
