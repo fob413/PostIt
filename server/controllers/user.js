@@ -28,54 +28,110 @@ export default {
    * @param {object} res
    * @return {void} 
    */
-  list(req, res) {
-    // token authentication
-    if (req.header('x-auth')) {
-      const token = req.header('x-auth');
-      jwt.verify(token, secret, (err, decoded) => {
-        if (err) {
-          // response for failed authentication
-          return res.json({
-            success: false,
-            message: 'failed to authenticaate token'
-          });
-        } else {
-          req.decoded = decoded;
-          return Users
-          .findOne({
-            where: {
-              UserName: req.decoded.UserName
-            }
-          })
-          .then(user => {
-            if(user.isLoggedin){
-              Users.all( {
-                attributes:['id','UserName']
-              })
-              .then(allUsers => res.status(200).send(allUsers))
-              .catch(err => res.status(400).send({
-                success: false,
-                message: err.message
-              }));
-            } else {
-              return res.status(401).send({
-                success: false,
-                message: 'Login to access this service'
-              });
-            }
-          })
-          .catch(err => res.status(400).send({
-            success: false,
-            error: err.message
-          }));
-        }
-      });
-    } else {
-      // response for failed authentication
+  // list(req, res) {
+  //   // token authentication
+  //   if (req.header('x-auth')) {
+  //     const token = req.header('x-auth');
+  //     jwt.verify(token, secret, (err, decoded) => {
+  //       if (err) {
+  //         // response for failed authentication
+  //         return res.json({
+  //           success: false,
+  //           message: 'failed to authenticaate token'
+  //         });
+  //       } else {
+  //         req.decoded = decoded;
+  //         return Users
+  //         .findOne({
+  //           where: {
+  //             UserName: req.decoded.UserName
+  //           }
+  //         })
+  //         .then(user => {
+  //           if(user.isLoggedin){
+  //             Users.all( {
+  //               attributes:['id','UserName']
+  //             })
+  //             .then(allUsers => res.status(200).send(allUsers))
+  //             .catch(err => res.status(400).send({
+  //               success: false,
+  //               message: err.message
+  //             }));
+  //           } else {
+  //             return res.status(401).send({
+  //               success: false,
+  //               message: 'Login to access this service'
+  //             });
+  //           }
+  //         })
+  //         .catch(err => res.status(400).send({
+  //           success: false,
+  //           error: err.message
+  //         }));
+  //       }
+  //     });
+  //   } else {
+  //     // response for failed authentication
+  //     return res.status(403).send({
+  //       success: false,
+  //       message: 'no token provided'
+  //     });
+  //   }
+  // },
+
+  /**
+   * api controller lists all the users on the platform
+   * @param {object} req 
+   * @param {object} res
+   * @return {void} 
+   */
+  searchUsers(req, res) {
+    if (!req.header('x-auth')) {
       return res.status(403).send({
         success: false,
         message: 'no token provided'
       });
+    } else {
+      if (!req.body.UserName) {
+        return res.status(400).send({
+          success: false,
+          message: 'no search parameter',
+          users: []
+        });
+      } else {
+        const token = req.header('x-auth');
+        jwt.verify(token, secret, (err, decoded) => {
+          if(err) {
+            return res.status(403).send({
+              success: false,
+              message: 'failed to authenticate token'
+            });
+          } else {
+            req.decoded = decoded;
+            return Users
+            .findAll({
+              offset: req.params.offset * 5,
+              limit: 5,
+              where: {
+                UserName: { $like: `%${req.body.UserName}%`}
+              },
+              attributes: ['id', 'UserName']
+            })
+            .then(users => {
+              res.status(200).send({
+                success: true,
+                users
+              });
+            }, err => {
+              res.status(400).send({
+                success: false,
+                message: 'an error occured searching users',
+                users: []
+              });
+            });
+          }
+        });
+      }
     }
   },
 
