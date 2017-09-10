@@ -306,7 +306,7 @@ class MessageBoard extends React.Component {
                 </form>
               </div>
 
-              <div>
+              <div className="addUser">
               {(
                 this.state.PlatformUsers && 
                 this.state.PlatformUsers.length > 0
@@ -318,29 +318,29 @@ class MessageBoard extends React.Component {
                       <PlatformUsers key={i} platformUser={platformUser} />
                     );
                   })}
+                  <div className="row">
+                    <div className="col s2"></div>
+                    <div className="">
+                      <button
+                      className="col s3 btn waves-effect waves-light green darken-4"
+                      onClick={this.prevPage}
+                      >
+                        Back
+                      </button>
+                    </div>
+                    <div className="col s2 center-align">{this.state.offset + 1}</div>
+                    <div className="">
+                      <button
+                        className="col s3 btn waves-effect waves-light green darken-4"
+                        onClick={this.nextPage}
+                      >
+                        Next
+                      </button>
+                    </div>
+                    <div className="col s2"></div>
+                  </div>
                 </ul>
                 }
-                <div className="row addUser">
-                  <div className="col s2"></div>
-                  <div className="">
-                    <button
-                    className="col s3 btn waves-effect waves-light green darken-4"
-                    onClick={this.prevPage}
-                    >
-                      Back
-                    </button>
-                  </div>
-                  <div className="col s2 center-align">{this.state.offset + 1}</div>
-                  <div className="">
-                    <button
-                      className="col s3 btn waves-effect waves-light green darken-4"
-                      onClick={this.nextPage}
-                    >
-                      Next
-                    </button>
-                  </div>
-                  <div className="col s2"></div>
-                </div>
               </div>
 
               {this.state.groupUsers && this.state.groupUsers.length > 0 &&
