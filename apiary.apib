@@ -5,7 +5,7 @@ HOST: http://polls.apiblueprint.org/
 
 PostIt is a simple application that allows friends and colleagues create groups for notifications. The application allows people create accounts, creat groups, add registered users to the group and then send messages out to these groups whenever they want.
 
-## POST IT APIS [/questions]
+## SIGN UP A USER [/api/user/signup]
 
 ### Sign up a user [POST]
 
@@ -18,72 +18,331 @@ PostIt is a simple application that allows friends and colleagues create groups 
             "telephone": "08138498175"
         }
 
-+ Response 200 (application/json)
++ Response 201 (application/json)
 
-        [
-            {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
-                    {
-                        "choice": "Swift",
-                        "votes": 2048
-                    }, {
-                        "choice": "Python",
-                        "votes": 1024
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 512
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 256
-                    }
-                ]
-            }
-        ]
+        {
+            "success": true,
+            "token": "asdfeiayefchandanegwjyiyalsdfn"
+        }
 
-### Create a New Question [POST]
+## SIGN IN A USER [/api/user/signin]
 
-You may create your own question using this action. It takes a JSON
-object containing a question and a collection of answers in the
-form of choices.
+### Sign in a user [POST]
 
 + Request (application/json)
 
         {
-            "question": "Favourite programming language?",
-            "choices": [
-                "Swift",
-                "Python",
-                "Objective-C",
-                "Ruby"
-            ]
+            "UserName": "Funsho",
+            "password": "abcdefghij"
         }
+        
++ Response 200 (application/json)
+
+        {
+            "success": true,
+            "token": "abcdefghijklmnopqrstuvwxyz"
+        }
+        
+## SIGN A USER OUT [/api/user/signout]
+
+### Sign a user out [GET]
+
++ Request
+
+    + Headers
+    
+            x-auth: "abcdefghijklmnopqrstuvwxyz"
+        
++ Response 200 (application/json)
+
+        {
+            "success": true,
+            "message": 'successfully logged out',
+            "isLoggedin": false
+        }
+        
+## FORGOT PASSWORD [/api/forgot/password]
+
+### Forgot password [POST]
+
++ Request (application/json)
+
+        {
+            "email": "fob1493@gmail.com"
+        }
+        
++ Response 200 (application/json)
+
+        {
+            "success": true
+        }
+        
+## UPDATE PASSWORD [/api/reset/password/:token]
+
+### Update password [POST]
+
++ Request (application/json)
+
+        {
+            "newPassword": "asdf;lkj",
+            "confirmPassword": "asdf;lkj"
+        }
+        
++ Response 201 (application/json)
+
+        {
+            "success": true,
+            "message": "successfully updated password"
+        }
+        
+## AUTHENTICATE RESET PASSWORD TOKEN [/api/reset/token]
+
+### Authenticate reset password token [POST]
+
++ Request (application/json)
+
+        {
+            "token": "abcdefghijklmnopqrstuvwxyz"
+        }
+        
++ Response 200 (application/json)
+
+        {
+            "success": true,
+            "message": "valid token",
+            "UserName": "funsho"
+        }
+        
+## LIST ALL USERS ON THE PLATFORM [/api/users/list]
+
+### List all the users on the platform [GET]
+
++ Request
+
+    + Headers
+    
+            x-auth: "abcdefghijklmnopqrstuvwxyz"
+        
++ Response 200 (application/json)
+
+        [
+            {
+                "id": "1",
+                "UserName": "funsho"
+            },
+            {
+                "id": "2",
+                "UserName": "balogun"
+            }
+        ]
+        
+## CREATE A NEW GROUP [/api/group]
+
+### Create a new group [POST]
+
++ Request
+
+    + Headers
+    
+            x-auth: "abcdefghijklmnopqrstuvwxyz"
+            
+    + Body
+    
+            {
+                "GroupName": "First Group",
+                "Description": "A short description of the First Group"
+            }
+        
++ Response 201 (application/json)
+
+        {
+            "GroupName": "First Group",
+            "Description": "A short description of the First Group"
+        }
+        
+## ADD USER TO A PARTICULAR GROUP [/api/group/:groupId/user]
+
+### Add user to a particular group [POST]
+
++ Request
+
+    + Headers
+    
+            x-auth: "abcdefghijklmnopqrstuvwxyz"
+            
+    + Body
+    
+            {
+                "userId": "1"
+            }
+        
++ Response 201 (application/json)
+
+        {
+            "id": "1"
+            "userId": "1",
+            "groupId": "1"
+        }
+        
+## LIST USERS IN A PARTICULAR GROUP [/api/group/:groupId/user/list]
+
+### List users in a particular group [GET]
+
++ Request
+
+    + Headers
+    
+            x-auth: "abcdefghijklmnopqrstuvwxyz"
+
++ Response 200 (application/json)
+
+        [
+            {
+                "id": "1",
+                "userId": "1",
+                "groupId": "1",
+                "user": {
+                            "id": "1",
+                            "UserName": "funsho"
+                        }
+            },
+            {
+                "id": "2",
+                "userId": "2",
+                "groupId": "1",
+                "user": {
+                            "id": "2",
+                            "UserName": "balogun"
+                        }
+            }
+        ]
+        
+## LIST GROUPS A USER BELONGS TO [/api/group/list]
+
+### List groups a user belongs to [GET]
+
++ Request
+
+    + Headers
+    
+            x-auth: "abcdefghijklmnopqrstuvwxyz"
+
++ Response 200 (application/json)
+
+        [
+            {
+                "id": "1",
+                "userId": "1",
+                "groupId": "1",
+                "Group": {
+                            "id": "1",
+                            "GroupName": "First Group",
+                            "Messages": [
+                                            {
+                                                "id": "1",
+                                                "content": "the first message sent to this group",
+                                                "authorsName": "funsho",
+                                                "readby": "1,2"
+                                            },
+                                            {
+                                                "id": "2",
+                                                "content": "the second message sent to this group",
+                                                "authorsName": "balogun",
+                                                "readby": "1,2"
+                                            }
+                                        ]
+                        }
+            },
+            {
+                "id": "2",
+                "userId": "1",
+                "groupId": "2",
+                "Group": {
+                            "id": "2",
+                            "GroupName": "Second Group",
+                            "Messages": [
+                                            {
+                                                "id": "3",
+                                                "content": "the first message sent to the Second Group",
+                                                "authorsName": "funsho",
+                                                "readby": "1,2"
+                                            },
+                                            {
+                                                "id": "4",
+                                                "content": "the second message sent to the Second Group",
+                                                "authorsName": "balogun",
+                                                "readby": "1,2"
+                                            }
+                                        ]
+                        }
+            }
+        ]
+        
+## SEND A MESSAGE TO A PARTICULAR GROUP [/api/group/:groupId/message]
+
+### Send a message to a particular group [POST]
+
++ Request
+
+    + Headers
+    
+            x-auth: "abcdefghijklmnopqrstuvwxyz"
+            
+    + Body
+    
+            {
+                "content": "req.body.content",
+                "priorityValue": "req.body.priority"
+            }
 
 + Response 201 (application/json)
 
+        {
+            "id": "1",
+            "content": "the is the first message sent to this group",
+            "authorsName": "funsho",
+            "priority": "normal"
+        }
+        
+## LIST MESSAGES IN A PARTICULAR GROUP [/api/group/:groupId/messages]
+
+### List messages in a particular group [GET]
+
++ Request
+
     + Headers
+    
+            x-auth: "abcdefghijklmnopqrstuvwxyz"
 
-            Location: /questions/2
++ Response 200 (application/json)
 
-    + Body
-
+        [
             {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
-                    {
-                        "choice": "Swift",
-                        "votes": 0
-                    }, {
-                        "choice": "Python",
-                        "votes": 0
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 0
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 0
-                    }
-                ]
+                "id": "1",
+                "content": "the is the first message sent to this group",
+                "authorsName": "funsho",
+                "priority": "normal"
+            },
+            {
+                "id": "2",
+                "content": "the is the second message sent to this group",
+                "authorsName": "balogun",
+                "priority": "urgent"
             }
+        ]
+        
+## UPDATE MESSAGES THAT A USER HAS READ [/api/group/:groupId/messages/read]
+
+### Update messages that a user has read [POST]
+
++ Request
+
+    + Headers
+    
+            x-auth: "abcdefghijklmnopqrstuvwxyz"
+
++ Response 200 (application/json)
+
+        {
+            "success": true
+        }
