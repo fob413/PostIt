@@ -12,4 +12,4 @@ after_script:
 env:
   global:
     - RANDOM_TOKEN=Randomtoken
-    - DATABASE_URL=postgres://tdpwgjhu:lb7AVqPPw5kI4ROuQdUhZpPioVaBgX2L@babar.elephantsql.com:5432/tdpwgjhu
+    - TEST_URL=postgres://tdpwgjhu:lb7AVqPPw5kI4ROuQdUhZpPioVaBgX2L@babar.elephantsql.com:5432/tdpwgjhu
