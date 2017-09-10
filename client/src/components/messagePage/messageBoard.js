@@ -10,7 +10,8 @@ import {
   loadGroupMessages, 
   loadPlatformUsers,
   loadGroupUsers,
-  readMessages
+  readMessages,
+  searchUsers
 } from '../../actions/messageActions';
 
 class MessageBoard extends React.Component {
@@ -35,12 +36,13 @@ class MessageBoard extends React.Component {
     this.filterUsers = this.filterUsers.bind(this);
     this.autoHide = this.autoHide.bind(this);
     this.toggleUnread = this.toggleUnread.bind(this);
+    this.prevPage = this.prevPage.bind(this);
+    this.nextPage = this.nextPage.bind(this);
   }
 
   componentDidMount() {
     if (this.state.groupId){
       this.props.loadGroupMessages(this.state.groupId, this.state.userId);
-      this.props.loadPlatformUsers();
       this.props.loadGroupUsers(this.state.groupId);
     } else {
       this.props.history.push('/broadpage');
@@ -55,7 +57,8 @@ class MessageBoard extends React.Component {
       unreadMessages: nextProps.Messages.unreadMessages,
       readMessages: nextProps.Messages.readMessages,
       PlatformUsers: nextProps.Messages.PlatformUsers,
-      groupUsers: nextProps.Messages.groupUsers
+      groupUsers: nextProps.Messages.groupUsers,
+      offset: 0
     });
     this.props.readMessages(this.state.groupId);
     if (!nextProps.auth.isLoggedIn) {
@@ -98,6 +101,33 @@ class MessageBoard extends React.Component {
     this.setState({
       addUser: _user.value
     });
+    this.props.searchUsers(this.state.offset, _user.value);
+  }
+
+  prevPage(e) {
+    e.preventDefault();
+    if (this.state.offset > 0) {
+      // this.props.searchUsers(this.state.offset - 1, this.state.addUser);
+      let num = this.state.offset;
+      this.setState({
+        offset: num - 1
+      });
+    }
+  }
+
+  nextPage(e) {
+    const { _user } = this.refs;
+    e.preventDefault();
+    console.log('increment by 1');
+    // this.props.searchUsers(this.state.offset + 1, this.state.addUser);
+    console.log('before set new state');
+    let num = this.state.offset;
+    console.log('after set new state');
+    this.setState({
+      offset: num + 1
+    });
+    console.log('finally done setting state');
+    // this.props.searchUsers(2, _user.value);
   }
 
   filterUsers(){
@@ -145,7 +175,6 @@ class MessageBoard extends React.Component {
   }
 
   render () {
-   // this.autoHide();
 
     return (
       <div className="container">
@@ -272,18 +301,18 @@ class MessageBoard extends React.Component {
                       type="text"
                       placeholder="Add User"
                       onChange={this.inputUser}
-                      onFocus={this.autoHide}
                     />
                   </div>
                 </form>
               </div>
 
-              <div id="hide" className="hid">
-                {(this.state.PlatformUsers && this.state.PlatformUsers.length > 0) && 
-                <ul className="collection">
-                  {this.state.PlatformUsers.filter((item) => {
-                    return item.UserName.startsWith(this.state.addUser);
-                  })
+              <div>
+              {(
+                this.state.PlatformUsers && 
+                this.state.PlatformUsers.length > 0
+                ) && 
+                <ul className="col s12 collection">
+                  {this.state.PlatformUsers
                   .map((platformUser, i) => {
                     return(
                       <PlatformUsers key={i} platformUser={platformUser} />
@@ -291,6 +320,27 @@ class MessageBoard extends React.Component {
                   })}
                 </ul>
                 }
+                <div className="row addUser">
+                  <div className="col s2"></div>
+                  <div className="">
+                    <button
+                    className="col s3 btn waves-effect waves-light green darken-4"
+                    onClick={this.prevPage}
+                    >
+                      Back
+                    </button>
+                  </div>
+                  <div className="col s2 center-align">{this.state.offset + 1}</div>
+                  <div className="">
+                    <button
+                      className="col s3 btn waves-effect waves-light green darken-4"
+                      onClick={this.nextPage}
+                    >
+                      Next
+                    </button>
+                  </div>
+                  <div className="col s2"></div>
+                </div>
               </div>
 
               {this.state.groupUsers && this.state.groupUsers.length > 0 &&
@@ -335,5 +385,7 @@ export default connect(
     loadGroupMessages, 
     loadPlatformUsers, 
     loadGroupUsers, 
-    readMessages }
+    readMessages,
+    searchUsers
+  }
 ) (withRouter(MessageBoard));

@@ -30,7 +30,6 @@ class Group extends React.Component{
   componentWillReceiveProps(nextProps){
     const group = this.state.group;
     const id = this.state.userId;
-    console.log(nextProps.showGroup);
     this.setState({
       group: nextProps.showGroup,
       unreadMessages: this.filterUnreadMessages(group.Messages, id)

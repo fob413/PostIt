@@ -116,11 +116,16 @@ describe('Signin route tests /api/user/signin', () => {
 
     // should return status code 401 if user doesn't exist
     it(`should return a status code 401 when the user does not exist`, (done) => {
+      const testUser4 = {
+        UserName: 'Funsho',
+        password: 'asdf;lkj'
+      };
+
       chai.request(app)
       .post('/api/user/signin')
-      .send(testUser3)
+      .send(testUser4)
       .end((err, res) => {
-        expect(res.body.telephone).to.equal('08138498175');
+        res.should.have.status(401);
         done();
       });
     });
@@ -144,6 +149,7 @@ describe('Signin route tests /api/user/signin', () => {
     // should return a message when username is not given
     it(`should return a message when user name is not given`, (done) => {
       const testUser4 = {
+        // no username given here
         password: 'asdf;lkj'
       };
 
@@ -201,8 +207,8 @@ describe('Signin route tests /api/user/signin', () => {
       });
     });
 
-    // should return a status code of 400 when password is wrong
-    it(`should return a status code of 400 when password is wrong`, (done) => {
+    // should return a status code of 401 when password is wrong
+    it(`should return a status code of 401 when password is wrong`, (done) => {
       const testUser4 = {
         UserName: 'Bayo',
         password: 'abcdefghijklmnop'

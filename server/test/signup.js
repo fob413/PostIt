@@ -177,7 +177,7 @@ describe('SignUp Negative Responses', () => {
     .post('/api/user/signup')
     .send(testUser2)
     .end((err, res) => {
-      expect(res.body.message).to.equal('Username not given');
+      expect(res.body.message).to.equal('Invalid credentials');
       done();
     });
   });
@@ -209,7 +209,7 @@ describe('SignUp Negative Responses', () => {
     .post('/api/user/signup')
     .send(testUser2)
     .end((err, res) => {
-      expect(res.body.message).to.equal('Email not given');
+      expect(res.body.message).to.equal('Invalid credentials');
       done();
     });
   });
@@ -243,7 +243,7 @@ describe('SignUp Negative Responses', () => {
     .post('/api/user/signup')
     .send(testUser2)
     .end((err, res) => {
-      expect(res.body.message).to.equal(`Password must be at least 8 characters`);
+      expect(res.body.message).to.equal(`Invalid credentials`);
       done();
     });
   });
@@ -275,7 +275,7 @@ describe('SignUp Negative Responses', () => {
   .post('/api/user/signup')
   .send(testUser2)
   .end((err, res) => {
-    expect(res.body.message).to.equal(`Please input your phone number`);
+    expect(res.body.message).to.equal(`Invalid credentials`);
     done();
   });
 });
@@ -309,7 +309,7 @@ describe('SignUp Negative Responses', () => {
   .post('/api/user/signup')
   .send(testUser2)
   .end((err, res) => {
-    expect(res.body.message).to.equal(`Telephone must be a set of numbers of 11 characters`);
+    expect(res.body.message).to.equal(`Invalid credentials`);
     done();
   });
 });
@@ -341,7 +341,7 @@ it(`It should return a message when
   .post('/api/user/signup')
   .send(testUser2)
   .end((err, res) => {
-    expect(res.body.message).to.equal('Password must be at least 8 characters')
+    expect(res.body.message).to.equal('Invalid credentials')
     done();
   });
 });

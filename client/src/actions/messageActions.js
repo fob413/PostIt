@@ -169,6 +169,22 @@ export function loadPlatformUsers() {
   };
 }
 
+export function searchUsers(offset, UserName) {
+  return dispatch => {
+    return axios.post(
+      `api/users/list/${offset}`,
+      {UserName},
+      {headers: {'x-auth': localStorage.getItem('x-auth')}}
+    )
+    .then(({ data }) => {
+      dispatch(loadPlatformUsersSuccess(data.users));
+      return true;
+    }, err => {
+      console.log(err.message);
+    });
+  };
+}
+
 export function loadGroupUsers(groupId) {
   return dispatch => {
     axios.get(
