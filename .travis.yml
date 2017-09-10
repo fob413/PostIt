@@ -13,9 +13,3 @@ env:
   global:
     - RANDOM_TOKEN=Randomtoken
     - TEST_URL=postgres://tdpwgjhu:lb7AVqPPw5kI4ROuQdUhZpPioVaBgX2L@babar.elephantsql.com:5432/tdpwgjhu
-
-services:
-  - postgresql
-
-before_script:
-  - psql -c 'CREATE DATABASE postit_test;' -U postgres
