@@ -52,6 +52,9 @@ Tests were run with Mocha and Chai on all functions and Api routes
 The Documentation for the API can be found [here.](https://jsapi.apiary.io/previews/postitcp/reference)
 
 ## Template Images
+![Cover Image1](https://github.com/fob413/PostIt/blob/feedback/template/image/cover1.jpg)
+![Cover Image2](https://github.com/fob413/PostIt/blob/feedback/template/image/cover2.jpg)
+![Cover Image3](https://github.com/fob413/PostIt/blob/feedback/template/image/cover3.jpg)
 ![Sign Up](https://github.com/fob413/PostIt/blob/newDatabaseBadge/template/image/Tsignup.png)
 ![Sign In](https://github.com/fob413/PostIt/blob/newDatabaseBadge/template/image/Tsignin.png)
 ![Message Board](https://github.com/fob413/PostIt/blob/newDatabaseBadge/template/image/Tmessageboard.png)
