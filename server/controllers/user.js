@@ -22,182 +22,251 @@ const invalid = {
 
 
 export default {
-  list(req, res) {
+  /**
+   * api controller lists all the users on the platform
+   * @param {object} req 
+   * @param {object} res
+   * @return {void} 
+   */
+  // list(req, res) {
+  //   // token authentication
+  //   if (req.header('x-auth')) {
+  //     const token = req.header('x-auth');
+  //     jwt.verify(token, secret, (err, decoded) => {
+  //       if (err) {
+  //         // response for failed authentication
+  //         return res.json({
+  //           success: false,
+  //           message: 'failed to authenticaate token'
+  //         });
+  //       } else {
+  //         req.decoded = decoded;
+  //         return Users
+  //         .findOne({
+  //           where: {
+  //             UserName: req.decoded.UserName
+  //           }
+  //         })
+  //         .then(user => {
+  //           if(user.isLoggedin){
+  //             Users.all( {
+  //               attributes:['id','UserName']
+  //             })
+  //             .then(allUsers => res.status(200).send(allUsers))
+  //             .catch(err => res.status(400).send({
+  //               success: false,
+  //               message: err.message
+  //             }));
+  //           } else {
+  //             return res.status(401).send({
+  //               success: false,
+  //               message: 'Login to access this service'
+  //             });
+  //           }
+  //         })
+  //         .catch(err => res.status(400).send({
+  //           success: false,
+  //           error: err.message
+  //         }));
+  //       }
+  //     });
+  //   } else {
+  //     // response for failed authentication
+  //     return res.status(403).send({
+  //       success: false,
+  //       message: 'no token provided'
+  //     });
+  //   }
+  // },
 
-    if (req.header('x-auth')) {
-      const token = req.header('x-auth');
-      jwt.verify(token, secret, (err, decoded) => {
-        if (err) {
-          return res.json({
-            success: false,
-            message: 'failed to authenticaate token'
-          });
-        } else {
-          req.decoded = decoded;
-          return Users
-          .findOne({
-            where: {
-              UserName: req.decoded.UserName
-            }
-          })
-          .then(user => {
-            if(user.isLoggedin){
-              Users.all( {
-                attributes:['id','UserName']
-              })
-              .then(allUsers => res.status(200).send(allUsers))
-              .catch(err => res.status(400).send({
-                success: false,
-                message: err.message
-              }));
-            } else {
-              return res.status(401).send({
-                success: false,
-                message: 'Login to access this service'
-              });
-            }
-          })
-          .catch(err => res.status(400).send({
-            success: false,
-            error: err.message
-          }));
-        }
-      });
-    } else {
+  /**
+   * api controller lists all the users on the platform
+   * @param {object} req 
+   * @param {object} res
+   * @return {void} 
+   */
+  searchUsers(req, res) {
+    if (!req.header('x-auth')) {
       return res.status(403).send({
         success: false,
         message: 'no token provided'
       });
+    } else {
+      if (!req.body.UserName) {
+        return res.status(400).send({
+          success: false,
+          message: 'no search parameter',
+          users: []
+        });
+      } else {
+        const token = req.header('x-auth');
+        jwt.verify(token, secret, (err, decoded) => {
+          if(err) {
+            return res.status(403).send({
+              success: false,
+              message: 'failed to authenticate token'
+            });
+          } else {
+            req.decoded = decoded;
+            return Users
+            .findAll({
+              offset: req.params.offset * 5,
+              limit: 5,
+              where: {
+                UserName: { $like: `%${req.body.UserName}%`}
+              },
+              attributes: ['id', 'UserName']
+            })
+            .then(users => {
+              res.status(200).send({
+                success: true,
+                users
+              });
+            }, err => {
+              res.status(400).send({
+                success: false,
+                message: 'an error occured searching users',
+                users: []
+              });
+            });
+          }
+        });
+      }
     }
   },
 
+  /**
+   * api controller to signup a new user
+   * @param {object} req 
+   * @param {object} res
+   * @return {void} 
+   */
   create(req, res) {
-    if ( req.body.UserName ) {
-      if (req.body.UserName.length > 0) {
-        if (req.body.password && req.body.password.length > 7) {
-          if (req.body.email) {
-            if (req.body.telephone) {
-              if (req.body.telephone.length == 11 && !isNaN(req.body.telephone)) {
-                return Users
-                .create({
-                  UserName: req.body.UserName,
-                  password: bcrypt.hashSync(req.body.password, 11),
-                  email: req.body.email,
-                  telephone: req.body.telephone
-                })
-                .then((user) => {
-                  const token = jwt.sign({
-                    UserName: user.UserName,
-                    email: user.email,
-                    telephone: user.telephone
-                  }, secret);
-                  res.status(201).json({
-                    success: true,
-                    UserName: user.UserName,
-                    email: user.email,
-                    isLoggedin: user.isLoggedin,
-                    telephone: user.telephone,
-                    token
-                  });
-                })
-                .catch(err => res.status(400).send({
-                  success: false,
-                  message: err.message
-                }));
-              } else {
-                res.status(400).send({
-                  success: false,
-                  message: 'Telephone must be a set of numbers of 11 characters'
-                });
-              }
-            } else {
-              res.status(400).send({
-                success: false,
-                message: 'Please input your phone number'
-              });
-            }
-          } else {
-            res.status(400).send({
-              success: false,
-              message: 'Email not given'
-            });
-          }
-        } else {
-          res.status(400).send({
-            success: false,
-            message: 'Password must be at least 8 characters'
-          });
-        }
-      } else {
-        res.status(400).send({
-          success: false,
-          message: 'Username cannot be an empty field'
+    // check for edge cases
+    if (
+      req.body.UserName &&
+      req.body.UserName.length > 0 &&
+      req.body.password &&
+      req.body.password.length > 7 &&
+      req.body.email &&
+      req.body.telephone &&
+      req.body.telephone.length == 11 &&
+      !isNaN(req.body.telephone)
+    ) {
+      return Users
+      .create({
+        UserName: req.body.UserName,
+        password: bcrypt.hashSync(req.body.password, 11),
+        email: req.body.email,
+        telephone: req.body.telephone
+      })
+      .then((user) => {
+        // sign and return token
+        const token = jwt.sign({
+          UserName: user.UserName,
+          email: user.email,
+          telephone: user.telephone,
+          userId: user.id
+        }, secret);
+        res.status(201).json({
+          success: true,
+          UserName: user.UserName,
+          email: user.email,
+          isLoggedin: user.isLoggedin,
+          telephone: user.telephone,
+          token,
+          userId: user.id
         });
-      }
+      })
+      .catch(err => res.status(400).send({
+        success: false,
+        message: err.message
+      }));
     } else {
+      // response for failed signup
       res.status(400).send({
         success: false,
-        message: 'Username not given'
+        message: 'Invalid credentials'
       });
     }
   },
 
+  /**
+   * api controller to signin a user
+   * @param {object} req 
+   * @param {object} res
+   * @return {void} 
+   */
   signin(req, res) {
-    return Users
-    .findOne({
-      where: {
-        UserName: req.body.UserName
-      }
-    })
-    .then((user) => {
-      if (user) {
-        if (req.body.password) {
-          if (!bcrypt.compareSync(req.body.password, user.password)) {
-            res.status(401).send(invalid);
-          } else {
-            return user
-            .update({
-              isLoggedin: true,
-            })
-            .then(() => {
-              const token = jwt.sign({
-                UserName: user.UserName,
-                email: user.email,
-                telephone: user.telephone
-              }, secret);
-              res.status(200).json({
-                success: true,
-                UserName: user.UserName,
-                email: user.email,
-                isLoggedin: user.isLoggedin,
-                telephone: user.telephone,
-                token
+    // check for username and password
+    if (req.body.UserName && req.body.password) {
+      return Users
+      .findOne({
+        where: {
+          UserName: req.body.UserName
+        }
+      })
+      .then((user) => {
+        if (user) {
+          if (req.body.password) {
+            if (!bcrypt.compareSync(req.body.password, user.password)) {
+              res.status(401).send(invalid);
+            } else {
+              return user
+              .update({
+                isLoggedin: true,
+              })
+              .then(() => {
+                const token = jwt.sign({
+                  UserName: user.UserName,
+                  email: user.email,
+                  telephone: user.telephone,
+                  userId: user.id
+                }, secret);
+                res.status(200).json({
+                  success: true,
+                  UserName: user.UserName,
+                  email: user.email,
+                  isLoggedin: user.isLoggedin,
+                  telephone: user.telephone,
+                  token,
+                  userId: user.id
+                });
+              })
+              .catch(err =>  {
+                res.status(400).send({
+                  success: false,
+                message: err.message
               });
-            })
-            .catch(err =>  {
-              res.status(400).send({
-                success: false,
-              message: err.message
-            });
-          }
-          );
+            }
+            );
+            }
+          } else {
+            res.status(401).json(invalid);
           }
         } else {
-          res.status(401).json(invalid)
-          .catch(error => {
-            res.status(400).send(error.message)});
+          res.status(401).send(invalid);
         }
+      })
+      .catch(error => {
+        res.status(400).send(error.message)});
       } else {
-        res.status(401).send(invalid)
-        .catch(error => res.status(400).send(error.message));
+        res.status(400).send({
+          // response for failed signin
+          success: false,
+          message: 'Invalid Credentials'
+        });
       }
-    })
-    .catch(error => {
-      console.log(error);
-      res.status(400).send(error)});
   },
 
+  /**
+   * api controller to sign out a user fron the platform
+   * @param {object} req 
+   * @param {object} res
+   * @return {void} 
+   */
   signout(req, res) {
+    // authentication. Check and confirm token
     if (req.header('x-auth')){
       const token = req.headers['x-auth'];
       jwt.verify(token, secret, (err, decoded) => {
@@ -219,6 +288,8 @@ export default {
               isLoggedin: false
             })
             .then(res.status(200).send({
+              // response for successful signout
+              success: true,
               message: 'successfully logged out',
               isLoggedin: user.isLoggedin
             }))
@@ -229,13 +300,21 @@ export default {
       })
     } else {
       return res.status(403).send({
+        // response for failed authentication
         success: false,
         message: 'no token provided'
       });
     }
   },
 
+  /**
+   * api controller to send reset password link to mail
+   * @param {object} req 
+   * @param {object} res
+   * @return {void} 
+   */
   forgot(req, res) {
+    // check for email
     if (!req.body.email) {
       res.status(400).send({
         success: false,
@@ -285,6 +364,12 @@ export default {
     }
   },
 
+  /**
+   * api controller to reset password
+   * @param {object} req 
+   * @param {object} res
+   * @return {void} 
+   */
   reset(req, res) {
     return Users
     .findOne({
@@ -349,6 +434,12 @@ export default {
     });
   },
 
+  /**
+   * api controller to authenticate token on resetting password
+   * @param {object} req 
+   * @param {object} res
+   * @return {void} 
+   */
   authToken(req, res) {
     if (!req.body.token) {
       res.status(400).send({
@@ -370,9 +461,7 @@ export default {
           });
         } else {
           res.status(200).send({
-            success: true,
-            message: 'valid token',
-            UserName: user.UserName
+            U
           });
         }
       }, err => {

@@ -39,7 +39,7 @@ module.exports = (app) => {
   app.post('/api/reset/token', usersController.authToken);
 
   // list all the users on the platform
-  app.get('/api/users/list', usersController.list);
+  app.post('/api/users/list/:offset', usersController.searchUsers);
 
   // creates a new group on the application
   app.post('/api/group', groupsController.create);

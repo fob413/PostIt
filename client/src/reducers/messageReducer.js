@@ -2,12 +2,16 @@ import {
   LOAD_GROUP_MESSAGES, 
   CURRENT_GROUP, 
   LOAD_PLATFORM_USERS,
-  LOAD_GROUP_USERS
+  LOAD_GROUP_USERS,
+  LOAD_UNREAD_MESSAGES,
+  LOAD_READ_MESSAGES
 } from '../constants';
 
 const initialState = {
   groupId: '',
   messages: [],
+  unreadMessages: [],
+  readMessages: [],
   groupUsers: [],
   PlatformUsers: []
 };
@@ -32,6 +36,16 @@ export default (state = initialState, action) => {
       case LOAD_GROUP_USERS:
         return Object.assign({}, state, {
           groupUsers: action.data
+        });
+
+      case LOAD_UNREAD_MESSAGES:
+        return Object.assign({}, state, {
+          unreadMessages: action.data
+        });
+
+      case LOAD_READ_MESSAGES:
+        return Object.assign({}, state, {
+          readMessages: action.data
         });
 
     default:
