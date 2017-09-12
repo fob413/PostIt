@@ -1,10 +1,6 @@
 {
   "root": true,
-  "extends": [ 
-    "eslint:recommended",
-    "plugin:import/errors",
-    "plugin:import/warnings"
-  ],
+  "extends": "airbnb",
   "plugins": [
     "react"
   ],
@@ -22,8 +18,12 @@
     "browser": true,
     "jquery": true
   },
+  "globals":{
+    "Materialize": true
+  },
   "rules": {
     "max-len": [1, 80, 2],
+    "indent": [ 1, 2 ],
     "one-var": 0,
     "one-var-declaration-per-line": 0,
     "new-cap": 0,
@@ -37,7 +37,10 @@
       "requireReturn": true,
       "requireReturnType": true,
       "requireParamDescription": false,
-      "requireReturnDescription": true
+      "requireReturnDescription": true,
+      "FunctionDeclaration": true,
+      "MethodDefinition": false,
+      "ClassDeclaration": false
     }],
     "quotes": 0,
     "no-console": 1,
