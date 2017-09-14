@@ -38,7 +38,7 @@ module.exports = (app) => {
   // authenticate reset password token
   app.post('/api/reset/token', usersController.authToken);
 
-  // list all the users on the platform
+  // search the users on the platform using pagination
   app.post('/api/users/list/:offset', usersController.searchUsers);
 
   // creates a new group on the application

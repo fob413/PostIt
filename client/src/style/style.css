@@ -46,8 +46,10 @@
 
 .addUser{
   height: 400px;
-  overflow-x: scroll;
-  border: 0.5px solid black;
+}
+
+.addUserBtn {
+  padding: 5%;
 }
 
 .hide{
@@ -70,4 +72,17 @@
   text-decoration: underline;
   font-weight: bold;
   color: #004d40;
+}
+
+.modalWidth {
+  width: 80%;
+}
+
+.addUserButtons {
+  position: relative;
+  bottom: -80%;
+}
+
+.modalButton {
+  z-index: auto;
 }

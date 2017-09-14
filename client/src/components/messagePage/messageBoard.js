@@ -3,6 +3,8 @@ import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { authenticateUser } from '../auth';
 import $ from 'jquery';
+import swal from 'sweetalert2';
+import Modal from 'react-modal';
 import DisplayMessage from './displayMessage';
 import PlatformUsers from './platformUsers';
 import { 
@@ -13,6 +15,18 @@ import {
   readMessages,
   searchUsers
 } from '../../actions/messageActions';
+
+const customStyles = {
+  content : {
+    top                   : '50%',
+    left                  : '50%',
+    right                 : 'auto',
+    bottom                : 'auto',
+    marginRight           : '-50%',
+    transform             : 'translate(-50%, -50%)',
+    width                 : '60%'
+  }
+};
 
 class MessageBoard extends React.Component {
   constructor(props) {
@@ -29,7 +43,8 @@ class MessageBoard extends React.Component {
       groupUsers: [],
       otherUsers: [],
       unread: true,
-      userId: this.props.auth.userId
+      userId: this.props.auth.userId,
+      modalIsOpen: false
     });
 
     this.inputUser = this.inputUser.bind(this);
@@ -38,6 +53,10 @@ class MessageBoard extends React.Component {
     this.toggleUnread = this.toggleUnread.bind(this);
     this.prevPage = this.prevPage.bind(this);
     this.nextPage = this.nextPage.bind(this);
+    this.openThisModal = this.openThisModal.bind(this);
+    this.openModal = this.openModal.bind(this);
+    this.afterOpenModal = this.afterOpenModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
   }
 
   componentDidMount() {
@@ -73,6 +92,11 @@ class MessageBoard extends React.Component {
 
   componentWillUnmount() {
     this.props.readMessages(this.state.groupId);
+  }
+
+  openThisModal(e){
+    e.preventDefault();
+    swal('Hello world');
   }
 
   onSend(e){
@@ -172,6 +196,19 @@ class MessageBoard extends React.Component {
         $('#hide').addClass('hide');
       });
     });
+  }
+
+  openModal() {
+    this.setState({modalIsOpen: true});
+  }
+ 
+  afterOpenModal() {
+    // references are now sync'd and can be accessed.
+    this.subtitle.style.color = '#f00';
+  }
+ 
+  closeModal() {
+    this.setState({modalIsOpen: false});
   }
 
   render () {
@@ -291,57 +328,77 @@ class MessageBoard extends React.Component {
             </div>
 
             <div className="col s4">
-              <div>
-                <form className="col s12">
-                  <div className="row">
-                    <input
-                      id="input"
-                      ref="_user"
-                      className="validate"
-                      type="text"
-                      placeholder="Add User"
-                      onChange={this.inputUser}
-                    />
-                  </div>
-                </form>
-              </div>
+            <button
+              onClick={this.openModal}
+              className="waves-effect waves-light btn col s12 green darken-4 modalButton"
+              >
+              Add User
+              </button>
+            <Modal
+              isOpen={this.state.modalIsOpen}
+              onAfterOpen={this.afterOpenModal}
+              onRequestClose={this.closeModal}
+              style={customStyles}
+              contentLabel="Example Modal"
+            >
+              <i onClick={this.closeModal} className="material-icons click red-text">highlight_off</i>
+              <h2
+                ref={subtitle => this.subtitle = subtitle}
+                className="green-text text-darken-4 center-align"
+              >
+                ADD USER
+              </h2>
+              <form>
+                <input
+                  autoComplete="off"
+                  id="input"
+                  ref="_user"
+                  type="text"
+                  placeholder="Add User"
+                  onChange={this.inputUser}
+                />
+                <div className="addUser">
 
-              <div className="addUser">
-              {(
-                this.state.PlatformUsers && 
-                this.state.PlatformUsers.length > 0
-                ) && 
-                <ul className="col s12 collection">
-                  {this.state.PlatformUsers
-                  .map((platformUser, i) => {
-                    return(
-                      <PlatformUsers key={i} platformUser={platformUser} />
-                    );
-                  })}
-                  <div className="row">
-                    <div className="col s2"></div>
-                    <div className="">
-                      <button
-                      className="col s3 btn waves-effect waves-light green darken-4"
-                      onClick={this.prevPage}
-                      >
-                        Back
-                      </button>
-                    </div>
-                    <div className="col s2 center-align">{this.state.offset + 1}</div>
-                    <div className="">
-                      <button
-                        className="col s3 btn waves-effect waves-light green darken-4"
-                        onClick={this.nextPage}
-                      >
-                        Next
-                      </button>
-                    </div>
-                    <div className="col s2"></div>
+                  <div>
+                    {(
+                      this.state.PlatformUsers &&
+                      this.state.PlatformUsers.length > 0
+                    ) &&
+                    <ul className="col s12 collection">
+                      {this.state.PlatformUsers
+                      .map((platformUser, i) => {
+                        return(
+                          <PlatformUsers key={i} platformUser={platformUser} />
+                        );
+                      })
+                      }
+                    </ul>
+                    }
                   </div>
-                </ul>
-                }
-              </div>
+                  <div className="row addUserButtons">
+                      <div className="col s2"></div>
+                      <div className="">
+                        <button
+                        className="col s3 btn waves-effect waves-light green darken-4"
+                        onClick={this.prevPage}
+                        >
+                          Back
+                        </button>
+                      </div>
+                      <div className="col s2 center-align">{this.state.offset + 1}</div>
+                      <div className="">
+                        <button
+                          className="col s3 btn waves-effect waves-light green darken-4"
+                          onClick={this.nextPage}
+                        >
+                          Next
+                        </button>
+                      </div>
+                      <div className="col s2"></div>
+                    </div>
+                </div>
+              </form>
+            </Modal>
 
               {this.state.groupUsers && this.state.groupUsers.length > 0 &&
                 <div>
