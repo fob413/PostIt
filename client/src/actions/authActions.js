@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { SIGN_UP, SIGN_IN, SIGN_OUT, RELOAD_USER_IN } from '../constants';
+import swal from 'sweetalert2';
 
 const signUpSuccess = data => ({
   type: SIGN_UP,
@@ -60,7 +61,7 @@ export function signUserIn(user) {
       dispatch(signInSuccess(data));
       return true;
     }, (err) => {
-      console.log(err.message);
+      swal('Oops...', 'Invalid Credentials', 'error');
     });
 }
 

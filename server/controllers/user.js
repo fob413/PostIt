@@ -236,7 +236,7 @@ export default {
               .catch(err =>  {
                 res.status(400).send({
                   success: false,
-                message: err.message
+                  message: err.message
               });
             }
             );
