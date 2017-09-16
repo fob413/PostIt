@@ -10,6 +10,7 @@ import {
   LOAD_UNREAD_MESSAGES,
   LOAD_READ_MESSAGES
 } from '../constants';
+import swal from 'sweetalert2';
 
 
 /**
@@ -207,7 +208,7 @@ export function addUserToGroup(userId, groupId) {
     .then(( { data } ) => {
       console.log(data);
     }, err => {
-      console.log(err.message);
+      swal('Oops...', err.response.data.message, 'error');
     })
   };
 }

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { LOAD_GROUPS, UNLOAD_GROUPS  } from '../constants';
+import swal from 'sweetalert2'
 
 const loadGroupSuccess = data => ({
   type: LOAD_GROUPS,
@@ -38,7 +39,8 @@ export function createNewGroup(GroupName) {
     .then(({ data }) => {
       return true;
     }, (err) => {
-      console.log(err.message);
+      // console.log(err.message);
+      swal('Oops...', err.response.data.message, 'error');
     });
   };
 }

@@ -142,7 +142,7 @@ export default {
    * @return {void} 
    */
   create(req, res) {
-    // check for edge cases
+    // validate users input
     if (
       req.body.UserName &&
       req.body.UserName.length > 0 &&
@@ -150,40 +150,100 @@ export default {
       req.body.password.length > 7 &&
       req.body.email &&
       req.body.telephone &&
-      req.body.telephone.length == 11 &&
+      req.body.telephone.length > 0 &&
       !isNaN(req.body.telephone)
     ) {
-      return Users
-      .create({
-        UserName: req.body.UserName,
-        password: bcrypt.hashSync(req.body.password, 11),
-        email: req.body.email,
-        telephone: req.body.telephone
+      return Users.findOne({
+        where: {
+          UserName: req.body.UserName
+        }
       })
-      .then((user) => {
-        // sign and return token
-        const token = jwt.sign({
-          UserName: user.UserName,
-          email: user.email,
-          telephone: user.telephone,
-          userId: user.id
-        }, secret);
-        res.status(201).json({
-          success: true,
-          UserName: user.UserName,
-          email: user.email,
-          isLoggedin: user.isLoggedin,
-          telephone: user.telephone,
-          token,
-          userId: user.id
+      .then(username => {
+        // check if username is hasn't been used
+        if (username) {
+          res.status(400).send({
+            success: false,
+            message: 'Username has already been taken!'
+          });
+        } else {
+          // check if email isn't in use
+          Users.findOne({
+            where: {
+              email: req.body.email
+            }
+          })
+          .then(emailUsed => {
+            if (emailUsed) {
+              res.status(400).send({
+                success: false,
+                message: 'Email already in use!'
+              });
+            } else {
+              // check if phone number isn't in use
+              Users.findOne({
+                where: {
+                  telephone: req.body.telephone
+                }
+              })
+              .then(telephoneUsed => {
+                if (telephoneUsed) {
+                  res.status(400).send({
+                    success: false,
+                    message: 'Telephone number in use by another user!'
+                  })
+                } else {
+                  // signup the new user
+                  Users.create({
+                    UserName: req.body.UserName,
+                    password: bcrypt.hashSync(req.body.password, 11),
+                    email: req.body.email,
+                    telephone: req.body.telephone
+                  })
+                  .then(user => {
+                    // sign and return token
+                    const token = jwt.sign({
+                      UserName: user.UserName,
+                      email: user.email,
+                      telephone: user.telephone,
+                      userId: user.id
+                    }, secret);
+                    res.status(201).json({
+                      success: true,
+                      UserName: user.UserName,
+                      email: user.email,
+                      isLoggedin: user.isLoggedin,
+                      telephone: user.telephone,
+                      token,
+                      userId: user.id
+                    });
+                  }, err => {
+                    res.status(400).send({
+                      success: false,
+                      message: err.message
+                    });
+                  });
+                }
+              }, err => {
+                res.status(400).send({
+                  success: false,
+                  message: err.message
+                });
+              });
+            }
+          }, err => {
+            res.status(400).send({
+              success: false,
+              message: err.message
+            });
+          });
+        }
+      }, err => {
+        res.status(400).send({
+          success: false,
+          message: err.message
         });
-      })
-      .catch(err => res.status(400).send({
-        success: false,
-        message: err.message
-      }));
+      });
     } else {
-      // response for failed signup
       res.status(400).send({
         success: false,
         message: 'Invalid credentials'

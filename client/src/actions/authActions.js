@@ -33,7 +33,7 @@ export function signUserUp(user) {
     dispatch(signUpSuccess(data));
     return true;
   }, (err) => {
-    swal('Oops...', 'Invalid Credentials', 'error');
+    swal('Oops...', err.response.data.message, 'error');
     // console.log(err.message);
   });
 }
@@ -62,7 +62,7 @@ export function signUserIn(user) {
       dispatch(signInSuccess(data));
       return true;
     }, (err) => {
-      swal('Oops...', 'Invalid Credentials', 'error');
+      swal('Oops...', err.response.data.message, 'error');
     });
 }
 

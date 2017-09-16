@@ -36,23 +36,41 @@ export default {
             if (user) {
               if (user.isLoggedin) {
                 if (req.body.GroupName.length > 0) {
-                  return Groups
-                  .create({
-                    GroupName: req.body.GroupName,
-                    Description: req.body.Description
+                  return Groups.findOne({
+                    where: {
+                      GroupName: req.body.GroupName
+                    }
                   })
-                  .then((group) => {
-                    Members
-                    .create({
-                      userId: user.id,
-                      groupId: group.id
+                  .then(groupExists => {
+                    if (groupExists) {
+                      res.status(400).send({
+                        success: false,
+                        message: 'A group already exists with the same name'
+                      });
+                    } else {
+                      Groups.create({
+                        GroupName: req.body.GroupName
+                      })
+                      .then(group => {
+                        Members
+                        .create({
+                          userId: user.id,
+                          groupId: group.id
+                        })
+                        .then(res.status(201).send(group));
+                      }, err => {
+                        res.send({
+                          success: false,
+                          message: err.message
+                        })
+                      });
+                    }
+                  }, err => {
+                    res.send({
+                      success: false,
+                      message: err.message
                     })
-                    .then(res.status(201).send(group));
-                  })
-                  .catch(err => res.status(400).send({
-                    success: false,
-                    message: err.message
-                  }));
+                  });
                 } else {
                   res.status(400).send({
                     success: false,
