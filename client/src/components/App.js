@@ -10,7 +10,6 @@ import Profile from '../components/navbar/profile';
 import MessageBoard from '../components/messagePage/messageBoard';
 import Reset from '../components/index/password/reset';
 import ResetPassword from '../components/index/password/resetPassword';
-import { authenticateUser } from './auth';
 import '../style/style.css';
 
 const history = createBrowserHistory();

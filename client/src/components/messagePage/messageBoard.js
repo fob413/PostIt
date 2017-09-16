@@ -3,14 +3,30 @@ import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { authenticateUser } from '../auth';
 import $ from 'jquery';
+import swal from 'sweetalert2';
+import Modal from 'react-modal';
 import DisplayMessage from './displayMessage';
 import PlatformUsers from './platformUsers';
 import { 
   sendMessage, 
   loadGroupMessages, 
   loadPlatformUsers,
-  loadGroupUsers
+  loadGroupUsers,
+  readMessages,
+  searchUsers
 } from '../../actions/messageActions';
+
+const customStyles = {
+  content : {
+    top                   : '50%',
+    left                  : '50%',
+    right                 : 'auto',
+    bottom                : 'auto',
+    marginRight           : '-50%',
+    transform             : 'translate(-50%, -50%)',
+    width                 : '60%'
+  }
+};
 
 class MessageBoard extends React.Component {
   constructor(props) {
@@ -19,22 +35,33 @@ class MessageBoard extends React.Component {
     this.state = ({
       groupId: this.props.Messages.groupId,
       messages: [],
+      unreadMessages: [],
+      readMessages: [],
       isLoggedIn: this.props.auth.isLoggedIn,
       addUser: "",
       PlatformUsers: [],
       groupUsers: [],
       otherUsers: [],
+      unread: true,
+      userId: this.props.auth.userId,
+      modalIsOpen: false
     });
 
     this.inputUser = this.inputUser.bind(this);
     this.filterUsers = this.filterUsers.bind(this);
     this.autoHide = this.autoHide.bind(this);
+    this.toggleUnread = this.toggleUnread.bind(this);
+    this.prevPage = this.prevPage.bind(this);
+    this.nextPage = this.nextPage.bind(this);
+    this.openThisModal = this.openThisModal.bind(this);
+    this.openModal = this.openModal.bind(this);
+    this.afterOpenModal = this.afterOpenModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
   }
 
   componentDidMount() {
     if (this.state.groupId){
-      this.props.loadGroupMessages(this.state.groupId);
-      this.props.loadPlatformUsers();
+      this.props.loadGroupMessages(this.state.groupId, this.state.userId);
       this.props.loadGroupUsers(this.state.groupId);
     } else {
       this.props.history.push('/broadpage');
@@ -46,9 +73,13 @@ class MessageBoard extends React.Component {
     this.setState({
       isLoggedIn: nextProps.auth.isLoggedIn,
       messages: nextProps.Messages.messages,
+      unreadMessages: nextProps.Messages.unreadMessages,
+      readMessages: nextProps.Messages.readMessages,
       PlatformUsers: nextProps.Messages.PlatformUsers,
-      groupUsers: nextProps.Messages.groupUsers
+      groupUsers: nextProps.Messages.groupUsers,
+      offset: 0
     });
+    this.props.readMessages(this.state.groupId);
     if (!nextProps.auth.isLoggedIn) {
       this.props.history.push('/broadpage');
     }
@@ -57,6 +88,15 @@ class MessageBoard extends React.Component {
   componentDidUpdate() {
     // this.filterUsers();
     // console.log('here');
+  }
+
+  componentWillUnmount() {
+    this.props.readMessages(this.state.groupId);
+  }
+
+  openThisModal(e){
+    e.preventDefault();
+    swal('Hello world');
   }
 
   onSend(e){
@@ -69,7 +109,10 @@ class MessageBoard extends React.Component {
         this.props.Messages.groupId, 
         _priority.value
       )
-      .then(() => this.props.loadGroupMessages(this.state.groupId),
+      .then(() => this.props.loadGroupMessages(
+        this.state.groupId, 
+        this.state.userId
+      ),
       err => console.log(err));
       _priority.value = "NORMAL";
     }
@@ -82,6 +125,33 @@ class MessageBoard extends React.Component {
     this.setState({
       addUser: _user.value
     });
+    this.props.searchUsers(this.state.offset, _user.value);
+  }
+
+  prevPage(e) {
+    e.preventDefault();
+    if (this.state.offset > 0) {
+      // this.props.searchUsers(this.state.offset - 1, this.state.addUser);
+      let num = this.state.offset;
+      this.setState({
+        offset: num - 1
+      });
+    }
+  }
+
+  nextPage(e) {
+    const { _user } = this.refs;
+    e.preventDefault();
+    console.log('increment by 1');
+    // this.props.searchUsers(this.state.offset + 1, this.state.addUser);
+    console.log('before set new state');
+    let num = this.state.offset;
+    console.log('after set new state');
+    this.setState({
+      offset: num + 1
+    });
+    console.log('finally done setting state');
+    // this.props.searchUsers(2, _user.value);
   }
 
   filterUsers(){
@@ -102,6 +172,18 @@ class MessageBoard extends React.Component {
     });
   }
 
+  toggleUnread() {
+    if(this.state.unread){
+      this.setState({
+        unread: false
+      });
+    } else {
+      this.setState({
+        unread: true
+      });
+    }
+  }
+
   autoHide() {
     $(() => {
       $('body #input').on('focus', () => {
@@ -116,10 +198,20 @@ class MessageBoard extends React.Component {
     });
   }
 
+  openModal() {
+    this.setState({modalIsOpen: true});
+  }
+ 
+  afterOpenModal() {
+    // references are now sync'd and can be accessed.
+    this.subtitle.style.color = '#f00';
+  }
+ 
+  closeModal() {
+    this.setState({modalIsOpen: false});
+  }
+
   render () {
-   this.autoHide();
-   console.log(this.autoHide);
-   console.log('something should be showing above me right now');
 
     return (
       <div className="container">
@@ -134,25 +226,71 @@ class MessageBoard extends React.Component {
         </Link>
           <div className="col s12">
             <div className="col s8">
-              <div className="message">
-                {(this.state.messages && 
-                this.state.messages.length > 0) &&
-                  <ul className="collection">
-                    {
-                      this.state.messages.map((message, i) => {
-                        return (
-                          <div key={i}>
-                            <DisplayMessage 
-                              content={message.content}
-                              author={message.authorsName}
-                            />
-                          </div>
-                        );
-                      })
+              
+            <div>
+              <div className="card-tabs">
+                <ul className="tabs tabs-fixed-width">
+                  <li 
+                    className={this.state.unread ?
+                    "tab click underline" :
+                    "tab click"}
+                    onClick={this.toggleUnread}
+                  >
+                    UNREAD MESSAGES
+                  </li>
+                  <li
+                    className={!this.state.unread ?
+                    "tab click underline" :
+                    "tab click"}
+                    onClick={this.toggleUnread}
+                  >
+                    READ MESSAGES
+                  </li>
+                </ul>
+              </div>
+
+              <div>
+                {(this.state.unread) ? 
+                  <div className="message">
+                    {this.state.unreadMessages &&
+                      this.state.unreadMessages.length > 0 ?
+                      <ul className="collection">
+                        {this.state.unreadMessages.map((message, i) => {
+                          return (
+                            <div key={i}>
+                              <DisplayMessage
+                                content={message.content}
+                                author={message.authorsName}
+                              />
+                            </div>
+                          );
+                        })}  
+                      </ul>:
+                      <div className="center-align">No new message</div>
                     }
-                  </ul>
+                  </div> :
+                  <div className="message">
+                    {(this.state.readMessages && 
+                    this.state.readMessages.length > 0) &&
+                      <ul className="collection">
+                        {
+                          this.state.readMessages.map((message, i) => {
+                            return (
+                              <div key={i}>
+                                <DisplayMessage 
+                                  content={message.content}
+                                  author={message.authorsName}
+                                />
+                              </div>
+                            );
+                          })
+                        }
+                      </ul>
+                    }
+                  </div>
                 }
               </div>
+            </div>
 
               <div className="row">
                 <form onSubmit={this.onSend}>
@@ -190,36 +328,77 @@ class MessageBoard extends React.Component {
             </div>
 
             <div className="col s4">
-              <div>
-                <form className="col s12">
-                  <div className="row">
-                    <input
-                      id="input"
-                      ref="_user"
-                      className="validate"
-                      type="text"
-                      placeholder="Add User"
-                      onChange={this.inputUser}
-                      onFocus={this.autoHide}
-                    />
-                  </div>
-                </form>
-              </div>
+            <button
+              onClick={this.openModal}
+              className="waves-effect waves-light btn col s12 green darken-4 modalButton"
+              >
+              Add User
+              </button>
+            <Modal
+              isOpen={this.state.modalIsOpen}
+              onAfterOpen={this.afterOpenModal}
+              onRequestClose={this.closeModal}
+              style={customStyles}
+              contentLabel="Example Modal"
+            >
+              <i onClick={this.closeModal} className="material-icons click red-text">highlight_off</i>
+              <h2
+                ref={subtitle => this.subtitle = subtitle}
+                className="green-text text-darken-4 center-align"
+              >
+                ADD USER
+              </h2>
+              <form>
+                <input
+                  autoComplete="off"
+                  id="input"
+                  ref="_user"
+                  type="text"
+                  placeholder="Add User"
+                  onChange={this.inputUser}
+                />
+                <div className="addUser">
 
-              <div id="hide" className="hide">
-                {(this.state.PlatformUsers && this.state.PlatformUsers.length > 0) && 
-                <ul className="collection">
-                  {this.state.PlatformUsers.filter((item) => {
-                    return item.UserName.startsWith(this.state.addUser);
-                  })
-                  .map((platformUser, i) => {
-                    return(
-                      <PlatformUsers key={i} platformUser={platformUser} />
-                    );
-                  })}
-                </ul>
-                }
-              </div>
+                  <div>
+                    {(
+                      this.state.PlatformUsers &&
+                      this.state.PlatformUsers.length > 0
+                    ) &&
+                    <ul className="col s12 collection">
+                      {this.state.PlatformUsers
+                      .map((platformUser, i) => {
+                        return(
+                          <PlatformUsers key={i} platformUser={platformUser} />
+                        );
+                      })
+                      }
+                    </ul>
+                    }
+                  </div>
+                  <div className="row addUserButtons">
+                      <div className="col s2"></div>
+                      <div className="">
+                        <button
+                        className="col s3 btn waves-effect waves-light green darken-4"
+                        onClick={this.prevPage}
+                        >
+                          Back
+                        </button>
+                      </div>
+                      <div className="col s2 center-align">{this.state.offset + 1}</div>
+                      <div className="">
+                        <button
+                          className="col s3 btn waves-effect waves-light green darken-4"
+                          onClick={this.nextPage}
+                        >
+                          Next
+                        </button>
+                      </div>
+                      <div className="col s2"></div>
+                    </div>
+                </div>
+              </form>
+            </Modal>
 
               {this.state.groupUsers && this.state.groupUsers.length > 0 &&
                 <div>
@@ -258,5 +437,12 @@ const mapStateToProps = state => (
 
 export default connect(
   mapStateToProps,
-  { sendMessage, loadGroupMessages, loadPlatformUsers, loadGroupUsers }
+  { 
+    sendMessage, 
+    loadGroupMessages, 
+    loadPlatformUsers, 
+    loadGroupUsers, 
+    readMessages,
+    searchUsers
+  }
 ) (withRouter(MessageBoard));
