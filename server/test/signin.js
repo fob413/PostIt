@@ -40,7 +40,7 @@ const testUser3 = {
 
 
 // tests for signin route
-describe('Signin route tests /api/user/signin', () => {
+describe('Signin route tests', () => {
   before((done) => {
     clearUserDatabase();
     chai.request(app)
@@ -52,10 +52,10 @@ describe('Signin route tests /api/user/signin', () => {
   });
 
   // test signin positive responses
-  describe('Positive signin of a user ', () => {
+  describe('Signin positive responses', () => {
 
     // successful signin should have a status code of 200
-    it(`should return a status code of 200 on successful signin`, (done) => {
+    it(`It should return a status code of 200 on successful signin`, (done) => {
       chai.request(app)
       .post('/api/user/signin')
       .send(testUser3)
@@ -66,7 +66,7 @@ describe('Signin route tests /api/user/signin', () => {
     });
 
     // a token should be returned on successful signin
-    it(`should return a token`, (done) => {
+    it(`It should return a token`, (done) => {
       chai.request(app)
       .post('/api/user/signin')
       .send(testUser3)
@@ -77,7 +77,7 @@ describe('Signin route tests /api/user/signin', () => {
     });
 
     // the user's UserName should be returned
-    it(`should return the users UserName`, (done) => {
+    it(`It should return the users UserName`, (done) => {
       chai.request(app)
       .post('/api/user/signin')
       .send(testUser3)
@@ -88,7 +88,7 @@ describe('Signin route tests /api/user/signin', () => {
     });
 
     // the user's mail should be returned
-    it(`should return the users mail`, (done) => {
+    it(`It should return the users mail`, (done) => {
       chai.request(app)
       .post('/api/user/signin')
       .send(testUser3)
@@ -99,7 +99,7 @@ describe('Signin route tests /api/user/signin', () => {
     });
 
     // the user's telephone number should be given
-    it(`should return the users telephone number`, (done) => {
+    it(`It should return the users telephone number`, (done) => {
       chai.request(app)
       .post('/api/user/signin')
       .send(testUser3)
@@ -112,134 +112,17 @@ describe('Signin route tests /api/user/signin', () => {
   });
 
 
-  describe('Negative signin of a user ', () => {});
+  describe('Signin negative responses', () => {});
 
     // should return status code 401 if user doesn't exist
-    it(`should return a status code 401 when the user does not exist`, (done) => {
-      const testUser4 = {
-        UserName: 'Funsho',
-        password: 'asdf;lkj'
-      };
-
+    it(`It should return a status code 401 when the user does not exist`, (done) => {
       chai.request(app)
       .post('/api/user/signin')
-      .send(testUser4)
+      .send(testUser3)
       .end((err, res) => {
-        res.should.have.status(401);
+        expect(res.body.telephone).to.equal('08138498175');
         done();
       });
     });
-
-    // should return status a message if user doesn not exist
-    it(`should return a message when user does not exist`, (done) => {
-      const testUser4 = {
-        UserName: 'Funsho',
-        password: 'asdf;lkj'
-      };
-
-      chai.request(app)
-      .post('/api/user/signin')
-      .send(testUser4)
-      .end((err, res) => {
-        expect(res.body.message).to.equal('Invalid Credentials');
-        done();
-      });
-    });
-
-    // should return a message when username is not given
-    it(`should return a message when user name is not given`, (done) => {
-      const testUser4 = {
-        // no username given here
-        password: 'asdf;lkj'
-      };
-
-      chai.request(app)
-      .post('/api/user/signin')
-      .send(testUser4)
-      .end((err, res) => {
-        expect(res.body.message).to.equal('Invalid Credentials');
-        done();
-      });
-    });
-
-    // should return a message when both password and username are not given
-    it(`should return a message when both user name and password are not given`, (done) => {
-      const testUser4 = {
-        // empty
-      };
-
-      chai.request(app)
-      .post('/api/user/signin')
-      .send(testUser4)
-      .end((err, res) => {
-        expect(res.body.message).to.equal('Invalid Credentials');
-        done();
-      });
-    });
-
-    // should return a status code of 400 when both password and username are not given
-    it(`should return a status code of 400 when both user name and password are not given`, (done) => {
-      const testUser4 = {
-        // empty
-      };
-
-      chai.request(app)
-      .post('/api/user/signin')
-      .send(testUser4)
-      .end((err, res) => {
-        res.should.have.status(400);
-        done();
-      });
-    });
-
-    // should return status a message when password is not given
-    it(`should return a message when password is not given`, (done) => {
-      const testUser4 = {
-        UserName: 'Bayo'
-      };
-
-      chai.request(app)
-      .post('/api/user/signin')
-      .send(testUser4)
-      .end((err, res) => {
-        expect(res.body.message).to.equal('Invalid Credentials');
-        done();
-      });
-    });
-
-    // should return a status code of 401 when password is wrong
-    it(`should return a status code of 401 when password is wrong`, (done) => {
-      const testUser4 = {
-        UserName: 'Bayo',
-        password: 'abcdefghijklmnop'
-      };
-
-      chai.request(app)
-      .post('/api/user/signin')
-      .send(testUser4)
-      .end((err, res) => {
-        res.should.have.status(401);
-        done();
-      });
-    });
-
-    // should return a message when password is wrong
-    it(`should return a message when password is wrong`, (done) => {
-      const User4 = {
-        UserName: 'Bayo',
-        password: 'abcdefghijklmnop'
-      };
-
-      chai.request(app)
-      .post('/api/user/signin')
-      .send(User4)
-      .end((err, res) => {
-        // expect(res.body.message).to.equal('Invalid Credentials');
-        expect(res.body.message).to.equal('Invalid Credentials');
-        done();
-      });
-    });
-
-
 
   });

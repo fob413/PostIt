@@ -4,7 +4,7 @@
 
 [![Build Status](https://travis-ci.org/fob413/PostIt.svg?branch=newDatabaseBadge)](https://travis-ci.org/fob413/PostIt)
 [![Code Climate](https://codeclimate.com/github/codeclimate/codeclimate/badges/gpa.svg)](https://codeclimate.com/github/fob413/PostIt)
-[![Coverage Status](https://coveralls.io/repos/github/fob413/PostIt/badge.svg?branch=feedback)](https://coveralls.io/github/fob413/PostIt?branch=feedback)
+[![Coverage Status](https://coveralls.io/repos/github/fob413/PostIt/badge.svg?branch=newDatabaseBadge)](https://coveralls.io/github/fob413/PostIt?branch=newDatabaseBadge)
 =======
 
 PostIt is a simple application that allows friends and colleagues create groups for notifications. The application allows people create accounts, creat groups, add registered users to the group and then send messages out to these groups whenever they want.
@@ -48,13 +48,49 @@ Tests were run with Mocha and Chai on all functions and Api routes
 ### Run Tests
 - After Installation of the application, run `npm test`
 
-## Api Documentation
-The Documentation for the API can be found [here.](https://jsapi.apiary.io/previews/postitcp/reference)
+## Api Routes
+1. Api routes for users to create accounts and login to the application
+```
+POST:/api/user/signup
+```
+- Username (req.body.username)
+- Email (req.body.email)
+- Password (req.body.password)
+```
+POST:/api/user/signin
+```
+- Username (req.body.username)
+- Password (req.body.password)
+
+2. Api route that allow users create broadcast groups
+```
+POST:api/group
+```
+-groupName (req.body.groupname)
+
+3. Api route that allow users add other users to the groups
+```
+POST:/api/group/<group id>/user
+```
+- userId (req.body.userId)
+- groupId (req.params.groupId)
+
+4. Api route that allows a logged in user post messages to created groups.
+```
+POST:/api/group/<group id>/message
+```
+- messageContent (req.body.messageContent)
+- groupId (req.params.groupId)
+- userId (req.body.userId)
+
+5. Api route that allows a logged in user retrieve messages that have been posted to groups they belong to
+```
+GET:/api/group/<groupid>/messages
+```
+- userId (req-header['user-id'])
+- groupId (req.params.groupId)
 
 ## Template Images
-![Cover Image1](https://github.com/fob413/PostIt/blob/feedback/template/image/cover1.jpg)
-![Cover Image2](https://github.com/fob413/PostIt/blob/feedback/template/image/cover2.jpg)
-![Cover Image3](https://github.com/fob413/PostIt/blob/feedback/template/image/cover3.jpg)
 ![Sign Up](https://github.com/fob413/PostIt/blob/newDatabaseBadge/template/image/Tsignup.png)
 ![Sign In](https://github.com/fob413/PostIt/blob/newDatabaseBadge/template/image/Tsignin.png)
 ![Message Board](https://github.com/fob413/PostIt/blob/newDatabaseBadge/template/image/Tmessageboard.png)

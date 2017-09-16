@@ -70,12 +70,6 @@ export default {
   //   .catch(error => res.status(400).send(error));
   // },
 
-  /**
-   * add a user to a new group
-   * @param {object} req 
-   * @param {object} res 
-   * @return {void}
-   */
   create(req, res) {
     if (req.header('x-auth')) {
       const token = req.header('x-auth');
@@ -178,12 +172,7 @@ export default {
   },
 
 
-  /**
-   * api route for list of users in a group
-   * @param {object} req 
-   * @param {object} res 
-   * @return {void}
-   */
+
   listGroupUsers(req, res) {
     if (req.header('x-auth')) {
       const token = req.header('x-auth');
@@ -219,7 +208,7 @@ export default {
                     return Members
                     .findAll({
                       where: {
-                        groupId: req.params.groupId
+                        groupId: req.u.groupId
                       },
                       attributes:['id', 'userId', 'groupId'],
                       include: [

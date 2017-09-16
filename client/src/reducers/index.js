@@ -4,7 +4,6 @@ const initialState = {
   UserName: '',
   email: '',
   telephone: '',
-  userId: '',
   isLoggedIn: false,
   token: '',
   groups: []
@@ -18,8 +17,7 @@ export default (state = initialState, action) => {
         isLoggedIn: action.data.isLoggedin,
         token: action.data.token,
         email: action.data.email,
-        telephone: action.data.telephone,
-        userId: action.data.userId
+        telephone: action.data.telephone
       });
 
     case SIGN_IN:
@@ -28,8 +26,7 @@ export default (state = initialState, action) => {
         isLoggedIn: action.data.isLoggedin,
         token: action.data.token,
         telephone: action.data.telephone,
-        email: action.data.email,
-        userId: action.data.userId
+        email: action.data.email
       });
 
     case SIGN_OUT:
@@ -39,8 +36,7 @@ export default (state = initialState, action) => {
       token: '',
       email: '',
       telephone: '',
-      groups: [],
-      userId: ''
+      groups: []
     });
 
     case RELOAD_USER_IN:
@@ -48,7 +44,6 @@ export default (state = initialState, action) => {
       UserName: action.data.UserName,
       email: action.data.email,
       telephone: action.data.telephone,
-      userId: action.data.userId,
       isLoggedIn: true
     });
 

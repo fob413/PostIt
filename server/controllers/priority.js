@@ -1,11 +1,5 @@
 import nodemailer from 'nodemailer';
 
-/**
- * function to send mail
- * @param {array} users array of users to send message to
- * @param {string} message message to be sent to users
- * @return {void} 
- */
 export function sendMail(users, message){
   console.log('send the mail');
   console.log(`the following users ${users}`);
@@ -48,25 +42,16 @@ export function sendMail(users, message){
     }
     console.log(`Message ${info.messageId} send: ${info.response}`);
   });
+
+
+  
 }
 
-/**
- * function to send sms to users
- * @param {array} users array of users
- * @return {void}
- */
 export function sendSMS(users){
   console.log('send an sms');
   console.log(`critical priority users of ${users}`);
 }
 
-/**
- * function to send reset password link to users mail
- * @param {string} token token to reset password
- * @param {string} email users email to send password reset link
- * @param {*} host 
- * @return {void}
- */
 export function sendResetMail(token, email, host){
   console.log('>>>>>>>>>>>>>>>>>>>>>reset mail is being sent right now');
   console.log(token);
@@ -108,11 +93,6 @@ export function sendResetMail(token, email, host){
 
 }
 
-/**
- * send message on successful reset of users password
- * @param {string} email users email address
- * @return {void}
- */
 export function sendSuccessfulResetMail(email) {
   // create reusable transporter object using the default SMTP transport
   const transporter = nodemailer.createTransport({

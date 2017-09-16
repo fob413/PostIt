@@ -26,6 +26,7 @@ class Profile extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    console.log(nextProps.auth);
     this.setState({
       username: nextProps.auth.UserName,
       email: nextProps.auth.email,

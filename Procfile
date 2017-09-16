@@ -1,1 +1,1 @@
-npm run start:pro
+npm start

@@ -13,7 +13,7 @@ const logger = require('morgan');
 const bodyParser = require('body-parser');*/
 
 // setup the express app
-const port = process.env.PORT || 3000;
+const port = 3000;
 const app = express();
 
 // config setup

@@ -3,7 +3,6 @@ import {Link, withRouter} from 'react-router-dom';
 import { connect } from 'react-redux';
 import { signUserIn, reloadUserIn } from '../../../actions/authActions';
 import { authenticateUser } from '../../auth';
-import swal from 'sweetalert2';
 
 
 
@@ -47,9 +46,7 @@ class Signin extends React.Component {
       if (res) {
         this.props.history.push('/broadpage');
       }
-    }, err => {
-      console.log('error from the front end');
-    });
+    }, err => console.log(err));
   }
 
   render() {

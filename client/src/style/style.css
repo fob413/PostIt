@@ -46,10 +46,8 @@
 
 .addUser{
   height: 400px;
-}
-
-.addUserBtn {
-  padding: 5%;
+  overflow-x: scroll;
+  border: 0.5px solid black;
 }
 
 .hide{
@@ -66,23 +64,4 @@
 
 .forgotBold{
   font-weight: bold
-}
-
-.underline{
-  text-decoration: underline;
-  font-weight: bold;
-  color: #004d40;
-}
-
-.modalWidth {
-  width: 80%;
-}
-
-.addUserButtons {
-  position: relative;
-  bottom: -80%;
-}
-
-.modalButton {
-  z-index: auto;
 }
