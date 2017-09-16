@@ -33,7 +33,8 @@ export function signUserUp(user) {
     dispatch(signUpSuccess(data));
     return true;
   }, (err) => {
-    console.log(err.message);
+    swal('Oops...', 'Invalid Credentials', 'error');
+    // console.log(err.message);
   });
 }
 
