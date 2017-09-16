@@ -4,3 +4,4 @@ client/dist/js
 !client/dist/js/bundle.js
 .nyc_output
 npm-debug.log
+.DS_Store
