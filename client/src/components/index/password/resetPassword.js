@@ -28,6 +28,8 @@ class ResetPassword extends React.Component {
       this.setState({
         UserName: res.UserName
       });
+    }, err => {
+      console.log(err.message);
     });
   }
 
@@ -71,7 +73,7 @@ class ResetPassword extends React.Component {
       <div className="conatainer">
         <div className="row center-align">
           <img
-            width="30%"
+            width="20%"
             src={require("../../../image/postitD.png")}
             alt="PostIT Logo"
           />

@@ -521,7 +521,8 @@ export default {
           });
         } else {
           res.status(200).send({
-            U
+            success: true,
+            UserName: user.UserName
           });
         }
       }, err => {
