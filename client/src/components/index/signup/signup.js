@@ -3,6 +3,7 @@ import {Link, withRouter} from 'react-router-dom';
 import { connect } from 'react-redux';
 import { signUserUp } from '../../../actions/authActions';
 import { authenticateUser } from '../../auth';
+import swal from 'sweetalert2'
 
 class SignUp extends React.Component {
   constructor(props) {
@@ -17,17 +18,6 @@ class SignUp extends React.Component {
 
     this.onChange = this.onChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  componentWillMount(){
-    // authenticateUser()
-    // .then(status=>{
-    //   this.props.history.push('/broadpage');
-    // })
-    // .catch(err=>{
-    //   console.log(err);
-    
-    // });
   }
 
   componentDidMount () {
@@ -54,11 +44,26 @@ class SignUp extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    this.props.signUserUp(this.state).then((res) => {
-      if (res) {
-        this.props.history.push('/broadpage');
+    if (
+      this.state.UserName &&
+      this.state.email &&
+      this.state.telephone &&
+      this.state.password &&
+      this.state.password.length > 7
+    ) {
+      if (!isNaN(this.state.telephone)) {
+        this.props.signUserUp(this.state).then((res) => {
+          if (res) {
+            this.props.history.push('/broadpage');
+          }
+        });
+      } else {
+        swal('Oops...', 'Please input a valid telephone number', 'error');
       }
-    });
+      
+    } else {
+      swal('Oops...', 'Please input a password of at least 8 characters', 'error');
+    }
   }
 
 

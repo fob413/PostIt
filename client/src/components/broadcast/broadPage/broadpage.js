@@ -20,24 +20,6 @@ class BroadPage extends React.Component{
     this.toggleCreateGroup = this.toggleCreateGroup.bind(this);
     this.onCreateGroup = this.onCreateGroup.bind(this);
   }
-
-  componentWillMount() {
-    // if(!localStorage.getItem('x-auth')){
-    //   this.props.history.push('/');
-    // }else{
-    //   this.props.loadGroups();
-    // }
-    // authenticateUser()
-    // .then(status=>{
-    //   this.props.reloadUserIn(status.UserName, status.email, status.telephone);
-    //   this.props.history.push('/broadpage');
-    //   this.props.loadGroups();
-    // })
-    // .catch(err=>{
-    //   console.log(err);
-    //   this.props.history.push('/signin');
-    // });
-  }
   
   componentDidMount() {
     if(!this.props.auth.isLoggedIn){

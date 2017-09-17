@@ -1,4 +1,8 @@
 import nodemailer from 'nodemailer';
+require('dotenv').config();
+
+const postitMail = process.env.EMAIL;
+const mailPassword = process.env.EMAIL_PASSWORD;
 
 /**
  * function to send mail
@@ -6,7 +10,7 @@ import nodemailer from 'nodemailer';
  * @param {string} message message to be sent to users
  * @return {void} 
  */
-export function sendMail(users, message){
+export function sendMail(users, message, priorityHeader){
   console.log('send the mail');
   console.log(`the following users ${users}`);
 
@@ -27,8 +31,8 @@ export function sendMail(users, message){
     // secure: true,
     service: "Gmail",
     auth: {
-      user: 'fob1493@gmail.com',
-      pass: 'OuoeBlgn413'
+      user: postitMail,
+      pass: mailPassword
     }
   });
 
@@ -36,7 +40,7 @@ export function sendMail(users, message){
   const mailOptions = {
     from: '"PostIt" <fob1493@gmail.com>',
     to: receivers,
-    subject: 'URGENT',
+    subject: priorityHeader,
     text: message,
     html: message
   };
@@ -69,8 +73,8 @@ export function sendSMS(users){
  */
 export function sendResetMail(token, email, host){
   console.log('>>>>>>>>>>>>>>>>>>>>>reset mail is being sent right now');
-  console.log(token);
-  console.log(host);
+  console.log('>>>>>>>>>>>>>>>>>>>>>', postitMail);
+  console.log('>>>>>>>>>>>>>>>>>>>>>', mailPassword);
 
   // create reusable transporter object using the default SMTP transport
   const transporter = nodemailer.createTransport({
@@ -79,8 +83,8 @@ export function sendResetMail(token, email, host){
     // secure: true,
     service: "Gmail",
     auth: {
-      user: 'fob1493@gmail.com',
-      pass: 'OuoeBlgn413'
+      user: postitMail,
+      pass: mailPassword
     }
   });
 
@@ -118,8 +122,8 @@ export function sendSuccessfulResetMail(email) {
   const transporter = nodemailer.createTransport({
     service: 'Gmail',
     auth: {
-      user: 'fob1493@gmail.com',
-      pass: 'OuoeBlgn413'
+      user: postitMail,
+      pass: mailPassword
     }
   });
 

@@ -107,11 +107,11 @@ export default {
                             ]
                           }).then((users) => {
                             if ( req.body.priority == 'URGENT' ){
-                              sendMail(users, messages.content);
+                              sendMail(users, messages.content, req.body.priority);
                             }
                             if (req.body.priority == 'CRITICAL') {
-                              sendMail(users, messages.content);
-                              sendSMS(users, messages.content);
+                              sendMail(users, messages.content, req.body.priority);
+                              // sendSMS(users, messages.content);
                             }
                             res.status(201).send(messages);
                           })
