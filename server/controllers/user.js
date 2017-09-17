@@ -109,7 +109,7 @@ export default {
           } else {
             req.decoded = decoded;
             return Users
-            .findAll({
+            .findAndCountAll({
               offset: req.params.offset * 5,
               limit: 5,
               where: {
