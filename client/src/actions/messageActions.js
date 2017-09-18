@@ -8,7 +8,8 @@ import {
   LOAD_GROUP_USERS,
   ADD_USER_TO_GROUP,
   LOAD_UNREAD_MESSAGES,
-  LOAD_READ_MESSAGES
+  LOAD_READ_MESSAGES,
+  LOAD_COUNT
 } from '../constants';
 import swal from 'sweetalert2';
 
@@ -58,6 +59,14 @@ const loadPlatformUsersSuccess = data => ({
  */
 const loadGroupUsersSuccess = data => ({
   type: LOAD_GROUP_USERS,
+  data
+});
+
+/**
+ * @override reducer function
+ */
+const loadCount = data => ({
+  type: LOAD_COUNT,
   data
 });
 
@@ -178,12 +187,14 @@ export function searchUsers(offset, UserName) {
       {headers: {'x-auth': localStorage.getItem('x-auth')}}
     )
     .then(({ data }) => {
-      dispatch(loadPlatformUsersSuccess(data.users));
+      dispatch(loadPlatformUsersSuccess(data.users.rows));
+      dispatch(loadCount(data.users.count));
       return true;
     }, err => {
       console.log(err.message);
     });
   };
+  console.log('search users with ', UserName, offset);
 }
 
 export function loadGroupUsers(groupId) {

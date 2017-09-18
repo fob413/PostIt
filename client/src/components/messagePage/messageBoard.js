@@ -44,7 +44,9 @@ class MessageBoard extends React.Component {
       otherUsers: [],
       unread: true,
       userId: this.props.auth.userId,
-      modalIsOpen: false
+      modalIsOpen: false,
+      count: 0,
+      offset: 0
     });
 
     this.inputUser = this.inputUser.bind(this);
@@ -77,7 +79,7 @@ class MessageBoard extends React.Component {
       readMessages: nextProps.Messages.readMessages,
       PlatformUsers: nextProps.Messages.PlatformUsers,
       groupUsers: nextProps.Messages.groupUsers,
-      offset: 0
+      count: nextProps.Messages.count
     });
     this.props.readMessages(this.state.groupId);
     if (!nextProps.auth.isLoggedIn) {
@@ -122,16 +124,17 @@ class MessageBoard extends React.Component {
   inputUser() {
     const { _user } = this.refs;
     _user.value = _user.value.trim();
+    this.props.searchUsers(this.state.offset, _user.value);
     this.setState({
       addUser: _user.value
     });
-    this.props.searchUsers(this.state.offset, _user.value);
   }
 
   prevPage(e) {
     e.preventDefault();
+    const { _user } = this.refs;
     if (this.state.offset > 0) {
-      // this.props.searchUsers(this.state.offset - 1, this.state.addUser);
+      this.props.searchUsers(this.state.offset - 1, _user.value);
       let num = this.state.offset;
       this.setState({
         offset: num - 1
@@ -140,18 +143,13 @@ class MessageBoard extends React.Component {
   }
 
   nextPage(e) {
-    const { _user } = this.refs;
     e.preventDefault();
-    console.log('increment by 1');
-    // this.props.searchUsers(this.state.offset + 1, this.state.addUser);
-    console.log('before set new state');
+    const { _user } = this.refs;
+    this.props.searchUsers(this.state.offset + 1, _user.value);
     let num = this.state.offset;
-    console.log('after set new state');
     this.setState({
       offset: num + 1
     });
-    console.log('finally done setting state');
-    // this.props.searchUsers(2, _user.value);
   }
 
   filterUsers(){

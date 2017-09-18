@@ -4,7 +4,8 @@ import {
   LOAD_PLATFORM_USERS,
   LOAD_GROUP_USERS,
   LOAD_UNREAD_MESSAGES,
-  LOAD_READ_MESSAGES
+  LOAD_READ_MESSAGES,
+  LOAD_COUNT
 } from '../constants';
 
 const initialState = {
@@ -13,7 +14,8 @@ const initialState = {
   unreadMessages: [],
   readMessages: [],
   groupUsers: [],
-  PlatformUsers: []
+  PlatformUsers: [],
+  count: 0
 };
 
 export default (state = initialState, action) => {
@@ -46,6 +48,11 @@ export default (state = initialState, action) => {
       case LOAD_READ_MESSAGES:
         return Object.assign({}, state, {
           readMessages: action.data
+        });
+
+      case LOAD_COUNT:
+        return Object.assign({}, state, {
+          count: action.data
         });
 
     default:
