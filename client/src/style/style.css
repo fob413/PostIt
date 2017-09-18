@@ -86,3 +86,11 @@
 .modalButton {
   z-index: auto;
 }
+
+.pagination {
+  cursor: pointer;
+}
+
+.addUserList {
+  height: 210px;
+}

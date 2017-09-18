@@ -10,7 +10,7 @@ const group = db.Groups;
 const members = db.Members;
 // const user = require('../models').Users;
 
-const should = chai.should();
+// const should = chai.should();
 const expect = chai.expect;
 
 chai.use(chaiHttp);
@@ -262,7 +262,65 @@ describe('Group route tests /api/group', () => {
       });
     });
   });
+});
 
+// tests lists groups user belongs to
+describe('Group route tests /api/group/:groupId/user/list', () => {
+  // string to hold token returned when user signs up
+  let token = '';
+  before((done) => {
+    clearDatabase();
+    chai.request(app)
+    .post('/api/user/signup')
+    .send(testUser)
+    .end((err, res) => {
+      token = res.body.token;
+      done();
+    });
+  });
+
+  describe('Positive list groups user belongs to response ', () => {
+    before((done) => {
+      chai.request(app)
+      .post('/api/user/signin')
+      .send(testUser)
+      .end((err, res) => {
+        token = res.body.token;
+      });
+
+      // create a group
+      const newGroup = {
+        GroupName: 'Test Group'
+      };
+      chai.request(app)
+      .post('/api/group')
+      .set('x-auth', token)
+      .send(newGroup)
+      .end((err, res) => {
+      });
+
+      // create another group
+      const newGroup2 = {
+        GroupName: 'Test Group2'
+      };
+      chai.request(app)
+      .post('/api/group')
+      .set('x-auth', token)
+      .send(newGroup2)
+      .end((err, res) => {
+        done();
+      });
+    });
+
+    // return a status 200
+    it('should return a status of 200 on listing the groups the user belongs to', () => {
+      chai.request(app)
+      .get('/api/group/list')
+      .end((err, res) => {
+        res.should.have.status(200);
+      });
+    });
+  });
 });
 
 // tests add users to a particular group

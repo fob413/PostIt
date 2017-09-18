@@ -3,9 +3,9 @@ import usersController from '../controllers/user';
 import groupsController from '../controllers/groups';
 import membersController from '../controllers/members';
 import messagesController from '../controllers/messages';
-import clearController from '../controllers/clear';
+import auth from '../middleware/authenticate';
 
-module.exports = (app) => { 
+module.exports = (app) => {
   // a get all api for users signup
   app.get('/api/user/signup', (req, res) => res.status(200).send({
     message: 'Hi, Welcome to PostIt',
@@ -42,16 +42,16 @@ module.exports = (app) => {
   app.post('/api/users/list/:offset', usersController.searchUsers);
 
   // creates a new group on the application
-  app.post('/api/group', groupsController.create);
+  app.post('/api/group', auth, groupsController.create);
 
   // add a user to a particular group
-  app.post('/api/group/:groupId/user', membersController.create);
+  app.post('/api/group/:groupId/user', auth, membersController.create);
 
   // list users in a particular group
   app.get('/api/group/:groupId/user/list', membersController.listGroupUsers);
 
   // logged in users retrieve groups they have been added to
-  app.get('/api/group/list', groupsController.listGroups);
+  app.get('/api/group/list', auth, groupsController.listGroups);
 
   // posts a message to a particular group
   // app.post('/api/group/:groupId/message', messagesController.create);
@@ -67,18 +67,13 @@ module.exports = (app) => {
   // app.get('/api/group/:groupId/user', membersController.list);
   // list out all the available groups on the application
   // app.get('/api/group/list', groupsController.list);
-  // to be removed list out all the registered users
-  app.get('/api/clear/users', clearController.clearUsers);
-  app.get('/api/clear/groups', clearController.clearGroups);
-  app.get('/api/clear/members', clearController.clearMembers);
-  app.get('/api/clear/messages', clearController.clearMessages);
   // list all the messages
   // app.get('/api/group/:groupId/message', messagesController.list);
   // a get all for the starty page of the app
   app.get('/*', (req, res) => {
-      res.status(200)
-      .sendFile(
-      path.join(__dirname, '../index.html'
+    res.status(200)
+    .sendFile(
+    path.join(__dirname, '../index.html'
     ));
-  }); 
+  });
 };

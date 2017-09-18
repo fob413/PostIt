@@ -1,41 +1,10 @@
-// const path = require('path');
-// const HtmlWebpackPlugin = require('html-webpack-plugin');
-
-// // const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
-// //   template: path.join(__dirname, 'client/dist/index.html'),
-// //   filename: 'index.html',
-// //   inject: 'body'
-// // });
-
-// module.exports = {
-//   entry: './client/index.js',
-//   output: {
-//     path: path.resolve('client/dist'),
-//     filename: 'bundle.js'
-//   },
-//   node: {
-//     net: 'empty',
-//     tls: 'empty',
-//     dns: 'empty',
-//     fs: 'empty'
-//   },
-//   module: {
-//     loaders: [
-//       { test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/ },
-//       { test: /\.jsx$/, loader: 'babel-loader', exclude: /node_modules/ },
-//       { test: /\.css$/, loader: 'style-loader!css-loader', exclude: /node_modules/ },
-//       { test: /\.json$/, loader: 'json-loader', exclude: /node_modules/ }
-//     ]
-//   }
-//   // plugins: [HtmlWebpackPluginConfig]
-// };
 const webpack = require('webpack');
 const path = require('path');
 
 module.exports = {
-  debug: true,
-  devtool: 'cheap-module-eval-source-map',
-  noInfo: false,  // to change to true soon
+  // debug: true,
+  devtool: 'inline-source-map',
+  // noInfo: false,  // to change to true soon
   entry: [
     'eventsource-polyfill',
     'webpack-hot-middleware/client?reload=true',
@@ -52,7 +21,10 @@ module.exports = {
   // },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin()
+    new webpack.LoaderOptionsPlugin({
+      debug: true
+    }),
+    new webpack.NoEmitOnErrorsPlugin()
   ],
   node: {
     net: 'empty',
@@ -62,18 +34,27 @@ module.exports = {
   },
   module: {
     loaders: [
-      {test: /\.js$/, include: path.join(__dirname, './client/src'), loaders: ['babel']},
-      {test: /(\.css)$/, loaders: ['style', 'css']},
-      {test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: "file"},
-      {test: /\.(woff|woff2)$/, loader: "url?prefix=font/&limit=5000"},
-      {test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/octet-stream"},
-      {test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=image/svg+xml"},
-      {test: /\.(jpe?g|png|gif|svg)$/i,
+      {
+        test: /.jsx?$/,
+        include: [path.join(__dirname, './client/src')],
+        exclude: /(node_modules|bower_components)/,
+        loaders: ['babel-loader']
+      },
+      { test: /(\.css)$/, loaders: ['style-loader', 'css-loader'] },
+      { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: 'file-loader' },
+      { test: /\.(woff|woff2)$/, loader: 'url-loader?prefix=font/&limit=5000' },
+      { test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: 'url-loader?limit=10000&mimetype=application/octet-stream' },
+      { test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: 'url-loader?limit=10000&mimetype=image/svg+xml' },
+      {
+        test: /\.(jpe?g|png|gif|svg)$/i,
         loaders: [
-            'file-loader?hash=sha512&digest=hex&name=[hash].[ext]',
-            'image-webpack-loader?bypassOnDebug&optimizationLevel=7&interlaced=false'
+          'file-loader?hash=sha512&digest=hex&name=[hash].[ext]',
+          'image-webpack-loader?bypassOnDebug&optimizationLevel=7&interlaced=false'
         ]
       }
     ]
+  },
+  resolve: {
+    extensions: ['.js', '.jsx']
   }
 };

@@ -33,24 +33,24 @@ export default (state = initialState, action) => {
       });
 
     case SIGN_OUT:
-    return Object.assign({}, state, {
-      UserName: '',
-      isLoggedIn: action.data.isLoggedIn,
-      token: '',
-      email: '',
-      telephone: '',
-      groups: [],
-      userId: ''
-    });
+      return Object.assign({}, state, {
+        UserName: '',
+        isLoggedIn: action.data.isLoggedIn,
+        token: '',
+        email: '',
+        telephone: '',
+        groups: [],
+        userId: ''
+      });
 
     case RELOAD_USER_IN:
-    return Object.assign({}, state, {
-      UserName: action.data.UserName,
-      email: action.data.email,
-      telephone: action.data.telephone,
-      userId: action.data.userId,
-      isLoggedIn: true
-    });
+      return Object.assign({}, state, {
+        UserName: action.data.UserName,
+        email: action.data.email,
+        telephone: action.data.telephone,
+        userId: action.data.userId,
+        isLoggedIn: true
+      });
 
     default:
       return state;

@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import {secret} from './config';
+import { secret } from './config';
 import { RELOAD_USER_IN } from '../constants';
 
 // export function authenticateUser() {
@@ -21,13 +21,19 @@ import { RELOAD_USER_IN } from '../constants';
 //   });
 // }
 
+/**
+ * authentication function
+ * @param {string} token users token to be authenticated
+ * @param {function} dispatch function to dispatch to store
+ * @return {void}
+ */
 export function authenticateUser(token, dispatch) {
   jwt.verify(token, secret, (err, decoded) => {
     if (!err) {
       const data = {
-        UserName : decoded.UserName,
-        email : decoded.email,
-        telephone : decoded.telephone,
+        UserName: decoded.UserName,
+        email: decoded.email,
+        telephone: decoded.telephone,
         userId: decoded.userId
       };
       dispatch({
@@ -38,6 +44,9 @@ export function authenticateUser(token, dispatch) {
   });
 }
 
+/**
+ * @return {void}
+ */
 export function test() {
   return true;
 }

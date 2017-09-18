@@ -141,8 +141,6 @@ describe('SignUp Positive Responses', () => {
         done();
       });
     });
-
-
   });
 });
 
@@ -167,7 +165,7 @@ describe('SignUp Negative Responses', () => {
     });
   });
 
-  it(`It should return a message about UserName not given`, (done) => {
+  it('It should return a message about UserName not given', (done) => {
     const testUser2 = {
       email: 'bayo@yahoo.com',
       password: 'abcdefghij',
@@ -243,7 +241,7 @@ describe('SignUp Negative Responses', () => {
     .post('/api/user/signup')
     .send(testUser2)
     .end((err, res) => {
-      expect(res.body.message).to.equal(`Invalid credentials`);
+      expect(res.body.message).to.equal('Invalid credentials');
       done();
     });
   });
@@ -266,27 +264,26 @@ describe('SignUp Negative Responses', () => {
 
   it(`It should return a message when 
   telephone number is not given`, (done) => {
-  const testUser2 = {
-    UserName: 'Bayo',
-    email: 'bayo@yahoo.com',
-    password: 'abcdefghij'
-  };
-  chai.request(app)
-  .post('/api/user/signup')
-  .send(testUser2)
-  .end((err, res) => {
-    expect(res.body.message).to.equal(`Invalid credentials`);
-    done();
-  });
-});
-
-  it(`It should return a status code of 400 when 
-    telephone number length is wrong`, (done) => {
     const testUser2 = {
       UserName: 'Bayo',
       email: 'bayo@yahoo.com',
-      password: 'abcdefghij',
-      telephone: '12345'
+      password: 'abcdefghij'
+    };
+    chai.request(app)
+    .post('/api/user/signup')
+    .send(testUser2)
+    .end((err, res) => {
+      expect(res.body.message).to.equal(`Invalid credentials`);
+      done();
+    });
+  });
+
+  it(`It should return a status code of 400 when 
+  password is not given`, (done) => {
+    const testUser2 = {
+      UserName: 'Bayo',
+      email: 'bayo@yahoo.com',
+      telephone: '08138498175'
     };
     chai.request(app)
     .post('/api/user/signup')
@@ -297,55 +294,21 @@ describe('SignUp Negative Responses', () => {
     });
   });
 
-  it(`It should return a a message when 
-  telephone number length is wrong`, (done) => {
-  const testUser2 = {
-    UserName: 'Bayo',
-    email: 'bayo@yahoo.com',
-    password: 'abcdefghij',
-    telephone: '12345'
-  };
-  chai.request(app)
-  .post('/api/user/signup')
-  .send(testUser2)
-  .end((err, res) => {
-    expect(res.body.message).to.equal(`Invalid credentials`);
-    done();
+  it(`It should return a message when 
+    password is not given`, (done) => {
+    const testUser2 = {
+      UserName: 'Bayo',
+      email: 'bayo@yahoo.com',
+      telephone: '08138498175'
+    };
+    chai.request(app)
+    .post('/api/user/signup')
+    .send(testUser2)
+    .end((err, res) => {
+      expect(res.body.message).to.equal('Invalid credentials')
+      done();
+    });
   });
-});
-
-  it(`It should return a status code of 400 when 
-  password is not given`, (done) => {
-  const testUser2 = {
-    UserName: 'Bayo',
-    email: 'bayo@yahoo.com',
-    telephone: '08138498175'
-  };
-  chai.request(app)
-  .post('/api/user/signup')
-  .send(testUser2)
-  .end((err, res) => {
-    res.should.have.status(400);
-    done();
-  });
-});
-
-it(`It should return a message when 
-  password is not given`, (done) => {
-  const testUser2 = {
-    UserName: 'Bayo',
-    email: 'bayo@yahoo.com',
-    telephone: '08138498175'
-  };
-  chai.request(app)
-  .post('/api/user/signup')
-  .send(testUser2)
-  .end((err, res) => {
-    expect(res.body.message).to.equal('Invalid credentials')
-    done();
-  });
-});
-
 });
 
 // // tests for signin route
