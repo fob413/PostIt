@@ -1,4 +1,5 @@
 import nodemailer from 'nodemailer';
+
 require('dotenv').config();
 
 const postitMail = process.env.EMAIL;
@@ -8,9 +9,10 @@ const mailPassword = process.env.EMAIL_PASSWORD;
  * function to send mail
  * @param {array} users array of users to send message to
  * @param {string} message message to be sent to users
- * @return {void} 
+ * @param {string} priorityHeader priority of the message
+ * @return {void}
  */
-export function sendMail(users, message, priorityHeader){
+export function sendMail(users, message, priorityHeader) {
   console.log('send the mail');
   console.log(`the following users ${users}`);
 
@@ -29,7 +31,7 @@ export function sendMail(users, message, priorityHeader){
     // host: 'smtp.gmail.com',
     // port: 465,
     // secure: true,
-    service: "Gmail",
+    service: 'Gmail',
     auth: {
       user: postitMail,
       pass: mailPassword
@@ -59,7 +61,7 @@ export function sendMail(users, message, priorityHeader){
  * @param {array} users array of users
  * @return {void}
  */
-export function sendSMS(users){
+export function sendSMS(users) {
   console.log('send an sms');
   console.log(`critical priority users of ${users}`);
 }
@@ -68,10 +70,10 @@ export function sendSMS(users){
  * function to send reset password link to users mail
  * @param {string} token token to reset password
  * @param {string} email users email to send password reset link
- * @param {*} host 
+ * @param {*} host
  * @return {void}
  */
-export function sendResetMail(token, email, host){
+export function sendResetMail(token, email, host) {
   console.log('>>>>>>>>>>>>>>>>>>>>>reset mail is being sent right now');
   console.log('>>>>>>>>>>>>>>>>>>>>>', postitMail);
   console.log('>>>>>>>>>>>>>>>>>>>>>', mailPassword);
@@ -81,7 +83,7 @@ export function sendResetMail(token, email, host){
     // host: 'smtp.gmail.com',
     // port: 465,
     // secure: true,
-    service: "Gmail",
+    service: 'Gmail',
     auth: {
       user: postitMail,
       pass: mailPassword
@@ -109,7 +111,6 @@ export function sendResetMail(token, email, host){
     }
     console.log(`Message ${info.messageId} send: ${info.response}`);
   });
-
 }
 
 /**
