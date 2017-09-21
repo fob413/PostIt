@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { SIGN_UP, SIGN_IN, SIGN_OUT, RELOAD_USER_IN } from '../constants';
 import swal from 'sweetalert2';
+import { SIGN_UP, SIGN_IN, SIGN_OUT, RELOAD_USER_IN } from '../constants';
 
 const signUpSuccess = data => ({
   type: SIGN_UP,
@@ -25,6 +25,11 @@ const reloadUserInSuccess = (UserName, email, telephone, userId) => ({
   userId
 });
 
+/**
+ * api call to sign up a new user
+ * @param {object} user object of users information
+ * @return {boolean} returns if the call is successful
+ */
 export function signUserUp(user) {
   return dispatch => (
     axios.post('/api/user/signup', user)
@@ -34,26 +39,36 @@ export function signUserUp(user) {
     return true;
   }, (err) => {
     swal('Oops...', err.response.data.message, 'error');
-    // console.log(err.message);
+    return false;
   });
 }
 
+/**
+ * api call to sign a user out of the platform
+ * @return {boolean} returns if the call is successful
+ */
 export function signUserOut() {
   return dispatch => (
    axios.get(
     'api/user/signout',
-    {headers: {'x-auth': localStorage.getItem('x-auth')}}
+    { headers: { 'x-auth': localStorage.getItem('x-auth') } }
   )
   .then(({ data }) => {
     localStorage.removeItem('x-auth');
     dispatch(signOutSuccess(data));
     return true;
   }, (err) => {
-    console.log(err.message);
-  }) 
+    swal('Oops...', err.response.data.message, 'error');
+    return false;
+  })
   );
 }
 
+/**
+ * api call to sign a user in
+ * @param {object} user object of users information
+ * @return {boolean} returns if the call is successful
+ */
 export function signUserIn(user) {
   return dispatch => (
     axios.post('api/user/signin', user))
@@ -63,9 +78,17 @@ export function signUserIn(user) {
       return true;
     }, (err) => {
       swal('Oops...', err.response.data.message, 'error');
+      return false;
     });
 }
 
+/**
+ * reload user into the store
+ * @param {string} UserName the users username
+ * @param {string} email the users email
+ * @param {string} telephone the users telephone number
+ * @return {void}
+ */
 export function reloadUserIn(UserName, email, telephone) {
   return dispatch => (
     dispatch(reloadUserInSuccess(UserName, email, telephone))

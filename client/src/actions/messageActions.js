@@ -1,17 +1,15 @@
 import axios from 'axios';
-import jwt from 'jsonwebtoken';
-import {secret} from '../components/config';
-import { 
-  CURRENT_GROUP, 
-  LOAD_GROUP_MESSAGES, 
-  LOAD_PLATFORM_USERS, 
+import swal from 'sweetalert2';
+import {
+  CURRENT_GROUP,
+  LOAD_GROUP_MESSAGES,
+  LOAD_PLATFORM_USERS,
   LOAD_GROUP_USERS,
-  ADD_USER_TO_GROUP,
   LOAD_UNREAD_MESSAGES,
   LOAD_READ_MESSAGES,
-  LOAD_COUNT
+  LOAD_COUNT,
+  LOAD_PAGE_COUNT
 } from '../constants';
-import swal from 'sweetalert2';
 
 
 /**
@@ -71,13 +69,21 @@ const loadCount = data => ({
 });
 
 /**
+ * @override reducer function
+ */
+const loadPageCount = data => ({
+  type: LOAD_PAGE_COUNT,
+  data
+});
+
+/**
  * filter unread messages
  * @param {array} data data gotten from api call
  * @param {string} userId current user id operating the platform
  * @return {array} array of unread messages
  */
 const filterUnreadMessages = (data, userId) => {
-  let unreadMessages = [];
+  const unreadMessages = [];
   data.map((item) => {
     // array to hold userId that have read messages
     let readby = [];
@@ -86,13 +92,13 @@ const filterUnreadMessages = (data, userId) => {
     // split the string of read users into an array
     readby = item.readby.split(',');
     // map through the array to check if user has read the message
-    readby.map(id => {
-      if(id == userId){
+    readby.map((id) => {
+      if (id == userId) {
         read = true;
       }
     });
     // push message that user hasn't read into unreadMessages
-    if(!read){
+    if (!read) {
       unreadMessages.push(item);
     }
   });
@@ -115,31 +121,43 @@ const filterReadMessages = (data, userId) => {
     // split the string of read users into an array
     readby = item.readby.split(',');
     // map through the array to check if user has read the message
-    readby.map(id => {
-      if(id == userId){
+    readby.map((id) => {
+      if (id == userId) {
         read = true;
       }
     });
     // push message that user hasn't read into unreadMessages
-    if(read){
+    if (read) {
       readMessages.push(item);
     }
   });
   return readMessages;
 };
 
+/**
+ * load the current group being operated on the front end
+ * @param {string} groupId the current groupId
+ * @return {void}
+ */
 export function loadCurrentGroup(groupId) {
   return dispatch => (
     dispatch(loadGroupId(groupId))
   );
 }
 
+/**
+ * api to send a message
+ * @param {string} message message to be sent
+ * @param {stroing} groupId group id of the current group
+ * @param {string} priority the priotity of the message being sent
+ * @return {boolean} return if the message has been sent or not
+ */
 export function sendMessage(message, groupId, priority) {
   return dispatch => {
     return axios.post(
       `api/group/${groupId}/message`,
-      {content: message, priority: priority},
-      {headers: {'x-auth': localStorage.getItem('x-auth')}}
+      { content: message, priority },
+      { headers: { 'x-auth': localStorage.getItem('x-auth') } }
     )
     .then(({ data }) => {
       return true;
@@ -153,7 +171,7 @@ export function loadGroupMessages(groupId, userId) {
   return dispatch => {
     axios.get(
       `api/group/${groupId}/messages`,
-      {headers: {'x-auth': localStorage.getItem('x-auth')}}
+      { headers: { 'x-auth': localStorage.getItem('x-auth') } }
     )
     .then(({ data }) => {
       dispatch(loadGroupMessagesSuccess(data));
@@ -187,23 +205,24 @@ export function searchUsers(offset, UserName) {
       {headers: {'x-auth': localStorage.getItem('x-auth')}}
     )
     .then(({ data }) => {
+      if (data.users.rows.length < 1) Materialize.toast('No user found', 4000, 'red');
       dispatch(loadPlatformUsersSuccess(data.users.rows));
       dispatch(loadCount(data.users.count));
+      dispatch(loadPageCount(data.data.pageCount));
       return true;
     }, err => {
       console.log(err.message);
     });
   };
-  console.log('search users with ', UserName, offset);
 }
 
 export function loadGroupUsers(groupId) {
   return dispatch => {
     axios.get(
       `api/group/${groupId}/user/list`,
-      {headers: {'x-auth': localStorage.getItem('x-auth')}}
+      { headers: { 'x-auth': localStorage.getItem('x-auth') } }
     )
-    .then (({ data} ) => {
+    .then(({ data }) => {
       dispatch(loadGroupUsersSuccess(data));
     }, err => console.log(err.message));
   };
@@ -213,14 +232,14 @@ export function addUserToGroup(userId, groupId) {
   return dispatch => {
     return axios.post(
       `api/group/${groupId}/user`,
-      {userId},
-      {headers: {'x-auth': localStorage.getItem('x-auth')}}
+      { userId },
+      { headers: { 'x-auth': localStorage.getItem('x-auth') } }
     )
-    .then(( { data } ) => {
-      console.log(data);
+    .then(({ data }) => {
+      swal('Successfully Added To Group');
     }, err => {
       swal('Oops...', err.response.data.message, 'error');
-    })
+    });
   };
 }
 
@@ -229,9 +248,9 @@ export function readMessages(groupId) {
     axios.post(
       `api/group/${groupId}/messages/read`,
       {},
-      {headers: {'x-auth': localStorage.getItem('x-auth')}}
+      { headers: { 'x-auth': localStorage.getItem('x-auth') } }
     )
-    .then(( { data }) => {
+    .then(({ data }) => {
       return;
     }, err => {
       console.log(err);

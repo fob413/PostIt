@@ -1,7 +1,8 @@
 import bcrypt from 'bcrypt';
+import crypto from 'crypto';
 import jwt from 'jsonwebtoken';
 import db from '../models/index';
-import crypto from 'crypto';
+import paginate from '../middleware/paginate';
 import { sendResetMail, sendSuccessfulResetMail } from './priority';
 
 require('dotenv').config();
@@ -24,9 +25,9 @@ const invalid = {
 export default {
   /**
    * api controller lists all the users on the platform
-   * @param {object} req 
-   * @param {object} res
-   * @return {void} 
+   * @param {object} req users information object
+   * @param {object} res servers response
+   * @return {void}
    */
   // list(req, res) {
   //   // token authentication
@@ -81,9 +82,9 @@ export default {
 
   /**
    * api controller lists all the users on the platform
-   * @param {object} req 
+   * @param {object} req users information object
    * @param {object} res
-   * @return {void} 
+   * @return {void}
    */
   searchUsers(req, res) {
     if (!req.header('x-auth')) {
@@ -101,7 +102,7 @@ export default {
       } else {
         const token = req.header('x-auth');
         jwt.verify(token, secret, (err, decoded) => {
-          if(err) {
+          if (err) {
             return res.status(403).send({
               success: false,
               message: 'failed to authenticate token'
@@ -113,19 +114,21 @@ export default {
               offset: req.params.offset * 5,
               limit: 5,
               where: {
-                UserName: { $like: `%${req.body.UserName}%`}
+                UserName: { $like: `%${req.body.UserName}%` }
               },
               attributes: ['id', 'UserName']
             })
-            .then(users => {
+            .then((users) => {
               res.status(200).send({
                 success: true,
-                users
+                users,
+                data: paginate(users.count, 5, req.params.offset * 5)
               });
-            }, err => {
+            }, (err) => {
               res.status(400).send({
                 success: false,
                 message: 'an error occured searching users',
+                error: err.message,
                 users: []
               });
             });
@@ -137,9 +140,9 @@ export default {
 
   /**
    * api controller to signup a new user
-   * @param {object} req 
-   * @param {object} res
-   * @return {void} 
+   * @param {object} req users object information
+   * @param {object} res servers response
+   * @return {void}
    */
   create(req, res) {
     // validate users input
@@ -158,7 +161,7 @@ export default {
           UserName: req.body.UserName
         }
       })
-      .then(username => {
+      .then((username) => {
         // check if username is hasn't been used
         if (username) {
           res.status(400).send({
@@ -172,7 +175,7 @@ export default {
               email: req.body.email
             }
           })
-          .then(emailUsed => {
+          .then((emailUsed) => {
             if (emailUsed) {
               res.status(400).send({
                 success: false,
@@ -185,12 +188,12 @@ export default {
                   telephone: req.body.telephone
                 }
               })
-              .then(telephoneUsed => {
+              .then((telephoneUsed) => {
                 if (telephoneUsed) {
                   res.status(400).send({
                     success: false,
                     message: 'Telephone number in use by another user!'
-                  })
+                  });
                 } else {
                   // signup the new user
                   Users.create({
@@ -199,7 +202,7 @@ export default {
                     email: req.body.email,
                     telephone: req.body.telephone
                   })
-                  .then(user => {
+                  .then((user) => {
                     // sign and return token
                     const token = jwt.sign({
                       UserName: user.UserName,
@@ -216,28 +219,28 @@ export default {
                       token,
                       userId: user.id
                     });
-                  }, err => {
+                  }, (err) => {
                     res.status(400).send({
                       success: false,
                       message: err.message
                     });
                   });
                 }
-              }, err => {
+              }, (err) => {
                 res.status(400).send({
                   success: false,
                   message: err.message
                 });
               });
             }
-          }, err => {
+          }, (err) => {
             res.status(400).send({
               success: false,
               message: err.message
             });
           });
         }
-      }, err => {
+      }, (err) => {
         res.status(400).send({
           success: false,
           message: err.message
@@ -253,9 +256,9 @@ export default {
 
   /**
    * api controller to signin a user
-   * @param {object} req 
-   * @param {object} res
-   * @return {void} 
+   * @param {object} req users information object
+   * @param {object} res servers response
+   * @return {void}
    */
   signin(req, res) {
     // check for username and password
@@ -293,12 +296,12 @@ export default {
                   userId: user.id
                 });
               })
-              .catch(err =>  {
+              .catch((err) => {
                 res.status(400).send({
                   success: false,
                   message: err.message
-              });
-            }
+                });
+              }
             );
             }
           } else {
@@ -308,26 +311,27 @@ export default {
           res.status(401).send(invalid);
         }
       })
-      .catch(error => {
-        res.status(400).send(error.message)});
-      } else {
-        res.status(400).send({
-          // response for failed signin
-          success: false,
-          message: 'Invalid Credentials'
-        });
-      }
+      .catch((error) => {
+        res.status(400).send(error.message);
+      });
+    } else {
+      res.status(400).send({
+        // response for failed signin
+        success: false,
+        message: 'Invalid Credentials'
+      });
+    }
   },
 
   /**
    * api controller to sign out a user fron the platform
-   * @param {object} req 
-   * @param {object} res
-   * @return {void} 
+   * @param {object} req users information object
+   * @param {object} res servers response
+   * @return {void}
    */
   signout(req, res) {
     // authentication. Check and confirm token
-    if (req.header('x-auth')){
+    if (req.header('x-auth')) {
       const token = req.headers['x-auth'];
       jwt.verify(token, secret, (err, decoded) => {
         if (err) {
@@ -343,7 +347,7 @@ export default {
               UserName: req.decoded.UserName
             }
           })
-          .then(user => {
+          .then((user) => {
             user.update({
               isLoggedin: false
             })
@@ -357,7 +361,7 @@ export default {
           })
           .catch(err => res.status(400).send(err.message));
         }
-      })
+      });
     } else {
       return res.status(403).send({
         // response for failed authentication
@@ -369,9 +373,9 @@ export default {
 
   /**
    * api controller to send reset password link to mail
-   * @param {object} req 
-   * @param {object} res
-   * @return {void} 
+   * @param {object} req users information object
+   * @param {object} res servers response
+   * @return {void}
    */
   forgot(req, res) {
     // check for email
@@ -386,7 +390,7 @@ export default {
           email: req.body.email
         }
       })
-      .then(user => {
+      .then((user) => {
         if (!user) {
           res.status(400).send({
             success: false,
@@ -397,25 +401,25 @@ export default {
           user.update({
             resetPasswordToken: token,
             expiryTime: Date.now() + 3600000
-          }, err => {
+          }, (err) => {
             res.status(400).send({
               success: false,
               message: err.message
             });
           })
-          .then(updatedUser => {
+          .then((updatedUser) => {
             res.send({
               success: true
             });
             sendResetMail(updatedUser.resetPasswordToken, updatedUser.email, req.headers.host);
-          }, err => {
+          }, (err) => {
             res.status(400).send({
               success: false,
               message: err.message
             });
           });
         }
-      }, err => {
+      }, (err) => {
         res.status(400).send({
           success: false,
           message: err.message
@@ -426,9 +430,9 @@ export default {
 
   /**
    * api controller to reset password
-   * @param {object} req 
-   * @param {object} res
-   * @return {void} 
+   * @param {object} req users information object
+   * @param {object} res servers response
+   * @return {void}
    */
   reset(req, res) {
     return Users
@@ -437,22 +441,20 @@ export default {
         resetPasswordToken: req.params.token
       }
     })
-    .then(user => {
+    .then((user) => {
       if (!user) {
         res.status(400).send({
           success: false,
           message: 'failed token authentication'
         });
       } else {
-        console.log(Date.now());
-        console.log(user.expiryTime);
         if ((Date.now()) > user.expiryTime) {
           user.update({
             resetPasswordToken: null,
             expiryTime: null
           })
           .then(() => {
-            res.status(400).send({success: false});
+            res.status(400).send({ success: false });
           }, err => res.status(400).send(err.message));
         } else {
           if (req.body.newPassword &&
@@ -466,13 +468,13 @@ export default {
               resetPasswordToken: null,
               expiryTime: null
             })
-            .then(updatedUser => {
+            .then((updatedUser) => {
               sendSuccessfulResetMail(updatedUser.email);
               res.status(201).send({
                 success: true,
                 message: 'successfully updated password'
               });
-            }, err => {
+            }, (err) => {
               res.status(400).send({
                 success: false,
                 message: err.message
@@ -486,7 +488,7 @@ export default {
           }
         }
       }
-    }, err => {
+    }, (err) => {
       res.status(400).send({
         success: false,
         message: err.message
@@ -496,9 +498,9 @@ export default {
 
   /**
    * api controller to authenticate token on resetting password
-   * @param {object} req 
-   * @param {object} res
-   * @return {void} 
+   * @param {object} req users information obect
+   * @param {object} res servers response
+   * @return {void}
    */
   authToken(req, res) {
     if (!req.body.token) {
@@ -513,7 +515,7 @@ export default {
           resetPasswordToken: req.body.token
         }
       })
-      .then(user => {
+      .then((user) => {
         if (!user) {
           res.status(400).send({
             success: false,
@@ -525,7 +527,7 @@ export default {
             UserName: user.UserName
           });
         }
-      }, err => {
+      }, (err) => {
         res.status(400).send({
           success: false,
           message: err.message
@@ -533,36 +535,5 @@ export default {
       });
     }
   }
-
-
-/*
-   signin(req, res) {
-    return Users
-    .findOne({
-      where: {
-        UserName: req.body.UserName
-      }
-    })
-    .then((user) => {
-      if (user) {
-        if (!bcrypt.compareSync(req.body.password, user.password)) {
-          res.status(401).json('Invalid Username or Password');
-        } else {
-          return user
-          .update({
-            isLoggedin: true,
-          })
-          .then(res.status(200).send({
-            Username: user.UserName,
-            isLoggedin: user.isLoggedin
-          }));
-        }
-      } else {
-        res.status(401).json('Invalid Credentials');
-      }
-    })
-    .then(user => res.status(201).send(user))
-    .catch(error => res.status(400).send(error));
-   }*/
 
 };
