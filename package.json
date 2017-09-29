@@ -5,7 +5,7 @@
   "main": "/server/server.js",
   "scripts": {
     "start": "./node_modules/.bin/babel-node ./server/app.js",
-    "test": "NODE_ENV=travis sequelize db:migrate && nyc mocha server/test --timeout 10000",
+    "test": "NODE_ENV=travis sequelize db:migrate && NODE_ENV=travis nyc mocha server/test --timeout 20000",
     "test:dev": "NODE_ENV=test sequelize db:migrate && nyc mocha server/test --timeout 10000",
     "build": "babel server -d dist",
     "start:dev": "nodemon --watch server --exec babel-node -- ./server/bin/www",
@@ -115,7 +115,7 @@
     "toastr": "^2.1.2",
     "url-loader": "^0.5.9",
     "uuid": "^3.1.0",
-    "webpack": "^1.13.0",
+    "webpack": "^2.6.1",
     "webpack-dev-middleware": "^1.12.0",
     "webpack-dev-server": "^2.6.1",
     "webpack-hot-middleware": "^2.18.2"
