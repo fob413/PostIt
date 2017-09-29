@@ -25,6 +25,7 @@ module.exports = {
       debug: true
     }),
     new webpack.NoEmitOnErrorsPlugin()
+    // new webpack.NoErrorsPlugin()
   ],
   node: {
     net: 'empty',

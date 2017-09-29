@@ -21,7 +21,7 @@ describe('The Index Reducer ', () => {
       type: SIGN_UP,
       data: {
         UserName: 'funsho',
-        isLoggedin: true,
+        isLoggedIn: true,
         token: 'abcdefghijklmnopqrstuvwxyz',
         email: 'fob1493@gmail.com',
         telephone: '08138498175',
