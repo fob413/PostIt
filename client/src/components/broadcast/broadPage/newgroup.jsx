@@ -1,48 +1,76 @@
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 
+
+/**
+ * @class NewGroup
+ * @extends {React.Component}
+ */
 class NewGroup extends React.Component {
-  constructor(props){
+
+  /**
+   * Creates an instance of NewGroup.
+   * @param {any} props
+   * @memberof NewGroup
+   */
+  constructor(props) {
     super(props);
     this.onCreateGroup = this.onCreateGroup.bind(this);
     this.onCancelCreate = this.onCancelCreate.bind(this);
   }
 
-  onCreateGroup(e) {
-    const {_groupName} = this.refs;
-    e.preventDefault();
-    let groupname = _groupName.value.trim();
-    if(groupname && groupname.length > 0) {
+
+  /**
+   * creates a new group
+   * @param {any} event
+   * @memberof NewGroup
+   * @return {void}
+   */
+  onCreateGroup(event) {
+    const { _groupName } = this.refs;
+    event.preventDefault();
+    const groupname = _groupName.value.trim();
+    if (groupname && groupname.length > 0) {
       this.props.toggleCreateGroup();
       this.props.onCreateGroup(groupname);
       _groupName.value = '';
-    } else {
-      console.log('Group name should not be empty');
     }
-    
   }
 
-  onCancelCreate(e) {
-    const {_groupName} = this.refs;
-    e.preventDefault();
+
+  /**
+   * on terminating create group
+   * @param {any} event
+   * @memberof NewGroup
+   * @return {void}
+   */
+  onCancelCreate(event) {
+    const { _groupName } = this.refs;
+    event.preventDefault();
     this.props.toggleCreateGroup();
     _groupName.value = '';
   }
 
+
+  /**
+   * @memberof NewGroup
+   * @return {void}
+   */
   render() {
-    const {createGroup, toggleCreateGroup} = this.props;
+    const { createGroup, toggleCreateGroup } = this.props;
     return (
       <div className={`row ${createGroup ? 'show' : 'hide'}`}>
         <form className="col s12" onSubmit={this.onCreateGroup}>
           <div className="row">
             <div className="input-field col s12">
-              <input 
+              <input
                 ref="_groupName"
                 className="validate"
                 id="group-name"
                 type="text"
+                autoComplete="off"
               />
               <label
-                htmlFor="group-name" 
+                htmlFor="group-name"
               >
                 Group Name
               </label>
@@ -74,7 +102,7 @@ class NewGroup extends React.Component {
 }
 
 NewGroup.propTypes = {
-  createGroup : PropTypes.bool.isRequired,
+  createGroup: PropTypes.bool.isRequired,
   toggleCreateGroup: PropTypes.func.isRequired,
   onCreateGroup: PropTypes.func.isRequired
 };

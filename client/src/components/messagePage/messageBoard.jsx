@@ -330,20 +330,24 @@ class MessageBoard extends React.Component {
     return (
       <div className="container">
         <div className="row messageBoard">
-          <Link to="/broadpage">
-            <img
-              width="70px"
-              alt="back"
-              src={require('../../image/back.png')}
-              className="click"
-            />
-          </Link>
           <div className="col s12">
             <div className="col s8">
 
               <div>
                 <div className="card-tabs">
                   <ul className="tabs tabs-fixed-width">
+                    <li
+                      className="tab click"
+                    >
+                      <Link to="/broadpage">
+                        <img
+                          width="70px"
+                          alt="back"
+                          src={require('../../image/back.png')}
+                          className="click"
+                        />
+                      </Link>
+                    </li>
                     <li
                       className={this.state.unread ?
                       'tab click underline' :
@@ -442,12 +446,14 @@ class MessageBoard extends React.Component {
             </div>
 
             <div className="col s4">
-              <button
-                onClick={this.openModal}
-                className="waves-effect waves-light btn col s12 green darken-4 modalButton"
-              >
-              Add User
-              </button>
+              <div className="row">
+                <button
+                  onClick={this.openModal}
+                  className="waves-effect waves-light btn col s12 green darken-4 modalButton"
+                >
+                Add User
+                </button>
+              </div>
               <Modal
                 isOpen={this.state.modalIsOpen}
                 onAfterOpen={this.afterOpenModal}
@@ -513,15 +519,15 @@ class MessageBoard extends React.Component {
 
               {this.state.groupUsers && this.state.groupUsers.length > 0 &&
                 <div>
-                  {this.state.groupUsers.map((user, i) => {
-                    return (
-                      <ul className="collection" key={i}>
-                        <li className="collection-item">
-                          {user.User.UserName}
-                        </li>
-                      </ul>
-                    );
-                  })}
+                  <ul className="collection">
+                    {this.state.groupUsers.map((user, i) => {
+                      return (
+                          <li className="collection-item" key={i}>
+                            {user.User.UserName}
+                          </li>
+                      );
+                    })}
+                  </ul>
                 </div>
               }
             </div>

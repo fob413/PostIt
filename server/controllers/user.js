@@ -408,7 +408,7 @@ export default {
             });
           })
           .then((updatedUser) => {
-            res.send({
+            res.status(200).send({
               success: true
             });
             sendResetMail(updatedUser.resetPasswordToken, updatedUser.email, req.headers.host);
