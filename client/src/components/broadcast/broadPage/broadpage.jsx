@@ -72,15 +72,19 @@ class BroadPage extends React.Component {
    * @return {void}
    */
   toggleCreateGroup() {
-    if (this.state.createGroup === true) {
-      this.setState({
-        createGroup: false
-      });
-    } else {
-      this.setState({
-        createGroup: true
-      });
-    }
+    this.setState({
+      createGroup: !this.state.createGroup
+    });
+
+    // if (this.state.createGroup === true) {
+    //   this.setState({
+    //     createGroup: false
+    //   });
+    // } else {
+    //   this.setState({
+    //     createGroup: true
+    //   });
+    // }
   }
 
 
