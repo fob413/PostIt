@@ -17,13 +17,13 @@ module.exports = {
     });
   },
 
-  signup(UserName, email, password, telephone) {
+  signup(userName, email, password, telephone) {
     let token = '';
     chai.request(app)
     .post('/api/user/signup')
     .send(
       {
-        UserName,
+        userName,
         email,
         password,
         telephone
@@ -35,40 +35,36 @@ module.exports = {
     return token;
   },
 
-  signin() {
-    console.log('i am here to signin');
-  },
-
   testUser1: {
-    UserName: 'Bayo',
+    userName: 'Bayo',
     email: 'bayo@yahoo.com',
     password: 'abcdefghij',
     telephone: '08138498175'
   },
 
   testUser2: {
-    UserName: 'funsho',
+    userName: 'funsho',
     email: 'funsho@gmail.com',
     password: 'asdf;lkj',
     telephone: '12345678901'
   },
 
   testUser3: {
-    UserName: 'fob',
+    userName: 'fob',
     email: 'funsho@gmail.com',
     password: 'asdf;lkj',
     telephone: '12345678901'
   },
 
   testUser4: {
-    UserName: 'fob',
+    userName: 'fob',
     email: 'fob@gmail.com',
     password: 'asdf;lkj',
     telephone: '12345678901'
   },
 
   testUser5: {
-    UserName: 'Bayo',
+    userName: 'Bayo',
     email: 'bayo@yahoo.com',
     password: 'asdf;lkj',
     telephone: '08138498175'
@@ -79,7 +75,7 @@ module.exports = {
   },
 
   incompleteUser1: {
-    UserName: 'Bayo',
+    userName: 'Bayo',
     email: 'bayo@yahoo.com'
   }
 };
