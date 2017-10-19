@@ -29,7 +29,7 @@ module.exports = (sequelize, DataTypes) => {
         });
 
         // associations between groups and members
-        Groups.hasMany(models.Members, {
+        Groups.hasMany(models.GroupMembers, {
 
           foreignKey: 'groupId',
 
