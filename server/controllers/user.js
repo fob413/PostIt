@@ -139,65 +139,61 @@ export default {
    */
   signin(req, res) {
     // check for username and password
-    if (req.body.UserName && req.body.password) {
+    if (req.body.userName && req.body.password) {
       return Users
       .findOne({
         where: {
-          UserName: req.body.UserName
+          userName: req.body.userName
         }
       })
       .then((user) => {
+        // if user exists
         if (user) {
-          if (req.body.password) {
-            if (!bcrypt.compareSync(req.body.password, user.password)) {
-              res.status(401).send(invalid);
-            } else {
-              return user
-              .update({
-                isLoggedin: true,
-              })
-              .then(() => {
-                const token = jwt.sign({
-                  UserName: user.UserName,
-                  email: user.email,
-                  telephone: user.telephone,
-                  userId: user.id
-                }, secret);
-                res.status(200).json({
-                  success: true,
-                  UserName: user.UserName,
-                  email: user.email,
-                  isLoggedin: user.isLoggedin,
-                  telephone: user.telephone,
-                  token,
-                  userId: user.id
-                });
-              })
-              .catch((err) => {
-                res.status(400).send({
-                  success: false,
-                  message: err.message
-                });
-              }
-            );
-            }
-          } else {
-            res.status(401).json(invalid);
+          if (!bcrypt.compareSync(req.body.password, user.password)) {
+            // response if passwords don't match
+            return res.status(401).send(invalid);
           }
-        } else {
-          res.status(401).send(invalid);
+          return user
+          .update({
+            isLoggedin: true,
+          })
+          .then(() => {
+            const token = jwt.sign({
+              userName: user.userName,
+              email: user.email,
+              telephone: user.telephone,
+              userId: user.id
+            }, secret);
+            res.status(200).json({
+              success: true,
+              userName: user.userName,
+              email: user.email,
+              isLoggedin: user.isLoggedin,
+              telephone: user.telephone,
+              token,
+              userId: user.id
+            });
+          })
+          .catch((err) => {
+            res.status(400).send({
+              success: false,
+              message: err.message
+            });
+          }
+        );
         }
+        // response for when user isn't found
+        return res.status(401).send(invalid);
       })
       .catch((error) => {
         res.status(400).send(error.message);
       });
-    } else {
-      res.status(400).send({
-        // response for failed signin
-        success: false,
-        message: 'Invalid Credentials'
-      });
     }
+    // response for failed validation
+    return res.status(400).send({
+      success: false,
+      message: 'Invalid Credentials'
+    });
   },
 
   /**
@@ -207,45 +203,33 @@ export default {
    * @return {void}
    */
   signout(req, res) {
-    // authentication. Check and confirm token
-    if (req.header('x-auth')) {
-      const token = req.headers['x-auth'];
-      jwt.verify(token, secret, (err, decoded) => {
-        if (err) {
-          return res.status(403).json({
-            success: false,
-            message: 'failed to authenticate token'
-          });
-        } else {
-          req.decoded = decoded;
-          return Users
-          .findOne({
-            where: {
-              UserName: req.decoded.UserName
-            }
-          })
-          .then((user) => {
-            user.update({
-              isLoggedin: false
-            })
-            .then(res.status(200).send({
-              // response for successful signout
-              success: true,
-              message: 'successfully logged out',
-              isLoggedin: user.isLoggedin
-            }))
-            .catch(err => res.status(400).send(err.message));
-          })
-          .catch(err => res.status(400).send(err.message));
-        }
+    return Users
+    .findOne({
+      where: {
+        userName: req.decoded.userName
+      }
+    })
+    .then((user) => {
+      user.update({
+        isLoggedin: false
+      })
+      .then(res.status(200).send({
+        // response for successful signout
+        success: true,
+        message: 'successfully logged out',
+        isLoggedin: user.isLoggedin
+      }), (err) => {
+        res.status(400).send({
+          success: false,
+          message: err.message
+        });
       });
-    } else {
-      return res.status(403).send({
-        // response for failed authentication
+    }, (err) => {
+      res.status(400).send({
         success: false,
-        message: 'no token provided'
+        message: err.message
       });
-    }
+    });
   },
 
   /**
@@ -255,55 +239,37 @@ export default {
    * @return {void}
    */
   searchUsers(req, res) {
-    if (!req.header('x-auth')) {
-      return res.status(403).send({
+    // validate request object
+    if (!req.body.userName || !req.body.limit) {
+      return res.status(400).send({
         success: false,
-        message: 'no token provided'
+        message: 'no search parameter/limit',
+        users: []
       });
-    } else {
-      if (!req.body.UserName) {
-        return res.status(400).send({
-          success: false,
-          message: 'no search parameter',
-          users: []
-        });
-      } else {
-        const token = req.header('x-auth');
-        jwt.verify(token, secret, (err, decoded) => {
-          if (err) {
-            return res.status(403).send({
-              success: false,
-              message: 'failed to authenticate token'
-            });
-          } else {
-            req.decoded = decoded;
-            return Users
-            .findAndCountAll({
-              offset: req.params.offset * 5,
-              limit: 5,
-              where: {
-                UserName: { $like: `%${req.body.UserName}%` }
-              },
-              attributes: ['id', 'UserName']
-            })
-            .then((users) => {
-              res.status(200).send({
-                success: true,
-                users,
-                data: paginate(users.count, 5, req.params.offset * 5)
-              });
-            }, (err) => {
-              res.status(400).send({
-                success: false,
-                message: 'an error occured searching users',
-                error: err.message,
-                users: []
-              });
-            });
-          }
-        });
-      }
     }
+    return Users
+    .findAndCountAll({
+      offset: req.params.offset * req.body.limit,
+      limit: req.body.limit,
+      where: {
+        userName: { $like: `%${req.body.userName}%` }
+      },
+      attributes: ['id', 'userName']
+    })
+    .then((users) => {
+      res.status(200).send({
+        success: true,
+        users,
+        data: paginate(users.count, req.body.limit, req.params.offset * 5)
+      });
+    }, (err) => {
+      res.status(400).send({
+        success: false,
+        message: 'an error occured searching users',
+        error: err.message,
+        users: []
+      });
+    });
   },
 
   /**
@@ -315,52 +281,51 @@ export default {
   forgot(req, res) {
     // check for email
     if (!req.body.email) {
-      res.status(400).send({
+      return res.status(400).send({
         success: false,
         message: 'No email provided'
       });
-    } else {
-      return Users.findOne({
-        where: {
-          email: req.body.email
-        }
+    }
+    return Users.findOne({
+      where: {
+        email: req.body.email
+      }
+    })
+    .then((user) => {
+      if (!user) {
+        return res.status(400).send({
+          success: false,
+          message: 'user not found'
+        });
+      }
+      const token = crypto.randomBytes(20).toString('hex');
+      user.update({
+        resetPasswordToken: token,
+        expiryTime: Date.now() + 3600000
+      }, (err) => {
+        res.status(400).send({
+          success: false,
+          message: err.message
+        });
       })
-      .then((user) => {
-        if (!user) {
-          res.status(400).send({
-            success: false,
-            message: 'user not found'
-          });
-        } else {
-          const token = crypto.randomBytes(20).toString('hex');
-          user.update({
-            resetPasswordToken: token,
-            expiryTime: Date.now() + 3600000
-          }, (err) => {
-            res.status(400).send({
-              success: false,
-              message: err.message
-            });
-          })
-          .then((updatedUser) => {
-            res.status(200).send({
-              success: true
-            });
-            sendResetMail(updatedUser.resetPasswordToken, updatedUser.email, req.headers.host);
-          }, (err) => {
-            res.status(400).send({
-              success: false,
-              message: err.message
-            });
-          });
-        }
+      .then((updatedUser) => {
+        res.status(200).send({
+          success: true,
+          message: 'reset password link has been sent to your mail'
+        });
+        sendResetMail(updatedUser.resetPasswordToken, updatedUser.email, req.headers.host);
       }, (err) => {
         res.status(400).send({
           success: false,
           message: err.message
         });
       });
-    }
+    }, (err) => {
+      res.status(400).send({
+        success: false,
+        message: err.message
+      });
+    });
   },
 
   /**

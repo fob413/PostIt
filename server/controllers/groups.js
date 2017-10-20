@@ -2,7 +2,7 @@ import db from '../models/index';
 
 const Users = db.Users;
 const Groups = db.Groups;
-const Members = db.Members;
+const GroupMembers = db.GroupMembers;
 const Messages = db.Messages;
 
 export default {
@@ -17,7 +17,7 @@ export default {
     return Users
     .findOne({
       where: {
-        UserName: req.decoded.UserName
+        userName: req.decoded.userName
       }
     })
     .then((user) => {
@@ -28,7 +28,7 @@ export default {
         });
       }
 
-      if (!req.body.GroupName || req.body.GroupName.trim().length < 1) {
+      if (!req.body.groupName || req.body.groupName.trim().length < 1) {
         return res.status(400).send({
           success: false,
           message: 'Input a name for the group'
@@ -37,7 +37,7 @@ export default {
 
       return Groups.findOne({
         where: {
-          GroupName: req.body.GroupName
+          groupName: req.body.groupName
         }
       })
       .then((groupExists) => {
@@ -49,10 +49,10 @@ export default {
         }
 
         Groups.create({
-          GroupName: req.body.GroupName
+          groupName: req.body.groupName
         })
         .then((group) => {
-          Members
+          GroupMembers
           .create({
             userId: user.id,
             groupId: group.id
@@ -85,7 +85,7 @@ export default {
   listGroups(req, res) {
     return Users.findOne({
       where: {
-        UserName: req.decoded.UserName
+        userName: req.decoded.userName
       }
     })
     .then((user) => {
@@ -96,14 +96,14 @@ export default {
         });
       }
 
-      return Members.findAll({
+      return GroupMembers.findAll({
         where: {
           userId: user.id
         },
         include: [
           {
             model: Groups,
-            attributes: ['id', 'GroupName'],
+            attributes: ['id', 'groupName'],
             include: [{
               model: Messages,
               attributes: ['id', 'content', 'authorsName', 'readby']
@@ -112,8 +112,8 @@ export default {
         ]
       })
       .then((members) => {
-        res.send({
-          success: false,
+        res.status(200).send({
+          success: true,
           members
         });
       }, err => res.status(500).send({

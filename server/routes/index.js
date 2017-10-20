@@ -27,7 +27,7 @@ module.exports = (app) => {
   app.post('/api/user/signin', usersController.signin);
 
   // signout a user from the application
-  app.get('/api/user/signout', usersController.signout);
+  app.get('/api/user/signout', auth, usersController.signout);
 
   // forgot password api for the user
   app.post('/api/forgot/password', usersController.forgot);
@@ -39,7 +39,7 @@ module.exports = (app) => {
   app.post('/api/reset/token', usersController.authToken);
 
   // search the users on the platform using pagination
-  app.post('/api/users/list/:offset', usersController.searchUsers);
+  app.post('/api/users/list/:offset', auth, usersController.searchUsers);
 
   // creates a new group on the application
   app.post('/api/group', auth, groupsController.create);

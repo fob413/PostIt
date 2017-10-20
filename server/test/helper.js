@@ -4,12 +4,32 @@ import app from '../app';
 import db from '../models/index';
 
 const user = db.Users;
+const group = db.Groups;
+const groupMember = db.GroupMembers;
 
 chai.use(chaiHttp);
 
 module.exports = {
   clearUserDatabase() {
     user.destroy({
+      where: {},
+      truncate: true,
+      restartIdentity: true,
+      cascade: true
+    });
+  },
+
+  clearGroupDatabase() {
+    group.destroy({
+      where: {},
+      truncate: true,
+      restartIdentity: true,
+      cascade: true
+    });
+  },
+
+  clearGroupMemberDatabase() {
+    groupMember.destroy({
       where: {},
       truncate: true,
       restartIdentity: true,
@@ -72,6 +92,27 @@ module.exports = {
 
   testUser6: {
     email: 'funsho@gmail.com'
+  },
+
+  testUser7: {
+    userName: 'test1',
+    email: 'test1@yahoo.com',
+    password: 'asdf;lkj',
+    telephone: '08138498176'
+  },
+
+  testUser8: {
+    userName: 'test2',
+    email: 'test2@yahoo.com',
+    password: 'asdf;lkj',
+    telephone: '08138498177'
+  },
+
+  testUser9: {
+    userName: 'test3',
+    email: 'test3@yahoo.com',
+    password: 'asdf;lkj',
+    telephone: '08138498178'
   },
 
   incompleteUser1: {

@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 const secret = process.env.SECRET_TOKEN;
 
 export default (req, res, next) => {
-  const token = req.header('x-auth');
+  const token = req.header('token');
   if (token) {
   // verifies secret and checks exp
     jwt.verify(token, secret, (err, decoded) => {

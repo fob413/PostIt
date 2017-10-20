@@ -10,6 +10,9 @@ import {
   testUser4,
   testUser5,
   testUser6,
+  testUser7,
+  testUser8,
+  testUser9,
   incompleteUser1,
   signup
 } from '../helper';
@@ -23,14 +26,38 @@ const expect = chai.expect;
 
 chai.use(chaiHttp);
 clearUserDatabase();
-let token = '';
 // beforeEach((done) => {
 //   clearUserDatabase();
 //   // token = signup('funsho', 'funsho@gmail.com', 'asdf;lkj', '12345678901');
 //   done();
 // });
 
-describe('Signup route POST /api/user/signup', () => [
+let token = '';
+
+describe('Test setup ', () => {
+  before((done) => {
+    clearUserDatabase();
+    done();
+  });
+
+  it('should get token for other tests', (done) => {
+    chai.request(app)
+    .post('/api/user/signup')
+    .send({
+      userName: 'seyi',
+      email: 'seyi@email.com',
+      telephone: '0987654321',
+      password: 'asdf;lkj'
+    })
+    .end((err, res) => {
+      token = res.body.token;
+      res.should.have.status(201);
+      done();
+    });
+  });
+});
+
+describe('Signup route POST /api/user/signup', () => {
   describe('Signup Positive Responses ', () => {
     it('it should return a status of 201 on successful signup', (done) => {
       chai.request(app)
@@ -41,7 +68,7 @@ describe('Signup route POST /api/user/signup', () => [
         done();
       });
     });
-  }),
+  });
 
   describe('Signup Negative Responses ', () => {
     before((done) => {
@@ -109,10 +136,10 @@ describe('Signup route POST /api/user/signup', () => [
         done();
       });
     });
-  })
-]);
+  });
+});
 
-describe('Signin route POST /api/user/signin', () => [
+describe('Signin route POST /api/user/signin', () => {
   describe('Signin Positive Responses ', () => {
     before((done) => {
       signup('funsho', 'funsho@gmail.com', 'asdf;lkj', '12345678901');
@@ -128,12 +155,12 @@ describe('Signin route POST /api/user/signin', () => [
         done();
       });
     });
-  }),
+  });
 
   describe('Siginin Negative Responses ', () => {
     before((done) => {
-      clearUserDatabase();
-      signup('funsho', 'funsho@gmail.com', 'asdf;lkj', '12345678901');
+      // clearUserDatabase();
+      signup('titi', 'titi@gmail.com', 'asdf;lkj', '123456789012');
       done();
     });
 
@@ -147,17 +174,20 @@ describe('Signin route POST /api/user/signin', () => [
       });
     });
 
-    it('it should return a status 400 when user is not found', (done) => {
+    it('it should return a status 401 when user is not found', (done) => {
       chai.request(app)
       .post('/api/user/signin')
-      .send(testUser1)
+      .send({
+        userName: 'McDavid',
+        password: 'asdf;lkj'
+      })
       .end((err, res) => {
         res.should.have.status(401);
         done();
       });
     });
 
-    it('it should return a status 400 when password is wrong', (done) => {
+    it('it should return a status 401 when password is wrong', (done) => {
       chai.request(app)
       .post('/api/user/signin')
       .send(testUser5)
@@ -166,35 +196,106 @@ describe('Signin route POST /api/user/signin', () => [
         done();
       });
     });
-  })
-]);
+  });
+});
 
-describe('Forgot password route POST /api/forgot/password', () => [
-  describe('Forgot password positive responses ', () => {
-    before((done) => {
-      signup('funsho', 'funsho@gmail.com', 'asdf;lkj', '12345678901');
-      done();
-    });
-
-    it('should return status 200', (done) => {
+describe('Signout route, GET /api/user/signout', () => {
+  describe('Signout positive response ', () => {
+    it('should return a status of 200 on successful signout', (done) => {
       chai.request(app)
-      .post('/api/forgot/password')
-      .send(testUser6)
+      .get('/api/user/signout')
+      .set('token', token)
       .end((err, res) => {
         res.should.have.status(200);
         done();
       });
     });
-  }),
-  describe('Forgot password negative responses ', () => {
-    before((done) => {
-      clearUserDatabase();
-      done();
+  });
+
+  describe('Signout negative response ', () => {
+    it('should return a status of 403 when no token is sent', (done) => {
+      chai.request(app)
+      .get('/api/user/signout')
+      .end((err, res) => {
+        res.should.have.status(403);
+        done();
+      });
     });
 
-    it('should return status 400 if no user object is sent', (done) => {
+    it('should return a status of 403 when no token sent is invalid', (done) => {
+      chai.request(app)
+      .get('/api/user/signout')
+      .set('token', 'asdlkfjasl;dfjoiuwajefi;ajsdi;dujas')
+      .end((err, res) => {
+        res.should.have.status(403);
+        done();
+      });
+    });
+
+    it('should return a message when no token sent is invalid', (done) => {
+      chai.request(app)
+      .get('/api/user/signout')
+      .set('token', 'asdlkfjasl;dfjoiuwajefi;ajsdi;dujas')
+      .end((err, res) => {
+        expect(res.body.message).to.equal('failed to authenticate token');
+        done();
+      });
+    });
+  });
+});
+
+describe('Search Users Route /api/users/list/:offset', () => {
+  describe('Search users positive response ', () => {
+    it('should return a status of 200 on successful search', (done) => {
+      chai.request(app)
+      .post('/api/users/list/0')
+      .set('token', token)
+      .send({
+        userName: 't',
+        limit: 5
+      })
+      .end((err, res) => {
+        res.should.have.status(200);
+        done();
+      });
+    });
+  });
+
+  describe('Search users negative response ', () => {
+    it('should return a status of 400 when request object fails validation', (done) => {
+      chai.request(app)
+      .post('/api/users/list/0')
+      .set('token', token)
+      .send()
+      .end((err, res) => {
+        res.should.have.status(400);
+        done();
+      });
+    });
+  });
+});
+
+describe('Forgot password route /api/forgot/password', () => {
+  describe('Forgot password positive response ', () => {
+    it('should return a status of 200', (done) => {
       chai.request(app)
       .post('/api/forgot/password')
+      .set('token', token)
+      .send({
+        email: 'seyi@email.com'
+      })
+      .end((err, res) => {
+        res.should.have.status(200);
+        done();
+      });
+    });
+  });
+
+  describe('Forgot password negative response ', () => {
+    it('it should return a status of 400 when email is not sent', (done) => {
+      chai.request(app)
+      .post('/api/forgot/password')
+      .set('token', token)
       .send()
       .end((err, res) => {
         res.should.have.status(400);
@@ -202,17 +303,65 @@ describe('Forgot password route POST /api/forgot/password', () => [
       });
     });
 
-    it('should return status 400 when no user is not found', (done) => {
+    it('it should return a status of 400 when no users is on the platforom with the email', (done) => {
       chai.request(app)
       .post('/api/forgot/password')
-      .send(testUser1)
+      .set('token', token)
+      .send({
+        email: 'nouseremail@email.com'
+      })
       .end((err, res) => {
         res.should.have.status(400);
         done();
       });
     });
-  })
-]);
+  });
+});
+
+// describe('Forgot password route POST /api/forgot/password', () => [
+//   describe('Forgot password positive responses ', () => {
+//     before((done) => {
+//       signup('funsho', 'funsho@gmail.com', 'asdf;lkj', '12345678901');
+//       done();
+//     });
+
+//     it('should return status 200', (done) => {
+//       chai.request(app)
+//       .post('/api/forgot/password')
+//       .send(testUser6)
+//       .end((err, res) => {
+//         res.should.have.status(200);
+//         done();
+//       });
+//     });
+//   }),
+//   describe('Forgot password negative responses ', () => {
+//     before((done) => {
+//       clearUserDatabase();
+//       done();
+//     });
+
+//     it('should return status 400 if no user object is sent', (done) => {
+//       chai.request(app)
+//       .post('/api/forgot/password')
+//       .send()
+//       .end((err, res) => {
+//         res.should.have.status(400);
+//         done();
+//       });
+//     });
+
+//     it('should return status 400 when no user is not found', (done) => {
+//       chai.request(app)
+//       .post('/api/forgot/password')
+//       .send(testUser1)
+//       .end((err, res) => {
+//         res.should.have.status(400);
+//         done();
+//       });
+//     });
+//   })
+// ]);
 
 // =====================================================================================
 

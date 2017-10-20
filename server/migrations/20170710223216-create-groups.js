@@ -7,7 +7,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      GroupName: {
+      groupName: {
         type: Sequelize.STRING,
         allowNull: false,
         unique: true,
