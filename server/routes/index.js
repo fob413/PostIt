@@ -1,7 +1,7 @@
 import path from 'path';
 import usersController from '../controllers/user';
 import groupsController from '../controllers/groups';
-import membersController from '../controllers/members';
+import groupMembersController from '../controllers/groupMembers';
 import messagesController from '../controllers/messages';
 import auth from '../middleware/authenticate';
 
@@ -45,10 +45,10 @@ module.exports = (app) => {
   app.post('/api/group', auth, groupsController.create);
 
   // add a user to a particular group
-  app.post('/api/group/:groupId/user', auth, membersController.create);
+  app.post('/api/group/:groupId/user', auth, groupMembersController.create);
 
   // list users in a particular group
-  app.get('/api/group/:groupId/user/list', membersController.listGroupUsers);
+  app.get('/api/group/:groupId/user/list', auth, groupMembersController.listGroupUsers);
 
   // logged in users retrieve groups they have been added to
   app.get('/api/group/list', auth, groupsController.listGroups);

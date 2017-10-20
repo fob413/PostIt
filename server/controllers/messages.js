@@ -1,6 +1,6 @@
-import db from '../models/index';
 import jwt from 'jsonwebtoken';
-import { sendMail, sendSMS } from './priority';
+import db from '../models/index';
+import { sendMail } from './priority';
 
 const Users = db.Users;
 const Members = db.Members;
@@ -17,11 +17,11 @@ const secret = process.env.SECRET_TOKEN;
  * @param {number} id current users id
  * @return {boolean} user has either read the message of not
  */
-const hasRead = (message,id) => {
+const hasRead = (message, id) => {
   let read = false;
-  message = message.split(",");
-  message.map(item => {
-    if (item == id){
+  message = message.split(',');
+  message.map((item) => {
+    if (item === id) {
       read = true;
     }
   });
@@ -32,8 +32,8 @@ export default {
 
   /**
    * api route to send a message to a group
-   * @param {object} req 
-   * @param {object} res 
+   * @param {object} req users request object
+   * @param {object} res servers response
    * @return {void}
    */
   sendMessage(req, res) {

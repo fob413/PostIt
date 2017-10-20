@@ -57,7 +57,12 @@ export default {
             userId: user.id,
             groupId: group.id
           })
-          .then(res.status(201).send(group), err => res.status(500).send({
+          .then(res.status(201).send({
+            success: true,
+            message: 'new group created',
+            id: group.id,
+            groupName: group.groupName
+          }), err => res.status(500).send({
             success: false,
             message: err.message
           }));

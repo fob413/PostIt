@@ -21,6 +21,8 @@ let token = '';
 describe('Test setup ', () => {
   before((done) => {
     clearUserDatabase();
+    clearGroupDatabase();
+    clearGroupMemberDatabase();
     done();
   });
 

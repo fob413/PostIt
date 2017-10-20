@@ -1,8 +1,7 @@
 import users from './user';
 import groups from './groups';
-import members from './members';
+import groupMembers from './groupMembers';
 import messages from './messages';
-import clear from './clear';
 
 // const users = require('./user');
 // const groups = require('./groups');
@@ -13,7 +12,6 @@ import clear from './clear';
 module.exports = {
   users,
   groups,
-  members,
-  messages,
-  clear
+  groupMembers,
+  messages
 };
