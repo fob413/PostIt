@@ -61,10 +61,10 @@ export function sendMail(users, message, priorityHeader) {
  * @param {array} users array of users
  * @return {void}
  */
-export function sendSMS(users) {
-  console.log('send an sms');
-  console.log(`critical priority users of ${users}`);
-}
+// export function sendSMS(users) {
+//   console.log('send an sms');
+//   console.log(`critical priority users of ${users}`);
+// }
 
 /**
  * function to send reset password link to users mail

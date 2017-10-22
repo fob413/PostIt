@@ -6,6 +6,7 @@ import db from '../models/index';
 const user = db.Users;
 const group = db.Groups;
 const groupMember = db.GroupMembers;
+const message = db.Messages;
 
 chai.use(chaiHttp);
 
@@ -30,6 +31,15 @@ module.exports = {
 
   clearGroupMemberDatabase() {
     groupMember.destroy({
+      where: {},
+      truncate: true,
+      restartIdentity: true,
+      cascade: true
+    });
+  },
+
+  clearMessagesDatabase() {
+    message.destroy({
       where: {},
       truncate: true,
       restartIdentity: true,
