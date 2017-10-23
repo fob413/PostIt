@@ -31,7 +31,7 @@ export function authenticateUser(token, dispatch) {
   jwt.verify(token, secret, (err, decoded) => {
     if (!err) {
       const data = {
-        UserName: decoded.UserName,
+        userName: decoded.userName,
         email: decoded.email,
         telephone: decoded.telephone,
         userId: decoded.userId

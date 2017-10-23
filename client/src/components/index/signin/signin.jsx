@@ -1,17 +1,25 @@
-import React, {PropTypes} from 'react';
-import {Link, withRouter} from 'react-router-dom';
+import React, { PropTypes } from 'react';
+import swal from 'sweetalert2';
+import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { signUserIn, reloadUserIn } from '../../../actions/authActions';
-import { authenticateUser } from '../../auth';
-import swal from 'sweetalert2';
 
 
-
+/**
+ * @class Signin
+ * @extends {React.Component}
+ */
 class Signin extends React.Component {
+
+  /**
+   * Creates an instance of Signin.
+   * @param {any} props
+   * @memberof Signin
+   */
   constructor(props) {
     super(props);
     this.state = {
-      UserName: '',
+      userName: '',
       password: '',
       isLoggedIn: this.props.auth.isLoggedIn
     };
@@ -20,13 +28,24 @@ class Signin extends React.Component {
     this.handleSignIn = this.handleSignIn.bind(this);
   }
 
+
+  /**
+   * @memberof Signin
+   * @return {void}
+   */
   componentDidMount() {
-    if (this.props.auth.isLoggedIn){
+    if (this.props.auth.isLoggedIn) {
       this.props.history.push('/broadpage');
     }
   }
 
-  componentWillReceiveProps(nextProps){
+
+  /**
+   * @param {any} nextProps
+   * @memberof Signin
+   * @return {void}
+   */
+  componentWillReceiveProps(nextProps) {
     this.setState({
       isLoggedIn: nextProps.auth.isLoggedIn
     });
@@ -35,29 +54,48 @@ class Signin extends React.Component {
     }
   }
 
-  onChange(e){
+
+  /**
+   * @param {any} event
+   * @memberof Signin
+   * @return {void}
+   */
+  onChange(event) {
     this.setState({
-      [e.target.name]: e.target.value
+      [event.target.name]: event.target.value
     });
   }
-  
-  handleSignIn(e){
-    e.preventDefault();
+
+
+  /**
+   * sign in a user function
+   * @param {any} event
+   * @memberof Signin
+   * @return {void}
+   */
+  handleSignIn(event) {
+    event.preventDefault();
     this.props.signUserIn(this.state).then((res) => {
       if (res) {
         this.props.history.push('/broadpage');
       }
-    }, err => {
-      console.log('error from the front end');
+    }, (err) => {
+      swal('Oops', err.message, 'error');
     });
   }
 
+
+  /**
+   * @memberof Signin
+   * @return {void}
+   */
   render() {
     return (
       <div className="container">
         <div className="row center-align">
-          <img width="30%" 
-            src={require("./../../../image/postitD.png")}
+          <img
+            width="30%"
+            src={require("./../../../image/postitD.png")} // eslint-disable-line
             alt="PostIt Logo"
           />
         </div>
@@ -68,7 +106,7 @@ class Signin extends React.Component {
               <div className="row">
                 <div className="input-field col s12 m12">
                   <input
-                    name="UserName"
+                    name="userName"
                     className="validate"
                     type="text"
                     id="userName"
@@ -81,25 +119,30 @@ class Signin extends React.Component {
                   </label>
                 </div>
 
-              <div className="input-field col s12 m12">
-                <input 
-                  name="password"
-                  className="validate"
-                  type="password"
-                  id="password"
-                  data-error="wrong"
-                  data-success="right"
-                  onChange={this.onChange}
-                />
-                <label htmlFor="password">
-                  Password
-                </label>
-              </div>
+                <div className="input-field col s12 m12">
+                  <input
+                    name="password"
+                    className="validate"
+                    type="password"
+                    id="password"
+                    data-error="wrong"
+                    data-success="right"
+                    onChange={this.onChange}
+                  />
+                  <label htmlFor="password">
+                    Password
+                  </label>
+                </div>
 
               </div>
 
               <div>
-                <Link className="green-text text-darken-1" to="/reset/password">Forgot Password?</Link>
+                <Link
+                  className="green-text text-darken-1"
+                  to="/reset/password"
+                >
+                  Forgot Password?
+                </Link>
               </div>
 
               <div className="row center-align">
@@ -127,14 +170,20 @@ class Signin extends React.Component {
   }
 }
 
+Signin.propTypes = {
+  auth: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
+  signUserIn: PropTypes.func.isRequired
+};
+
 const mapStateToProps = state => (
   {
-    auth: state.MyApp
+    auth: state.Auth
   }
 );
 
 
 export default connect(
-  mapStateToProps, 
+  mapStateToProps,
   { signUserIn, reloadUserIn }
 )(withRouter(Signin));

@@ -19,7 +19,7 @@ export function loadGroups() {
   return (dispatch) => {
     axios.get(
       'api/group/list',
-      { headers: { 'x-auth': localStorage.getItem('x-auth') } }
+      { headers: { token: localStorage.getItem('token') } }
     )
     .then(({ data }) => {
       dispatch(loadGroupSuccess(data.members));
@@ -31,14 +31,14 @@ export function loadGroups() {
 
 /**
  * api call to create new group
- * @param {string} GroupName the name for the group to be created
+ * @param {string} groupName the name for the group to be created
  * @return {boolean} the response for when the call was successful or not
  */
-export function createNewGroup(GroupName) {
+export function createNewGroup(groupName) {
   return () => axios.post(
       'api/group',
-      { GroupName },
-      { headers: { 'x-auth': localStorage.getItem('x-auth') } }
+      { groupName },
+      { headers: { token: localStorage.getItem('token') } }
     )
     .then(() => true, (err) => {
       // console.log(err.message);

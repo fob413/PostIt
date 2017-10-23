@@ -1,33 +1,46 @@
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 
+
+/**
+ * @class Profile
+ * @extends {React.Component}
+ */
 class Profile extends React.Component {
+
+  /**
+   * Creates an instance of Profile.
+   * @param {any} props
+   * @memberof Profile
+   */
   constructor(props) {
     super(props);
     this.state = {
-      username: this.props.auth.UserName,
+      username: this.props.auth.userName,
       email: this.props.auth.email,
       telephone: this.props.auth.telephone
     };
   }
 
-  componentWillMount(){
-    // if(localStorage.getItem('x-auth')){
-    //   this.setState({
-    //     username: this.props.auth.UserName,
-    //     email: this.props.auth.email,
-    //     telephone: this.props.auth.telephone
-    //   }); 
-    // } else {
-    //   this.props.history.push('/signin');
-    // }
+
+  /**
+   * @memberof Profile
+   * @return {void}
+   */
+  componentWillMount() {
     (!this.props.auth.isLoggedIn) &&
       this.props.history.push('/signin');
   }
 
+
+  /**
+   * @param {any} nextProps
+   * @memberof Profile
+   * @return {void}
+   */
   componentWillReceiveProps(nextProps) {
     this.setState({
-      username: nextProps.auth.UserName,
+      username: nextProps.auth.userName,
       email: nextProps.auth.email,
       telephone: nextProps.auth.telephone
     });
@@ -35,6 +48,11 @@ class Profile extends React.Component {
       this.props.history.push('/signin');
   }
 
+
+  /**
+   * @memberof Profile
+   * @return {void}
+   */
   render() {
     // console.log(this.state);
     return (
@@ -44,8 +62,8 @@ class Profile extends React.Component {
             <img
               className="circle"
               alt="PostIt Logo"
-              src={require("../../image/name.png")}
-              />
+              src={require("../../image/name.png")} // eslint-disable-line
+            />
             <span>User Name</span>
             <p>{this.state.username}</p>
           </li>
@@ -53,8 +71,8 @@ class Profile extends React.Component {
             <img
               className="circle"
               alt="PostIt Logo"
-              src={require("../../image/mail.png")}
-              />
+              src={require("../../image/mail.png")} // eslint-disable-line
+            />
             <span>Email</span>
             <p>{this.state.email}</p>
           </li>
@@ -62,8 +80,8 @@ class Profile extends React.Component {
             <img
               className="circle"
               alt="PostIt Logo"
-              src={require("../../image/number.png")}
-              />
+              src={require("../../image/number.png")} // eslint-disable-line
+            />
             <span>Phone Number</span>
             <p>{this.state.telephone}</p>
           </li>
@@ -73,9 +91,17 @@ class Profile extends React.Component {
   }
 }
 
+/*
+* Validation of the components properties
+*/
+Profile.propTypes = {
+  auth: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired
+};
+
 const mapStateToProps = state => (
   {
-    auth: state.MyApp
+    auth: state.Auth
   }
 );
 

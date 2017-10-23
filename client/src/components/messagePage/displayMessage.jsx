@@ -12,7 +12,6 @@ class DisplayMessage extends React.Component {
     );
   }
 }
-var mrlo = 3
 
 DisplayMessage.propTypes = {
   content: PropTypes.string.isRequired,

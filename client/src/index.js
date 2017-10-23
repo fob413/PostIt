@@ -17,8 +17,8 @@ const store = createStore(
   )
 );
 
-if (localStorage.getItem('x-auth')) {
-  authenticateUser(localStorage.getItem('x-auth'), store.dispatch);
+if (localStorage.getItem('token')) {
+  authenticateUser(localStorage.getItem('token'), store.dispatch);
 }
 
 ReactDOM.render(

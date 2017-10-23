@@ -17,9 +17,9 @@ const signOutSuccess = data => ({
   data
 });
 
-const reloadUserInSuccess = (UserName, email, telephone, userId) => ({
+const reloadUserInSuccess = (userName, email, telephone, userId) => ({
   type: RELOAD_USER_IN,
-  UserName,
+  userName,
   email,
   telephone,
   userId
@@ -28,13 +28,13 @@ const reloadUserInSuccess = (UserName, email, telephone, userId) => ({
 /**
  * api call to sign up a new user
  * @param {object} user object of users information
- * @return {boolean} returns if the call is successful
+ * @return {boolean} returns if the call is successful or not
  */
 export function signUserUp(user) {
   return dispatch => (
     axios.post('/api/user/signup', user)
   ).then(({ data }) => {
-    localStorage.setItem('x-auth', data.token);
+    localStorage.setItem('token', data.token);
     dispatch(signUpSuccess(data));
     return true;
   }, (err) => {
@@ -51,10 +51,10 @@ export function signUserOut() {
   return dispatch => (
    axios.get(
     'api/user/signout',
-    { headers: { 'x-auth': localStorage.getItem('x-auth') } }
+    { headers: { token: localStorage.getItem('token') } }
   )
   .then(({ data }) => {
-    localStorage.removeItem('x-auth');
+    localStorage.removeItem('token');
     dispatch(signOutSuccess(data));
     return true;
   }, (err) => {
@@ -73,7 +73,7 @@ export function signUserIn(user) {
   return dispatch => (
     axios.post('api/user/signin', user))
     .then(({ data }) => {
-      localStorage.setItem('x-auth', data.token);
+      localStorage.setItem('token', data.token);
       dispatch(signInSuccess(data));
       return true;
     }, (err) => {

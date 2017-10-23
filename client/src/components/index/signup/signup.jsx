@@ -1,15 +1,25 @@
-import React, {PropTypes} from 'react';
-import {Link, withRouter} from 'react-router-dom';
+import React, { PropTypes } from 'react';
+import { Link, withRouter } from 'react-router-dom';
+import swal from 'sweetalert2';
 import { connect } from 'react-redux';
 import { signUserUp } from '../../../actions/authActions';
-import { authenticateUser } from '../../auth';
-import swal from 'sweetalert2'
 
+
+/**
+ * @class SignUp
+ * @extends {React.Component}
+ */
 class SignUp extends React.Component {
+
+  /**
+   * Creates an instance of SignUp.
+   * @param {any} props
+   * @memberof SignUp
+   */
   constructor(props) {
     super(props);
     this.state = {
-      UserName: '',
+      userName: '',
       email: '',
       telephone: '',
       password: '',
@@ -20,32 +30,56 @@ class SignUp extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  componentDidMount () {
-    if (this.props.auth.isLoggedIn){
+
+  /**
+   * @memberof SignUp
+   * @return {void}
+   */
+  componentDidMount() {
+    if (this.props.auth.isLoggedIn) {
       this.props.history.push('/broadpage');
     }
   }
 
+
+  /**
+   * @param {any} nextProps
+   * @memberof SignUp
+   * @return {void}
+   */
   componentWillReceiveProps(nextProps) {
     this.setState({
       isLoggedIn: nextProps.auth.isLoggedIn
     });
-    if (nextProps.auth.isLoggedIn){
+    if (nextProps.auth.isLoggedIn) {
       this.props.history.push('/broadpage');
     }
   }
 
 
-  onChange(e) {
+  /**
+   * change in input field updates state
+   * @param {any} event
+   * @memberof SignUp
+   * @return {void}
+   */
+  onChange(event) {
     this.setState({
-      [e.target.name]: e.target.value
+      [event.target.name]: event.target.value
     });
   }
 
-  handleSubmit(e) {
-    e.preventDefault();
+
+  /**
+   * signup user
+   * @param {any} event
+   * @memberof SignUp
+   * @return {void}
+   */
+  handleSubmit(event) {
+    event.preventDefault();
     if (
-      this.state.UserName &&
+      this.state.userName &&
       this.state.email &&
       this.state.telephone &&
       this.state.password &&
@@ -60,19 +94,23 @@ class SignUp extends React.Component {
       } else {
         swal('Oops...', 'Please input a valid telephone number', 'error');
       }
-      
     } else {
       swal('Oops...', 'Please input a password of at least 8 characters', 'error');
     }
   }
 
 
+  /**
+   * @memberof SignUp
+   * @return {void}
+   */
   render() {
     return (
       <div className="container">
         <div className="row center-align">
-          <img width="30%" 
-            src={require("./../../../image/postitD.png")}
+          <img
+            width="30%"
+            src={require("./../../../image/postitD.png")} // eslint-disable-line
             alt="PostIt Logo"
           />
         </div>
@@ -83,7 +121,7 @@ class SignUp extends React.Component {
               <div className="row">
                 <div className="input-field col s12 m6">
                   <input
-                    name="UserName"
+                    name="userName"
                     className="validate"
                     type="text"
                     id="userName"
@@ -94,7 +132,7 @@ class SignUp extends React.Component {
                   <label htmlFor="userName">
                     Username
                   </label>
-                </div>  
+                </div>
 
                 <div className="input-field col s12 m6">
                   <input
@@ -112,7 +150,7 @@ class SignUp extends React.Component {
                 </div>
 
                 <div className="input-field col s6 m6">
-                  <input 
+                  <input
                     name="telephone"
                     className="validate"
                     type="tel"
@@ -127,20 +165,20 @@ class SignUp extends React.Component {
                 </div>
 
                 <div className="input-field col s6 m6">
-                <input 
-                  name="password"
-                  className="validate"
-                  type="password"
-                  id="password"
-                  data-error="wrong"
-                  data-success="right"
-                  onChange={this.onChange}
-                />
-                <label htmlFor="password">
-                  Password
-                </label>
-              </div>
-              
+                  <input
+                    name="password"
+                    className="validate"
+                    type="password"
+                    id="password"
+                    data-error="wrong"
+                    data-success="right"
+                    onChange={this.onChange}
+                  />
+                  <label htmlFor="password">
+                    Password
+                  </label>
+                </div>
+
               </div>
 
               <div className="row center-align">
@@ -171,13 +209,19 @@ class SignUp extends React.Component {
   }
 }
 
+SignUp.propTypes = {
+  auth: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
+  signUserUp: PropTypes.func.isRequired
+};
+
 const mapStateToProps = state => (
   {
-    auth: state.MyApp
+    auth: state.Auth
   }
 );
 
 export default connect(
-  mapStateToProps, 
+  mapStateToProps,
   { signUserUp }
 )(withRouter(SignUp));

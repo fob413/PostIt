@@ -1,12 +1,22 @@
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { signUserOut } from '../../actions/authActions';
-import { authenticateUser } from '../auth';
 import { unloadGroups } from '../../actions/groupsActions';
 
+
+/**
+ * @class NavBar
+ * @extends {React.Component}
+ */
 class NavBar extends React.Component {
-  constructor(props){
+
+  /**
+   * Creates an instance of NavBar.
+   * @param {any} props
+   * @memberof NavBar
+   */
+  constructor(props) {
     super(props);
     this.state = {
       isAuth: this.props.auth.isLoggedIn
@@ -15,36 +25,27 @@ class NavBar extends React.Component {
     this.onSignOut = this.onSignOut.bind(this);
   }
 
-  componentWillMount(){
-    // if(localStorage.getItem('x-auth')){
-    //   console.log('user logged in');
-    //   this.setState({
-    //     isAuth: true
-    //   });
-    // }
-    // authenticateUser()
-    // .then(status=>{
-    //   this.setState({
-    //     isAuth: true
-    //   });
-    // })
-    // .catch(err=>{
-    //   console.log(err);
-    //   this.setState({
-    //     isAuth: false
-    //   })
-    
-    // });
-  }
 
+  /**
+   * @param {any} nextProps
+   * @memberof NavBar
+   * @return {void}
+   */
   componentWillReceiveProps(nextProps) {
     this.setState({
       isAuth: nextProps.auth.isLoggedIn
     });
-  }  
+  }
 
-  onSignOut(e) {
-    e.preventDefault();
+
+  /**
+   * log the user out of the platform
+   * @param {any} event
+   * @memberof NavBar
+   * @return {void}
+   */
+  onSignOut(event) {
+    event.preventDefault();
     this.props.signUserOut()
     .then((res) => {
       this.props.unloadGroups();
@@ -52,12 +53,17 @@ class NavBar extends React.Component {
         this.setState({
           isAuth: false
         });
-        //this.props.unloadGroups();
+        // this.props.unloadGroups();
         this.props.history.push('/signin');
       }
     });
   }
 
+
+  /**
+   * @memberof NavBar
+   * @return {void}
+   */
   render() {
     const { isAuth } = this.state;
     return (
@@ -65,15 +71,15 @@ class NavBar extends React.Component {
         {isAuth && (
           <nav>
             <div className="nav-wrapper green darken-4">
-           
+
               <Link className="brand-logo center" to="/broadpage">
                 <img
                   width="70px"
                   alt="PostIt Logo"
-                  src={require("../../image/postitL.png")}
+                  src={require("../../image/postitL.png")} // eslint-disable-line
                 />
               </Link>
-            
+
               <ul className="left" id="nav-mobile">
                 <li>
                   <Link to="/profile">
@@ -88,7 +94,7 @@ class NavBar extends React.Component {
 
               <ul className="right" id="nav-mobile">
                 <li>
-                  <i
+                  <i // eslint-disable-line
                     onClick={this.onSignOut}
                     className="material-icons white-text logout hoverable"
                   >
@@ -97,10 +103,10 @@ class NavBar extends React.Component {
                 </li>
               </ul>
             </div>
-          </nav>  
+          </nav>
         )}
       </div>
-    )
+    );
   }
 }
 
@@ -108,13 +114,17 @@ class NavBar extends React.Component {
 * Validation of the components properties
 */
 NavBar.propTypes = {
+  auth: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
+  signUserOut: PropTypes.func.isRequired,
+  unloadGroups: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => (
- {
-    auth: state.MyApp,
+  {
+    auth: state.Auth,
     groups: state.Groups
- }
+  }
 );
 
 export default connect(mapStateToProps, { signUserOut, unloadGroups })(withRouter(NavBar));
