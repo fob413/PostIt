@@ -23,6 +23,7 @@ class SignUp extends React.Component {
       email: '',
       telephone: '',
       password: '',
+      confirmPassword: '',
       isLoggedIn: this.props.auth.isLoggedIn
     };
 
@@ -83,7 +84,8 @@ class SignUp extends React.Component {
       this.state.email &&
       this.state.telephone &&
       this.state.password &&
-      this.state.password.length > 7
+      this.state.password.length > 7 &&
+      this.state.password === this.state.confirmPassword
     ) {
       if (!isNaN(this.state.telephone)) {
         this.props.signUserUp(this.state).then((res) => {
@@ -95,6 +97,9 @@ class SignUp extends React.Component {
         swal('Oops...', 'Please input a valid telephone number', 'error');
       }
     } else {
+      if (!(this.state.password === this.state.confirmPassword)) {
+        swal('Oops...', 'Please confirm your password', 'error');
+      }
       swal('Oops...', 'Please input a password of at least 8 characters', 'error');
     }
   }
@@ -116,10 +121,14 @@ class SignUp extends React.Component {
         </div>
 
         <div className="row">
-          <div className="container col s12">
+          <div className="col s2" />
+          <div className="col s8">
             <form>
               <div className="row">
-                <div className="input-field col s12 m6">
+                <div className="input-field col s12 m12">
+                  <i className="material-icons prefix pink-text text-darken-4">
+                    account_circle
+                  </i>
                   <input
                     name="userName"
                     className="validate"
@@ -134,7 +143,10 @@ class SignUp extends React.Component {
                   </label>
                 </div>
 
-                <div className="input-field col s12 m6">
+                <div className="input-field col s12 m12">
+                  <i className="material-icons prefix pink-text text-darken-4">
+                    email
+                  </i>
                   <input
                     name="email"
                     className="validate"
@@ -149,7 +161,10 @@ class SignUp extends React.Component {
                   </label>
                 </div>
 
-                <div className="input-field col s6 m6">
+                <div className="input-field col s12 m12">
+                  <i className="material-icons prefix pink-text text-darken-4">
+                    contact_phone
+                  </i>
                   <input
                     name="telephone"
                     className="validate"
@@ -164,7 +179,10 @@ class SignUp extends React.Component {
                   </label>
                 </div>
 
-                <div className="input-field col s6 m6">
+                <div className="input-field col s12 m6">
+                  <i className="material-icons prefix pink-text text-darken-4">
+                    lock
+                  </i>
                   <input
                     name="password"
                     className="validate"
@@ -179,11 +197,29 @@ class SignUp extends React.Component {
                   </label>
                 </div>
 
+                <div className="input-field col s12 m6">
+                  <i className="material-icons prefix pink-text text-darken-4">
+                    lock
+                  </i>
+                  <input
+                    name="confirmPassword"
+                    className="validate"
+                    type="password"
+                    id="confirmPassword"
+                    data-error="wrong"
+                    data-success="right"
+                    onChange={this.onChange}
+                  />
+                  <label htmlFor="confirmPassword">
+                    Confirm Password
+                  </label>
+                </div>
+
               </div>
 
               <div className="row center-align">
                 <button
-                  className="btn-large green darken-4 waves effect"
+                  className="btn-large  pink darken-4 waves effect"
                   name="action"
                   onClick={this.handleSubmit}
                 >
@@ -200,7 +236,7 @@ class SignUp extends React.Component {
           <p>
             OR
             <br />
-            <Link className="green-text text-darken-1 signButton" to="SignIn">Sign In</Link>
+            <Link className="pink-text text-darken-4 signButton" to="SignIn">Sign In</Link>
           </p>
         </div>
 

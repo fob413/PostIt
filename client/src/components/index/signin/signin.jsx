@@ -101,10 +101,14 @@ class Signin extends React.Component {
         </div>
 
         <div className="row">
-          <div className="container col s12">
+          <div className="col s2" />
+          <div className="container col s8">
             <form>
               <div className="row">
                 <div className="input-field col s12 m12">
+                  <i className="material-icons prefix pink-text text-darken-4">
+                    account_circle
+                  </i>
                   <input
                     name="userName"
                     className="validate"
@@ -120,6 +124,9 @@ class Signin extends React.Component {
                 </div>
 
                 <div className="input-field col s12 m12">
+                  <i className="material-icons prefix pink-text text-darken-4">
+                    lock
+                  </i>
                   <input
                     name="password"
                     className="validate"
@@ -138,7 +145,7 @@ class Signin extends React.Component {
 
               <div>
                 <Link
-                  className="green-text text-darken-1"
+                  className="pink-text text-darken-4"
                   to="/reset/password"
                 >
                   Forgot Password?
@@ -147,7 +154,7 @@ class Signin extends React.Component {
 
               <div className="row center-align">
                 <button
-                  className="btn-large green darken-4 waves effect"
+                  className="btn-large pink darken-4 waves effect"
                   name="action"
                   onClick={this.handleSignIn}
                 >
@@ -162,7 +169,7 @@ class Signin extends React.Component {
           <p>
             OR
             <br />
-            <Link className="green-text text-darken-1 signButton" to="/">Sign Up</Link>
+            <Link className="pink-text text-darken-4 signButton" to="/">Sign Up</Link>
           </p>
         </div>
       </div>
