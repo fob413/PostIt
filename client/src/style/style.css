@@ -1,10 +1,23 @@
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
+.mainBody {
+  min-height: 82vh !important;
+}
+
 .signButton{
   cursor: pointer;
 }
 
 .logout{
   cursor: pointer;
-  padding-right: 50%;
 }
 
 .center{

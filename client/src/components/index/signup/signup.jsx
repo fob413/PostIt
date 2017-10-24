@@ -37,7 +37,7 @@ class SignUp extends React.Component {
    */
   componentDidMount() {
     if (this.props.auth.isLoggedIn) {
-      this.props.history.push('/broadpage');
+      this.props.history.push('/dashboard');
     }
   }
 
@@ -52,7 +52,7 @@ class SignUp extends React.Component {
       isLoggedIn: nextProps.auth.isLoggedIn
     });
     if (nextProps.auth.isLoggedIn) {
-      this.props.history.push('/broadpage');
+      this.props.history.push('/dashboard');
     }
   }
 
@@ -88,7 +88,7 @@ class SignUp extends React.Component {
       if (!isNaN(this.state.telephone)) {
         this.props.signUserUp(this.state).then((res) => {
           if (res) {
-            this.props.history.push('/broadpage');
+            this.props.history.push('/dashboard');
           }
         });
       } else {

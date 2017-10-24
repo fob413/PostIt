@@ -18,6 +18,7 @@
     "curly": ["error", "multi-line"],
     "no-shadow": ["error", { "allow": ["req", "done", "res", "err"] }],
     "react/forbid-prop-types": 0,
+    "react/no-string-refs": 0,
     "valid-jsdoc": ["error", {
       "requireReturn": true,
       "requireReturnType": true,

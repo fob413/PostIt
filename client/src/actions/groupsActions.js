@@ -35,6 +35,7 @@ export function loadGroups() {
  * @return {boolean} the response for when the call was successful or not
  */
 export function createNewGroup(groupName) {
+  console.log(">>>>>>>");
   return () => axios.post(
       'api/group',
       { groupName },

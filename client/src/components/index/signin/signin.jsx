@@ -35,7 +35,7 @@ class Signin extends React.Component {
    */
   componentDidMount() {
     if (this.props.auth.isLoggedIn) {
-      this.props.history.push('/broadpage');
+      this.props.history.push('/dashboard');
     }
   }
 
@@ -50,7 +50,7 @@ class Signin extends React.Component {
       isLoggedIn: nextProps.auth.isLoggedIn
     });
     if (nextProps.auth.isLoggedIn) {
-      this.props.history.push('/broadpage');
+      this.props.history.push('/dashboard');
     }
   }
 
@@ -77,7 +77,7 @@ class Signin extends React.Component {
     event.preventDefault();
     this.props.signUserIn(this.state).then((res) => {
       if (res) {
-        this.props.history.push('/broadpage');
+        this.props.history.push('/dashboard');
       }
     }, (err) => {
       swal('Oops', err.message, 'error');

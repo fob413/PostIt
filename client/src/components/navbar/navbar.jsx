@@ -69,39 +69,41 @@ class NavBar extends React.Component {
     return (
       <div>
         {isAuth && (
-          <nav>
-            <div className="nav-wrapper green darken-4">
+          <nav className="teal darken-4">
+            <div className="container">
+              <div className="nav-wrapper">
 
-              <Link className="brand-logo center" to="/broadpage">
-                <img
-                  width="70px"
-                  alt="PostIt Logo"
-                  src={require("../../image/postitL.png")} // eslint-disable-line
-                />
-              </Link>
+                <Link className="brand-logo center" to="/dashboard">
+                  <img
+                    width="70px"
+                    alt="PostIt Logo"
+                    src={require("../../image/postitL.png")} // eslint-disable-line
+                  />
+                </Link>
 
-              <ul className="left" id="nav-mobile">
-                <li>
-                  <Link to="/profile">
-                    <i
-                      className="modal-trigger white-text material-icons hoverable logout"
+                <ul className="left" id="nav-mobile">
+                  <li>
+                    <Link to="/profile">
+                      <i
+                        className="white-text material-icons hoverable logout"
+                      >
+                        settings
+                      </i>
+                    </Link>
+                  </li>
+                </ul>
+
+                <ul className="right" id="nav-mobile">
+                  <li>
+                    <i // eslint-disable-line
+                      onClick={this.onSignOut}
+                      className="white-text material-icons hoverable logout"
                     >
-                      settings
+                      exit_to_app
                     </i>
-                  </Link>
-                </li>
-              </ul>
-
-              <ul className="right" id="nav-mobile">
-                <li>
-                  <i // eslint-disable-line
-                    onClick={this.onSignOut}
-                    className="material-icons white-text logout hoverable"
-                  >
-                    exit_to_app
-                  </i>
-                </li>
-              </ul>
+                  </li>
+                </ul>
+              </div>
             </div>
           </nav>
         )}
