@@ -85,7 +85,7 @@ class MessageBoard extends React.Component {
       this.props.loadGroupMessages(this.state.groupId, this.state.userId);
       this.props.loadGroupUsers(this.state.groupId);
     } else {
-      this.props.history.push('/broadpage');
+      this.props.history.push('/dashboard');
     }
   }
 
@@ -125,13 +125,13 @@ class MessageBoard extends React.Component {
 
   /**
    * sends a message to the current group
-   * @param {any} e
+   * @param {any} event
    * @memberof MessageBoard
    * @return {void}
    */
-  onSend(e) {
+  onSend(event) {
+    event.preventDefault();
     const { _message, _priority } = this.refs;
-    e.preventDefault();
     _message.value = _message.value.trim();
     if (_message.value.length > 0) {
       this.props.sendMessage(
@@ -339,7 +339,7 @@ class MessageBoard extends React.Component {
                     <li
                       className="tab click"
                     >
-                      <Link to="/broadpage">
+                      <Link to="/dashboard">
                         <img
                           width="70px"
                           alt="back"
@@ -546,7 +546,7 @@ MessageBoard.propTypes = {
 
 const mapStateToProps = state => (
   {
-    auth: state.MyApp,
+    auth: state.Auth,
     Messages: state.Messages
   }
 );

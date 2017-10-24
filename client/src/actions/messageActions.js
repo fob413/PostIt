@@ -157,7 +157,7 @@ export function sendMessage(message, groupId, priority) {
     return axios.post(
       `api/group/${groupId}/message`,
       { content: message, priority },
-      { headers: { 'x-auth': localStorage.getItem('x-auth') } }
+      { headers: { token: localStorage.getItem('token') } }
     )
     .then(({ data }) => {
       return true;
@@ -171,7 +171,7 @@ export function loadGroupMessages(groupId, userId) {
   return dispatch => {
     axios.get(
       `api/group/${groupId}/messages`,
-      { headers: { 'x-auth': localStorage.getItem('x-auth') } }
+      { headers: { token: localStorage.getItem('token') } }
     )
     .then(({ data }) => {
       dispatch(loadGroupMessagesSuccess(data));
@@ -188,8 +188,8 @@ export function loadGroupMessages(groupId, userId) {
 export function loadPlatformUsers() {
   return dispatch => {
     axios.get(
-      `api/users/list`,
-      {headers: {'x-auth': localStorage.getItem('x-auth')}}
+      'api/users/list',
+      { headers: { token: localStorage.getItem('token') } }
     )
     .then(({ data }) => {
       dispatch(loadPlatformUsersSuccess(data));
@@ -197,12 +197,12 @@ export function loadPlatformUsers() {
   };
 }
 
-export function searchUsers(offset, UserName) {
+export function searchUsers(offset, userName) {
   return dispatch => {
     return axios.post(
       `api/users/list/${offset}`,
-      {UserName},
-      {headers: {'x-auth': localStorage.getItem('x-auth')}}
+      { userName, limit: 5 },
+      { headers: { token: localStorage.getItem('token') } }
     )
     .then(({ data }) => {
       if (data.users.rows.length < 1) Materialize.toast('No user found', 4000, 'red');
@@ -220,7 +220,7 @@ export function loadGroupUsers(groupId) {
   return dispatch => {
     axios.get(
       `api/group/${groupId}/user/list`,
-      { headers: { 'x-auth': localStorage.getItem('x-auth') } }
+      { headers: { token: localStorage.getItem('token') } }
     )
     .then(({ data }) => {
       dispatch(loadGroupUsersSuccess(data));
@@ -233,7 +233,7 @@ export function addUserToGroup(userId, groupId) {
     return axios.post(
       `api/group/${groupId}/user`,
       { userId },
-      { headers: { 'x-auth': localStorage.getItem('x-auth') } }
+      { headers: { token: localStorage.getItem('token') } }
     )
     .then(({ data }) => {
       swal('Successfully Added To Group');
@@ -248,7 +248,7 @@ export function readMessages(groupId) {
     axios.post(
       `api/group/${groupId}/messages/read`,
       {},
-      { headers: { 'x-auth': localStorage.getItem('x-auth') } }
+      { headers: { token: localStorage.getItem('token') } }
     )
     .then(({ data }) => {
       return;
