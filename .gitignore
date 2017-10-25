@@ -5,3 +5,4 @@ client/dist/js
 .nyc_output
 npm-debug.log
 .DS_Store
+coverage

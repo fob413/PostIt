@@ -12,6 +12,14 @@ main {
   min-height: 82vh !important;
 }
 
+.profileBody {
+  min-height: 64vh;
+}
+
+.logo{
+  padding-top: 10vh;
+}
+
 .signButton{
   cursor: pointer;
 }
@@ -46,6 +54,7 @@ main {
 
 .messageBoard{
   margin-top: 5%;
+  min-height: 75vh;
 }
 
 .sendMessage {

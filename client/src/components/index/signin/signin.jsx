@@ -95,7 +95,7 @@ class Signin extends React.Component {
         <div className="row center-align">
           <img
             width="30%"
-            src={require("./../../../image/postitD.png")} // eslint-disable-line
+            src="https://github.com/fob413/PostIt/blob/chore/feedback/client/src/image/postItLogo.png?raw=true"
             alt="PostIt Logo"
           />
         </div>

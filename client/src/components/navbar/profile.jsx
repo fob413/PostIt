@@ -56,13 +56,13 @@ class Profile extends React.Component {
   render() {
     // console.log(this.state);
     return (
-      <div className="container profile">
+      <div className="container profile profileBody">
         <ul className="collection">
           <li className="collection-item avatar">
             <img
               className="circle"
               alt="PostIt Logo"
-              src={require("../../image/name.png")} // eslint-disable-line
+              src="https://github.com/fob413/PostIt/blob/chore/feedback/client/src/image/nameNew.png?raw=true"
             />
             <span>User Name</span>
             <p>{this.state.username}</p>
@@ -71,7 +71,7 @@ class Profile extends React.Component {
             <img
               className="circle"
               alt="PostIt Logo"
-              src={require("../../image/mail.png")} // eslint-disable-line
+              src="https://github.com/fob413/PostIt/blob/chore/feedback/client/src/image/mailNew.png?raw=true"
             />
             <span>Email</span>
             <p>{this.state.email}</p>
@@ -80,7 +80,7 @@ class Profile extends React.Component {
             <img
               className="circle"
               alt="PostIt Logo"
-              src={require("../../image/number.png")} // eslint-disable-line
+              src="https://github.com/fob413/PostIt/blob/chore/feedback/client/src/image/phoneNew.png?raw=true"
             />
             <span>Phone Number</span>
             <p>{this.state.telephone}</p>

@@ -40,15 +40,17 @@ class SearchGroups extends React.Component {
   render() {
     return (
       <div className="row">
-        <div className="input-field">
-          <i className="material-icons prefix">search</i>
-          <input
-            ref="_searchValue"
-            id="icon_prefix"
-            type="text"
-            onChange={this.searchGroups}
-          />
-          <label htmlFor="icon_prefix align-left">Search Groups</label>
+        <div className="col s12">
+          <div className="input-field">
+            <i className="material-icons prefix">search</i>
+            <input
+              ref="_searchValue"
+              id="icon_prefix"
+              type="text"
+              onChange={this.searchGroups}
+            />
+            <label htmlFor="icon_prefix align-left">Search Groups</label>
+          </div>
         </div>
       </div>
     );

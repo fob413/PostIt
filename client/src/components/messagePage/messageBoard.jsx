@@ -150,12 +150,12 @@ class MessageBoard extends React.Component {
   }
 
   /**
-   * @param {any} e
+   * @param {any} event
    * @memberof MessageBoard
    * @return {void}
    */
-  openThisModal(e) {
-    e.preventDefault();
+  openThisModal(event) {
+    event.preventDefault();
     swal('Hello world');
   }
 
@@ -206,16 +206,16 @@ class MessageBoard extends React.Component {
 
   /**
    * load previous page of users
-   * @param {any} e
+   * @param {any} event
    * @memberof MessageBoard
    * @return {void}
    */
-  prevPage(e) {
-    e.preventDefault();
+  prevPage(event) {
+    event.preventDefault();
     const { _user } = this.refs;
     if (this.state.offset > 0) {
       this.props.searchUsers(this.state.offset - 1, _user.value);
-      let num = this.state.offset;
+      const num = this.state.offset;
       this.setState({
         offset: num - 1
       });
@@ -224,15 +224,15 @@ class MessageBoard extends React.Component {
 
   /**
    * load next page of users
-   * @param {any} e
+   * @param {any} event
    * @memberof MessageBoard
    * @return {void}
    */
-  nextPage(e) {
-    e.preventDefault();
+  nextPage(event) {
+    event.preventDefault();
     const { _user } = this.refs;
     this.props.searchUsers(this.state.offset + 1, _user.value);
-    let num = this.state.offset;
+    const num = this.state.offset;
     this.setState({
       offset: num + 1
     });
@@ -343,7 +343,7 @@ class MessageBoard extends React.Component {
                         <img
                           width="70px"
                           alt="back"
-                          src={require('../../image/back.png')}
+                          src={require('../../image/back.png')} // eslint-disable-line
                           className="click"
                         />
                       </Link>

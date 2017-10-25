@@ -9,7 +9,7 @@ import { signUserUp } from '../../../actions/authActions';
  * @class SignUp
  * @extends {React.Component}
  */
-class SignUp extends React.Component {
+export class SignUp extends React.Component {
 
   /**
    * Creates an instance of SignUp.
@@ -85,6 +85,7 @@ class SignUp extends React.Component {
       this.state.telephone &&
       this.state.password &&
       this.state.password.length > 7 &&
+      this.state.confirmPassword.length &&
       this.state.password === this.state.confirmPassword
     ) {
       if (!isNaN(this.state.telephone)) {
@@ -97,7 +98,7 @@ class SignUp extends React.Component {
         swal('Oops...', 'Please input a valid telephone number', 'error');
       }
     } else {
-      if (!(this.state.password === this.state.confirmPassword)) {
+      if ((this.state.password === this.state.confirmPassword) !== true) {
         swal('Oops...', 'Please confirm your password', 'error');
       }
       swal('Oops...', 'Please input a password of at least 8 characters', 'error');
@@ -115,7 +116,7 @@ class SignUp extends React.Component {
         <div className="row center-align">
           <img
             width="30%"
-            src={require("./../../../image/postitD.png")} // eslint-disable-line
+            src="https://github.com/fob413/PostIt/blob/chore/feedback/client/src/image/postItLogo.png?raw=true"
             alt="PostIt Logo"
           />
         </div>
