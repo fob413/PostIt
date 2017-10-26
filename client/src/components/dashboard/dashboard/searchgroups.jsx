@@ -16,10 +16,23 @@ class SearchGroups extends React.Component {
     super(props);
 
     this.state = {
-      search: ''
+      search: '',
+      showSearchGroups: this.props.showSearchGroups
     };
 
     this.searchGroups = this.searchGroups.bind(this);
+  }
+
+
+  /**
+   * @param {any} nextProps
+   * @memberof SearchGroups
+   * @return {void}
+   */
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      showSearchGroups: nextProps.showSearchGroups
+    });
   }
 
 
@@ -29,8 +42,8 @@ class SearchGroups extends React.Component {
    * @return {void}
    */
   searchGroups() {
-    const { _searchValue } = this.refs;
-    this.props.onSearchGroups(_searchValue.value);
+    const { searchValue } = this.refs;
+    this.props.onSearchGroups(searchValue.value);
   }
 
   /**
@@ -39,12 +52,13 @@ class SearchGroups extends React.Component {
    */
   render() {
     return (
+      this.state.showSearchGroups &&
       <div className="row">
         <div className="col s12">
           <div className="input-field">
             <i className="material-icons prefix">search</i>
             <input
-              ref="_searchValue"
+              ref="searchValue"
               id="icon_prefix"
               type="text"
               onChange={this.searchGroups}

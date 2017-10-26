@@ -13,18 +13,12 @@ const mailPassword = process.env.EMAIL_PASSWORD;
  * @return {void}
  */
 export function sendMail(users, message, priorityHeader) {
-  console.log('send the mail');
-  console.log(`the following users ${users}`);
-
   // get email of the users
   let receivers = '';
 
   users.forEach((user) => {
     receivers += `${user.User.email},`;
   });
-  console.log('before receivers');
-  console.log(receivers);
-  console.log('after receivers');
 
   // create reusable transporter object using the default SMTP transport
   const transporter = nodemailer.createTransport({
@@ -50,9 +44,9 @@ export function sendMail(users, message, priorityHeader) {
   // send mail with defined transport object
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
-      return console.log(error);
+      return error;
     }
-    console.log(`Message ${info.messageId} send: ${info.response}`);
+    console.log(`${info.messageId} send: ${info.response}`);
   });
 }
 
@@ -74,9 +68,6 @@ export function sendMail(users, message, priorityHeader) {
  * @return {void}
  */
 export function sendResetMail(token, email, host) {
-  console.log('>>>>>>>>>>>>>>>>>>>>>reset mail is being sent right now');
-  console.log('>>>>>>>>>>>>>>>>>>>>>', postitMail);
-  console.log('>>>>>>>>>>>>>>>>>>>>>', mailPassword);
 
   // create reusable transporter object using the default SMTP transport
   const transporter = nodemailer.createTransport({
@@ -107,7 +98,7 @@ export function sendResetMail(token, email, host) {
   // send mail with defined transport object
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
-      return console.log(error);
+      return error;
     }
     console.log(`Message ${info.messageId} send: ${info.response}`);
   });
@@ -140,7 +131,7 @@ export function sendSuccessfulResetMail(email) {
   // send mail with defined transport object
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
-      return console.log(error);
+      return error;
     }
     console.log(`Message ${info.messageId} send: ${info.response}`);
   });

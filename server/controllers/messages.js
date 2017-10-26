@@ -1,4 +1,3 @@
-import jwt from 'jsonwebtoken';
 import db from '../models/index';
 import { sendMail } from './priority';
 
@@ -6,22 +5,18 @@ const Users = db.Users;
 const GroupMembers = db.GroupMembers;
 const Message = db.Messages;
 const Groups = db.Groups;
-const secret = process.env.SECRET_TOKEN;
-
-// const message = require('../models').Messages;
-// const Users = require('../models/').Users;
 
 /**
  * checks if a user has read a message
  * @param {array} message array of users that have read the message
  * @param {number} id current users id
- * @return {boolean} user has either read the message of not
+ * @return {boolean} user has either read the message or not
  */
 const hasRead = (message, id) => {
   let read = false;
   message = message.split(',');
   message.map((item) => {
-    if (item === id) {
+    if (item == id) { // eslint-disable-line
       read = true;
     }
   });
@@ -99,10 +94,10 @@ export default {
                   }
                 ]
               }).then((users) => {
-                if (req.body.priority === 'urgent') {
+                if (req.body.priority === 'URGENT') {
                   sendMail(users, messages.content, req.body.priority);
                 }
-                if (req.body.priority === 'critical') {
+                if (req.body.priority === 'CRITICAL') {
                   sendMail(users, messages.content, req.body.priority);
                   // sendSMS(users, messages.content);
                 }

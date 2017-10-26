@@ -84,6 +84,7 @@ class MessageBoard extends React.Component {
     if (this.state.groupId) {
       this.props.loadGroupMessages(this.state.groupId, this.state.userId);
       this.props.loadGroupUsers(this.state.groupId);
+      this.props.readMessages(this.state.groupId);
     } else {
       this.props.history.push('/dashboard');
     }
@@ -120,7 +121,7 @@ class MessageBoard extends React.Component {
    * @return {void}
    */
   componentWillUnmount() {
-    this.props.readMessages(this.state.groupId);
+    // this.props.readMessages(this.state.groupId);
   }
 
   /**
@@ -340,12 +341,18 @@ class MessageBoard extends React.Component {
                       className="tab click"
                     >
                       <Link to="/dashboard">
-                        <img
+                        {/* {<img
                           width="70px"
                           alt="back"
                           src={require('../../image/back.png')} // eslint-disable-line
                           className="click"
-                        />
+                        />} */}
+                        <a className="waves-effect waves-light btn teal darken-2 white-text">
+                          <i className="material-icons right white-text">
+                            backspace
+                          </i>
+                          Back
+                        </a>
                       </Link>
                     </li>
                     <li
@@ -383,7 +390,7 @@ class MessageBoard extends React.Component {
                                 </div>
                               );
                             })}
-                          </ul>:
+                          </ul> :
                           <div className="center-align">No new message</div>
                       }
                     </div> :
@@ -435,7 +442,7 @@ class MessageBoard extends React.Component {
 
                   <div className="right">
                     <button
-                      className="btn-large green darken-4 waves effect"
+                      className="btn pink darken-4 waves effect"
                     >
                       SEND
                     </button>
@@ -449,7 +456,7 @@ class MessageBoard extends React.Component {
               <div className="row">
                 <button
                   onClick={this.openModal}
-                  className="waves-effect waves-light btn col s12 green darken-4 modalButton"
+                  className="waves-effect waves-light btn col s12 teal darken-2 modalButton"
                 >
                 Add User
                 </button>
@@ -523,7 +530,7 @@ class MessageBoard extends React.Component {
                     {this.state.groupUsers.map((user, i) => {
                       return (
                           <li className="collection-item" key={i}>
-                            {user.User.UserName}
+                            {user.User.userName}
                           </li>
                       );
                     })}
@@ -541,7 +548,12 @@ class MessageBoard extends React.Component {
 MessageBoard.propTypes = {
   sendMessage: PropTypes.func.isRequired,
   loadGroupMessages: PropTypes.func.isRequired,
-  loadGroupUsers: PropTypes.func.isRequired
+  loadGroupUsers: PropTypes.func.isRequired,
+  Messages: PropTypes.object.isRequired,
+  auth: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
+  readMessages: PropTypes.func.isRequired,
+  searchUsers: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => (

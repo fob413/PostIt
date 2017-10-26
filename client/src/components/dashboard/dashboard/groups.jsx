@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react';
 import Group from './group';
-import SearchGroups from './searchgroups';
 
 
 /**
@@ -18,10 +17,8 @@ class Groups extends React.Component {
     super(props);
     this.state = {
       groups: this.props.groups,
-      search: ''
+      search: this.props.search
     };
-
-    this.onSearchGroups = this.onSearchGroups.bind(this);
   }
 
 
@@ -32,20 +29,8 @@ class Groups extends React.Component {
    */
   componentWillReceiveProps(nextProps) {
     this.setState({
-      groups: nextProps.groups
-    });
-  }
-
-
-  /**
-   * filter the arrar of groups
-   * @param {any} search
-   * @memberof Groups
-   * @return {void}
-   */
-  onSearchGroups(search) {
-    this.setState({
-      search
+      groups: nextProps.groups,
+      search: nextProps.search
     });
   }
 
@@ -56,27 +41,28 @@ class Groups extends React.Component {
    */
   render() {
     return (
-      <div>
-        <SearchGroups onSearchGroups={this.onSearchGroups} />
-        {(this.state.groups.length > 0) ?
-          <div className="row">
-            {this.state.groups.filter(item =>
+      <div className="row groupsBody">
+        <div className="col s12">
+          {(this.state.groups.length > 0) ?
+            <div className="row">
+              {this.state.groups.filter(item =>
               item.Group.groupName
               .toLowerCase()
               .startsWith(this.state.search.toLowerCase())
             )
-            .map((group, i) => {
-              return (
-                <div key={i} >
-                  <Group showGroup={group.Group} groups={this.state.groups} />
-                </div>
-              );
-            })}
-          </div> :
-          <div className="center-align">
-            <h4>CREATE YOUR FIRST GROUP</h4>
-          </div>
-        }
+              .map((group, i) => {
+                return (
+                  <div key={i} >
+                    <Group showGroup={group.Group} groups={this.state.groups} />
+                  </div>
+                );
+              })}
+            </div> :
+            <div className="center-align">
+              <h4>CREATE YOUR FIRST GROUP</h4>
+            </div>
+          }
+        </div>
       </div>
     );
   }
@@ -86,7 +72,8 @@ class Groups extends React.Component {
 * Validation of the components properties
 */
 Groups.propTypes = {
-  groups: PropTypes.array.isRequired
+  groups: PropTypes.array.isRequired,
+  search: PropTypes.string.isRequired
 };
 
 export default Groups;

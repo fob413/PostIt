@@ -25,12 +25,12 @@ class PlatformUsers extends React.Component {
 
 
   /**
-   * @param {any} e
+   * @param {any} event
    * @memberof PlatformUsers
    * @return {void}
    */
-  addUser(e) {
-    e.preventDefault();
+  addUser(event) {
+    event.preventDefault();
     this.props.addUserToGroup(
       this.props.platformUser.id,
       this.props.Messages.groupId
@@ -48,7 +48,7 @@ class PlatformUsers extends React.Component {
       <li
         className="collection-item click"
       >
-        {this.props.platformUser.UserName}
+        {this.props.platformUser.userName}
         <a href="#!" className="secondary-content">
           <i onClick={this.addUser} className="material-icons green-text text-darken-4">
             add
@@ -58,6 +58,13 @@ class PlatformUsers extends React.Component {
     );
   }
 }
+
+PlatformUsers.propTypes = {
+  // platformUser: PropsTypes.object.isRequired,
+  // addUserToGroup: PropsTypes.func.isRequired,
+  // Messages: PropsTypes.object.isRequired,
+  // loadGroupUsers: PropsTypes.func.isRequired
+};
 
 const mapStateToProps = state => ({
   Messages: state.Messages

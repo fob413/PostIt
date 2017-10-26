@@ -2,9 +2,9 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { loadGroups, createNewGroup } from '../../../actions/groupsActions';
 import { reloadUserIn } from '../../../actions/authActions';
-import CreateGroup from './creategroup';
 import Groups from './groups';
 import NewGroup from './newgroup';
+import SearchGroups from './searchgroups';
 
 
 /**
@@ -22,11 +22,15 @@ class DashBoard extends React.Component {
     super(props);
     this.state = {
       createGroup: false,
+      showSearchGroups: false,
       groups: this.props.groups,
-      isLoggedIn: this.props.auth.isLoggedIn
+      isLoggedIn: this.props.auth.isLoggedIn,
+      search: ''
     };
     this.toggleCreateGroup = this.toggleCreateGroup.bind(this);
     this.onCreateGroup = this.onCreateGroup.bind(this);
+    this.onSearchGroups = this.onSearchGroups.bind(this);
+    this.toggleSearchGroups = this.toggleSearchGroups.bind(this);
   }
 
 
@@ -66,15 +70,54 @@ class DashBoard extends React.Component {
   }
 
   /**
+   * filter the arrar of groups
+   * @param {any} search
+   * @memberof Groups
+   * @return {void}
+   */
+  onSearchGroups(search) {
+    this.setState({
+      search
+    });
+  }
+
+  /**
    * toggle state that handles condition
    * rendering or creating a group
    * @memberof DashBoard
    * @return {void}
    */
   toggleCreateGroup() {
-    this.setState({
-      createGroup: !this.state.createGroup
-    });
+    if (this.state.showSearchGroups) {
+      this.setState({
+        createGroup: !this.state.createGroup,
+        showSearchGroups: !this.state.showSearchGroups
+      });
+    } else if (!this.state.showSearchGroups) {
+      this.setState({
+        createGroup: !this.state.createGroup
+      });
+    }
+  }
+
+
+  /**
+   * toggle state that handles conditional
+   * rendering of searchGroups component
+   * @memberof DashBoard
+   * @return {void}
+   */
+  toggleSearchGroups() {
+    if (this.state.createGroup) {
+      this.setState({
+        showSearchGroups: !this.state.showSearchGroups,
+        createGroup: !this.state.createGroup
+      });
+    } else if (!this.state.createGroup) {
+      this.setState({
+        showSearchGroups: !this.state.showSearchGroups
+      });
+    }
   }
 
 
@@ -85,13 +128,34 @@ class DashBoard extends React.Component {
   render() {
     return (
       <div className="container mainBody">
-        <CreateGroup toggleCreateGroup={this.toggleCreateGroup} />
+        <a
+          className="waves-effect waves-light btn-large right cyan darken-4 dashButtons"
+          onClick={this.toggleSearchGroups}
+        >
+          <i className="material-icons right">
+            search
+          </i>
+          Search Groups
+        </a>
+        <a
+          className="waves-effect waves-light btn-large right cyan darken-4"
+          onClick={this.toggleCreateGroup}
+        >
+          <i className="material-icons right">
+            group_add
+          </i>
+          Create Group
+        </a>
+        <SearchGroups
+          onSearchGroups={this.onSearchGroups}
+          showSearchGroups={this.state.showSearchGroups}
+        />
         <NewGroup
           toggleCreateGroup={this.toggleCreateGroup}
           createGroup={this.state.createGroup}
           onCreateGroup={this.onCreateGroup}
         />
-        <Groups groups={this.state.groups} />
+        <Groups groups={this.state.groups} search={this.state.search} />
       </div>
     );
   }
