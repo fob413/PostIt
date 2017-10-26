@@ -110,7 +110,7 @@ class MessageBoard extends React.Component {
     });
     this.props.readMessages(this.state.groupId);
     if (!nextProps.auth.isLoggedIn) {
-      this.props.history.push('/broadpage');
+      this.props.history.push('/dashboard');
     }
   }
 
