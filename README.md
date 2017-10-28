@@ -4,7 +4,7 @@
 
 [![Build Status](https://travis-ci.org/fob413/PostIt.svg?branch=newDatabaseBadge)](https://travis-ci.org/fob413/PostIt)
 [![Code Climate](https://codeclimate.com/github/codeclimate/codeclimate/badges/gpa.svg)](https://codeclimate.com/github/fob413/PostIt)
-[![Coverage Status](https://coveralls.io/repos/github/fob413/PostIt/badge.svg?branch=feedback)](https://coveralls.io/github/fob413/PostIt?branch=feedback)
+[![Coverage Status](https://coveralls.io/repos/github/fob413/PostIt/badge.svg?branch=chore%2Ffeedback)](https://coveralls.io/github/fob413/PostIt?branch=chore%2Ffeedback)
 =======
 
 PostIt is a simple application that allows friends and colleagues create groups for notifications. The application allows people create accounts, creat groups, add registered users to the group and then send messages out to these groups whenever they want.
@@ -31,6 +31,11 @@ PostIt is a simple application that allows friends and colleagues create groups 
 - Migrate to database `sequelize db:migrate`
 - To start the application, run `npm start`
 
+## System Dependencies
+- Node
+- Postgres
+- Npm
+
 ## Built With
 ### Front End
 - React
@@ -44,22 +49,33 @@ PostIt is a simple application that allows friends and colleagues create groups 
 - Postgres
 
 ## Tests
-Tests were run with Mocha and Chai on all functions and Api routes
-### Run Tests
-- After Installation of the application, run `npm test`
+Tests were run with Mocha and Chai on all functions and Api routes for the back end and Jest for the front end. To run the tests after the installation of the application:
+- For the back end, run `npm test`
+- For the front end, run `npm run test:client`
 
 ## Api Documentation
 The Documentation for the API can be found [here.](https://jsapi.apiary.io/previews/postitcp/reference)
 
+## Frequently Asked Questions
+Find the frequently asked questions [here.](https://github.com/fob413/PostIt/wiki/Frequently-Asked-Questions)
+
 ## Template Images
-![Cover Image1](https://github.com/fob413/PostIt/blob/feedback/template/image/cover1.jpg)
-![Cover Image2](https://github.com/fob413/PostIt/blob/feedback/template/image/cover2.jpg)
-![Cover Image3](https://github.com/fob413/PostIt/blob/feedback/template/image/cover3.jpg)
-![Sign Up](https://github.com/fob413/PostIt/blob/newDatabaseBadge/template/image/Tsignup.png)
-![Sign In](https://github.com/fob413/PostIt/blob/newDatabaseBadge/template/image/Tsignin.png)
-![Message Board](https://github.com/fob413/PostIt/blob/newDatabaseBadge/template/image/Tmessageboard.png)
-![Create Group](https://github.com/fob413/PostIt/blob/newDatabaseBadge/template/image/Tcreategroup.png)
-![Post Message](https://github.com/fob413/PostIt/blob/newDatabaseBadge/template/image/Tpostmessage.png)
+![Cover Image1](https://github.com/fob413/PostIt/blob/chore/feedback/template/image/cover1.jpg?raw=true)
+![Cover Image2](https://github.com/fob413/PostIt/blob/chore/feedback/template/image/cover2.jpg?raw=true)
+![Cover Image3](https://github.com/fob413/PostIt/blob/chore/feedback/template/image/cover3.jpg?raw=true)
+![Sign Up](https://github.com/fob413/PostIt/blob/chore/feedback/template/image/Tsignin.png?raw=true)
+![Sign In](https://github.com/fob413/PostIt/blob/chore/feedback/template/image/Tsignup.png?raw=true)
+![Dashboard Board](https://github.com/fob413/PostIt/blob/chore/feedback/template/image/dashboard.png?raw=true)
+![Message Board](https://github.com/fob413/PostIt/blob/chore/feedback/template/image/messageBoard.png?raw=true)
+
+## Limitations
+- Users don't get an invitation request when being added to a group
+- Users cannot leave a group that they have been added to
+- Users cannot send files to group
+- Users cannot delete messages that have already been sent to a group
+
+## Contributing
+Feel free to dive in. Open an issue to request for a bug fix or additional feature or submit PRs.
 
 ### Author
 Funsho Oluyole-Balogun
