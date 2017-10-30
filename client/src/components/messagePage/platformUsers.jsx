@@ -17,10 +17,24 @@ class PlatformUsers extends React.Component {
   constructor(props) {
     super(props);
     this.state = ({
-      addUserId: ''
+      addUserId: '',
+      groupUsers: this.props.groupUsers
     });
 
     this.addUser = this.addUser.bind(this);
+    this.isGroupMember = this.isGroupMember.bind(this);
+  }
+
+
+  /**
+   * @param {any} nextProps
+   * @memberof PlatformUsers
+   * @return {void}
+   */
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      groupUsers: nextProps.groupUsers
+    });
   }
 
 
@@ -38,6 +52,23 @@ class PlatformUsers extends React.Component {
     .then(() => this.props.loadGroupUsers(this.props.Messages.groupId));
   }
 
+  /**
+   * check if user belongs to group or not
+   * @param {any} id the users id to be checked
+   * @memberof PlatformUsers
+   * @return {boolean} result to signify if user belongs to group
+   */
+  isGroupMember(id) {
+    const { groupUsers } = this.state;
+    let groupMember = false;
+    (groupUsers.length > 0) &&
+      groupUsers.map((user) => {
+        if (id === user.userId) groupMember = true;
+      });
+
+    return groupMember;
+  }
+
 
   /**
    * @memberof PlatformUsers
@@ -45,16 +76,25 @@ class PlatformUsers extends React.Component {
    */
   render() {
     return (
-      <li
-        className="collection-item click"
-      >
-        {this.props.platformUser.userName}
-        <a href="#!" className="secondary-content">
-          <i onClick={this.addUser} className="material-icons green-text text-darken-4">
-            add
-          </i>
-        </a>
-      </li>
+      this.isGroupMember(this.props.platformUser.id) ?
+        <li
+          className="collection-item click"
+        >
+          {this.props.platformUser.userName}
+          <a href="#!" className="secondary-content pink-text text-darken-4">
+            MEMBER
+          </a>
+        </li> :
+        <li
+          className="collection-item click"
+        >
+          {this.props.platformUser.userName}
+          <a href="#!" className="secondary-content">
+            <i onClick={this.addUser} className="material-icons pink-text text-darken-4">
+              group_add
+            </i>
+          </a>
+        </li>
     );
   }
 }

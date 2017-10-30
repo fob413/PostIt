@@ -347,12 +347,9 @@ class MessageBoard extends React.Component {
                           src={require('../../image/back.png')} // eslint-disable-line
                           className="click"
                         />} */}
-                        <a className="waves-effect waves-light btn teal darken-2 white-text">
-                          <i className="material-icons right white-text">
-                            backspace
-                          </i>
-                          Back
-                        </a>
+                        <i className="material-icons pink-text text-darken-4">
+                          backspace
+                        </i>
                       </Link>
                     </li>
                     <li
@@ -500,7 +497,11 @@ class MessageBoard extends React.Component {
                         {this.state.PlatformUsers
                         .map((platformUser, i) => {
                           return (
-                            <PlatformUsers key={i} platformUser={platformUser} />
+                            <PlatformUsers
+                              key={i}
+                              platformUser={platformUser}
+                              groupUsers={this.state.groupUsers}
+                            />
                           );
                         })
                         }
@@ -529,7 +530,7 @@ class MessageBoard extends React.Component {
                   <ul className="collection">
                     {this.state.groupUsers.map((user, i) => {
                       return (
-                          <li className="collection-item" key={i}>
+                          <li className="collection-item right-align" key={i}>
                             {user.User.userName}
                           </li>
                       );
