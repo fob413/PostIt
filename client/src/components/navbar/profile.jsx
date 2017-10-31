@@ -57,35 +57,41 @@ class Profile extends React.Component {
     // console.log(this.state);
     return (
       <div className="container profile profileBody">
-        <ul className="collection">
-          <li className="collection-item avatar">
-            <img
-              className="circle"
-              alt="PostIt Logo"
-              src="https://github.com/fob413/PostIt/blob/chore/feedback/client/src/image/nameNew.png?raw=true"
-            />
-            <span>User Name</span>
-            <p>{this.state.username}</p>
-          </li>
-          <li className="collection-item avatar">
-            <img
-              className="circle"
-              alt="PostIt Logo"
-              src="https://github.com/fob413/PostIt/blob/chore/feedback/client/src/image/mailNew.png?raw=true"
-            />
-            <span>Email</span>
-            <p>{this.state.email}</p>
-          </li>
-          <li className="collection-item avatar">
-            <img
-              className="circle"
-              alt="PostIt Logo"
-              src="https://github.com/fob413/PostIt/blob/chore/feedback/client/src/image/phoneNew.png?raw=true"
-            />
-            <span>Phone Number</span>
-            <p>{this.state.telephone}</p>
-          </li>
-        </ul>
+        <h3 className="center teal-text text-darken-4" id="profileName">Profile</h3>
+        <div className="row">
+          <div className="col s2" />
+          <div className="col s8">
+            <ul className="collection profileTable">
+              <li className="collection-item avatar">
+                <img
+                  className="circle"
+                  alt="PostIt Logo"
+                  src="https://github.com/fob413/PostIt/blob/chore/feedback/client/src/image/nameNew.png?raw=true"
+                />
+                <span>User Name</span>
+                <p>{this.state.username}</p>
+              </li>
+              <li className="collection-item avatar">
+                <img
+                  className="circle"
+                  alt="PostIt Logo"
+                  src="https://github.com/fob413/PostIt/blob/chore/feedback/client/src/image/mailNew.png?raw=true"
+                />
+                <span>Email</span>
+                <p>{this.state.email}</p>
+              </li>
+              <li className="collection-item avatar">
+                <img
+                  className="circle"
+                  alt="PostIt Logo"
+                  src="https://github.com/fob413/PostIt/blob/chore/feedback/client/src/image/phoneNew.png?raw=true"
+                />
+                <span>Phone Number</span>
+                <p>{this.state.telephone}</p>
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
     );
   }

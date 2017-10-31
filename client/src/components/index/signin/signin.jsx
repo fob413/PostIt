@@ -103,7 +103,7 @@ class Signin extends React.Component {
         <div className="row">
           <div className="col s2" />
           <div className="container col s8">
-            <form>
+            <form onSubmit={this.handleSignIn}>
               <div className="row">
                 <div className="input-field col s12 m12">
                   <i className="material-icons prefix pink-text text-darken-4">
@@ -117,6 +117,7 @@ class Signin extends React.Component {
                     data-error="wrong"
                     data-success="right"
                     onChange={this.onChange}
+                    required
                   />
                   <label htmlFor="userName">
                     Username
@@ -135,6 +136,7 @@ class Signin extends React.Component {
                     data-error="wrong"
                     data-success="right"
                     onChange={this.onChange}
+                    required
                   />
                   <label htmlFor="password">
                     Password
@@ -156,7 +158,6 @@ class Signin extends React.Component {
                 <button
                   className="btn-large pink darken-4 waves effect"
                   name="action"
-                  onClick={this.handleSignIn}
                 >
                   Sign In
                   <i className="material-icons right">send</i>

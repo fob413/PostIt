@@ -79,28 +79,23 @@ export class SignUp extends React.Component {
    */
   handleSubmit(event) {
     event.preventDefault();
-    if (
-      this.state.userName &&
-      this.state.email &&
-      this.state.telephone &&
-      this.state.password &&
-      this.state.password.length > 7 &&
-      this.state.confirmPassword.length &&
-      this.state.password === this.state.confirmPassword
-    ) {
-      if (!isNaN(this.state.telephone)) {
-        this.props.signUserUp(this.state).then((res) => {
-          if (res) {
-            this.props.history.push('/dashboard');
-          }
-        });
+    if (this.state.password.length > 7) {
+      if (
+        this.state.password === this.state.confirmPassword
+      ) {
+        if (!isNaN(this.state.telephone)) {
+          this.props.signUserUp(this.state).then((res) => {
+            if (res) {
+              this.props.history.push('/dashboard');
+            }
+          });
+        } else {
+          swal('Oops...', 'Please input a valid telephone number', 'error');
+        }
       } else {
-        swal('Oops...', 'Please input a valid telephone number', 'error');
-      }
-    } else {
-      if ((this.state.password === this.state.confirmPassword) !== true) {
         swal('Oops...', 'Please confirm your password', 'error');
       }
+    } else {
       swal('Oops...', 'Please input a password of at least 8 characters', 'error');
     }
   }
@@ -124,7 +119,7 @@ export class SignUp extends React.Component {
         <div className="row">
           <div className="col s2" />
           <div className="col s8">
-            <form>
+            <form onSubmit={this.handleSubmit}>
               <div className="row">
                 <div className="input-field col s12 m12">
                   <i className="material-icons prefix pink-text text-darken-4">
@@ -138,6 +133,7 @@ export class SignUp extends React.Component {
                     data-error="wrong"
                     data-success="right"
                     onChange={this.onChange}
+                    required
                   />
                   <label htmlFor="userName">
                     Username
@@ -156,6 +152,7 @@ export class SignUp extends React.Component {
                     data-error="wrong"
                     data-success="right"
                     onChange={this.onChange}
+                    required
                   />
                   <label htmlFor="email">
                     Email
@@ -174,6 +171,7 @@ export class SignUp extends React.Component {
                     data-error="wrong"
                     data-success="right"
                     onChange={this.onChange}
+                    required
                   />
                   <label htmlFor="telephone">
                     Telephone
@@ -192,6 +190,7 @@ export class SignUp extends React.Component {
                     data-error="wrong"
                     data-success="right"
                     onChange={this.onChange}
+                    required
                   />
                   <label htmlFor="password">
                     Password
@@ -210,6 +209,7 @@ export class SignUp extends React.Component {
                     data-error="wrong"
                     data-success="right"
                     onChange={this.onChange}
+                    required
                   />
                   <label htmlFor="confirmPassword">
                     Confirm Password
@@ -222,7 +222,6 @@ export class SignUp extends React.Component {
                 <button
                   className="btn-large  pink darken-4 waves effect"
                   name="action"
-                  onClick={this.handleSubmit}
                 >
                   Sign Up
                   <i className="material-icons right">send</i>

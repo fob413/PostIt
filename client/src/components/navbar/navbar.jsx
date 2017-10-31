@@ -73,7 +73,7 @@ class NavBar extends React.Component {
             <div className="container">
               <div className="nav-wrapper">
 
-                <Link className="brand-logo center" to="/dashboard">
+                <Link className="brand-logo center hoverable" to="/dashboard">
                   <img
                     width="70px"
                     alt="PostIt Logo"

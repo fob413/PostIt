@@ -43,7 +43,15 @@ main {
 }
 
 .profile{
-  margin-top: 10%;
+  margin-top: 8%;
+}
+
+#profileName {
+  font-weight: bold;
+}
+
+.profileTable {
+  border: 2px solid #004d40;
 }
 
 .message{
