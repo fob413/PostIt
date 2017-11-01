@@ -7,7 +7,7 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import App from './components/App.jsx';
 import rootReducer from './reducers/rootReducer';
-import { authenticateUser } from './components/auth';
+import { authenticateUser } from './helpers/auth';
 
 const store = createStore(
   rootReducer,

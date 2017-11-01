@@ -1,6 +1,6 @@
 import axios from 'axios';
 import swal from 'sweetalert2';
-import { SIGN_UP, SIGN_IN, SIGN_OUT, RELOAD_USER_IN } from '../constants';
+import { SIGN_UP, SIGN_IN, SIGN_OUT, RELOAD_USER_IN } from '../helpers/constants';
 
 const signUpSuccess = data => ({
   type: SIGN_UP,

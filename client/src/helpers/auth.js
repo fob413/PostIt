@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
-import { secret } from './config';
-import { RELOAD_USER_IN } from '../constants';
+import { secret } from '../helpers/config';
+import { RELOAD_USER_IN } from '../helpers/constants';
 
 // export function authenticateUser() {
 //   return new Promise((resolve, reject) => {

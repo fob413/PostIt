@@ -1,7 +1,7 @@
 import {
   LOAD_GROUPS,
   UNLOAD_GROUPS
-} from '../../../constants';
+} from '../../../helpers/constants';
 import store from '../../../reducers/groupReducer';
 
 describe('The Group Reducer ', () => {

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import swal from 'sweetalert2';
-import { LOAD_GROUPS, UNLOAD_GROUPS } from '../constants';
+import { LOAD_GROUPS, UNLOAD_GROUPS } from '../helpers/constants';
 
 const loadGroupSuccess = data => ({
   type: LOAD_GROUPS,

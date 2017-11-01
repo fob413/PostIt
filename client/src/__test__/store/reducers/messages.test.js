@@ -8,7 +8,7 @@ import {
   LOAD_READ_MESSAGES,
   LOAD_COUNT,
   LOAD_PAGE_COUNT
-} from '../../../constants';
+} from '../../../helpers/constants';
 
 describe('The Message Reducer', () => {
   it('LOAD_GROUP_MESSAGES', () => {

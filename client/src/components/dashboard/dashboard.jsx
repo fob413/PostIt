@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { loadGroups, createNewGroup } from '../../../actions/groupsActions';
-import { reloadUserIn } from '../../../actions/authActions';
+import { loadGroups, createNewGroup } from '../../actions/groupsActions';
+import { reloadUserIn } from '../../actions/authActions';
 import Groups from './groups';
 import NewGroup from './newgroup';
 import SearchGroups from './searchgroups';

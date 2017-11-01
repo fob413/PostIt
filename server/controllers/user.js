@@ -3,7 +3,7 @@ import crypto from 'crypto';
 import jwt from 'jsonwebtoken';
 import db from '../models/index';
 import paginate from '../middleware/paginate';
-import { sendResetMail, sendSuccessfulResetMail } from './priority';
+import { sendResetMail, sendSuccessfulResetMail } from '../middleware/priority';
 
 require('dotenv').config();
 

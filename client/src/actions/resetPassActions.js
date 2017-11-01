@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { RESET_PASSWORD } from '../constants';
+import { RESET_PASSWORD } from '../helpers/constants';
 
 export function forgotPassword ( email ) {
   return dispatch => (

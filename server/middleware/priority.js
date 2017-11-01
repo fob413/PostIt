@@ -37,8 +37,25 @@ export function sendMail(users, message, priorityHeader) {
     from: '"PostIt" <fob1493@gmail.com>',
     to: receivers,
     subject: priorityHeader,
-    text: message,
-    html: message
+    html: `
+    <div style="width: 100%; background-color: grey; padding: 2%;">
+      <div style="width: 60%; background-color: white; margin: auto;">
+        <div style="height: 8%; background-color: #004d40; width:100%">
+          <img height="40px" style="margin-left: 2%" src="https://github.com/fob413/PostIt/blob/chore/feedback/template/image/postitL.png?raw=true">
+        </div>
+        <div style="padding: 8%">
+          <div class="row">
+            Hi, you have a new message:
+          </div>
+          <div class="next-container" style="border: 2px solid; margin-top:2%; padding: 2%;">
+            ${message}
+          </div>
+          <div style="border-top: 3px solid #004d40;"></div>
+          <p style="font-weight: bold; color: #004d40;">PostIt</p>
+        </div>
+      </div>
+    </div>
+    `
   };
 
   // send mail with defined transport object
@@ -68,7 +85,6 @@ export function sendMail(users, message, priorityHeader) {
  * @return {void}
  */
 export function sendResetMail(token, email, host) {
-
   // create reusable transporter object using the default SMTP transport
   const transporter = nodemailer.createTransport({
     // host: 'smtp.gmail.com',
@@ -86,13 +102,24 @@ export function sendResetMail(token, email, host) {
     from: '"PostIt" <fob1493@gmail.com>',
     to: email,
     subject: 'POSTIT PASSWORD RESET',
-    text: `You are receiving this because you (or someone else) 
-    have requested the reset of the password for your account.\n\n
-    Please click on the following link or paste this into your browser 
-    to complete the process: \n\n
-    http://${host}/reset/${token}\n\n
-    If you did not request this, please ignore this mail and your 
-    password will remain unchanged.`
+    html: `
+    <div style="width: 100%; background-color: grey; padding: 2%;">
+      <div style="width: 60%; background-color: white; margin: auto;">
+        <div style="height: 8%; background-color: #004d40; width:100%">
+          <img height="40px" style="margin-left: 2%" src="https://github.com/fob413/PostIt/blob/chore/feedback/template/image/postitL.png?raw=true">
+        </div>
+        <div style="padding: 8%">
+          <div class="row">
+            You are receiving this because you (or someone else) have requested the reset of the password for your account.<br />Please click on the following link or paste this into your browser to complete the process:
+            <p>http://${host}/reset/${token}</p>
+            <p>If you did not request this, please ignore this mail and your password will remain unchanged.</p>
+          </div>
+          <div style="border-top: 3px solid #004d40;"></div>
+          <p style="font-weight: bold; color: #004d40">PostIt</p>
+        </div>
+      </div>
+    </div>
+    `
   };
 
   // send mail with defined transport object
@@ -124,8 +151,22 @@ export function sendSuccessfulResetMail(email) {
     from: '"PostIt" <fob1493@gmail.com>',
     to: email,
     subject: 'POSTIT PASSWORD CHANGE SUCCESSFUL',
-    text: `This email confirms that your new POSTIT password has been set.\n\n
-    You can now access your Account.`
+    html: `
+    <div style="width: 100%; background-color: grey; padding: 2%;">
+      <div style="width: 60%; background-color: white; margin: auto;">
+        <div style="height: 8%; background-color: #004d40; width:100%">
+          <img height="40px" style="margin-left: 2%" src="https://github.com/fob413/PostIt/blob/chore/feedback/template/image/postitL.png?raw=true">
+        </div>
+        <div style="padding: 8%">
+          <div class="row">
+            <p>This email confirms that your new POSTIT password has been set.<br />You can now access your Account.</p>
+            <div style="border-top: 3px solid #004d40;"></div>
+            <p style="font-weight: bold; color: #004d40">PostIt</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    `
   };
 
   // send mail with defined transport object

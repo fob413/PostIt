@@ -3,7 +3,7 @@ import {
   SIGN_IN,
   SIGN_OUT,
   RELOAD_USER_IN
-} from '../../../constants';
+} from '../../../helpers/constants';
 import store from '../../../reducers/auth';
 
 describe('The Index Reducer ', () => {

@@ -1,5 +1,5 @@
 import db from '../models/index';
-import { sendMail } from './priority';
+import { sendMail } from '../middleware/priority';
 
 const Users = db.Users;
 const GroupMembers = db.GroupMembers;

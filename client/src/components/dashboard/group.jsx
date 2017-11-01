@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { loadCurrentGroup } from '../../../actions/messageActions';
+import { loadCurrentGroup } from '../../actions/messageActions';
 
 
 /**

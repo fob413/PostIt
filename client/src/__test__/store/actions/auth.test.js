@@ -13,7 +13,7 @@ import {
   SIGN_IN,
   SIGN_OUT,
   RELOAD_USER_IN
-} from '../../../constants';
+} from '../../../helpers/constants';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);

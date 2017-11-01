@@ -1,4 +1,4 @@
-import { SIGN_IN, SIGN_OUT, SIGN_UP, RELOAD_USER_IN } from '../constants';
+import { SIGN_IN, SIGN_OUT, SIGN_UP, RELOAD_USER_IN } from '../helpers/constants';
 
 const initialState = {
   userName: '',
