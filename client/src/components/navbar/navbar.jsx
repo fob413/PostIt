@@ -35,6 +35,9 @@ class NavBar extends React.Component {
     this.setState({
       isAuth: nextProps.auth.isLoggedIn
     });
+    if (!nextProps.auth.isLoggedIn) {
+      this.props.history.push('/signin');
+    }
   }
 
 

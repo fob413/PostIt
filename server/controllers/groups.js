@@ -35,6 +35,14 @@ export default {
         });
       }
 
+      // groupName characters should not be more than 20
+      if (req.body.groupName.trim().length > 14) {
+        return res.status(400).send({
+          success: false,
+          message: 'GroupName should not be more than 14 characters'
+        });
+      }
+
       return Groups.findOne({
         where: {
           groupName: req.body.groupName
