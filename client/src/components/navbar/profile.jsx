@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
  * @class Profile
  * @extends {React.Component}
  */
-class Profile extends React.Component {
+export class Profile extends React.Component {
 
   /**
    * Creates an instance of Profile.

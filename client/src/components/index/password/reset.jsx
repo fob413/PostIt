@@ -7,7 +7,7 @@ import { forgotPassword } from '../../../actions/resetPassActions';
  * @class Reset
  * @extends {React.Component}
  */
-class Reset extends React.Component {
+export class Reset extends React.Component {
 
   /**
    * Creates an instance of Reset.
@@ -16,9 +16,23 @@ class Reset extends React.Component {
    */
   constructor(props) {
     super(props);
+    this.state = {
+      email: ''
+    };
     this.onReset = this.onReset.bind(this);
+    this.onChange = this.onChange.bind(this);
   }
 
+  /**
+   * @param {any} event
+   * @memberof Reset
+   * @return {void}
+   */
+  onChange(event) {
+    this.setState({
+      [event.target.name]: event.target.value
+    });
+  }
 
   /**
    * function to reset users password
@@ -28,18 +42,18 @@ class Reset extends React.Component {
    */
   onReset(event) {
     event.preventDefault();
-    const { email } = this.refs;
-    email.value = email.value.trim();
-
-    if (email.value.length > 0) {
-      this.props.forgotPassword(email.value)
+    const { email } = this.state;
+    if (email.length > 0) {
+      this.props.forgotPassword(email)
       .then((res) => {
         if (res.success) {
           Materialize.toast(
             'Check your mail for instructions',
             4000,
             'green darken-4');
-          email.value = '';
+          this.setState({
+            email: ''
+          });
         } else {
           Materialize.toast(
             res.message,
@@ -51,7 +65,9 @@ class Reset extends React.Component {
           `An error occured: ${err.message}`,
           4000,
           'red');
-        email.value = '';
+        this.setState({
+          email: ''
+        });
       });
     } else {
       Materialize.toast(
@@ -92,7 +108,15 @@ class Reset extends React.Component {
                   </p>
                   <form onSubmit={this.onReset}>
                     <div className="input-field">
-                      <input ref="email" id="email" type="email" className="validate" />
+                      <input
+                        ref="email"
+                        id="email"
+                        type="email"
+                        className="validate"
+                        onChange={this.onChange}
+                        value={this.state.email}
+                        name="email"
+                      />
                       <label htmlFor="email" data-error="wrong" data-success="right">
                         Enter Your Email
                       </label>
@@ -121,7 +145,7 @@ Reset.propTypes = {
 
 const mapStateToProps = state => (
   {
-
+    auth: state.Auth
   }
 );
 

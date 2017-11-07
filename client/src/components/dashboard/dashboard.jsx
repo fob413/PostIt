@@ -2,16 +2,16 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { loadGroups, createNewGroup } from '../../actions/groupsActions';
 import { reloadUserIn } from '../../actions/authActions';
-import Groups from './groups';
-import NewGroup from './newgroup';
-import SearchGroups from './searchgroups';
+import Groups from './Groups';
+import NewGroup from './Newgroup';
+import SearchGroups from './Searchgroups';
 
 
 /**
  * @class DashBoard
  * @extends {React.Component}
  */
-class DashBoard extends React.Component {
+export class DashBoard extends React.Component {
 
   /**
    * Creates an instance of DashBoard.

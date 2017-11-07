@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
  * @class NavBar
  * @extends {React.Component}
  */
-class Footer extends React.Component {
+export class Footer extends React.Component {
 
   /**
    * Creates an instance of NavBar.
@@ -64,8 +64,7 @@ Footer.propTypes = {
 
 const mapStateToProps = state => (
   {
-    auth: state.Auth,
-    groups: state.Groups
+    auth: state.Auth
   }
 );
 

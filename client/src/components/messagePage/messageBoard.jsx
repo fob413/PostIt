@@ -5,8 +5,8 @@ import ReactPaginate from 'react-paginate';
 import $ from 'jquery';
 import swal from 'sweetalert2';
 import Modal from 'react-modal';
-import DisplayMessage from './displayMessage';
-import PlatformUsers from './platformUsers';
+import DisplayMessage from './DisplayMessage';
+import PlatformUsers from './PlatformUsers';
 import {
   sendMessage,
   loadGroupMessages,
@@ -32,7 +32,7 @@ const customStyles = {
  * @class MessageBoard
  * @extends {React.Component}
  */
-class MessageBoard extends React.Component {
+export class MessageBoard extends React.Component {
 
   /**
    * Creates an instance of MessageBoard.
@@ -57,12 +57,13 @@ class MessageBoard extends React.Component {
       modalIsOpen: false,
       count: 0,
       pageCount: 0,
-      offset: 0
+      offset: 0,
+      message: '',
+      user: '',
+      priority: 'NORMAL'
     });
 
     this.inputUser = this.inputUser.bind(this);
-    this.filterUsers = this.filterUsers.bind(this);
-    this.autoHide = this.autoHide.bind(this);
     this.toggleUnread = this.toggleUnread.bind(this);
     this.prevPage = this.prevPage.bind(this);
     this.nextPage = this.nextPage.bind(this);
@@ -71,6 +72,7 @@ class MessageBoard extends React.Component {
     this.afterOpenModal = this.afterOpenModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.pageClick = this.pageClick.bind(this);
+    this.onChange = this.onChange.bind(this);
   }
 
 
@@ -125,6 +127,17 @@ class MessageBoard extends React.Component {
   }
 
   /**
+   * @param {any} event
+   * @memberof Signin
+   * @return {void}
+   */
+  onChange(event) {
+    this.setState({
+      [event.target.name]: event.target.value
+    });
+  }
+
+  /**
    * sends a message to the current group
    * @param {any} event
    * @memberof MessageBoard
@@ -132,22 +145,28 @@ class MessageBoard extends React.Component {
    */
   onSend(event) {
     event.preventDefault();
-    const { _message, _priority } = this.refs;
-    _message.value = _message.value.trim();
-    if (_message.value.length > 0) {
+    let { message } = this.state;
+    const { priority } = this.state;
+    message = message.trim();
+    if (message.length > 0) {
       this.props.sendMessage(
-        _message.value,
+        message,
         this.props.Messages.groupId,
-        _priority.value
+        priority
       )
       .then(() => this.props.loadGroupMessages(
         this.state.groupId,
         this.state.userId
       ),
       err => console.log(err));
-      _priority.value = 'NORMAL';
+      this.setState({
+        priority: 'NORMAL'
+      });
     }
-    _message.value = '';
+    this.setState({
+      message: '',
+      prority: 'NORMAL'
+    });
   }
 
   /**
@@ -162,14 +181,18 @@ class MessageBoard extends React.Component {
 
 
   /**
-   * users input in form
+   * search for users on the platform
+   * @param {any} event
    * @memberof MessageBoard
    * @return {void}
    */
-  inputUser() {
-    const { _user } = this.refs;
-    _user.value = _user.value.trim();
-    if (_user.value.length === 0) {
+  inputUser(event) {
+    this.setState({
+      [event.target.name]: event.target.value
+    });
+    let user = event.target.value;
+    user = user.trim();
+    if (user.length === 0) {
       this.setState({
         addUser: '',
         PlatformUsers: [],
@@ -177,9 +200,9 @@ class MessageBoard extends React.Component {
         pageCount: 0
       });
     } else {
-      this.props.searchUsers(this.state.offset, _user.value);
+      this.props.searchUsers(this.state.offset, user);
       this.setState({
-        addUser: _user.value
+        addUser: user
       });
     }
   }
@@ -192,16 +215,16 @@ class MessageBoard extends React.Component {
    * @return {void}
    */
   pageClick(data) {
-    const { _user } = this.refs;
-    _user.value = _user.value.trim();
+    let { user } = this.state;
+    user = user.trim();
     const selected = data.selected;
     const limit = 5;
     const offset = Math.ceil(selected * limit);
     this.setState({
       offset,
-      addUser: _user.value
+      addUser: user
     });
-    this.props.searchUsers(selected, _user.value);
+    this.props.searchUsers(selected, user);
   }
 
 
@@ -213,9 +236,9 @@ class MessageBoard extends React.Component {
    */
   prevPage(event) {
     event.preventDefault();
-    const { _user } = this.refs;
+    const { user } = this.state;
     if (this.state.offset > 0) {
-      this.props.searchUsers(this.state.offset - 1, _user.value);
+      this.props.searchUsers(this.state.offset - 1, user);
       const num = this.state.offset;
       this.setState({
         offset: num - 1
@@ -231,34 +254,11 @@ class MessageBoard extends React.Component {
    */
   nextPage(event) {
     event.preventDefault();
-    const { _user } = this.refs;
-    this.props.searchUsers(this.state.offset + 1, _user.value);
+    const { user } = this.state;
+    this.props.searchUsers(this.state.offset + 1, user);
     const num = this.state.offset;
     this.setState({
       offset: num + 1
-    });
-  }
-
-
-  /**
-   * @memberof MessageBoard
-   * @return {void}
-   */
-  filterUsers() {
-    const filteredUsers = [];
-    this.state.PlatformUsers.forEach((pUser) => {
-      let condition = false;
-      this.state.groupUsers.forEach((gUser) => {
-        if (pUser.UserName === gUser.User.UserName) {
-          condition = true;
-        }
-      });
-      if (!condition) {
-        filteredUsers.push(pUser);
-      }
-    });
-    this.setState({
-      otherUsers: filteredUsers
     });
   }
 
@@ -277,24 +277,6 @@ class MessageBoard extends React.Component {
         unread: true
       });
     }
-  }
-
-  /**
-   * @memberof MessageBoard
-   * @return {void}
-   */
-  autoHide() {
-    $(() => {
-      $('body #input').on('focus', () => {
-        $('#hide').removeClass('hide');
-        $('#hide').addClass('show');
-      });
-
-      $('body #input').on('focusout', () => {
-        $('#hide').removeClass('show');
-        $('#hide').addClass('hide');
-      });
-    });
   }
 
   /**
@@ -418,18 +400,22 @@ class MessageBoard extends React.Component {
                 <form onSubmit={this.onSend}>
                   <div className="input-field col s12">
                     <input
-                      ref="_message"
                       className="sendMessage"
                       type="text"
                       placeholder="Type A Message"
+                      name="message"
+                      value={this.state.message}
+                      onChange={this.onChange}
                     />
                   </div>
 
                   <div className="col m4 browser-default">
                     <select
                       defaultValue="1"
-                      ref="_priority"
                       className="browser-default"
+                      name="priority"
+                      value={this.state.priority}
+                      onChange={this.onChange}
                     >
                       <option value="NORMAL">Normal</option>
                       <option value="URGENT">Urgent</option>
@@ -481,7 +467,8 @@ class MessageBoard extends React.Component {
                   <input
                     autoComplete="off"
                     id="input"
-                    ref="_user"
+                    name="user"
+                    value={this.state.value}
                     type="text"
                     placeholder="Add User"
                     onChange={this.inputUser}

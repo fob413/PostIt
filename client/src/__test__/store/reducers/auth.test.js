@@ -105,4 +105,12 @@ describe('The Index Reducer ', () => {
       isLoggedIn: true
     });
   });
+
+  it('default', () => {
+    const state = {};
+    const action = {};
+
+    const results = store(state, action);
+    expect(results).toEqual({});
+  });
 });

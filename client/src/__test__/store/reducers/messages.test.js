@@ -432,4 +432,29 @@ describe('The Message Reducer', () => {
       pageCount: 5
     });
   });
+
+  it('default', () => {
+    const state = {
+      groupId: '',
+      messages: [],
+      unreadMessages: [],
+      readMessages: [],
+      groupUsers: [],
+      PlatformUsers: [],
+      count: 0,
+      pageCount: 0
+    };
+    const action = {};
+    const results = store(state, action);
+    expect(results).toEqual({
+      groupId: '',
+      messages: [],
+      unreadMessages: [],
+      readMessages: [],
+      groupUsers: [],
+      PlatformUsers: [],
+      count: 0,
+      pageCount: 0
+    });
+  });
 });

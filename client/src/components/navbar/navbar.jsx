@@ -9,7 +9,7 @@ import { unloadGroups } from '../../actions/groupsActions';
  * @class NavBar
  * @extends {React.Component}
  */
-class NavBar extends React.Component {
+export class NavBar extends React.Component {
 
   /**
    * Creates an instance of NavBar.

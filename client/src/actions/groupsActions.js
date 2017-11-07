@@ -16,8 +16,7 @@ const unloadGroupsSuccess = () => ({
  * @return {void}
  */
 export function loadGroups() {
-  return (dispatch) => {
-    axios.get(
+  return dispatch => axios.get(
       'api/group/list',
       { headers: { token: localStorage.getItem('token') } }
     )
@@ -26,7 +25,6 @@ export function loadGroups() {
     }, (err) => {
       swal('Error Loading Groups...', err.response.data.message, 'error');
     });
-  };
 }
 
 /**
@@ -35,7 +33,6 @@ export function loadGroups() {
  * @return {boolean} the response for when the call was successful or not
  */
 export function createNewGroup(groupName) {
-  console.log(">>>>>>>");
   return () => axios.post(
       'api/group',
       { groupName },

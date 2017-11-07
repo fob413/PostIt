@@ -1,176 +1,198 @@
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import moxios from 'moxios';
+import axios from 'axios';
+import MockAdapter from 'axios-mock-adapter';
 import mockLocalStorage from '../../_mocks_/mockLocalStorage';
+import * as types from '../../../helpers/constants';
+import data from '../../_mocks_/mockData';
 import {
   signUserUp,
   signUserIn,
   signUserOut,
   reloadUserIn
 } from '../../../actions/authActions';
-import {
-  SIGN_UP,
-  SIGN_IN,
-  SIGN_OUT,
-  RELOAD_USER_IN
-} from '../../../helpers/constants';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
+const mock = new MockAdapter(axios);
 window.localStorage = mockLocalStorage;
 
-const initialState = {
-  userName: '',
-  email: '',
-  telephone: '',
-  userId: '',
-  isLoggedIn: false,
-  token: '',
-  groups: []
-};
-
-describe('Sign up action ', () => {
-  beforeEach(() => moxios.install());
-  afterEach(() => moxios.uninstall());
-  const store = mockStore(initialState);
-  const userData = {
-    userName: 'Funsho',
-    password: 'asdf;lkj',
-    email: 'funsho@email.com',
-    telephone: '12345678901'
-  };
+describe('Sign up action', () => {
+  beforeEach(() => {
+    mock.reset();
+  });
+  const user = data.userData;
+  const token = data.token;
+  const store = mockStore({});
 
   it('should contain a sign up function', () => {
     expect(typeof (signUserUp())).toBe('function');
   });
 
-  it('should dispatch SIGN_UP on successful sign up', (done) => {
-    moxios.stubRequest('/api/user/signup', {
-      status: 201,
-      response: {
-        success: true,
-        message: 'Successfully signed up',
-        token: 'abcdefghijklmnopqrstuvwxyz'
-      }
+  it('should dispatch SIGN UP on successful sign up', () => {
+    mock.onPost('api/user/signup', user)
+    .reply(201, {
+      token,
+      message: 'Successfully signed user up',
+      success: true
     });
-    const expectedActions = [
+
+    const expectedAction = [
       {
-        type: SIGN_UP,
+        type: types.SIGN_UP,
         data: {
           success: true,
-          message: 'Successfully signed up',
-          token: 'abcdefghijklmnopqrstuvwxyz'
+          message: 'Successfully signed user up',
+          token
         }
       }
     ];
-    store.dispatch(signUserUp(userData)).then(() => {
-      expect(store.getActions()).toEqual(expectedActions);
+
+    return store.dispatch(signUserUp(user))
+    .then(() => {
+      expect(store.getActions()).toEqual(expectedAction);
     });
-    done();
+  });
+
+  it('should not dispatch SIGN UP when unsuccessful', () => {
+    mock.reset();
+    const stores = mockStore({});
+    mock.onPost('api/user/signup')
+    .reply(400, {
+      message: 'An error occured',
+      success: false
+    });
+
+    const expectedAction = data.emptyAction;
+
+    return stores.dispatch(signUserUp(user))
+    .then(() => {
+      expect(stores.getActions()).toEqual(expectedAction);
+    });
   });
 });
 
-describe('Sign in action ', () => {
-  beforeEach(() => moxios.install());
-  afterEach(() => moxios.uninstall());
-  const store = mockStore(initialState);
-  const userData = {
-    userName: 'Funsho',
-    password: 'asdf;lkj'
-  };
+describe('Sign in action', () => {
+  const user = data.userData;
+  const token = data.token;
+  const store = mockStore({});
 
   it('should contain a sign in function', () => {
     expect(typeof (signUserIn())).toBe('function');
   });
 
-  it('should dispatch SIGN_IN on successful sign in', (done) => {
-    moxios.stubRequest('/api/user/signin', {
-      status: 200,
-      response: {
-        success: true,
-        message: 'Successfully signed in',
-        token: 'abcdefghijklmnopqrstuvwxyz'
-      }
+  it('should dispatch SIGN IN on successful sign in', () => {
+    mock.onPost('api/user/signin', user)
+    .reply(200, {
+      token,
+      message: 'Successfully signed user in',
+      success: true
     });
-    const expectedActions = [
+
+    const expectedAction = [
       {
-        type: SIGN_IN,
+        type: types.SIGN_IN,
         data: {
           success: true,
-          message: 'Successfully signed in',
-          token: 'abcdefghijklmnopqrstuvwxyz'
+          message: 'Successfully signed user in',
+          token
         }
       }
     ];
-    store.dispatch(signUserIn(userData)).then(() => {
-      expect(store.getActions()).toEqual(expectedActions);
+
+    return store.dispatch(signUserIn(user))
+    .then(() => {
+      expect(store.getActions()).toEqual(expectedAction);
     });
-    done();
+  });
+
+  it('should not dispatch SIGN IN on unsuccessful sign in', () => {
+    const stores = mockStore({});
+    mock.reset();
+    mock.onPost('api/user/signin', user)
+    .reply(400, {
+      message: 'An error has occured',
+      success: false
+    });
+
+    const expectedAction = data.emptyAction;
+
+    return stores.dispatch(signUserIn(user))
+    .then(() => {
+      expect(stores.getActions()).toEqual(expectedAction);
+    });
   });
 });
 
-describe('Sign out action ', () => {
-  const token = 'abcdefghiijklmnopqrstuvqxyz';
-  beforeEach(() => {
-    moxios.install();
-    mockLocalStorage.setItem('token', token);
-  });
-  afterEach(() => {
-    moxios.uninstall();
-    mockLocalStorage.removeItem('token');
-  });
-  const store = mockStore(initialState);
+describe('Sign out aciton', () => {
+  const store = mockStore({});
 
   it('should contain a sign out function', () => {
     expect(typeof (signUserOut())).toBe('function');
   });
 
-  it('should dispatch SIGN_OUT on successful sign out', (done) => {
-    const expectedActions = [
+  it('should dispatch SIGN OUT on successful sign out', () => {
+    mock.onGet('api/user/signout')
+    .reply(200, {
+      success: true,
+      isLoggedIn: false,
+      message: 'Successfully logged user out'
+    });
+
+    const expectedAction = [
       {
-        type: SIGN_OUT,
+        type: types.SIGN_OUT,
         data: {
           success: true,
-          message: 'Successfully signed out',
-          isLoggedIn: false
+          isLoggedIn: false,
+          message: 'Successfully logged user out'
         }
       }
     ];
-    store.dispatch(signUserOut()).then(() => {
-      expect(store.getActions()).toEqual(expectedActions);
+
+    return store.dispatch(signUserOut())
+    .then(() => {
+      expect(store.getActions()).toEqual(expectedAction);
     });
-    done();
+  });
+
+  it('should not dispatch SIGN OUT on unsuccessful sign out', () => {
+    mock.reset();
+    const stores = mockStore({});
+    mock.onGet('api/user/signout')
+    .reply(400, {
+      success: false,
+      message: 'An error has occured'
+    });
+
+    const expectedAction = data.emptyAction;
+
+    return stores.dispatch(signUserOut())
+    .then(() => {
+      expect(stores.getActions()).toEqual(expectedAction);
+    });
   });
 });
 
-describe('Reload user in action ', () => {
-  const token = 'abcdefghiijklmnopqrstuvqxyz';
-  beforeEach(() => {
-    moxios.install();
-    mockLocalStorage.setItem('token', token);
-  });
-  afterEach(() => {
-    moxios.uninstall();
-    mockLocalStorage.removeItem('token');
-  });
-  const store = mockStore(initialState);
+describe('Reload user in action', () => {
+  const store = mockStore({});
 
-  it('should contain a reloadUserIn function', () => {
+  it('should contain a reload user in function', () => {
     expect(typeof (reloadUserIn())).toBe('function');
   });
 
-  it('should dispatch RELOAD_USER_IN on successful reload', (done) => {
-    const expectedActions = [
+  it('should dispatch RELOAD_USER_IN when called', () => {
+    const user = data.userData;
+    const expectedAction = [
       {
-        type: RELOAD_USER_IN,
-        userName: 'funsho',
-        email: 'funsho@email.com',
-        telephone: '12345678901',
-        userId: undefined
+        type: types.RELOAD_USER_IN,
+        userName: user.userName,
+        email: user.email,
+        telephone: user.telephone
       }
     ];
-    store.dispatch(reloadUserIn('funsho', 'funsho@email.com', '12345678901'));
-    expect(store.getActions()).toEqual(expectedActions);
-    done();
+
+    store.dispatch(reloadUserIn(user.userName, user.email, user.telephone));
+    expect(store.getActions()).toEqual(expectedAction);
   });
 });

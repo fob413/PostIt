@@ -84,13 +84,13 @@ export function signUserIn(user) {
 
 /**
  * reload user into the store
- * @param {string} UserName the users username
+ * @param {string} userName the users username
  * @param {string} email the users email
  * @param {string} telephone the users telephone number
  * @return {void}
  */
-export function reloadUserIn(UserName, email, telephone) {
+export function reloadUserIn(userName, email, telephone) {
   return dispatch => (
-    dispatch(reloadUserInSuccess(UserName, email, telephone))
+    dispatch(reloadUserInSuccess(userName, email, telephone))
   );
 }

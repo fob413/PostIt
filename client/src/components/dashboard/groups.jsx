@@ -1,12 +1,12 @@
 import React, { PropTypes } from 'react';
-import Group from './group';
+import Group from './Group';
 
 
 /**
  * @class Groups
  * @extends {React.Component}
  */
-class Groups extends React.Component {
+export class Groups extends React.Component {
 
   /**
    * Creates an instance of Groups.

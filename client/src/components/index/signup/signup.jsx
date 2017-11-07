@@ -9,7 +9,7 @@ import { signUserUp } from '../../../actions/authActions';
  * @class SignUp
  * @extends {React.Component}
  */
-class SignUp extends React.Component {
+export class SignUp extends React.Component {
 
   /**
    * Creates an instance of SignUp.

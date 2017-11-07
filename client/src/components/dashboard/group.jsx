@@ -8,7 +8,7 @@ import { loadCurrentGroup } from '../../actions/messageActions';
  * @class Group
  * @extends {React.Component}
  */
-class Group extends React.Component {
+export class Group extends React.Component {
 
   /**
    * Creates an instance of Group.
@@ -86,7 +86,7 @@ Group.propTypes = {
   auth: PropTypes.object.isRequired,
   showGroup: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
-  loadCurrentGroup: PropTypes.object.isRequired
+  // loadCurrentGroup: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({

@@ -5,7 +5,7 @@ import React, { PropTypes } from 'react';
  * @class SearchGroups
  * @extends {React.Component}
  */
-class SearchGroups extends React.Component {
+export class SearchGroups extends React.Component {
 
   /**
    * Creates an instance of SearchGroups.
@@ -17,7 +17,8 @@ class SearchGroups extends React.Component {
 
     this.state = {
       search: '',
-      showSearchGroups: this.props.showSearchGroups
+      showSearchGroups: this.props.showSearchGroups,
+      searchValue: ''
     };
 
     this.searchGroups = this.searchGroups.bind(this);
@@ -39,11 +40,15 @@ class SearchGroups extends React.Component {
   /**
    * send the current search value
    * @memberof SearchGroups
+   * @param {any} event
    * @return {void}
    */
-  searchGroups() {
-    const { searchValue } = this.refs;
-    this.props.onSearchGroups(searchValue.value);
+  searchGroups(event) {
+    event.preventDefault();
+    this.setState({
+      [event.target.name]: event.target.value
+    });
+    this.props.onSearchGroups(event.target.value);
   }
 
   /**
@@ -62,6 +67,8 @@ class SearchGroups extends React.Component {
               id="icon_prefix"
               type="text"
               onChange={this.searchGroups}
+              name="searchValue"
+              value={this.state.searchValue}
             />
             <label htmlFor="icon_prefix align-left">Search Groups</label>
           </div>

@@ -8,7 +8,7 @@ import { signUserIn } from '../../../actions/authActions';
  * @class ResetPassword
  * @extends {React.Component}
  */
-class ResetPassword extends React.Component {
+export class ResetPassword extends React.Component {
 
   /**
    * Creates an instance of ResetPassword.
@@ -20,10 +20,13 @@ class ResetPassword extends React.Component {
 
     this.state = {
       isLoggedIn: this.props.auth.isLoggedIn,
-      UserName: ''
+      UserName: '',
+      newPassword: '',
+      confirmPassword: ''
     };
 
     this.onChangePassword = this.onChangePassword.bind(this);
+    this.onChange = this.onChange.bind(this);
   }
 
 
@@ -63,6 +66,17 @@ class ResetPassword extends React.Component {
     }
   }
 
+  /**
+   * @param {any} event
+   * @memberof ResetPassword
+   * @return {void}
+   */
+  onChange(event) {
+    this.setState({
+      [event.target.name]: event.target.value
+    });
+  }
+
 
   /**
    * function to handle call to api that changes password
@@ -72,14 +86,14 @@ class ResetPassword extends React.Component {
    */
   onChangePassword(event) {
     event.preventDefault();
-    const { _newPassword, _confirmPassword } = this.refs;
-    if (_newPassword && _newPassword.value.length > 7
-      && _confirmPassword && _confirmPassword.value.length > 7
-      && _newPassword.value === _confirmPassword.value) {
+    const { newPassword, confirmPassword } = this.state;
+    if (newPassword && newPassword.length > 7
+      && confirmPassword && confirmPassword.length > 7
+      && newPassword === confirmPassword) {
       this.props.resetPassword(
            this.props.match.params.token,
-           _newPassword.value,
-           _confirmPassword.value
+           newPassword,
+           confirmPassword
           ).then((res) => {
             if (res.success) {
               this.props.history.push('/signin');
@@ -124,7 +138,13 @@ class ResetPassword extends React.Component {
                     <div className="col s12">
                       <div className="input-field inline col s12">
                         <label>New Password</label>
-                        <input ref="_newPassword" type="password" />
+                        <input
+                          ref="_newPassword"
+                          type="password"
+                          name="newPassword"
+                          value={this.state.newPassword}
+                          onChange={this.onChange}
+                        />
                       </div>
                     </div>
                   </div>
@@ -132,7 +152,13 @@ class ResetPassword extends React.Component {
                     <div className="col s12">
                       <div className="input-field inline col s12">
                         <label>Confirm Password</label>
-                        <input ref="_confirmPassword" type="password" />
+                        <input
+                          ref="_confirmPassword"
+                          type="password"
+                          name="confirmPassword"
+                          value={this.state.confirmPassword}
+                          onChange={this.onChange}
+                        />
                       </div>
                     </div>
                   </div>

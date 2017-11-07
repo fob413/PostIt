@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const PageNotFound = () => (
+export const PageNotFound = () => (
   <div className="container mainBody">
     <div className="row center-align">
       <Link className="brand-logo" to="/dashboard">

@@ -7,7 +7,7 @@ import { addUserToGroup, loadGroupUsers } from '../../actions/messageActions';
  * @class PlatformUsers
  * @extends {React.Component}
  */
-class PlatformUsers extends React.Component {
+export class PlatformUsers extends React.Component {
 
   /**
    * Creates an instance of PlatformUsers.

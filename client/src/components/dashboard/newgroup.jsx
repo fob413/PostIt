@@ -5,7 +5,7 @@ import React, { PropTypes } from 'react';
  * @class NewGroup
  * @extends {React.Component}
  */
-class NewGroup extends React.Component {
+export class NewGroup extends React.Component {
 
   /**
    * Creates an instance of NewGroup.
@@ -14,8 +14,25 @@ class NewGroup extends React.Component {
    */
   constructor(props) {
     super(props);
+    this.state = {
+      groupName: ''
+    };
+
     this.onCreateGroup = this.onCreateGroup.bind(this);
     this.onCancelCreate = this.onCancelCreate.bind(this);
+    this.onChange = this.onChange.bind(this);
+  }
+
+  /**
+   * change in input field updates state
+   * @param {any} event
+   * @memberof SignUp
+   * @return {void}
+   */
+  onChange(event) {
+    this.setState({
+      [event.target.name]: event.target.value
+    });
   }
 
 
@@ -26,13 +43,14 @@ class NewGroup extends React.Component {
    * @return {void}
    */
   onCreateGroup(event) {
-    const { groupName } = this.refs;
     event.preventDefault();
-    const groupname = groupName.value.trim();
+    const groupname = this.state.groupName.trim();
     if (groupname && groupname.length > 0) {
       this.props.toggleCreateGroup();
       this.props.onCreateGroup(groupname);
-      groupName.value = '';
+      this.setState({
+        groupName: ''
+      });
     }
   }
 
@@ -44,10 +62,11 @@ class NewGroup extends React.Component {
    * @return {void}
    */
   onCancelCreate(event) {
-    const { groupName } = this.refs;
     event.preventDefault();
     this.props.toggleCreateGroup();
-    groupName.value = '';
+    this.setState({
+      groupName: ''
+    });
   }
 
 
@@ -68,6 +87,9 @@ class NewGroup extends React.Component {
                 id="group-name"
                 type="text"
                 autoComplete="off"
+                value={this.state.groupName}
+                onChange={this.onChange}
+                name="groupName"
               />
               <label
                 htmlFor="group-name"

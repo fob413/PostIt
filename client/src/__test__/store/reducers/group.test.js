@@ -76,4 +76,15 @@ describe('The Group Reducer ', () => {
       Groups: []
     });
   });
+
+  it('default', () => {
+    const state = {
+      Groups: []
+    };
+    const action = {};
+    const results = store(state, action);
+    expect(results).toEqual({
+      Groups: []
+    });
+  });
 });
