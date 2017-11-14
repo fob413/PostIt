@@ -6,3 +6,5 @@ client/dist/js
 npm-debug.log
 .DS_Store
 coverage
+dist
+build
