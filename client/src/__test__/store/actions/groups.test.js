@@ -1,16 +1,13 @@
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import moxios from 'moxios';
-import mockLocalStorage from '../../_mocks_/mockLocalStorage';
+import mockLocalStorage from '../../__mocks__/mockLocalStorage';
+import data from '../../__mocks__/mockData';
 import {
   loadGroups,
   createNewGroup,
   unloadGroups
 } from '../../../actions/groupsActions';
-import {
-  LOAD_GROUPS,
-  UNLOAD_GROUPS
-} from '../../../helpers/constants';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
@@ -30,38 +27,12 @@ describe('Load Groups action ', () => {
   });
 
   it('should dispatch LOAD_GROUPS on successful api call', (done) => {
-    moxios.stubRequest('api/group/list', {
+    moxios.stubRequest('api/v1/group/list', {
       status: 200,
-      response: {
-        success: true,
-        members: [
-          {
-            id: 1,
-            groupName: 'Group One'
-          },
-          {
-            id: 2,
-            groupName: 'Group Two'
-          }
-        ]
-      }
+      response: data.loadGroupsSuccessfulRes
     });
 
-    const expectedActions = [
-      {
-        type: LOAD_GROUPS,
-        data: [
-          {
-            id: 1,
-            groupName: 'Group One'
-          },
-          {
-            id: 2,
-            groupName: 'Group Two'
-          }
-        ]
-      }
-    ];
+    const expectedActions = data.loadGroupsActions;
 
     store.dispatch(loadGroups()).then(() => {
       expect(store.getActions()).toEqual(expectedActions);
@@ -80,11 +51,7 @@ describe('Unload groups action ', () => {
   });
 
   it('should dispatch unload groups when called', (done) => {
-    const expectedActions = [
-      {
-        type: UNLOAD_GROUPS
-      }
-    ];
+    const expectedActions = data.unloadGroupsActions;
 
     store.dispatch(unloadGroups());
     expect(store.getActions()).toEqual(expectedActions);
@@ -102,12 +69,9 @@ describe('Create new group action ', () => {
   });
 
   it('should return true when successful', (done) => {
-    moxios.stubRequest('api/group', {
+    moxios.stubRequest('api/v1/group', {
       status: 201,
-      response: {
-        success: true,
-        message: 'New group successfully created'
-      }
+      response: data.createNewGroupRes
     });
 
     const expectedSuccess = true;
@@ -116,20 +80,4 @@ describe('Create new group action ', () => {
     });
     done();
   });
-
-  // it('should return false when unsuccessful', (done) => {
-  //   moxios.stubFailure('api/group', {
-  //     status: 400,
-  //     response: {
-  //       success: false,
-  //       message: 'Problem creating new group'
-  //     }
-  //   });
-
-  //   const expectedSuccess = false;
-  //   store.dispatch(createNewGroup()).then((err) => {
-  //     expect(err.data.success).toEqual(expectedSuccess);
-  //   });
-  //   done();
-  // });
 });

@@ -3,6 +3,7 @@ import React from 'react';
 import { shallow, mount } from 'enzyme';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
+import data from '../__mocks__/componentMockData';
 import ConnectedResetPassword, { ResetPassword } from '../../components/index/password/ResetPassword';
 
 // jest.mock('Materialize', () => jest.fn());
@@ -52,26 +53,7 @@ describe('ResetPassword', () => {
   };
 
   beforeEach(() => {
-    props = {
-      auth: {
-        isLoggedIn: false
-      },
-      history: { push: jest.fn() },
-      router: {
-        history: { push: jest.fn() },
-      },
-      authToken: jest.fn(() => Promise.resolve()),
-      match: {
-        params: {
-          token: '82b786eb6e8e63c74814a74dc7445eb61eb19c41'
-        }
-      },
-      resetPassword: jest.fn(() => Promise.resolve({
-        res: {
-          success: true
-        }
-      }))
-    };
+    props = data.resetPasswordProps;
   });
 
   it('always renders a div', () => {
@@ -80,26 +62,7 @@ describe('ResetPassword', () => {
   });
 
   it('calls a componentDidMount method', () => {
-    props = {
-      auth: {
-        isLoggedIn: true
-      },
-      history: { push: jest.fn() },
-      router: {
-        history: { push: jest.fn() },
-      },
-      authToken: jest.fn(() => Promise.resolve({
-        res: {
-          UserName: 'user'
-        }
-      })),
-      match: {
-        params: {
-          token: '82b786eb6e8e63c74814a74dc7445eb61eb19c41'
-        }
-      },
-      resetPassword: jest.fn(() => Promise.resolve())
-    };
+    props = data.resetPasswordProps2;
     const component = mount(
       <ResetPassword {...props} />,
       {
@@ -135,22 +98,7 @@ describe('ResetPassword', () => {
   });
 
   it('calls a componentDidMount method', () => {
-    props = {
-      auth: {
-        isLoggedIn: true
-      },
-      history: { push: jest.fn() },
-      router: {
-        history: { push: jest.fn() },
-      },
-      authToken: jest.fn(() => Promise.reject()),
-      match: {
-        params: {
-          token: '82b786eb6e8e63c74814a74dc7445eb61eb19c41'
-        }
-      },
-      resetPassword: jest.fn(() => Promise.resolve())
-    };
+    props = data.resetPasswordProps3;
     const component = mount(
       <ResetPassword {...props} />,
       {
@@ -190,11 +138,7 @@ describe('ResetPassword', () => {
     const componentWillReceivePropsSpy = jest.spyOn(
       component.instance(), 'componentWillReceiveProps'
     );
-    const nextProps = {
-      auth: {
-        isLoggedIn: true
-      }
-    };
+    const nextProps = data.resetPasswordNextProps;
 
     component.instance().componentWillReceiveProps(nextProps);
     expect(componentWillReceivePropsSpy).toHaveBeenCalled();
@@ -207,11 +151,7 @@ describe('ResetPassword', () => {
 
   it('calls onChange method', () => {
     const component = mountResetPassword();
-    const event = {
-      target: {
-        newPassword: 'asdf;lkj'
-      }
-    };
+    const event = data.resetPasswordEvent;
     const onChangeSpy = jest.spyOn(component.instance(), 'onChange');
     component.instance().onChange(event);
     expect(onChangeSpy).toHaveBeenCalled();
@@ -219,35 +159,15 @@ describe('ResetPassword', () => {
 
   it('calls onChangePassword method', () => {
     const component = mountResetPassword();
-    const event = {
-      preventDefault: jest.fn()
-    };
-    component.setState({
-      newPassword: 'asdf;lkj',
-      confirmPassword: 'asdf;lkj'
-    });
+    const event = data.messageBoardEvent3;
+    component.setState(data.resetPasswordSetState);
     const onChangePasswordspy = jest.spyOn(component.instance(), 'onChangePassword');
     component.instance().onChangePassword(event);
     expect(onChangePasswordspy).toHaveBeenCalled();
   });
 
   it('calls onChangePassword method', () => {
-    props = {
-      auth: {
-        isLoggedIn: false
-      },
-      history: { push: jest.fn() },
-      router: {
-        history: { push: jest.fn() },
-      },
-      authToken: jest.fn(() => Promise.resolve()),
-      match: {
-        params: {
-          token: '82b786eb6e8e63c74814a74dc7445eb61eb19c41'
-        }
-      },
-      resetPassword: jest.fn(() => Promise.reject())
-    };
+    props = data.resetPasswordProps4;
     const component = mount(
       <ResetPassword {...props} />,
       {
@@ -278,10 +198,7 @@ describe('ResetPassword', () => {
     const event = {
       preventDefault: jest.fn()
     };
-    component.setState({
-      newPassword: 'asdf;lkj',
-      confirmPassword: 'asdf;lk'
-    });
+    component.setState(data.resetPasswordSetState2);
     const onChangePasswordspy = jest.spyOn(component.instance(), 'onChangePassword');
     component.instance().onChangePassword(event);
     expect(onChangePasswordspy).toHaveBeenCalled();

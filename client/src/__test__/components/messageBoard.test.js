@@ -4,6 +4,7 @@ import { mount, shallow } from 'enzyme';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import ConnectedMessageBoard, { MessageBoard } from '../../components/messagePage/MessageBoard';
+import data from '../__mocks__/componentMockData';
 
 const middleware = [thunk];
 const mockStore = configureMockStore(middleware);
@@ -50,56 +51,7 @@ describe('MessageBoard ', () => {
   };
 
   beforeEach(() => {
-    props = {
-      sendMessage: jest.fn(() => Promise.resolve()),
-      loadGroupMessages: jest.fn(),
-      loadGroupUsers: jest.fn(),
-      Messages: {
-        readMessages: [
-          {
-            authorsName: 'user1',
-            content: 'Hello world',
-            createdAt: '2017-11-01T12:47:39.925Z',
-            groupId: 2,
-            id: 2,
-            priorityValue: 'URGENT',
-            readby: '3',
-            updatedAt: '2017-11-01T12:4740.032Z',
-            userId: 3
-          },
-          {
-            authorsName: 'user2',
-            content: 'Hello back at you',
-            createdAt: '2017-11-01T12:47:39.925Z',
-            groupId: 2,
-            id: 2,
-            priorityValue: 'URGENT',
-            readby: '3',
-            updatedAt: '2017-11-01T12:4740.032Z',
-            userId: 3
-          }
-        ],
-        unreadMessages: [
-          {
-            authorsName: 'user2',
-            content: 'Hello back at you',
-            createdAt: '2017-11-01T12:47:39.925Z',
-            groupId: 2,
-            id: 2,
-            priorityValue: 'URGENT',
-            readby: '3',
-            updatedAt: '2017-11-01T12:4740.032Z',
-            userId: 3
-          }
-        ]
-      },
-      auth: {},
-      history: {
-        push: jest.fn()
-      },
-      readMessages: jest.fn(),
-      searchUsers: jest.fn()
-    };
+    props = data.messageBoardProps;
   });
 
   it('always renders a div', () => {
@@ -143,19 +95,7 @@ describe('MessageBoard ', () => {
     const componentWillReceivePropsSpy = jest.spyOn(
       component.instance(), 'componentWillReceiveProps'
     );
-    const nextProps = {
-      auth: {
-        isloggedIn: true
-      },
-      Messages: {
-        messages: [],
-        unreadMessages: [],
-        readMessages: [],
-        PlatformUsers: [],
-        groupUsers: [],
-        pageCount: 2
-      }
-    };
+    const nextProps = data.messageBoardNextProps;
     component.instance().componentWillReceiveProps(nextProps);
     expect(componentWillReceivePropsSpy).toHaveBeenCalled();
   });
@@ -252,11 +192,7 @@ describe('MessageBoard ', () => {
       component.instance(), 'inputUser'
     );
 
-    const event = {
-      target: {
-        value: 'user'
-      }
-    };
+    const event = data.messageBoardEvent1;
 
     component.instance().inputUser(event);
     expect(inputUserSpy).toHaveBeenCalled();
@@ -268,11 +204,7 @@ describe('MessageBoard ', () => {
       component.instance(), 'inputUser'
     );
 
-    const event = {
-      target: {
-        value: ''
-      }
-    };
+    const event = data.messageBoardEvent2;
 
     component.instance().inputUser(event);
     expect(inputUserSpy).toHaveBeenCalled();
@@ -284,15 +216,13 @@ describe('MessageBoard ', () => {
       component.instance(), 'pageClick'
     );
 
-    const data = {
-      selected: 1
-    };
+    const datas = data.messageBoardData;
 
     component.setState({
       user: 'user'
     });
 
-    component.instance().pageClick(data);
+    component.instance().pageClick(datas);
     expect(pageClickSpy).toHaveBeenCalled();
   });
 
@@ -302,9 +232,7 @@ describe('MessageBoard ', () => {
       component.instance(), 'prevPage'
     );
 
-    const event = {
-      preventDefault: jest.fn()
-    };
+    const event = data.messageBoardEvent3;
 
     component.setState({
       offset: 1
@@ -320,9 +248,7 @@ describe('MessageBoard ', () => {
       component.instance(), 'nextPage'
     );
 
-    const event = {
-      preventDefault: jest.fn()
-    };
+    const event = data.messageBoardEvent3;
 
     component.setState({
       offset: 1,
@@ -339,34 +265,16 @@ describe('MessageBoard ', () => {
       component.instance(), 'onSend'
     );
 
-    const event = {
-      preventDefault: jest.fn()
-    };
+    const event = data.messageBoardEvent3;
 
-    component.setState({
-      offset: 1,
-      user: 'user',
-      message: 'Hello world',
-      priority: 'NORMAL'
-    });
+    component.setState(data.messageBoardSetState);
 
     component.instance().onSend(event);
     expect(onSendSpy).toHaveBeenCalled();
   });
 
   it('calls onSend method', () => {
-    props = {
-      sendMessage: jest.fn(() => Promise.reject()),
-      loadGroupMessages: jest.fn(),
-      loadGroupUsers: jest.fn(),
-      Messages: {},
-      auth: {},
-      history: {
-        push: jest.fn()
-      },
-      readMessages: jest.fn(),
-      searchUsers: jest.fn()
-    };
+    props = data.messageBoardProps2;
     const component = mount(
       <MessageBoard {...props} />,
       {
@@ -403,59 +311,10 @@ describe('MessageBoard ', () => {
       preventDefault: jest.fn()
     };
 
-    component.setState({
-      offset: 1,
-      user: 'user',
-      message: 'Hello world',
-      priority: 'NORMAL'
-    });
+    component.setState(data.messageBoardSetState);
 
     component.instance().onSend(event);
     expect(onSendSpy).toHaveBeenCalled();
   });
-
-  // it('always renders a div', () => {
-  //   props = {
-  //     sendMessage: jest.fn(() => Promise.resolve()),
-  //     loadGroupMessages: jest.fn(),
-  //     loadGroupUsers: jest.fn(),
-  //     Messages: {},
-  //     auth: {},
-  //     history: {
-  //       push: jest.fn()
-  //     },
-  //     readMessages: jest.fn(),
-  //     searchUsers: jest.fn()
-  //   };
-  //   const component = mount(
-  //     <MessageBoard {...props} />,
-  //     {
-  //       childContextTypes: { router: React.PropTypes.object },
-  //       context: { router: {
-  //         history: {
-  //           push: () => null,
-  //           createHref: () => null,
-  //           replace: () => null,
-  //           exact: true,
-  //           path: '/messageboard',
-  //           component: '[function Connect]',
-  //           location: {
-  //             pathname: '/messageboard',
-  //             search: '',
-  //             hash: '#!'
-  //           },
-  //           computedMatch: {
-  //             path: '/messageboard',
-  //             url: '/messageboard',
-  //             isExact: true,
-  //             params: {}
-  //           }
-  //         }
-  //       }
-  //       }
-  //     }
-  //   );
-  //   expect(component.length).toBeGreaterThan(0);
-  // });
 });
 

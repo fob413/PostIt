@@ -1,4 +1,4 @@
-import db from '../models/index';
+import db from '../models';
 import { sendMail } from '../middleware/priority';
 
 const Users = db.Users;

@@ -2,9 +2,9 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import mockLocalStorage from '../../_mocks_/mockLocalStorage';
+import mockLocalStorage from '../../__mocks__/mockLocalStorage';
 import * as types from '../../../helpers/constants';
-import datas from '../../_mocks_/mockData';
+import datas from '../../__mocks__/mockData';
 import {
   loadCurrentGroup,
   sendMessage,
@@ -30,12 +30,7 @@ describe('LOAD CURRENT GROUP action', () => {
     const store = mockStore({});
     const groupId = datas.groupId;
 
-    const expectedAction = [
-      {
-        type: types.CURRENT_GROUP,
-        data: groupId
-      }
-    ];
+    const expectedAction = datas.loadCurrentGroupActions;
 
     store.dispatch(loadCurrentGroup(groupId));
     expect(store.getActions()).toEqual(expectedAction);
@@ -52,7 +47,7 @@ describe('Send Message function', () => {
     const groupId = datas.groupId;
     const message = datas.message;
     const priority = datas.priority;
-    mock.onPost(`api/group/${groupId}/message`)
+    mock.onPost(`api/v1/group/${groupId}/message`)
     .reply(201, {
       success: true,
       message: 'message sent'
@@ -72,7 +67,7 @@ describe('Send Message function', () => {
     const groupId = datas.groupId;
     const message = datas.message;
     const priority = datas.priority;
-    mock.onPost(`api/group/${groupId}/message`)
+    mock.onPost(`api/v1/group/${groupId}/message`)
     .reply(400, {
       success: true,
       message: 'An error has occured'
@@ -98,7 +93,7 @@ describe('LOAD GROUP MESSAGES action', () => {
     const dataArray = datas.messageArrayData;
     const userId = datas.id;
 
-    mock.onGet(`api/group/${groupId}/messages`)
+    mock.onGet(`api/v1/group/${groupId}/messages`)
     .reply(200, dataArray);
 
     const expectedAction = [
@@ -128,7 +123,7 @@ describe('LOAD GROUP MESSAGES action', () => {
     const groupId = datas.groupId;
     const userId = datas.id;
 
-    mock.onGet(`api/group/${groupId}/messages`)
+    mock.onGet(`api/v1/group/${groupId}/messages`)
     .reply(400, {
       success: false,
       message: 'An error has occured'
@@ -152,7 +147,7 @@ describe('LOAD PLATFORM USERS action', () => {
     const store = mockStore({});
     const usersArray = datas.platformUsers;
 
-    mock.onGet('api/users/list')
+    mock.onGet('api/v1/users/list')
     .reply(200, usersArray);
 
     const expectedAction = [
@@ -172,7 +167,7 @@ describe('LOAD PLATFORM USERS action', () => {
     mock.reset();
     const store = mockStore({});
 
-    mock.onGet('api/users/list')
+    mock.onGet('api/v1/users/list')
     .reply(400, {
       success: false,
       message: 'An error has occured'
@@ -199,7 +194,7 @@ describe('SEARCH USERS action', () => {
     const searchUserData = datas.searchUser;
     const userName = datas.userName;
 
-    mock.onPost(`api/users/list/${offset}`, searchUserData)
+    mock.onPost(`api/v1/users/list/${offset}`, searchUserData)
     .reply(200, searchUserResult);
 
     const expectedAction = [
@@ -230,7 +225,7 @@ describe('SEARCH USERS action', () => {
     const searchUserData = datas.searchUser;
     const userName = datas.userName;
 
-    mock.onPost(`api/users/list/${offset}`, searchUserData)
+    mock.onPost(`api/v1/users/list/${offset}`, searchUserData)
     .reply(400, {
       success: false,
       message: 'An error has occured'
@@ -255,7 +250,7 @@ describe('LOAD GROUP USERS action', () => {
     const groupId = datas.groupId;
     const usersArray = datas.platformUsers;
 
-    mock.onGet(`api/group/${groupId}/user/list`)
+    mock.onGet(`api/v1/group/${groupId}/user/list`)
     .reply(200, usersArray);
 
     const expectedAction = [
@@ -276,7 +271,7 @@ describe('LOAD GROUP USERS action', () => {
     const store = mockStore({});
     const groupId = datas.groupId;
 
-    mock.onGet(`api/group/${groupId}/user/list`)
+    mock.onGet(`api/v1/group/${groupId}/user/list`)
     .reply(400, {
       success: false,
       message: 'An error has occured'
@@ -305,7 +300,7 @@ describe('ADD USER TO GROUP action', () => {
       message: 'Successfully added to group'
     };
 
-    mock.onPost(`api/group/${groupId}/user`)
+    mock.onPost(`api/v1/group/${groupId}/user`)
     .reply(201, data);
 
     const expectedAction = datas.emptyAction;
@@ -322,7 +317,7 @@ describe('ADD USER TO GROUP action', () => {
     const userId = datas.id;
     const groupId = datas.groupId;
 
-    mock.onPost(`api/group/${groupId}/user`)
+    mock.onPost(`api/v1/group/${groupId}/user`)
     .reply(400, {
       success: false,
       message: 'An error has occured'
@@ -350,7 +345,7 @@ describe('Read Messages action', () => {
       message: 'User has read all messages'
     };
 
-    mock.onPost(`api/group/${groupId}/messages/read`)
+    mock.onPost(`api/v1/group/${groupId}/messages/read`)
     .reply(201, data);
 
     const expectedAction = datas.emptyAction;
@@ -370,7 +365,7 @@ describe('Read Messages action', () => {
       message: 'An error has occured'
     };
 
-    mock.onPost(`api/group/${groupId}/messages/read`)
+    mock.onPost(`api/v1/group/${groupId}/messages/read`)
     .reply(400, data);
 
     const expectedAction = datas.emptyAction;

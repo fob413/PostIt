@@ -8,7 +8,7 @@ import axios from 'axios';
  */
 export function forgotPassword(email) {
   return () => (
-    axios.post('/api/forgot/password', { email })
+    axios.post('/api/v1/forgot/password', { email })
   ).then(({ data }) => data,
     err => err.response.data);
 }
@@ -21,7 +21,7 @@ export function forgotPassword(email) {
  */
 export function authToken(token) {
   return () => (
-    axios.post('/api/reset/token', { token })
+    axios.post('/api/v1/reset/token', { token })
   ).then(({ data }) => data,
   err => err.response.data
   );
@@ -37,7 +37,7 @@ export function authToken(token) {
  */
 export function resetPassword(token, newPassword, confirmPassword) {
   return () => axios.post(
-      `/api/reset/password/${token}`,
+      `/api/v1/reset/password/${token}`,
       { newPassword, confirmPassword }
     ).then(({ data }) => data,
     err => err.response.data);

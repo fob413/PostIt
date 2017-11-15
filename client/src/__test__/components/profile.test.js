@@ -4,6 +4,7 @@ import { shallow, mount } from 'enzyme';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import ConnectedProfile, { Profile } from '../../components/navbar/Profile';
+import data from '../__mocks__/componentMockData';
 
 const middleware = [thunk];
 const mockStore = configureMockStore(middleware);
@@ -25,17 +26,7 @@ describe('Profile ', () => {
   };
 
   beforeEach(() => {
-    props = {
-      auth: {
-        userName: 'User',
-        email: 'user@email.com',
-        telephone: '1234567890',
-        isLoggedIn: true
-      },
-      history: {
-        push: jest.fn()
-      },
-    };
+    props = data.profileProps;
   });
 
   it('always renders a div', () => {
@@ -49,17 +40,7 @@ describe('Profile ', () => {
   });
 
   it('has componentWillMount method', () => {
-    props = {
-      auth: {
-        userName: 'User',
-        email: 'user@email.com',
-        telephone: '1234567890',
-        isLoggedIn: false
-      },
-      history: {
-        push: jest.fn()
-      },
-    };
+    props = data.profileProps2;
 
     const component = mount(
       <Profile {...props} />
@@ -73,30 +54,13 @@ describe('Profile ', () => {
   });
 
   it('has componentWillReceiveProps method', () => {
-    props = {
-      auth: {
-        userName: 'User',
-        email: 'user@email.com',
-        telephone: '1234567890',
-        isLoggedIn: true
-      },
-      history: {
-        push: jest.fn()
-      },
-    };
+    props = data.profileProps;
 
     const component = mount(
       <Profile {...props} />
     );
 
-    const nextProps = {
-      auth: {
-        userName: 'User',
-        email: 'user@email.com',
-        telephone: '1234567890',
-        isLoggedIn: false
-      }
-    };
+    const nextProps = data.profileNextProps;
 
     const componentWillReceivePropsSpy = jest.spyOn(
       component.instance(), 'componentWillReceiveProps'

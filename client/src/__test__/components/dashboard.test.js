@@ -4,6 +4,7 @@ import { mount, shallow } from 'enzyme';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import ConnectedDashBoard, { DashBoard } from '../../components/dashboard/dashboard';
+import data from '../__mocks__/componentMockData';
 
 const middleware = [thunk];
 const mockStore = configureMockStore(middleware);
@@ -51,23 +52,7 @@ describe('DashBoard', () => {
   };
 
   beforeEach(() => {
-    props = {
-      auth: {
-        email: 'fob1493@gmail.com',
-        groups: [],
-        isLoggedIn: true,
-        telephone: '12345678901',
-        token: '',
-        userId: 3,
-        userName: 'user'
-      },
-      createNewGroup: jest.fn(() => Promise.resolve()),
-      groups: [],
-      history: {
-        push: jest.fn()
-      },
-      loadGroups: jest.fn()
-    };
+    props = data.dashBoardProps;
   });
 
   it('always renders a div', () => {
@@ -76,23 +61,7 @@ describe('DashBoard', () => {
   });
 
   it('sends the user to signin if not authenticated', () => {
-    props = {
-      auth: {
-        email: 'fob1493@gmail.com',
-        groups: [],
-        isLoggedIn: false,
-        telephone: '12345678901',
-        token: '',
-        userId: 3,
-        userName: 'user'
-      },
-      createNewGroup: jest.fn(() => Promise.resolve()),
-      groups: [],
-      history: {
-        push: jest.fn()
-      },
-      loadGroups: jest.fn()
-    };
+    props = data.dashBoardProps2;
 
     const component = mount(
       <DashBoard {...props} />,
@@ -134,12 +103,7 @@ describe('DashBoard', () => {
       component.instance(), 'componentWillReceiveProps'
     );
 
-    const nextProps = {
-      groups: [],
-      auth: {
-        isLoggedIn: true
-      }
-    };
+    const nextProps = data.dashBoardNextProps;
 
     component.instance().componentWillReceiveProps(nextProps);
     expect(componentWillReceivePropsSpy).toHaveBeenCalled();
@@ -151,7 +115,7 @@ describe('DashBoard', () => {
       component.instance(), 'onCreateGroup'
     );
 
-    const groupName = 'Random New Group';
+    const groupName = data.groupName;
 
     component.instance().onCreateGroup(groupName);
     expect(onCreateGroupSpy).toHaveBeenCalled();
@@ -163,7 +127,7 @@ describe('DashBoard', () => {
       component.instance(), 'onSearchGroups'
     );
 
-    const search = 'Random New Group';
+    const search = data.groupName;
 
     component.instance().onSearchGroups(search);
     expect(onSearchGroupsSpy).toHaveBeenCalled();

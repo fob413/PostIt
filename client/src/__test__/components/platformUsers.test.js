@@ -4,6 +4,7 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { shallow, mount } from 'enzyme';
 import ConnectedPlatformUsers, { PlatformUsers } from '../../components/messagePage/PlatformUsers';
+import data from '../__mocks__/componentMockData';
 
 const middleware = [thunk];
 const mockStore = configureMockStore(middleware);
@@ -25,35 +26,7 @@ describe('PlatformUsers', () => {
   };
 
   beforeEach(() => {
-    props = {
-      platformUser: {
-        id: 1,
-        userName: 'user'
-      },
-      addUserToGroup: jest.fn(() => Promise.resolve()),
-      Messages: {},
-      loadGroupUsers: jest.fn(() => Promise.resolve()),
-      groupUsers: [
-        {
-          id: 2,
-          userId: 3,
-          groupId: 2,
-          User: {
-            id: 3,
-            userName: 'user1'
-          }
-        },
-        {
-          id: 3,
-          userId: 4,
-          groupId: 2,
-          User: {
-            id: 4,
-            userName: 'user2'
-          }
-        }
-      ]
-    };
+    props = data.platformUsersProps;
   });
 
   it('always renders a li', () => {
@@ -66,28 +39,7 @@ describe('PlatformUsers', () => {
     const componentWillReceivePropsSpy = jest.spyOn(
       component.instance(), 'componentWillReceiveProps'
     );
-    const nextProps = {
-      groupUsers: [
-        {
-          id: 2,
-          userId: 1,
-          groupId: 2,
-          User: {
-            id: 1,
-            userName: 'user1'
-          }
-        },
-        {
-          id: 3,
-          userId: 4,
-          groupId: 2,
-          User: {
-            id: 4,
-            userName: 'user2'
-          }
-        }
-      ]
-    };
+    const nextProps = data.plaformUsersNextProps;
     component.instance().componentWillReceiveProps(nextProps);
     expect(componentWillReceivePropsSpy).toHaveBeenCalled();
   });

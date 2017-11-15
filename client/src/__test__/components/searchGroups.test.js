@@ -1,6 +1,7 @@
 /* global jest */
 import React from 'react';
 import { mount } from 'enzyme';
+import data from '../__mocks__/componentMockData';
 import { SearchGroups } from '../../components/dashboard/Searchgroups';
 
 describe('SearchGroups ', () => {
@@ -17,10 +18,7 @@ describe('SearchGroups ', () => {
   };
 
   beforeEach(() => {
-    props = {
-      showSearchGroups: true,
-      onSearchGroups: jest.fn()
-    };
+    props = data.searchGroupsProps;
   });
 
   it('renders a div', () => {
@@ -34,21 +32,14 @@ describe('SearchGroups ', () => {
       component.instance(), 'componentWillReceiveProps'
     );
 
-    const nextProps = {
-      showSearchGroups: false
-    };
+    const nextProps = data.searchGroupNextProps;
     component.instance().componentWillReceiveProps(nextProps);
     expect(componentWillReceivePropSpy).toHaveBeenCalled();
   });
 
   it('calls searchGroups method', () => {
     const component = mountSearchGroups();
-    const event = {
-      preventDefault: jest.fn(),
-      target: {
-        searchValue: 'group'
-      }
-    };
+    const event = data.searchGroupEvent;
     const searchGroupsSpy = jest.spyOn(
       component.instance(), 'searchGroups'
     );

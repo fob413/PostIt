@@ -4,6 +4,7 @@ import { mount, shallow } from 'enzyme';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import ConnectedGroup, { Group } from '../../components/dashboard/Group';
+import data from '../__mocks__/componentMockData';
 
 const middleware = [thunk];
 const mockStore = configureMockStore(middleware);
@@ -25,18 +26,7 @@ describe('Group ', () => {
   };
 
   beforeEach(() => {
-    props = {
-      auth: {
-        userId: 1
-      },
-      showGroup: {
-        id: 2
-      },
-      history: {
-        push: jest.fn()
-      },
-      loadCurrentGroup: jest.fn()
-    };
+    props = data.groupProps;
   });
 
   it('always renders a div', () => {

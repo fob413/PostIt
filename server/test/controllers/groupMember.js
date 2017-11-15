@@ -29,7 +29,7 @@ describe('Test setup', () => {
 
   it('should get token for other tests', (done) => {
     chai.request(app)
-    .post('/api/user/signup')
+    .post('/api/v1/user/signup')
     .send({
       userName: 'seyi',
       email: 'seyi@email.com',
@@ -45,7 +45,7 @@ describe('Test setup', () => {
 
   it('should signup another user', (done) => {
     chai.request(app)
-    .post('/api/user/signup')
+    .post('/api/v1/user/signup')
     .send({
       userName: 'funsho',
       email: 'funsho@email.com',
@@ -61,7 +61,7 @@ describe('Test setup', () => {
 
   it('should create a group', (done) => {
     chai.request(app)
-    .post('/api/group')
+    .post('/api/v1/group')
     .set('token', token)
     .send({
       groupName: 'Test Group One'
@@ -77,7 +77,7 @@ describe('Add User To A Group Route /api/group/:groupId/user', () => {
   describe('Add user positive response', () => {
     it('should return a status of 201 when successful', (done) => {
       chai.request(app)
-      .post('/api/group/1/user')
+      .post('/api/v1/group/1/user')
       .set('token', token)
       .send({
         userId: 1
@@ -92,7 +92,7 @@ describe('Add User To A Group Route /api/group/:groupId/user', () => {
   describe('Add user negative response', () => {
     it('should return a status 400 when user object is not sent', (done) => {
       chai.request(app)
-      .post('/api/group/1/user')
+      .post('/api/v1/group/1/user')
       .set('token', token)
       .send()
       .end((err, res) => {
@@ -103,7 +103,7 @@ describe('Add User To A Group Route /api/group/:groupId/user', () => {
 
     it('should return a status 401 when user already belongs to the group', (done) => {
       chai.request(app)
-      .post('/api/group/1/user')
+      .post('/api/v1/group/1/user')
       .set('token', token)
       .send({
         userId: 1
@@ -116,7 +116,7 @@ describe('Add User To A Group Route /api/group/:groupId/user', () => {
 
     it('should return a status 400 when group does not exist', (done) => {
       chai.request(app)
-      .post('/api/group/8/user')
+      .post('/api/v1/group/8/user')
       .set('token', token)
       .send({
         userId: 1
@@ -133,7 +133,7 @@ describe('List Users In A Group api route /api/group/:groupId/user/list', () => 
   describe('List users in a group positive response', () => {
     it('should return a status 200 when successful', (done) => {
       chai.request(app)
-      .get('/api/group/1/user/list')
+      .get('/api/v1/group/1/user/list')
       .set('token', token)
       .end((err, res) => {
         res.should.have.status(200);
@@ -145,7 +145,7 @@ describe('List Users In A Group api route /api/group/:groupId/user/list', () => 
   describe('List users in a group negative response', () => {
     it('should return a status 400 when group does not exist', (done) => {
       chai.request(app)
-      .get('/api/group/8/user/list')
+      .get('/api/v1/group/8/user/list')
       .set('token', token)
       .end((err, res) => {
         res.should.have.status(400);

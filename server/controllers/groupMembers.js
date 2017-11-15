@@ -1,19 +1,12 @@
-import jwt from 'jsonwebtoken';
-import db from '../models/index';
+import db from '../models';
 
 const GroupMembers = db.GroupMembers;
 const Users = db.Users;
 const Groups = db.Groups;
-const secret = process.env.SECRET_TOKEN;
 
 // const members = require('../models/').Members;
 
 export default {
-  list(req, res) {
-    return GroupMembers.all()
-    .then(group => res.status(200).send(group))
-    .catch(error => res.status(400).send(error));
-  },
 
   /**
    * add a user to a new group

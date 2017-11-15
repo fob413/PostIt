@@ -1,6 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import { DisplayMessage } from '../../components/messagePage/DisplayMessage';
+import data from '../__mocks__/componentMockData';
 
 describe('DisplayMessage ', () => {
   let props;
@@ -16,10 +17,7 @@ describe('DisplayMessage ', () => {
   };
 
   beforeEach(() => {
-    props = {
-      author: 'user',
-      content: 'Hello World'
-    };
+    props = data.displayMessageProps;
   });
 
   it('always renders li', () => {

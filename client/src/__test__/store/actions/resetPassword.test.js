@@ -2,9 +2,8 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import mockLocalStorage from '../../_mocks_/mockLocalStorage';
-import * as types from '../../../helpers/constants';
-import data from '../../_mocks_/mockData';
+import mockLocalStorage from '../../__mocks__/mockLocalStorage';
+import data from '../../__mocks__/mockData';
 import {
   forgotPassword,
   authToken,
@@ -25,7 +24,7 @@ describe('forgotPassword action', () => {
     const store = mockStore({});
     const email = data.email;
 
-    mock.onPost('/api/forgot/password')
+    mock.onPost('/api/v1/forgot/password')
     .reply(200, {
       success: true,
       message: 'Reset password link has been sent to your mail'
@@ -44,7 +43,7 @@ describe('forgotPassword action', () => {
     const store = mockStore({});
     const email = data.email;
 
-    mock.onPost('/api/forgot/password')
+    mock.onPost('/api/v1/forgot/password')
     .reply(400, {
       success: false,
       message: 'An error has occured'
@@ -68,7 +67,7 @@ describe('authToken action', () => {
     const store = mockStore({});
     const token = data.token;
 
-    mock.onPost('/api/reset/token')
+    mock.onPost('/api/v1/reset/token')
     .reply(200, {
       success: true,
       message: 'Authenticated to change password'
@@ -87,7 +86,7 @@ describe('authToken action', () => {
     const store = mockStore({});
     const token = data.token;
 
-    mock.onPost('/api/reset/token')
+    mock.onPost('/api/v1/reset/token')
     .reply(400, {
       success: false,
       message: 'Not authenticated to change password'
@@ -113,7 +112,7 @@ describe('resetPassword action', () => {
     const newPassword = data.password;
     const confirmPassword = data.password;
 
-    mock.onPost(`/api/reset/password/${token}`)
+    mock.onPost(`/api/v1/reset/password/${token}`)
     .reply(200, {
       success: true,
       message: 'Successfully changed password'
@@ -133,7 +132,7 @@ describe('resetPassword action', () => {
     const newPassword = data.password;
     const confirmPassword = data.password;
 
-    mock.onPost(`/api/reset/password/${token}`)
+    mock.onPost(`/api/v1/reset/password/${token}`)
     .reply(200, {
       success: true,
       message: 'Successfully changed password'
@@ -154,7 +153,7 @@ describe('resetPassword action', () => {
     const newPassword = data.password;
     const confirmPassword = data.password;
 
-    mock.onPost(`/api/reset/password/${token}`)
+    mock.onPost(`/api/v1/reset/password/${token}`)
     .reply(400, {
       success: false,
       message: 'An error has occured'

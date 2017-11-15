@@ -1,6 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import { Message } from '../../components/messagePage/Message';
+import data from '../__mocks__/componentMockData';
 
 describe('Message ', () => {
   let props;
@@ -16,10 +17,7 @@ describe('Message ', () => {
   };
 
   beforeEach(() => {
-    props = {
-      messageContent: 'Hello World',
-      messageAuthor: 'User'
-    };
+    props = data.messageProps;
   });
 
   it('always renders a div', () => {

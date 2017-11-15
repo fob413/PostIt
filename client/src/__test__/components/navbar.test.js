@@ -5,6 +5,7 @@ import configureMockStore from 'redux-mock-store';
 import { Link } from 'react-router-dom';
 import thunk from 'redux-thunk';
 import ConnectedNavbar, { NavBar } from '../../components/navbar/navbar';
+import data from '../__mocks__/componentMockData';
 
 const middleware = [thunk];
 const mockStore = configureMockStore(middleware);
@@ -39,18 +40,7 @@ describe('Navbar ', () => {
   };
 
   beforeEach(() => {
-    props = {
-      auth: {
-        isLoggedin: true
-      },
-      signUserOut: jest.fn(() => Promise.resolve({
-        res: {}
-      })),
-      unloadGroups: jest.fn(() => Promise.resolve()),
-      history: {
-        push: jest.fn()
-      }
-    };
+    props = data.navbarProps;
   });
 
   it('always renders a div', () => {
@@ -63,11 +53,7 @@ describe('Navbar ', () => {
     const componentWillReceivePropsSpy = jest.spyOn(
       component.instance(), 'componentWillReceiveProps'
     );
-    const nextProps = {
-      auth: {
-        isLoggedIn: false
-      }
-    };
+    const nextProps = data.navbarNextProps;
 
     component.instance().componentWillReceiveProps(nextProps);
     expect(componentWillReceivePropsSpy).toHaveBeenCalled();
@@ -75,9 +61,7 @@ describe('Navbar ', () => {
 
   it('calls onSignOut method', () => {
     const component = mountNavbar();
-    const event = {
-      preventDefault: jest.fn()
-    };
+    const event = data.messageBoardEvent3;
     const onSignOutSpy = jest.spyOn(
       component.instance(), 'onSignOut'
     );

@@ -2,6 +2,7 @@ import React from 'react';
 import { mount } from 'enzyme';
 import { Link } from 'react-router-dom';
 import { PageNotFound } from '../../components/pagenotfound/Pagenotfound';
+import data from '../__mocks__/componentMockData';
 
 describe('PageNotFound ', () => {
   let props;
@@ -41,11 +42,7 @@ describe('PageNotFound ', () => {
   };
 
   beforeEach(() => {
-    props = {
-      history: {
-        push: jest.fn()
-      }
-    };
+    props = data.pageNotFoundProps;
   });
 
   it('always renders a div', () => {

@@ -2,6 +2,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import { NewGroup } from '../../components/dashboard/Newgroup';
+import data from '../__mocks__/componentMockData';
 
 describe('NewGroup ', () => {
   let props;
@@ -17,11 +18,7 @@ describe('NewGroup ', () => {
   };
 
   beforeEach(() => {
-    props = {
-      createGroup: true,
-      toggleCreateGroup: jest.fn(),
-      onCreateGroup: jest.fn()
-    };
+    props = data.newGroupsProps;
   });
 
   it('renders a div', () => {
@@ -30,11 +27,7 @@ describe('NewGroup ', () => {
   });
 
   it('does not render anything when create is false', () => {
-    props = {
-      createGroup: false,
-      toggleCreateGroup: jest.fn(),
-      onCreateGroup: jest.fn()
-    };
+    props = data.newGroupsProps2;
     const component = mount(
       <NewGroup {...props} />
     );
@@ -43,9 +36,7 @@ describe('NewGroup ', () => {
 
   it('calls an onChange method', () => {
     const component = mountNewGroup();
-    const event = {
-      target: { groupName: 'group' }
-    };
+    const event = data.newGroupsEvent;
     const onChangeSpy = jest.spyOn(component.instance(), 'onChange');
     component.instance().onChange(event);
     expect(onChangeSpy).toHaveBeenCalled();
@@ -53,12 +44,8 @@ describe('NewGroup ', () => {
 
   it('calls onCreateGroup method', () => {
     const component = mountNewGroup();
-    const event = {
-      preventDefault: jest.fn()
-    };
-    component.setState({
-      groupName: 'Group'
-    });
+    const event = data.messageBoardEvent3;
+    component.setState(data.newGroupsSetState);
     const onCreateGroupSpy = jest.spyOn(component.instance(), 'onCreateGroup');
     component.instance().onCreateGroup(event);
     expect(onCreateGroupSpy).toHaveBeenCalled();
@@ -66,9 +53,7 @@ describe('NewGroup ', () => {
 
   it('calls onCancelCreate method', () => {
     const component = mountNewGroup();
-    const event = {
-      preventDefault: jest.fn()
-    };
+    const event = data.messageBoardEvent3;
     const onCancelCreateSpy = jest.spyOn(component.instance(), 'onCancelCreate');
     component.instance().onCancelCreate(event);
     expect(onCancelCreateSpy).toHaveBeenCalled();

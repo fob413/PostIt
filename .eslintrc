@@ -38,6 +38,7 @@
     "localStorage": true,
     "window": true,
     "document": true,
-    "Materialize": true
+    "Materialize": true,
+    "jest": true
   }
 }

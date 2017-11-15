@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 import crypto from 'crypto';
 import jwt from 'jsonwebtoken';
-import db from '../models/index';
+import db from '../models';
 import paginate from '../middleware/paginate';
 import { sendResetMail, sendSuccessfulResetMail } from '../middleware/priority';
 
@@ -10,8 +10,6 @@ require('dotenv').config();
 const secret = process.env.SECRET_TOKEN;
 
 const Users = db.Users;
-// const bcrypt = require('bcrypt');
-// const Users = require('../models').Users;
 
 // message sent for invalid inputs
 const invalid = {

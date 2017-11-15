@@ -1,4 +1,5 @@
 import nodemailer from 'nodemailer';
+import logger from 'logger';
 
 require('dotenv').config();
 
@@ -22,9 +23,6 @@ export function sendMail(users, message, priorityHeader) {
 
   // create reusable transporter object using the default SMTP transport
   const transporter = nodemailer.createTransport({
-    // host: 'smtp.gmail.com',
-    // port: 465,
-    // secure: true,
     service: 'Gmail',
     auth: {
       user: postitMail,
@@ -63,19 +61,9 @@ export function sendMail(users, message, priorityHeader) {
     if (error) {
       return error;
     }
-    console.log(`${info.messageId} send: ${info.response}`);
+    logger.info(`${info.messageId} send: ${info.response}`);
   });
 }
-
-/**
- * function to send sms to users
- * @param {array} users array of users
- * @return {void}
- */
-// export function sendSMS(users) {
-//   console.log('send an sms');
-//   console.log(`critical priority users of ${users}`);
-// }
 
 /**
  * function to send reset password link to users mail
@@ -87,9 +75,6 @@ export function sendMail(users, message, priorityHeader) {
 export function sendResetMail(token, email, host) {
   // create reusable transporter object using the default SMTP transport
   const transporter = nodemailer.createTransport({
-    // host: 'smtp.gmail.com',
-    // port: 465,
-    // secure: true,
     service: 'Gmail',
     auth: {
       user: postitMail,
@@ -127,7 +112,7 @@ export function sendResetMail(token, email, host) {
     if (error) {
       return error;
     }
-    console.log(`Message ${info.messageId} send: ${info.response}`);
+    logger.info(`Message ${info.messageId} send: ${info.response}`);
   });
 }
 
@@ -174,6 +159,6 @@ export function sendSuccessfulResetMail(email) {
     if (error) {
       return error;
     }
-    console.log(`Message ${info.messageId} send: ${info.response}`);
+    logger.info(`Message ${info.messageId} send: ${info.response}`);
   });
 }

@@ -90,7 +90,7 @@ module.exports = {
     userName: 'fob',
     email: 'fob@gmail.com',
     password: 'asdf;lkj',
-    telephone: '12345678901'
+    telephone: '0987654321'
   },
 
   testUser5: {
@@ -123,6 +123,27 @@ module.exports = {
     email: 'test3@yahoo.com',
     password: 'asdf;lkj',
     telephone: '08138498178'
+  },
+
+  testUser10: {
+    userName: 'Bayo',
+    email: 'funsho@gmail.com',
+    password: 'asdf;lkj',
+    telephone: '12345678901'
+  },
+
+  testUser11: {
+    userName: 'test11',
+    email: 'seyi@email.com',
+    password: 'asdf;lkj',
+    telephone: '1029384756'
+  },
+
+  testUser12: {
+    userName: 'seyi',
+    email: 'seyi@email.com',
+    telephone: '0987654321',
+    password: 'asdf;lkj'
   },
 
   incompleteUser1: {

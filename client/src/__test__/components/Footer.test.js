@@ -4,6 +4,7 @@ import { mount, shallow } from 'enzyme';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import ConnectedFooter, { Footer } from '../../components/footer/footer';
+import data from '../__mocks__/componentMockData';
 
 const middleware = [thunk];
 const mockStore = configureMockStore(middleware);
@@ -24,28 +25,18 @@ describe('Footer ', () => {
   };
 
   beforeEach(() => {
-    props = {
-      auth: undefined
-    };
+    props = data.footerProps;
   });
 
   it('always renders a div', () => {
-    props = {
-      auth: {
-        isLoggedin: true
-      }
-    };
+    props = data.footerProps2;
 
     const divs = footer().find('div');
     expect(divs.length).toBeGreaterThan(0);
   });
 
   it('does not render anything if auth is false', () => {
-    props = {
-      auth: {
-        isLoggedin: false
-      }
-    };
+    props = data.footerProps3;
 
     const divs = footer().find('div');
     const wrappingDiv = divs.first();
@@ -53,22 +44,14 @@ describe('Footer ', () => {
   });
 
   it('contains everything else that gets rendered', () => {
-    props = {
-      auth: {
-        isLoggedin: true
-      }
-    };
+    props = data.footerProps2;
     const divs = footer().find('div');
     const wrappingDiv = divs.first();
     expect(wrappingDiv.children()).toEqual(footer().children());
   });
 
   it('renders footer whens state.isAuth is true', () => {
-    props = {
-      auth: {
-        isLoggedin: true
-      }
-    };
+    props = data.footerProps2;
     const component = footer();
     component.setState({ isAuth: true });
     const wrappingDiv = component.first();
@@ -78,11 +61,7 @@ describe('Footer ', () => {
   it('contains a componentWillReceiveProps Method', () => {
     const component = footer();
     const componentWillMountSpy = jest.spyOn(component.instance(), 'componentWillReceiveProps');
-    const nextProps = {
-      auth: {
-        isLoggedin: true
-      }
-    };
+    const nextProps = data.footerProps2;
     component.instance().componentWillReceiveProps(nextProps);
     expect(componentWillMountSpy).toHaveBeenCalledTimes(1);
   });

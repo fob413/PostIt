@@ -17,7 +17,7 @@ const unloadGroupsSuccess = () => ({
  */
 export function loadGroups() {
   return dispatch => axios.get(
-      'api/group/list',
+      'api/v1/group/list',
       { headers: { token: localStorage.getItem('token') } }
     )
     .then(({ data }) => {
@@ -34,7 +34,7 @@ export function loadGroups() {
  */
 export function createNewGroup(groupName) {
   return () => axios.post(
-      'api/group',
+      'api/v1/group',
       { groupName },
       { headers: { token: localStorage.getItem('token') } }
     )

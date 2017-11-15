@@ -45,16 +45,5 @@ describe('User model', () => {
     });
     done();
   });
-
-  it('should update a user\'s password', (done) => {
-    Users.findById(userId).then((user) => {
-      user.update({ password: data.newPassword })
-      .then((updatedUser) => {
-        updatedUser.dataValues.id.should.equal(userId);
-        updatedUser.dataValues.password.should.equal(data.newPassword);
-        done();
-      });
-    });
-  });
 });
 

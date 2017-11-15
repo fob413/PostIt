@@ -155,14 +155,14 @@ export function loadCurrentGroup(groupId) {
 export function sendMessage(message, groupId, priority) {
   return dispatch => {
     return axios.post(
-      `api/group/${groupId}/message`,
+      `api/v1/group/${groupId}/message`,
       { content: message, priority },
       { headers: { token: localStorage.getItem('token') } }
     )
     .then(({ data }) => {
       return true;
     }, (err) => {
-      console.log(err.message);
+      // console.log(err.message);
     });
   };
 }
@@ -178,7 +178,7 @@ export function sendMessage(message, groupId, priority) {
 export function loadGroupMessages(groupId, userId) {
   return (dispatch) => {
     return axios.get(
-      `api/group/${groupId}/messages`,
+      `api/v1/group/${groupId}/messages`,
       { headers: { token: localStorage.getItem('token') } }
     )
     .then(({ data }) => {
@@ -202,7 +202,7 @@ export function loadGroupMessages(groupId, userId) {
 export function loadPlatformUsers() {
   return (dispatch) => {
     return axios.get(
-      'api/users/list',
+      'api/v1/users/list',
       { headers: { token: localStorage.getItem('token') } }
     )
     .then(({ data }) => {
@@ -222,7 +222,7 @@ export function loadPlatformUsers() {
 export function searchUsers(offset, userName) {
   return (dispatch) => {
     return axios.post(
-      `api/users/list/${offset}`,
+      `api/v1/users/list/${offset}`,
       { userName, limit: 5 },
       { headers: { token: localStorage.getItem('token') } }
     )
@@ -232,7 +232,7 @@ export function searchUsers(offset, userName) {
       dispatch(loadCount(data.users.count));
       dispatch(loadPageCount(data.data.pageCount));
       return true;
-    }, err => {
+    }, (err) => {
       console.log(err.message);
     });
   };
@@ -248,7 +248,7 @@ export function searchUsers(offset, userName) {
 export function loadGroupUsers(groupId) {
   return (dispatch) => {
     return axios.get(
-      `api/group/${groupId}/user/list`,
+      `api/v1/group/${groupId}/user/list`,
       { headers: { token: localStorage.getItem('token') } }
     )
     .then(({ data }) => {
@@ -268,7 +268,7 @@ export function loadGroupUsers(groupId) {
 export function addUserToGroup(userId, groupId) {
   return () => {
     return axios.post(
-      `api/group/${groupId}/user`,
+      `api/v1/group/${groupId}/user`,
       { userId },
       { headers: { token: localStorage.getItem('token') } }
     )
@@ -290,7 +290,7 @@ export function addUserToGroup(userId, groupId) {
 export function readMessages(groupId) {
   return () => {
     return axios.post(
-      `api/group/${groupId}/messages/read`,
+      `api/v1/group/${groupId}/messages/read`,
       {},
       { headers: { token: localStorage.getItem('token') } }
     )

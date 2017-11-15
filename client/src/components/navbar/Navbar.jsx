@@ -80,7 +80,7 @@ export class NavBar extends React.Component {
                   <img
                     width="70px"
                     alt="PostIt Logo"
-                    src={require("../../image/postitL.png")} // eslint-disable-line
+                    src="https://github.com/fob413/PostIt/blob/chore/feedback/template/image/postitL.png?raw=true"
                   />
                 </Link>
 

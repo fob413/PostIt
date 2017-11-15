@@ -4,6 +4,7 @@ import { shallow, mount } from 'enzyme';
 import configureMockStore from 'redux-mock-store';
 import { Link } from 'react-router-dom';
 import thunk from 'redux-thunk';
+import data from '../__mocks__/componentMockData';
 import ConnectedSignup, { SignUp } from '../../components/index/signup/signup';
 
 const middleware = [thunk];
@@ -52,16 +53,7 @@ describe('Signup ', () => {
   };
 
   beforeEach(() => {
-    props = {
-      auth: {
-        isLoggedIn: false
-      },
-      history: { push: jest.fn() },
-      router: {
-        history: { push: jest.fn() },
-      },
-      signUserUp: jest.fn(() => Promise.resolve())
-    };
+    props = data.signupProps;
   });
 
   it('always rendrs a div', () => {
@@ -75,16 +67,7 @@ describe('Signup ', () => {
   });
 
   it('calls history.push method if you are authenticated', () => {
-    props = {
-      auth: {
-        isLoggedIn: true
-      },
-      history: { push: jest.fn() },
-      router: {
-        history: { push: jest.fn() },
-      },
-      signUserUp: jest.fn(() => Promise.resolve())
-    };
+    props = data.signupProps2;
     const component = mount(
       <SignUp {...props} />,
       {
@@ -126,11 +109,7 @@ describe('Signup ', () => {
     const componentWillReceivePropsSpy = jest.spyOn(
       component.instance(), 'componentWillReceiveProps'
     );
-    const nextProps = {
-      auth: {
-        isLoggedIn: true
-      }
-    };
+    const nextProps = data.signupNextProps;
     component.instance().componentWillReceiveProps(nextProps);
     expect(componentWillReceivePropsSpy).toHaveBeenCalled();
   });
@@ -142,27 +121,14 @@ describe('Signup ', () => {
 
   it('calls onChange method', () => {
     const component = mountSignup();
-    const event = {
-      target: { userName: 'FOB' }
-    };
+    const event = data.signupEvent;
     const onChangeSpy = jest.spyOn(component.instance(), 'onChange');
     component.instance().onChange(event);
     expect(onChangeSpy).toHaveBeenCalled();
   });
 
   it('calls handleSubmit method', () => {
-    props = {
-      auth: {
-        isLoggedIn: false
-      },
-      history: { push: jest.fn() },
-      router: {
-        history: { push: jest.fn() },
-      },
-      signUserUp: jest.fn(() => Promise.resolve({
-        res: {}
-      }))
-    };
+    props = data.signupProps;
     const component = mount(
       <SignUp {...props} />,
       {
@@ -204,18 +170,7 @@ describe('Signup ', () => {
   });
 
   it('calls handleSubmit method', () => {
-    props = {
-      auth: {
-        isLoggedIn: false
-      },
-      history: { push: jest.fn() },
-      router: {
-        history: { push: jest.fn() },
-      },
-      signUserUp: jest.fn(() => Promise.resolve({
-        res: {}
-      }))
-    };
+    props = data.signupProps;
     const component = mount(
       <SignUp {...props} />,
       {
@@ -246,11 +201,7 @@ describe('Signup ', () => {
       }
     );
 
-    component.setState({
-      password: 'asdf;lkj',
-      confirmPassword: 'asdf;lkj',
-      telephone: '1234567890'
-    });
+    component.setState(data.signupSetState);
 
     const event = {
       preventDefault: jest.fn()
@@ -263,18 +214,7 @@ describe('Signup ', () => {
   });
 
   it('calls handleSubmit method', () => {
-    props = {
-      auth: {
-        isLoggedIn: false
-      },
-      history: { push: jest.fn() },
-      router: {
-        history: { push: jest.fn() },
-      },
-      signUserUp: jest.fn(() => Promise.resolve({
-        res: {}
-      }))
-    };
+    props = data.signupProps;
     const component = mount(
       <SignUp {...props} />,
       {
@@ -305,11 +245,7 @@ describe('Signup ', () => {
       }
     );
 
-    component.setState({
-      password: 'asdf;lkj',
-      confirmPassword: 'asdf;lkj',
-      telephone: 'asdfghjkl;'
-    });
+    component.setState(data.signupSetState2);
 
     const event = {
       preventDefault: jest.fn()
@@ -322,18 +258,7 @@ describe('Signup ', () => {
   });
 
   it('calls handleSubmit method', () => {
-    props = {
-      auth: {
-        isLoggedIn: false
-      },
-      history: { push: jest.fn() },
-      router: {
-        history: { push: jest.fn() },
-      },
-      signUserUp: jest.fn(() => Promise.resolve({
-        res: {}
-      }))
-    };
+    props = data.signupProps;
     const component = mount(
       <SignUp {...props} />,
       {
@@ -364,11 +289,7 @@ describe('Signup ', () => {
       }
     );
 
-    component.setState({
-      password: 'asdf;lkj',
-      confirmPassword: 'asdf;lk',
-      telephone: '1234567890'
-    });
+    component.setState(data.signupSetState3);
 
     const event = {
       preventDefault: jest.fn()

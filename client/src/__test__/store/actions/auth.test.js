@@ -2,9 +2,9 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import mockLocalStorage from '../../_mocks_/mockLocalStorage';
+import mockLocalStorage from '../../__mocks__/mockLocalStorage';
 import * as types from '../../../helpers/constants';
-import data from '../../_mocks_/mockData';
+import data from '../../__mocks__/mockData';
 import {
   signUserUp,
   signUserIn,
@@ -30,23 +30,14 @@ describe('Sign up action', () => {
   });
 
   it('should dispatch SIGN UP on successful sign up', () => {
-    mock.onPost('api/user/signup', user)
+    mock.onPost('api/v1/user/signup', user)
     .reply(201, {
       token,
       message: 'Successfully signed user up',
       success: true
     });
 
-    const expectedAction = [
-      {
-        type: types.SIGN_UP,
-        data: {
-          success: true,
-          message: 'Successfully signed user up',
-          token
-        }
-      }
-    ];
+    const expectedAction = data.signupSuccessfulAction;
 
     return store.dispatch(signUserUp(user))
     .then(() => {
@@ -57,7 +48,7 @@ describe('Sign up action', () => {
   it('should not dispatch SIGN UP when unsuccessful', () => {
     mock.reset();
     const stores = mockStore({});
-    mock.onPost('api/user/signup')
+    mock.onPost('api/v1/user/signup')
     .reply(400, {
       message: 'An error occured',
       success: false
@@ -82,23 +73,14 @@ describe('Sign in action', () => {
   });
 
   it('should dispatch SIGN IN on successful sign in', () => {
-    mock.onPost('api/user/signin', user)
+    mock.onPost('api/v1/user/signin', user)
     .reply(200, {
       token,
       message: 'Successfully signed user in',
       success: true
     });
 
-    const expectedAction = [
-      {
-        type: types.SIGN_IN,
-        data: {
-          success: true,
-          message: 'Successfully signed user in',
-          token
-        }
-      }
-    ];
+    const expectedAction = data.signinSuccessfulAction;
 
     return store.dispatch(signUserIn(user))
     .then(() => {
@@ -109,7 +91,7 @@ describe('Sign in action', () => {
   it('should not dispatch SIGN IN on unsuccessful sign in', () => {
     const stores = mockStore({});
     mock.reset();
-    mock.onPost('api/user/signin', user)
+    mock.onPost('api/v1/user/signin', user)
     .reply(400, {
       message: 'An error has occured',
       success: false
@@ -132,23 +114,14 @@ describe('Sign out aciton', () => {
   });
 
   it('should dispatch SIGN OUT on successful sign out', () => {
-    mock.onGet('api/user/signout')
+    mock.onGet('api/v1/user/signout')
     .reply(200, {
       success: true,
       isLoggedIn: false,
       message: 'Successfully logged user out'
     });
 
-    const expectedAction = [
-      {
-        type: types.SIGN_OUT,
-        data: {
-          success: true,
-          isLoggedIn: false,
-          message: 'Successfully logged user out'
-        }
-      }
-    ];
+    const expectedAction = data.signoutSuccessfulAction;
 
     return store.dispatch(signUserOut())
     .then(() => {
@@ -159,7 +132,7 @@ describe('Sign out aciton', () => {
   it('should not dispatch SIGN OUT on unsuccessful sign out', () => {
     mock.reset();
     const stores = mockStore({});
-    mock.onGet('api/user/signout')
+    mock.onGet('api/v1/user/signout')
     .reply(400, {
       success: false,
       message: 'An error has occured'

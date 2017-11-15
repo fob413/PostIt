@@ -29,7 +29,7 @@ describe('Test setup', () => {
 
   it('should get token for other tests', (done) => {
     chai.request(app)
-    .post('/api/user/signup')
+    .post('/api/v1/user/signup')
     .send({
       userName: 'seyi',
       email: 'seyi@email.com',
@@ -45,7 +45,7 @@ describe('Test setup', () => {
 
   it('should signup another user', (done) => {
     chai.request(app)
-    .post('/api/user/signup')
+    .post('/api/v1/user/signup')
     .send({
       userName: 'funsho',
       email: 'funsho@email.com',
@@ -61,7 +61,7 @@ describe('Test setup', () => {
 
   it('should create a group', (done) => {
     chai.request(app)
-    .post('/api/group')
+    .post('/api/v1/group')
     .set('token', token)
     .send({
       groupName: 'Test Group One'
@@ -77,7 +77,7 @@ describe('Send Messge Route /api/group/:groupId/message', () => {
   describe('Send message positive response ', () => {
     it('should return a status 201 when successful', (done) => {
       chai.request(app)
-      .post('/api/group/1/message')
+      .post('/api/v1/group/1/message')
       .set('token', token)
       .send({
         content: 'Hello World one'
@@ -90,7 +90,7 @@ describe('Send Messge Route /api/group/:groupId/message', () => {
 
     it('should return a status 201 when successful', (done) => {
       chai.request(app)
-      .post('/api/group/1/message')
+      .post('/api/v1/group/1/message')
       .set('token', token)
       .send({
         content: 'Hello World two',
@@ -104,7 +104,7 @@ describe('Send Messge Route /api/group/:groupId/message', () => {
 
     it('should return a status 201 when successful', (done) => {
       chai.request(app)
-      .post('/api/group/1/message')
+      .post('/api/v1/group/1/message')
       .set('token', token)
       .send({
         content: 'Hello World three',
@@ -121,7 +121,7 @@ describe('Send Messge Route /api/group/:groupId/message', () => {
     let secondToken = '';
     before((done) => {
       chai.request(app)
-      .post('/api/user/signup')
+      .post('/api/v1/user/signup')
       .send({
         userName: 'temi',
         email: 'temi@email.com',
@@ -137,7 +137,7 @@ describe('Send Messge Route /api/group/:groupId/message', () => {
 
     it('should return a status 400 when group does not exist', (done) => {
       chai.request(app)
-      .post('/api/group/8/message')
+      .post('/api/v1/group/8/message')
       .set('token', token)
       .send({
         content: 'Hello World'
@@ -150,7 +150,7 @@ describe('Send Messge Route /api/group/:groupId/message', () => {
 
     it('should return a status 400 when user is not in group', (done) => {
       chai.request(app)
-      .post('/api/group/1/message')
+      .post('/api/v1/group/1/message')
       .set('token', secondToken)
       .send({
         content: 'Hello World'
@@ -163,7 +163,7 @@ describe('Send Messge Route /api/group/:groupId/message', () => {
 
     it('should return a status 400 when there is no content in users request object', (done) => {
       chai.request(app)
-      .post('/api/group/1/message')
+      .post('/api/v1/group/1/message')
       .set('token', token)
       .send()
       .end((err, res) => {
@@ -178,7 +178,7 @@ describe('Retrieve Group Messages Route /api/group/:groupId/messages', () => {
   let secondToken = '';
   before((done) => {
     chai.request(app)
-    .post('/api/user/signup')
+    .post('/api/v1/user/signup')
     .send({
       userName: 'teni',
       email: 'teni@email.com',
@@ -194,7 +194,7 @@ describe('Retrieve Group Messages Route /api/group/:groupId/messages', () => {
   describe('Retrieve group messages positive response ', () => {
     it('should return a status 200 when successful', (done) => {
       chai.request(app)
-      .get('/api/group/1/messages')
+      .get('/api/v1/group/1/messages')
       .set('token', token)
       .end((err, res) => {
         res.should.have.status(200);
@@ -206,7 +206,7 @@ describe('Retrieve Group Messages Route /api/group/:groupId/messages', () => {
   describe('Retrieve group negative response', () => {
     it('should return status 400 when group does not exist', (done) => {
       chai.request(app)
-      .get('/api/group/8/messages')
+      .get('/api/v1/group/8/messages')
       .set('token', token)
       .end((err, res) => {
         res.should.have.status(400);
@@ -216,7 +216,7 @@ describe('Retrieve Group Messages Route /api/group/:groupId/messages', () => {
 
     it('should return status 400 when user is not a member of the group', (done) => {
       chai.request(app)
-      .get('/api/group/1/messages')
+      .get('/api/v1/group/1/messages')
       .set('token', secondToken)
       .end((err, res) => {
         res.should.have.status(400);
@@ -230,7 +230,7 @@ describe('Read Message route /api/group/:groupId/messages/read ', () => {
   let secondToken = '';
   before((done) => {
     chai.request(app)
-    .post('/api/user/signup')
+    .post('/api/v1/user/signup')
     .send({
       userName: 'femi',
       email: 'femi@email.com',
@@ -246,7 +246,7 @@ describe('Read Message route /api/group/:groupId/messages/read ', () => {
   describe('Read message positive response ', () => {
     it('should return status 201 when successful', (done) => {
       chai.request(app)
-      .post('/api/group/1/messages/read')
+      .post('/api/v1/group/1/messages/read')
       .set('token', token)
       .end((err, res) => {
         res.should.have.status(201);
@@ -258,7 +258,7 @@ describe('Read Message route /api/group/:groupId/messages/read ', () => {
   describe('Read message negative response ', () => {
     it('should return status 400 when not a member of group', (done) => {
       chai.request(app)
-      .post('/api/group/1/messages/read')
+      .post('/api/v1/group/1/messages/read')
       .set('token', secondToken)
       .end((err, res) => {
         res.should.have.status(400);

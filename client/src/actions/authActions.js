@@ -32,7 +32,7 @@ const reloadUserInSuccess = (userName, email, telephone, userId) => ({
  */
 export function signUserUp(user) {
   return dispatch => (
-    axios.post('/api/user/signup', user)
+    axios.post('/api/v1/user/signup', user)
   ).then(({ data }) => {
     localStorage.setItem('token', data.token);
     dispatch(signUpSuccess(data));
@@ -50,7 +50,7 @@ export function signUserUp(user) {
 export function signUserOut() {
   return dispatch => (
    axios.get(
-    'api/user/signout',
+    'api/v1/user/signout',
     { headers: { token: localStorage.getItem('token') } }
   )
   .then(({ data }) => {
@@ -71,7 +71,7 @@ export function signUserOut() {
  */
 export function signUserIn(user) {
   return dispatch => (
-    axios.post('api/user/signin', user))
+    axios.post('api/v1/user/signin', user))
     .then(({ data }) => {
       localStorage.setItem('token', data.token);
       dispatch(signInSuccess(data));

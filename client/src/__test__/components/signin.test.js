@@ -4,6 +4,7 @@ import { shallow, mount } from 'enzyme';
 import configureMockStore from 'redux-mock-store';
 import { Link } from 'react-router-dom';
 import thunk from 'redux-thunk';
+import data from '../__mocks__/componentMockData';
 import ConnectedSignin, { Signin } from '../../components/index/signin/Signin';
 
 const middleware = [thunk];
@@ -51,16 +52,7 @@ describe('Signin ', () => {
   };
 
   beforeEach(() => {
-    props = {
-      auth: {
-        isLoggedIn: false
-      },
-      history: { push: jest.fn() },
-      router: {
-        history: { push: jest.fn() },
-      },
-      signUserIn: jest.fn(() => Promise.resolve())
-    };
+    props = data.signinProps;
   });
 
   it('always renders a div', () => {
@@ -83,16 +75,7 @@ describe('Signin ', () => {
   });
 
   it('calls the history.push method if you are authenticated', () => {
-    props = {
-      auth: {
-        isLoggedIn: true
-      },
-      history: { push: jest.fn() },
-      router: {
-        history: { push: jest.fn() },
-      },
-      signUserIn: jest.fn(() => Promise.resolve())
-    };
+    props = data.signinProps2;
     const wrapper = mount(
       <Signin {...props} />,
       {
@@ -133,11 +116,7 @@ describe('Signin ', () => {
     const componentWillReceivePropsSpy = jest.spyOn(
       wrapper.instance(), 'componentWillReceiveProps'
     );
-    const nextProps = {
-      auth: {
-        isLoggedIn: true
-      }
-    };
+    const nextProps = data.signinNextProps;
     wrapper.instance().componentWillReceiveProps(nextProps);
     expect(componentWillReceivePropsSpy).toHaveBeenCalled();
   });
@@ -149,25 +128,14 @@ describe('Signin ', () => {
 
   it('calls onChange method', () => {
     const component = mountSignin();
-    const event = {
-      target: { userName: 'FOB' }
-    };
+    const event = data.signinEvent;
     const onChangeSpy = jest.spyOn(component.instance(), 'onChange');
     component.instance().onChange(event);
     expect(onChangeSpy).toHaveBeenCalledTimes(1);
   });
 
   it('calls handleSignin method', () => {
-    props = {
-      auth: {
-        isLoggedIn: false
-      },
-      history: { push: jest.fn() },
-      router: {
-        history: { push: jest.fn() },
-      },
-      signUserIn: jest.fn(() => Promise.reject())
-    };
+    props = data.signinProps3;
     const component = mount(
       <Signin {...props} />,
       {
@@ -196,27 +164,14 @@ describe('Signin ', () => {
         }
       }
     );
-    const event = {
-      preventDefault: jest.fn()
-    };
+    const event = data.messageBoardEvent3;
     const handleSignInSpy = jest.spyOn(component.instance(), 'handleSignIn');
     component.instance().handleSignIn(event);
     expect(handleSignInSpy).toHaveBeenCalled();
   });
 
   it('calls handleSignin method', () => {
-    props = {
-      auth: {
-        isLoggedIn: false
-      },
-      history: { push: jest.fn() },
-      router: {
-        history: { push: jest.fn() },
-      },
-      signUserIn: jest.fn(() => Promise.resolve({
-        res: {}
-      }))
-    };
+    props = data.signinProps;
     const component = mount(
       <Signin {...props} />,
       {
@@ -245,9 +200,7 @@ describe('Signin ', () => {
         }
       }
     );
-    const event = {
-      preventDefault: jest.fn()
-    };
+    const event = data.messageBoardEvent3;
     const handleSignInSpy = jest.spyOn(component.instance(), 'handleSignIn');
     component.instance().handleSignIn(event);
     expect(handleSignInSpy).toHaveBeenCalled();

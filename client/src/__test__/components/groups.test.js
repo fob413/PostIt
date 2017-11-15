@@ -2,6 +2,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { Groups } from '../../components/dashboard/Groups';
+import data from '../__mocks__/componentMockData';
 
 describe('Groups ', () => {
   let props;
@@ -17,23 +18,7 @@ describe('Groups ', () => {
   };
 
   beforeEach(() => {
-    props = {
-      groups: [
-        {
-          Group: {
-            Messages: [],
-            groupName: 'First Group',
-            id: 2
-          },
-          createdAt: '2017-10-30T13:49:12.143Z',
-          groupId: 2,
-          id: 2,
-          updatedAt: '2017-10-30T13:49:12.143Z',
-          userId: 3
-        }
-      ],
-      search: ''
-    };
+    props = data.groupsProps;
   });
 
   it('always renders a div', () => {
@@ -46,19 +31,13 @@ describe('Groups ', () => {
     const componentWillReceivePropsSpy = jest.spyOn(
       component.instance(), 'componentWillReceiveProps'
     );
-    const nextProps = {
-      groups: [],
-      search: ''
-    };
+    const nextProps = data.groupsNextProps;
     component.instance().componentWillReceiveProps(nextProps);
     expect(componentWillReceivePropsSpy).toHaveBeenCalled();
   });
 
   it('always renders a div', () => {
-    props = {
-      groups: [],
-      search: ''
-    };
+    props = data.groupsNextProps;
     const component = shallow(
       <Groups {...props} />
     ).find('div');
