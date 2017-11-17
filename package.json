@@ -9,7 +9,7 @@
     "test:dev": "NODE_ENV=test sequelize db:migrate:undo:all && sequelize db:migrate && nyc --reporter=text --reporter=html --reporter=lcov mocha server/test/* --timeout 10000",
     "test:client": "jest",
     "build:": "babel server -d dist",
-    "start:dev": "npm run buildi && NODE_ENV=development ./node_modules/.bin/babel-node ./server/app.js",
+    "start:dev": "npm run buildiClient && NODE_ENV=development ./node_modules/.bin/babel-node ./server/app.js",
     "start:pro": "node build/server/app.js",
     "dev": "nodemon server/server.js & webpack-dev-server",
     "webpack": "webpack-dev-server --port 3000 --hot",
@@ -18,8 +18,10 @@
     "build": "npm run build:client && npm run build:server",
     "build:server": "babel server -d build/server --copy-files --ignore test",
     "build:client": "NODE_ENV=production webpack --config webpack.config.js && cp -R client build/client",
+    "build:newClient": "webpack --config webpack.dev.js",
     "build:prod": "webpack --config webpack.prod.js",
     "clean": "rm -rf build && mkdir build",
+    "buildiClient": "npm run clean && npm run build:newClient && npm run build:server",
     "buildi": "npm run clean && npm run build:prod && npm run build:server"
   },
   "script": {

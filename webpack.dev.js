@@ -1,33 +1,22 @@
 const webpack = require('webpack');
 const merge = require('webpack-merge');
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const common = require('./webpack.common.js');
 
 module.exports = merge(common, {
-  devtool: 'inline-source-map',
-  entry: [
-    'webpack/hot/only-dev-server',
-    'eventsource-polyfill',
-    'webpack-hot-middleware/client?reload=true',
-  ],
-  devServer: {
-    contentBase: 'build',
-    hot: true,
-    inline: true,
-    port: process.env.PORT || 3000,
-    host: 'localhost',
-    historyApiFallback: true,
-    publicPath: '/',
-  },
+  devtool: 'source-map',
   plugins: [
-    new webpack.NamedModulesPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.LoaderOptionsPlugin({
-      debug: true,
+      debug: true
+    }),
+    new UglifyJSPlugin({
+      sourceMap: true
     }),
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: JSON.stringify('development'),
-      },
-    }),
-  ],
+        NODE_ENV: JSON.stringify('development')
+      }
+    })
+  ]
 });
