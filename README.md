@@ -75,7 +75,16 @@ Find the frequently asked questions [here.](https://github.com/fob413/PostIt/wik
 - Users cannot delete messages that have already been sent to a group
 
 ## Contributing
-Feel free to dive in. Open an issue to request for a bug fix or additional feature or submit PRs.
+Feel free to dive in. Open an issue to request for a bug fix or additional feature or submit PRs. To contribute:
+- Fork this repository
+- Create your feature branch on your local machine: `git checkout -b your-feature-branch`
+- Commit your changes: `git commit -m 'Add my feature'`
+- Push your branch online: `git push origin your-feature-branch`
+- Open a pull request to the `development` branch and describe how your feature works
+
+Refer to this wiki for the preferred [GIT workflow.](https://github.com/andela/bestpractices/wiki)
+
+Ensure your codes follow [AirBnB Javascript Style Guide.](https://github.com/airbnb/javascript)
 
 ### Author
 Funsho Oluyole-Balogun
