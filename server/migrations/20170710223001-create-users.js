@@ -7,7 +7,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      UserName: {
+      userName: {
         type: Sequelize.STRING,
         allowNull: false,
         unique: true,
@@ -49,7 +49,7 @@ module.exports = {
       }
     });
   },
-  down: (queryInterface /* , Sequelize*/) => {
+  down: (queryInterface /* , Sequelize */) => {
     queryInterface.dropTable('Users');
   }
 };

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!--Import Google Icon Font-->
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+    <!--Import Css-->
+    <link type="text/css" rel="stylesheet" href="style.css">
+
+  </head>
+  <body>
+    
+    <main>
+      <nav>
+        <div class="nav-wrapper teal darken-4">
+          <a href="#" class="brand-logo center"><img width="70px" src="image/postitL.png" alt="PostIt Logo"></a>
+          <ul id="nav-mobile" class="left">
+            <li><a class="modal-trigger" href="#modal1"><i href="#modal1" class="modal-trigger white-text material-icons">settings</i></a></li>
+          </ul>
+          <ul id="nav-mobile" class="right">
+              <li><a class="modal-trigger" href="#modal1"><i href="#modal1" class="modal-trigger white-text material-icons">exit_to_app</i></a></li>
+            </ul>
+        </div>
+      </nav>
+      
+      <div id="modal1" class="modal">
+        <div class="modal-content">
+          <h4>User Profile</h4>
+          <form class="">
+            <div class="row">
+              <div class="input-field col s12 m12">
+                <input class="validate" type="text" id="userName" data-error="wrong" data-success="right">
+                <label for="userName">Username</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="input-field col s12 m12">
+                <input class="validate" type="email" id="email" data-error="wrong" data-success="right">
+                <label for="email">Email</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="input-field col s12 m12">
+                <input class="validate" type="text" id="phoneNumber" data-error="wrong" data-success="right">
+                <label for="phoneNumber">Phone Number</label>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button class="btn-large green darken-4 waves-effect" type="submit" name="action">
+            <a class="white-text" href="broadcast.html">Submit</a>
+          </button>
+        </div>
+      </div>
+            
+      <div class="container">
+        <br>
+        <br>
+        <div class="row center">
+          <div>
+              <a class="waves-effect waves-light btn-large cyan darken-4"><i class="material-icons right">group_add</i>Create Group</a>
+              
+          </div>
+        </div>
+
+        <div class="row center">
+          <div class="input-field">
+            <i class="material-icons prefix">search</i>
+            <input id="icon_prefix" type="text">
+            <label for="icon_prefix">Search Groups</label>
+          </div>
+        </div>
+
+        <div class="row center">
+          <div class="col s6 m4">
+            <div class="card horizontal">
+              <div class="card-stacked">
+                <div class="card-content pink darken-4">
+                  <p class="white-text"><i class="modal-trigger white-text material-icons left yellow-text text-darken-2 small">folder_special</i>Sample Group Name</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col s6 m4">
+              <div class="card horizontal">
+                <div class="card-stacked">
+                  <div class="card-content pink darken-4">
+                    <p class="white-text"><i class="modal-trigger white-text material-icons left yellow-text text-darken-2 small">folder_special</i>Sample Group Name</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col s6 m4">
+                <div class="card horizontal">
+                  <div class="card-stacked">
+                    <div class="card-content pink darken-4">
+                      <p class="white-text"><i class="modal-trigger white-text material-icons left yellow-text text-darken-2 small">folder_special</i>Sample Group Name</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col s6 m4">
+                  <div class="card horizontal">
+                    <div class="card-stacked">
+                      <div class="card-content pink darken-4">
+                        <p class="white-text"><i class="modal-trigger white-text material-icons left yellow-text text-darken-2 small">folder_special</i>Sample Group Name</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+        </div>
+
+
+      </div>
+    </main>
+
+    <footer class="page-footer teal darken-4">
+        <div class="footer-copyright">
+          <div class="container">
+          © 2017 Copyright PostIt
+          <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
+          </div>
+        </div>
+      </footer>
+
+
+    
+            
+
+
+    <!-- jQuery first, then Tether, then Bootstrap JS. -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="js/materialize.min.js"></script>
+
+    <script type="text/javascript">
+      $('document').ready(function(){
+      $('.modal').modal();
+  });
+    </script>
+  </body>
+</html>

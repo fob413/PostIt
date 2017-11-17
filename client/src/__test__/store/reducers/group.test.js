@@ -1,76 +1,28 @@
-import {
-  LOAD_GROUPS,
-  UNLOAD_GROUPS
-} from '../../../constants';
 import store from '../../../reducers/groupReducer';
+import datas from '../../__mocks__/mockData';
 
 describe('The Group Reducer ', () => {
   it('LOAD GROUP', () => {
     const state = {
       Group: []
     };
-    const action = {
-      type: LOAD_GROUPS,
-      data: [
-        {
-          id: 1,
-          userId: 1,
-          groupId: 1,
-          createdAt: '2017-09-16T11:28:13.182Z',
-          updatedAt: '2017-09-16T11:28:13.182Z'
-        },
-        {
-          id: 2,
-          userId: 2,
-          groupId: 2,
-          createdAt: '2017-09-16T11:28:13.182Z',
-          updatedAt: '2017-09-16T11:28:13.182Z'
-        }
-      ]
-    };
+    const action = datas.loadGroupReducerAction;
     const results = store(state, action);
-    expect(results).toEqual(
-      [
-        {
-          id: 1,
-          userId: 1,
-          groupId: 1,
-          createdAt: '2017-09-16T11:28:13.182Z',
-          updatedAt: '2017-09-16T11:28:13.182Z'
-        },
-        {
-          id: 2,
-          userId: 2,
-          groupId: 2,
-          createdAt: '2017-09-16T11:28:13.182Z',
-          updatedAt: '2017-09-16T11:28:13.182Z'
-        }
-      ]
-    );
+    expect(results).toEqual(datas.loadGroupReducerExpected);
   });
 
   it('UNLOAD_GROUPS', () => {
+    const state = datas.unloadGroupReducerInitialState;
+    const action = datas.unloadGroupsReducerAction;
+    const results = store(state, action);
+    expect(results).toEqual(datas.unloadGroupsReducerExpected);
+  });
+
+  it('default', () => {
     const state = {
-      Groups: [
-        {
-          id: 1,
-          userId: 1,
-          groupId: 1,
-          createdAt: '2017-09-16T11:28:13.182Z',
-          updatedAt: '2017-09-16T11:28:13.182Z'
-        },
-        {
-          id: 2,
-          userId: 2,
-          groupId: 2,
-          createdAt: '2017-09-16T11:28:13.182Z',
-          updatedAt: '2017-09-16T11:28:13.182Z'
-        }
-      ]
+      Groups: []
     };
-    const action = {
-      type: UNLOAD_GROUPS
-    };
+    const action = {};
     const results = store(state, action);
     expect(results).toEqual({
       Groups: []

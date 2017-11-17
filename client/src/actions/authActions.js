@@ -1,6 +1,6 @@
 import axios from 'axios';
 import swal from 'sweetalert2';
-import { SIGN_UP, SIGN_IN, SIGN_OUT, RELOAD_USER_IN } from '../constants';
+import { SIGN_UP, SIGN_IN, SIGN_OUT, RELOAD_USER_IN } from '../helpers/constants';
 
 const signUpSuccess = data => ({
   type: SIGN_UP,
@@ -17,9 +17,9 @@ const signOutSuccess = data => ({
   data
 });
 
-const reloadUserInSuccess = (UserName, email, telephone, userId) => ({
+const reloadUserInSuccess = (userName, email, telephone, userId) => ({
   type: RELOAD_USER_IN,
-  UserName,
+  userName,
   email,
   telephone,
   userId
@@ -28,13 +28,13 @@ const reloadUserInSuccess = (UserName, email, telephone, userId) => ({
 /**
  * api call to sign up a new user
  * @param {object} user object of users information
- * @return {boolean} returns if the call is successful
+ * @return {boolean} returns if the call is successful or not
  */
 export function signUserUp(user) {
   return dispatch => (
-    axios.post('/api/user/signup', user)
+    axios.post('/api/v1/user/signup', user)
   ).then(({ data }) => {
-    localStorage.setItem('x-auth', data.token);
+    localStorage.setItem('token', data.token);
     dispatch(signUpSuccess(data));
     return true;
   }, (err) => {
@@ -50,11 +50,11 @@ export function signUserUp(user) {
 export function signUserOut() {
   return dispatch => (
    axios.get(
-    'api/user/signout',
-    { headers: { 'x-auth': localStorage.getItem('x-auth') } }
+    'api/v1/user/signout',
+    { headers: { token: localStorage.getItem('token') } }
   )
   .then(({ data }) => {
-    localStorage.removeItem('x-auth');
+    localStorage.removeItem('token');
     dispatch(signOutSuccess(data));
     return true;
   }, (err) => {
@@ -71,9 +71,9 @@ export function signUserOut() {
  */
 export function signUserIn(user) {
   return dispatch => (
-    axios.post('api/user/signin', user))
+    axios.post('api/v1/user/signin', user))
     .then(({ data }) => {
-      localStorage.setItem('x-auth', data.token);
+      localStorage.setItem('token', data.token);
       dispatch(signInSuccess(data));
       return true;
     }, (err) => {
@@ -84,13 +84,13 @@ export function signUserIn(user) {
 
 /**
  * reload user into the store
- * @param {string} UserName the users username
+ * @param {string} userName the users username
  * @param {string} email the users email
  * @param {string} telephone the users telephone number
  * @return {void}
  */
-export function reloadUserIn(UserName, email, telephone) {
+export function reloadUserIn(userName, email, telephone) {
   return dispatch => (
-    dispatch(reloadUserInSuccess(UserName, email, telephone))
+    dispatch(reloadUserInSuccess(userName, email, telephone))
   );
 }

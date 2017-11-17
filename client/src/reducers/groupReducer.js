@@ -1,4 +1,4 @@
-import { LOAD_GROUPS, UNLOAD_GROUPS } from '../constants';
+import { LOAD_GROUPS, UNLOAD_GROUPS } from '../helpers/constants';
 
 const initialState = {
   Groups: []

@@ -1,10 +1,32 @@
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
+.mainBody {
+  min-height: 82vh !important;
+  padding-top: 2vh;
+}
+
+.profileBody {
+  min-height: 64vh;
+}
+
+.logo{
+  padding-top: 10vh;
+}
+
 .signButton{
   cursor: pointer;
 }
 
 .logout{
   cursor: pointer;
-  padding-right: 50%;
 }
 
 .center{
@@ -21,11 +43,19 @@
 }
 
 .profile{
-  margin-top: 10%;
+  margin-top: 8%;
+}
+
+#profileName {
+  font-weight: bold;
+}
+
+.profileTable {
+  border: 2px solid #004d40;
 }
 
 .message{
-  border: 2px solid green;
+  border: 2px solid #880e4f;
   padding: 10px;
   height: 350px;
   overflow-y: scroll;
@@ -33,6 +63,7 @@
 
 .messageBoard{
   margin-top: 5%;
+  min-height: 75vh;
 }
 
 .sendMessage {
@@ -71,7 +102,7 @@
 .underline{
   text-decoration: underline;
   font-weight: bold;
-  color: #004d40;
+  color: #880e4f;
 }
 
 .modalWidth {
@@ -97,4 +128,12 @@
 
 .groupMessage {
   padding-top: 10px;
+}
+
+.dashButtons {
+  margin-left: 1vh;
+}
+
+.groupsBody {
+  margin-top: 12vh;
 }

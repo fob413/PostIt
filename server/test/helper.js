@@ -4,6 +4,9 @@ import app from '../app';
 import db from '../models/index';
 
 const user = db.Users;
+const group = db.Groups;
+const groupMember = db.GroupMembers;
+const message = db.Messages;
 
 chai.use(chaiHttp);
 
@@ -17,13 +20,40 @@ module.exports = {
     });
   },
 
-  signup(UserName, email, password, telephone) {
+  clearGroupDatabase() {
+    group.destroy({
+      where: {},
+      truncate: true,
+      restartIdentity: true,
+      cascade: true
+    });
+  },
+
+  clearGroupMemberDatabase() {
+    groupMember.destroy({
+      where: {},
+      truncate: true,
+      restartIdentity: true,
+      cascade: true
+    });
+  },
+
+  clearMessagesDatabase() {
+    message.destroy({
+      where: {},
+      truncate: true,
+      restartIdentity: true,
+      cascade: true
+    });
+  },
+
+  signup(userName, email, password, telephone) {
     let token = '';
     chai.request(app)
     .post('/api/user/signup')
     .send(
       {
-        UserName,
+        userName,
         email,
         password,
         telephone
@@ -35,40 +65,36 @@ module.exports = {
     return token;
   },
 
-  signin() {
-    console.log('i am here to signin');
-  },
-
   testUser1: {
-    UserName: 'Bayo',
+    userName: 'Bayo',
     email: 'bayo@yahoo.com',
     password: 'abcdefghij',
     telephone: '08138498175'
   },
 
   testUser2: {
-    UserName: 'funsho',
+    userName: 'funsho',
     email: 'funsho@gmail.com',
     password: 'asdf;lkj',
     telephone: '12345678901'
   },
 
   testUser3: {
-    UserName: 'fob',
+    userName: 'fob',
     email: 'funsho@gmail.com',
     password: 'asdf;lkj',
     telephone: '12345678901'
   },
 
   testUser4: {
-    UserName: 'fob',
+    userName: 'fob',
     email: 'fob@gmail.com',
     password: 'asdf;lkj',
-    telephone: '12345678901'
+    telephone: '0987654321'
   },
 
   testUser5: {
-    UserName: 'Bayo',
+    userName: 'Bayo',
     email: 'bayo@yahoo.com',
     password: 'asdf;lkj',
     telephone: '08138498175'
@@ -78,8 +104,50 @@ module.exports = {
     email: 'funsho@gmail.com'
   },
 
+  testUser7: {
+    userName: 'test1',
+    email: 'test1@yahoo.com',
+    password: 'asdf;lkj',
+    telephone: '08138498176'
+  },
+
+  testUser8: {
+    userName: 'test2',
+    email: 'test2@yahoo.com',
+    password: 'asdf;lkj',
+    telephone: '08138498177'
+  },
+
+  testUser9: {
+    userName: 'test3',
+    email: 'test3@yahoo.com',
+    password: 'asdf;lkj',
+    telephone: '08138498178'
+  },
+
+  testUser10: {
+    userName: 'Bayo',
+    email: 'funsho@gmail.com',
+    password: 'asdf;lkj',
+    telephone: '12345678901'
+  },
+
+  testUser11: {
+    userName: 'test11',
+    email: 'seyi@email.com',
+    password: 'asdf;lkj',
+    telephone: '1029384756'
+  },
+
+  testUser12: {
+    userName: 'seyi',
+    email: 'seyi@email.com',
+    telephone: '0987654321',
+    password: 'asdf;lkj'
+  },
+
   incompleteUser1: {
-    UserName: 'Bayo',
+    userName: 'Bayo',
     email: 'bayo@yahoo.com'
   }
 };

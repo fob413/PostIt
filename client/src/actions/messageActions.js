@@ -9,7 +9,7 @@ import {
   LOAD_READ_MESSAGES,
   LOAD_COUNT,
   LOAD_PAGE_COUNT
-} from '../constants';
+} from '../helpers/constants';
 
 
 /**
@@ -155,23 +155,31 @@ export function loadCurrentGroup(groupId) {
 export function sendMessage(message, groupId, priority) {
   return dispatch => {
     return axios.post(
-      `api/group/${groupId}/message`,
+      `api/v1/group/${groupId}/message`,
       { content: message, priority },
-      { headers: { 'x-auth': localStorage.getItem('x-auth') } }
+      { headers: { token: localStorage.getItem('token') } }
     )
     .then(({ data }) => {
       return true;
     }, (err) => {
-      console.log(err.message);
+      // console.log(err.message);
     });
   };
 }
 
+
+/**
+ * load messages in a particular group
+ * @export
+ * @param {any} groupId group id of the group in view
+ * @param {any} userId uses id
+ * @return{void}
+ */
 export function loadGroupMessages(groupId, userId) {
-  return dispatch => {
-    axios.get(
-      `api/group/${groupId}/messages`,
-      { headers: { 'x-auth': localStorage.getItem('x-auth') } }
+  return (dispatch) => {
+    return axios.get(
+      `api/v1/group/${groupId}/messages`,
+      { headers: { token: localStorage.getItem('token') } }
     )
     .then(({ data }) => {
       dispatch(loadGroupMessagesSuccess(data));
@@ -185,11 +193,17 @@ export function loadGroupMessages(groupId, userId) {
   };
 }
 
+
+/**
+ * load users on the platform
+ * @export
+ * @return{void}
+ */
 export function loadPlatformUsers() {
-  return dispatch => {
-    axios.get(
-      `api/users/list`,
-      {headers: {'x-auth': localStorage.getItem('x-auth')}}
+  return (dispatch) => {
+    return axios.get(
+      'api/v1/users/list',
+      { headers: { token: localStorage.getItem('token') } }
     )
     .then(({ data }) => {
       dispatch(loadPlatformUsersSuccess(data));
@@ -197,12 +211,20 @@ export function loadPlatformUsers() {
   };
 }
 
-export function searchUsers(offset, UserName) {
-  return dispatch => {
+
+/**
+ * search for users ono the platform
+ * @export
+ * @param {any} offset maximum number of list length
+ * @param {any} userName the name of the user being search for
+ * @return {void}
+ */
+export function searchUsers(offset, userName) {
+  return (dispatch) => {
     return axios.post(
-      `api/users/list/${offset}`,
-      {UserName},
-      {headers: {'x-auth': localStorage.getItem('x-auth')}}
+      `api/v1/users/list/${offset}`,
+      { userName, limit: 5 },
+      { headers: { token: localStorage.getItem('token') } }
     )
     .then(({ data }) => {
       if (data.users.rows.length < 1) Materialize.toast('No user found', 4000, 'red');
@@ -210,17 +232,24 @@ export function searchUsers(offset, UserName) {
       dispatch(loadCount(data.users.count));
       dispatch(loadPageCount(data.data.pageCount));
       return true;
-    }, err => {
+    }, (err) => {
       console.log(err.message);
     });
   };
 }
 
+
+/**
+ * load users in a particular group
+ * @export
+ * @param {any} groupId id of group in view
+ * @return {void}
+ */
 export function loadGroupUsers(groupId) {
-  return dispatch => {
-    axios.get(
-      `api/group/${groupId}/user/list`,
-      { headers: { 'x-auth': localStorage.getItem('x-auth') } }
+  return (dispatch) => {
+    return axios.get(
+      `api/v1/group/${groupId}/user/list`,
+      { headers: { token: localStorage.getItem('token') } }
     )
     .then(({ data }) => {
       dispatch(loadGroupUsersSuccess(data));
@@ -228,31 +257,46 @@ export function loadGroupUsers(groupId) {
   };
 }
 
+
+/**
+ * add user to a particular group
+ * @export
+ * @param {any} userId id of the user to be added to the group
+ * @param {any} groupId id of the group in view
+ * @return {void}
+ */
 export function addUserToGroup(userId, groupId) {
-  return dispatch => {
+  return () => {
     return axios.post(
-      `api/group/${groupId}/user`,
+      `api/v1/group/${groupId}/user`,
       { userId },
-      { headers: { 'x-auth': localStorage.getItem('x-auth') } }
+      { headers: { token: localStorage.getItem('token') } }
     )
-    .then(({ data }) => {
+    .then(() => {
       swal('Successfully Added To Group');
-    }, err => {
+    }, (err) => {
       swal('Oops...', err.response.data.message, 'error');
     });
   };
 }
 
+
+/**
+ * read messages that the user has already seen
+ * @export
+ * @param {any} groupId id of the group in view
+ * @return {void}
+ */
 export function readMessages(groupId) {
-  return dispatch => {
-    axios.post(
-      `api/group/${groupId}/messages/read`,
+  return () => {
+    return axios.post(
+      `api/v1/group/${groupId}/messages/read`,
       {},
-      { headers: { 'x-auth': localStorage.getItem('x-auth') } }
+      { headers: { token: localStorage.getItem('token') } }
     )
-    .then(({ data }) => {
+    .then(() => {
       return;
-    }, err => {
+    }, (err) => {
       console.log(err);
     });
   };

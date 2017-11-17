@@ -4,16 +4,23 @@
   "description": "A simple application that allows friends and colleagues create groups for notifications",
   "main": "/server/server.js",
   "scripts": {
-    "start": "./node_modules/.bin/babel-node ./server/app.js",
-    "test": "NODE_ENV=travis sequelize db:migrate && NODE_ENV=travis nyc mocha server/test/* --timeout 20000",
-    "test:dev": "NODE_ENV=test sequelize db:migrate && nyc mocha server/test/* --timeout 10000",
-    "build": "babel server -d dist",
+    "start": "NODE_ENV=production npm run buildi && ./node_modules/.bin/babel-node ./server/app.js",
+    "test": "NODE_ENV=travis sequelize db:migrate && NODE_ENV=travis nyc --reporter=text --reporter=html --reporter=lcov mocha server/test/* --timeout 20000",
+    "test:dev": "NODE_ENV=test sequelize db:migrate:undo:all && sequelize db:migrate && nyc --reporter=text --reporter=html --reporter=lcov mocha server/test/* --timeout 10000",
+    "test:client": "jest",
+    "build:": "babel server -d dist",
     "start:dev": "nodemon --watch server --exec babel-node -- ./server/bin/www",
-    "start:pro": "NODE_ENV=production sequelize db:migrate:undo:all && sequelize db:migrate && ./node_modules/.bin/babel-node ./server/app.js",
+    "start:pro": "node build/server/app.js",
     "dev": "nodemon server/server.js & webpack-dev-server",
     "webpack": "webpack-dev-server --port 3000 --hot",
     "app": "npm run start | npm run webpack",
-    "coverage": "nyc report --reporter=text-lcov | coveralls"
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "build": "npm run build:client && npm run build:server",
+    "build:server": "babel server -d build/server --copy-files --ignore test",
+    "build:client": "NODE_ENV=production webpack --config webpack.config.js && cp -R client build/client",
+    "build:prod": "webpack --config webpack.prod.js",
+    "clean": "rm -rf build && mkdir build",
+    "buildi": "npm run clean && npm run build:prod && npm run build:server"
   },
   "script": {
     "build": "babel --presets es2015 server -d dist",
@@ -31,6 +38,22 @@
       "server/test/"
     ]
   },
+  "jest": {
+    "roots": [
+      "<rootDir>/client/src/__test__"
+    ],
+    "transform": {
+      ".*": "<rootDir>/node_modules/babel-jest"
+    },
+    "moduleFileExtensions": [
+      "js",
+      "jsx"
+    ],
+    "unmockedModulePathPatterns": [
+      "react"
+    ],
+    "collectCoverage": true
+  },
   "author": "Funsho Oluyole-Balogun",
   "license": "ISC",
   "bugs": {
@@ -38,6 +61,7 @@
   },
   "homepage": "https://github.com/fob413/PostIt#readme",
   "dependencies": {
+    "autoprefixer": "^7.1.6",
     "axios": "^0.16.2",
     "babel-cli": "^6.24.1",
     "babel-core": "^6.25.0",
@@ -52,6 +76,7 @@
     "body-parser": "^1.17.2",
     "chai": "^4.1.0",
     "chai-http": "^3.0.0",
+    "clean-webpack-plugin": "^0.1.17",
     "codecov": "^2.2.0",
     "colors": "^1.1.2",
     "cors": "^2.8.3",
@@ -70,7 +95,7 @@
     "eventsource-polyfill": "^0.9.6",
     "expect": "^1.20.2",
     "express": "^4.15.3",
-    "extract-text-webpack-plugin": "^3.0.0",
+    "extract-text-webpack-plugin": "^3.0.2",
     "file-loader": "^0.11.2",
     "history": "^4.6.3",
     "html-webpack-plugin": "^2.29.0",
@@ -79,6 +104,8 @@
     "jsdom": "^11.1.0",
     "jsonwebtoken": "^7.4.2",
     "jwt-decode": "^2.2.0",
+    "lodash": "^4.17.4",
+    "logger": "0.0.1",
     "materialize-css": "^0.100.1",
     "mocha": "^3.4.2",
     "mocha-lcov-reporter": "^1.3.0",
@@ -94,6 +121,7 @@
     "pg": "^6.4.2",
     "pg-hstore": "^2.3.2",
     "react": "^15.6.1",
+    "react-addons-test-utils": "^15.6.2",
     "react-dom": "^15.6.1",
     "react-materialize": "^1.0.6",
     "react-modal": "^2.3.2",
@@ -102,6 +130,7 @@
     "react-router": "^4.1.2",
     "react-router-dom": "^4.1.2",
     "react-router-redux": "^4.0.8",
+    "react-test-renderer": "^16.0.0",
     "redux": "^3.7.2",
     "redux-immutable-state-invariant": "^2.0.0",
     "redux-mock-store": "^1.2.3",
@@ -113,19 +142,27 @@
     "supertest": "^3.0.0",
     "sweetalert2": "^6.7.0",
     "toastr": "^2.1.2",
+    "transfer-webpack-plugin": "^0.1.4",
+    "uglifyjs-webpack-plugin": "^1.0.1",
     "url-loader": "^0.5.9",
     "uuid": "^3.1.0",
-    "webpack": "^2.6.1",
+    "webpack": "^3.8.1",
     "webpack-dev-middleware": "^1.12.0",
     "webpack-dev-server": "^2.6.1",
-    "webpack-hot-middleware": "^2.18.2"
+    "webpack-hot-middleware": "^2.18.2",
+    "webpack-merge": "^4.1.1"
   },
   "devDependencies": {
-    "babel-jest": "^21.0.2",
+    "axios-mock-adapter": "^1.9.0",
+    "babel-jest": "^21.2.0",
     "coveralls": "^2.13.1",
     "image-webpack-loader": "^3.3.1",
     "jest": "^21.0.2",
     "mocha-lcov-reporter": "^1.3.0",
-    "nyc": "^11.2.1"
+    "moxios": "^0.4.0",
+    "nyc": "^11.2.1",
+    "react-addons-test-utils": "^15.6.2",
+    "react-test-renderer": "^16.0.0",
+    "sinon": "^4.1.2"
   }
 }

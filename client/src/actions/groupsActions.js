@@ -1,6 +1,6 @@
 import axios from 'axios';
 import swal from 'sweetalert2';
-import { LOAD_GROUPS, UNLOAD_GROUPS } from '../constants';
+import { LOAD_GROUPS, UNLOAD_GROUPS } from '../helpers/constants';
 
 const loadGroupSuccess = data => ({
   type: LOAD_GROUPS,
@@ -16,29 +16,27 @@ const unloadGroupsSuccess = () => ({
  * @return {void}
  */
 export function loadGroups() {
-  return (dispatch) => {
-    axios.get(
-      'api/group/list',
-      { headers: { 'x-auth': localStorage.getItem('x-auth') } }
+  return dispatch => axios.get(
+      'api/v1/group/list',
+      { headers: { token: localStorage.getItem('token') } }
     )
     .then(({ data }) => {
       dispatch(loadGroupSuccess(data.members));
     }, (err) => {
       swal('Error Loading Groups...', err.response.data.message, 'error');
     });
-  };
 }
 
 /**
  * api call to create new group
- * @param {string} GroupName the name for the group to be created
+ * @param {string} groupName the name for the group to be created
  * @return {boolean} the response for when the call was successful or not
  */
-export function createNewGroup(GroupName) {
+export function createNewGroup(groupName) {
   return () => axios.post(
-      'api/group',
-      { GroupName },
-      { headers: { 'x-auth': localStorage.getItem('x-auth') } }
+      'api/v1/group',
+      { groupName },
+      { headers: { token: localStorage.getItem('token') } }
     )
     .then(() => true, (err) => {
       // console.log(err.message);

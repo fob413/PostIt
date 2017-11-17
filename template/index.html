@@ -18,11 +18,12 @@
 
     <div class="container">
       <div class="row centerInDiv">
-        <img width="30%" src="image/postitD.png" alt="PostIt Logo">
+        <img width="30%" style="padding-top: 15vh" src="image/dark_logo" alt="PostIt Logo">
       </div>
 
       <div class="row">
-        <div class="container col s12 m12">
+        <div class="col s12 m1"></div>
+        <div class="container col s12 m10">
         <form class="">
           <div class="row">
             <div class="input-field col s12 m6">
@@ -36,12 +37,22 @@
           </div>
           <div class="row">
             <div class="input-field col s12 m12">
+              <input class="validate" type="text" id="telephone" data-error="wrong" data-success="right">
+              <label for="telephone">Telephone</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12 m6">
               <input class="validate" type="password" id="password" data-error="wrong" data-success="right">
               <label for="password">Password</label>
             </div>
+            <div class="input-field col s12 m6">
+              <input class="validate" type="password" id="confirmPassword" data-error="wrong" data-success="right">
+              <label for="confirmPassword">Confirm Password</label>
+            </div>
           </div>
           <div class="row centerInDiv">
-            <button class="btn-large green darken-4 waves-effect" type="submit" name="action"><a class="white-text" href="broadcast.html">Sign Up</a>
+            <button class="btn-large green darken-4 waves-effect" type="submit" name="action"><a class="white-text" href="dashboard.html">Sign Up</a>
               <i class="material-icons right">send</i>
             </button>
           </div>

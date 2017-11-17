@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
-import MyApp from './index';
+import Auth from './auth';
 import Groups from './groupReducer';
 import Messages from './messageReducer';
 
 export default combineReducers({
-  MyApp,
+  Auth,
   Groups,
   Messages
 });

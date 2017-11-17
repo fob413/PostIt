@@ -1,4 +1,4 @@
-import { SIGN_UP, SIGN_IN, SIGN_OUT, GROUPS_LIST } from '../constants';
+import { SIGN_UP, SIGN_IN, SIGN_OUT, GROUPS_LIST } from '../helpers/constants';
 
 export const signUp = (Username, isLoggedin, token, email, telephone) => ({
   type: SIGN_UP,
