@@ -1,0 +1,29 @@
+{
+  "name": "PostIt",
+  "scripts": {
+  },
+  "env": {
+    "EMAIL": {
+      "required": true
+    },
+    "EMAIL_PASSWORD": {
+      "required": true
+    },
+    "HEROKU_POSTGRESQL_NAVY_URL": {
+      "required": true
+    },
+    "SECRET_TOKEN": {
+      "required": true
+    }
+  },
+  "formation": {
+  },
+  "addons": [
+    "heroku-postgresql"
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ]
+}
