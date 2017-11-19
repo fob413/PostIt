@@ -3,7 +3,7 @@ import React from 'react';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { shallow, mount } from 'enzyme';
-import ConnectedPlatformUsers, { PlatformUsers } from '../../components/messagePage/PlatformUsers';
+import ConnectedPlatformUsers, { PlatformUsers } from '../../components/messageBoard/PlatformUsers';
 import data from '../__mocks__/componentMockData';
 
 const middleware = [thunk];

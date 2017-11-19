@@ -1,7 +1,7 @@
 /* global jest */
 import React from 'react';
 import { mount } from 'enzyme';
-import { NewGroup } from '../../components/dashboard/Newgroup';
+import { NewGroup } from '../../components/dashBoard/NewGroup';
 import data from '../__mocks__/componentMockData';
 
 describe('NewGroup ', () => {

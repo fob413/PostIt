@@ -1,7 +1,7 @@
 /* global jest */
 import React from 'react';
 import { shallow } from 'enzyme';
-import { Groups } from '../../components/dashboard/Groups';
+import { Groups } from '../../components/dashBoard/Groups';
 import data from '../__mocks__/componentMockData';
 
 describe('Groups ', () => {

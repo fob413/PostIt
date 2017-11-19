@@ -3,7 +3,7 @@ import React from 'react';
 import { mount, shallow } from 'enzyme';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import ConnectedMessageBoard, { MessageBoard } from '../../components/messagePage/MessageBoard';
+import ConnectedMessageBoard, { MessageBoard } from '../../components/messageBoard/MessageBoard';
 import data from '../__mocks__/componentMockData';
 
 const middleware = [thunk];

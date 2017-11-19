@@ -3,7 +3,7 @@ import React from 'react';
 import { mount, shallow } from 'enzyme';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import ConnectedFooter, { Footer } from '../../components/footer/footer';
+import ConnectedFooter, { Footer } from '../../components/Footer';
 import data from '../__mocks__/componentMockData';
 
 const middleware = [thunk];

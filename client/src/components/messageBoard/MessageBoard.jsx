@@ -2,7 +2,6 @@ import React, { PropTypes } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import ReactPaginate from 'react-paginate';
-import $ from 'jquery';
 import swal from 'sweetalert2';
 import Modal from 'react-modal';
 import DisplayMessage from './DisplayMessage';

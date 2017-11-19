@@ -2,7 +2,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import data from '../__mocks__/componentMockData';
-import { SearchGroups } from '../../components/dashboard/Searchgroups';
+import { SearchGroups } from '../../components/dashBoard/SearchGroups';
 
 describe('SearchGroups ', () => {
   let props;

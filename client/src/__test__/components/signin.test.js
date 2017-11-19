@@ -5,7 +5,7 @@ import configureMockStore from 'redux-mock-store';
 import { Link } from 'react-router-dom';
 import thunk from 'redux-thunk';
 import data from '../__mocks__/componentMockData';
-import ConnectedSignin, { Signin } from '../../components/index/signin/Signin';
+import ConnectedSignin, { Signin } from '../../components/authentication/Signin';
 
 const middleware = [thunk];
 const mockStore = configureMockStore(middleware);
