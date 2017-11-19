@@ -4,7 +4,7 @@ import { shallow, mount } from 'enzyme';
 import configureMockStore from 'redux-mock-store';
 import { Link } from 'react-router-dom';
 import thunk from 'redux-thunk';
-import ConnectedNavbar, { NavBar } from '../../components/navbar/navbar';
+import ConnectedNavbar, { NavBar } from '../../components/navbar/Navbar';
 import data from '../__mocks__/componentMockData';
 
 const middleware = [thunk];

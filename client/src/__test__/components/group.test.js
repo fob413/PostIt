@@ -3,7 +3,7 @@ import React from 'react';
 import { mount, shallow } from 'enzyme';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import ConnectedGroup, { Group } from '../../components/dashboard/Group';
+import ConnectedGroup, { Group } from '../../components/dashBoard/Group';
 import data from '../__mocks__/componentMockData';
 
 const middleware = [thunk];

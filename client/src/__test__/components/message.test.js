@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { Message } from '../../components/messagePage/Message';
+import { Message } from '../../components/messageBoard/Message';
 import data from '../__mocks__/componentMockData';
 
 describe('Message ', () => {

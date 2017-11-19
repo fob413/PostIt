@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import { Link } from 'react-router-dom';
-import { PageNotFound } from '../../components/pagenotfound/Pagenotfound';
+import { PageNotFound } from '../../components/PageNotFound';
 import data from '../__mocks__/componentMockData';
 
 describe('PageNotFound ', () => {

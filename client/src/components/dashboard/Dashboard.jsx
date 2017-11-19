@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { loadGroups, createNewGroup } from '../../actions/groupsActions';
 import { reloadUserIn } from '../../actions/authActions';
 import Groups from './Groups';
-import NewGroup from './Newgroup';
-import SearchGroups from './Searchgroups';
+import NewGroup from './NewGroup';
+import SearchGroups from './SearchGroups';
 
 
 /**

@@ -1,16 +1,16 @@
 import React from 'react';
 import { createBrowserHistory } from 'history';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import SignUp from '../components/index/signup/Signup';
-import SignIn from '../components/index/signin/Signin';
-import PageNotFound from '../components/pagenotfound/Pagenotfound';
-import Dashboard from '../components/dashboard/Dashboard';
+import Signup from '../components/authentication/Signup';
+import Signin from '../components/authentication/Signin';
+import PageNotFound from '../components/PageNotFound';
+import Dashboard from '../components/dashBoard/DashBoard';
 import Navbar from '../components/navbar/Navbar';
 import Profile from '../components/navbar/Profile';
-import MessageBoard from '../components/messagePage/MessageBoard';
-import Reset from '../components/index/password/Reset';
-import ResetPassword from '../components/index/password/ResetPassword';
-import Footer from '../components/footer/Footer';
+import MessageBoard from '../components//messageBoard/MessageBoard';
+import Reset from '../components/authentication/password/Reset';
+import ResetPassword from '../components/authentication/password/ResetPassword';
+import Footer from '../components/Footer';
 import '../style/style.css';
 
 const history = createBrowserHistory();
@@ -20,8 +20,8 @@ const App = () => (
     <div>
       <Navbar />
       <Switch>
-        <Route exact path="/" component={SignUp} />
-        <Route path="/signin" component={SignIn} />
+        <Route exact path="/" component={Signup} />
+        <Route path="/signin" component={Signin} />
         <Route path="/dashboard" component={Dashboard} />
         <Route path="/messageboard" component={MessageBoard} />
         <Route path="/profile" component={Profile} />
