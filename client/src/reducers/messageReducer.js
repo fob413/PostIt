@@ -24,42 +24,42 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case LOAD_GROUP_MESSAGES:
       return Object.assign({}, state, {
-        messages: action.data
+        messages: action.payLoad
       });
 
     case CURRENT_GROUP:
       return Object.assign({}, state, {
-        groupId: action.data
+        groupId: action.payLoad
       });
 
     case LOAD_PLATFORM_USERS:
       return Object.assign({}, state, {
-        PlatformUsers: action.data
+        PlatformUsers: action.payLoad
       });
 
     case LOAD_GROUP_USERS:
       return Object.assign({}, state, {
-        groupUsers: action.data
+        groupUsers: action.payLoad
       });
 
     case LOAD_UNREAD_MESSAGES:
       return Object.assign({}, state, {
-        unreadMessages: action.data
+        unreadMessages: action.payLoad
       });
 
     case LOAD_READ_MESSAGES:
       return Object.assign({}, state, {
-        readMessages: action.data
+        readMessages: action.payLoad
       });
 
     case LOAD_COUNT:
       return Object.assign({}, state, {
-        count: action.data
+        count: action.payLoad
       });
 
     case LOAD_PAGE_COUNT:
       return Object.assign({}, state, {
-        pageCount: action.data
+        pageCount: action.payLoad
       });
 
     default:

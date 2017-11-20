@@ -2,11 +2,20 @@ import axios from 'axios';
 import swal from 'sweetalert2';
 import { LOAD_GROUPS, UNLOAD_GROUPS } from '../helpers/constants';
 
-const loadGroupSuccess = data => ({
+/**
+ * action creator that sets the groups the user belongs to the store
+ * @param {object} payLoad response from api call
+ * @return {object} action object of groups and action type
+ */
+const loadGroupSuccess = payLoad => ({
   type: LOAD_GROUPS,
-  data
+  payLoad
 });
 
+/**
+ * action creator that unload groups from the store
+ * @return {object} action object of action type
+ */
 const unloadGroupsSuccess = () => ({
   type: UNLOAD_GROUPS
 });
@@ -39,7 +48,6 @@ export function createNewGroup(groupName) {
       { headers: { token: localStorage.getItem('token') } }
     )
     .then(() => true, (err) => {
-      // console.log(err.message);
       swal('Oops...', err.response.data.message, 'error');
       return false;
     });

@@ -1,9 +1,9 @@
-import db from '../models';
+import models from '../models';
 
-const Users = db.Users;
-const Groups = db.Groups;
-const GroupMembers = db.GroupMembers;
-const Messages = db.Messages;
+const Users = models.Users;
+const Groups = models.Groups;
+const GroupMembers = models.GroupMembers;
+const Messages = models.Messages;
 
 export default {
 
@@ -50,7 +50,7 @@ export default {
       })
       .then((groupExists) => {
         if (groupExists) {
-          return res.status(400).send({
+          return res.status(409).send({
             success: false,
             message: 'A group already exists with the same name'
           });

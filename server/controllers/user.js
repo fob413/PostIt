@@ -1,15 +1,16 @@
 import bcrypt from 'bcrypt';
 import crypto from 'crypto';
 import jwt from 'jsonwebtoken';
-import db from '../models';
+import models from '../models';
 import paginate from '../middleware/paginate';
-import { sendResetMail, sendSuccessfulResetMail } from '../middleware/priority';
+import sendResetMail from '../middleware/resetMail';
+import sendSuccessfulResetMail from '../middleware/successfulResetMail';
+import validate from '../middleware/validate';
 
 require('dotenv').config();
 
 const secret = process.env.SECRET_TOKEN;
-
-const Users = db.Users;
+const Users = models.Users;
 
 // message sent for invalid inputs
 const invalid = {
@@ -28,16 +29,7 @@ export default {
    */
   create(req, res) {
     // validate users input
-    if (
-      req.body.userName &&
-      req.body.userName.length > 0 &&
-      req.body.password &&
-      req.body.password.length > 7 &&
-      req.body.email &&
-      req.body.telephone &&
-      req.body.telephone.length > 0 &&
-      !isNaN(req.body.telephone)
-    ) {
+    if (validate(req, res, 'signup')) {
       return Users.findOne({
         where: {
           userName: req.body.userName
@@ -46,7 +38,7 @@ export default {
       .then((username) => {
         // check if username hasn't been used
         if (username) {
-          return res.status(400).send({
+          return res.status(409).send({
             success: false,
             message: 'Username has already been taken!'
           });
@@ -60,7 +52,7 @@ export default {
         })
         .then((emailUsed) => {
           if (emailUsed) {
-            return res.status(400).send({
+            return res.status(409).send({
               success: false,
               message: 'Email already in use!'
             });
@@ -73,7 +65,7 @@ export default {
           })
           .then((telephoneUsed) => {
             if (telephoneUsed) {
-              return res.status(400).send({
+              return res.status(409).send({
                 success: false,
                 message: 'Telephone number in use by another user!'
               });
@@ -137,7 +129,7 @@ export default {
    */
   signin(req, res) {
     // check for username and password
-    if (req.body.userName && req.body.password) {
+    if (validate(req, res, 'signin')) {
       return Users
       .findOne({
         where: {
@@ -173,7 +165,7 @@ export default {
             });
           })
           .catch((err) => {
-            res.status(400).send({
+            res.status(500).send({
               success: false,
               message: err.message
             });
@@ -181,10 +173,10 @@ export default {
         );
         }
         // response for when user isn't found
-        return res.status(401).send(invalid);
+        return res.status(404).send(invalid);
       })
       .catch((error) => {
-        res.status(400).send(error.message);
+        res.status(500).send(error.message);
       });
     }
     // response for failed validation
@@ -217,13 +209,13 @@ export default {
         message: 'successfully logged out',
         isLoggedin: user.isLoggedin
       }), (err) => {
-        res.status(400).send({
+        res.status(500).send({
           success: false,
           message: err.message
         });
       });
     }, (err) => {
-      res.status(400).send({
+      res.status(500).send({
         success: false,
         message: err.message
       });
@@ -258,10 +250,10 @@ export default {
       res.status(200).send({
         success: true,
         users,
-        data: paginate(users.count, req.body.limit, req.params.offset * 5)
+        paginateData: paginate(users.count, req.body.limit, req.params.offset * 5)
       });
     }, (err) => {
-      res.status(400).send({
+      res.status(500).send({
         success: false,
         message: 'an error occured searching users',
         error: err.message,
@@ -301,7 +293,7 @@ export default {
         resetPasswordToken: token,
         expiryTime: Date.now() + 3600000
       }, (err) => {
-        res.status(400).send({
+        res.status(500).send({
           success: false,
           message: err.message
         });
@@ -313,13 +305,13 @@ export default {
         });
         sendResetMail(updatedUser.resetPasswordToken, updatedUser.email, req.headers.host);
       }, (err) => {
-        res.status(400).send({
+        res.status(500).send({
           success: false,
           message: err.message
         });
       });
     }, (err) => {
-      res.status(400).send({
+      res.status(500).send({
         success: false,
         message: err.message
       });
@@ -341,7 +333,7 @@ export default {
     })
     .then((user) => {
       if (!user) {
-        res.status(400).send({
+        res.status(401).send({
           success: false,
           message: 'failed token authentication'
         });
@@ -352,8 +344,8 @@ export default {
             expiryTime: null
           })
           .then(() => {
-            res.status(400).send({ success: false });
-          }, err => res.status(400).send(err.message));
+            res.status(403).send({ success: false });
+          }, err => res.status(500).send(err.message));
         } else {
           if (req.body.newPassword &&
             req.body.newPassword.length > 7 &&
@@ -373,7 +365,7 @@ export default {
                 message: 'successfully updated password'
               });
             }, (err) => {
-              res.status(400).send({
+              res.status(500).send({
                 success: false,
                 message: err.message
               });
@@ -387,7 +379,7 @@ export default {
         }
       }
     }, (err) => {
-      res.status(400).send({
+      res.status(500).send({
         success: false,
         message: err.message
       });
@@ -402,7 +394,7 @@ export default {
    */
   authToken(req, res) {
     if (!req.body.token) {
-      res.status(400).send({
+      res.status(401).send({
         success: false,
         message: 'No token provided'
       });
@@ -415,7 +407,7 @@ export default {
       })
       .then((user) => {
         if (!user) {
-          res.status(400).send({
+          res.status(403).send({
             success: false,
             message: 'failed token authentication'
           });
@@ -426,7 +418,7 @@ export default {
           });
         }
       }, (err) => {
-        res.status(400).send({
+        res.status(500).send({
           success: false,
           message: err.message
         });

@@ -13,78 +13,94 @@ import {
 
 
 /**
- * @override reducer function
+ * action creator that loads the current group being viewed
+ * @param {object} payLoad the current groups id
+ * @return {object} action object of current group id and action type
  */
-const loadGroupId = data => ({
+const loadGroupId = payLoad => ({
   type: CURRENT_GROUP,
-  data
+  payLoad
 });
 
 /**
- * @override reducer function
+ * action creator that sets the group messages to the store
+ * @param {object} payLoad response from api call
+ * @return {object} action object of group messages and action type
  */
-const loadGroupMessagesSuccess = data => ({
+const loadGroupMessagesSuccess = payLoad => ({
   type: LOAD_GROUP_MESSAGES,
-  data
+  payLoad
 });
 
 /**
- * @override reducer function
+ * action creator that sets the unread messages to the store
+ * @param {object} payLoad response from api call
+ * @return {object} action object of unread messages and action type
  */
-const loadGroupUnreadMessagesSuccess = data => ({
+const loadGroupUnreadMessagesSuccess = payLoad => ({
   type: LOAD_UNREAD_MESSAGES,
-  data
+  payLoad
 });
 
 /**
- * @override reducer function
+ * action creator that sets the read messages to the store
+ * @param {object} payLoad response from api call
+ * @return {object} action object of read messages and action type
  */
-const loadGroupReadMessagesSuccess = data => ({
+const loadGroupReadMessagesSuccess = payLoad => ({
   type: LOAD_READ_MESSAGES,
-  data
+  payLoad
 });
 
 /**
- * @override reducer function
+ * action creator that sets the searched user api result to the store
+ * @param {object} payLoad response from api call
+ * @return {object} action object of search result and action type
  */
-const loadPlatformUsersSuccess = data => ({
+const loadPlatformUsersSuccess = payLoad => ({
   type: LOAD_PLATFORM_USERS,
-  data
+  payLoad
 });
 
 /**
- * @override reducer function
+ * action creator that sets the users in a group to the store
+ * @param {object} payLoad response from api call
+ * @return {object} action object of user in a group and action type
  */
-const loadGroupUsersSuccess = data => ({
+const loadGroupUsersSuccess = payLoad => ({
   type: LOAD_GROUP_USERS,
-  data
+  payLoad
 });
 
 /**
- * @override reducer function
+ * action creator that sets the count of searched users to the store
+ * @param {object} payLoad response from api call
+ * @return {object} action object of search result count and action type
  */
-const loadCount = data => ({
+const loadCount = payLoad => ({
   type: LOAD_COUNT,
-  data
+  payLoad
 });
 
 /**
- * @override reducer function
+ * action creator that sets the pagecount of the searched result to the store
+ * @param {object} payLoad response from api call
+ * @return {object} action object of search result pagecount and action type
  */
-const loadPageCount = data => ({
+const loadPageCount = payLoad => ({
   type: LOAD_PAGE_COUNT,
-  data
+  payLoad
 });
 
 /**
  * filter unread messages
- * @param {array} data data gotten from api call
+ * @param {array} payLoad payLoad gotten from api call
  * @param {string} userId current user id operating the platform
  * @return {array} array of unread messages
  */
-const filterUnreadMessages = (data, userId) => {
+const filterUnreadMessages = (payLoad, userId) => {
   const unreadMessages = [];
-  data.map((item) => {
+  payLoad.map((item) => {
     // array to hold userId that have read messages
     let readby = [];
     // boolean to check if user has read a message
@@ -107,13 +123,13 @@ const filterUnreadMessages = (data, userId) => {
 
 /**
  * filter read messages
- * @param {array} data data gotten from api call
+ * @param {array} payLoad payLoad gotten from api call
  * @param {string} userId current user id operating the platform
  * @return {array} array of read messages
  */
-const filterReadMessages = (data, userId) => {
+const filterReadMessages = (payLoad, userId) => {
   let readMessages = [];
-  data.map((item) => {
+  payLoad.map((item) => {
     // array to hold userId that have read messages
     let readby = [];
     // boolean to check if user has read a message
@@ -159,10 +175,10 @@ export function sendMessage(message, groupId, priority) {
       { content: message, priority },
       { headers: { token: localStorage.getItem('token') } }
     )
-    .then(({ data }) => {
+    .then(() => {
       return true;
     }, (err) => {
-      // console.log(err.message);
+      swal('Oops...', err.message, 'error');
     });
   };
 }
@@ -189,7 +205,9 @@ export function loadGroupMessages(groupId, userId) {
       dispatch(loadGroupReadMessagesSuccess(
         filterReadMessages(data, userId)
       ));
-    }, err => console.log(err));
+    }, (err) => {
+      swal('Oops', err.message, 'error');
+    });
   };
 }
 
@@ -207,7 +225,9 @@ export function loadPlatformUsers() {
     )
     .then(({ data }) => {
       dispatch(loadPlatformUsersSuccess(data));
-    }, err => console.log(err));
+    }, (err) => {
+      swal('Oops...', err.message, 'error');
+    });
   };
 }
 
@@ -230,10 +250,10 @@ export function searchUsers(offset, userName) {
       if (data.users.rows.length < 1) Materialize.toast('No user found', 4000, 'red');
       dispatch(loadPlatformUsersSuccess(data.users.rows));
       dispatch(loadCount(data.users.count));
-      dispatch(loadPageCount(data.data.pageCount));
+      dispatch(loadPageCount(data.paginateData.pageCount));
       return true;
     }, (err) => {
-      console.log(err.message);
+      swal('Oops...', err.message, 'error');
     });
   };
 }
@@ -253,7 +273,9 @@ export function loadGroupUsers(groupId) {
     )
     .then(({ data }) => {
       dispatch(loadGroupUsersSuccess(data));
-    }, err => console.log(err.message));
+    }, (err) => {
+      swal('Oops...', err.message, 'error');
+    });
   };
 }
 

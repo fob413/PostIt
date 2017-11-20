@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
+import swal from 'sweetalert2';
 import { resetPassword, authToken } from '../../../actions/resetPassActions';
 import { signUserIn } from '../../../actions/authActions';
 
@@ -47,7 +48,7 @@ export class ResetPassword extends React.Component {
         UserName: res.UserName
       });
     }, (err) => {
-      console.log(err.message);
+      swal('Oops...', err.message, 'error');
     });
   }
 

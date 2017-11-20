@@ -111,7 +111,7 @@ const data = {
         }
       ]
     },
-    data: {
+    paginateData: {
       page: 1,
       pageCount: 1,
       pageSize: 1,
@@ -122,7 +122,7 @@ const data = {
   signupSuccessfulAction: [
     {
       type: types.SIGN_UP,
-      data: {
+      payLoad: {
         success: true,
         message: 'Successfully signed user up',
         token: 'abcdefghijklmnopqrstuvwxyz'
@@ -133,7 +133,7 @@ const data = {
   signinSuccessfulAction: [
     {
       type: types.SIGN_IN,
-      data: {
+      payLoad: {
         success: true,
         message: 'Successfully signed user in',
         token: 'abcdefghijklmnopqrstuvwxyz'
@@ -144,7 +144,7 @@ const data = {
   signoutSuccessfulAction: [
     {
       type: types.SIGN_OUT,
-      data: {
+      payLoad: {
         success: true,
         isLoggedIn: false,
         message: 'Successfully logged user out'
@@ -169,7 +169,7 @@ const data = {
   loadGroupsActions: [
     {
       type: types.LOAD_GROUPS,
-      data: [
+      payLoad: [
         {
           id: 1,
           groupName: 'Group One'
@@ -196,7 +196,7 @@ const data = {
   loadCurrentGroupActions: [
     {
       type: types.CURRENT_GROUP,
-      data: 1
+      payLoad: 1
     }
   ],
 
@@ -212,7 +212,7 @@ const data = {
 
   signupReducerAction: {
     type: types.SIGN_UP,
-    data: {
+    payLoad: {
       userName: 'funsho',
       isLoggedin: true,
       token: 'abcdefghijklmnopqrstuvwxyz',
@@ -234,7 +234,7 @@ const data = {
 
   signinReducerAction: {
     type: types.SIGN_IN,
-    data: {
+    payLoad: {
       userName: 'funsho',
       isLoggedin: true,
       token: 'abcdefghijklmnopqrstuvwxyz',
@@ -255,7 +255,7 @@ const data = {
 
   signoutReducerAction: {
     type: types.SIGN_OUT,
-    data: {
+    payLoad: {
       isLoggedIn: false
     }
   },
@@ -272,7 +272,7 @@ const data = {
 
   reloadUserInReducerAction: {
     type: types.RELOAD_USER_IN,
-    data: {
+    payLoad: {
       userName: 'funsho',
       email: 'fob1493@gmail.com',
       telephone: '08138498175',
@@ -291,7 +291,7 @@ const data = {
 
   loadGroupReducerAction: {
     type: types.LOAD_GROUPS,
-    data: [
+    payLoad: [
       {
         id: 1,
         userId: 1,
@@ -366,7 +366,7 @@ const data = {
 
   loadGroupMessagesReducerAction: {
     type: types.LOAD_GROUP_MESSAGES,
-    data: [
+    payLoad: [
       {
         id: 2,
         content: 'second message sent to this group',
@@ -428,7 +428,7 @@ const data = {
 
   currentGroupReducerAction: {
     type: types.CURRENT_GROUP,
-    data: 5
+    payLoad: 5
   },
 
   currentGroupReducerExpected: {
@@ -444,7 +444,7 @@ const data = {
 
   loadPlatformUsersReducerAction: {
     type: types.LOAD_PLATFORM_USERS,
-    data: [
+    payLoad: [
       {
         id: 14,
         UserName: 'user3'
@@ -478,7 +478,7 @@ const data = {
 
   loadGroupUsersReducerAction: {
     type: types.LOAD_GROUP_USERS,
-    data: [
+    payLoad: [
       {
         id: 1,
         userId: 3,
@@ -532,7 +532,7 @@ const data = {
 
   loadUnreadMessagesReducerAction: {
     type: types.LOAD_UNREAD_MESSAGES,
-    data: [
+    payLoad: [
       {
         id: 2,
         content: 'second message sent to this group',
@@ -594,7 +594,7 @@ const data = {
 
   loadReadMessagesReducersAction: {
     type: types.LOAD_READ_MESSAGES,
-    data: [
+    payLoad: [
       {
         id: 2,
         content: 'second message sent to this group',
@@ -656,7 +656,7 @@ const data = {
 
   loadCountReducerAction: {
     type: types.LOAD_COUNT,
-    data: 16
+    payLoad: 16
   },
 
   loadCountReducerExpected: {
@@ -672,7 +672,7 @@ const data = {
 
   loadPageCountReducerAction: {
     type: types.LOAD_PAGE_COUNT,
-    data: 5
+    payLoad: 5
   },
 
   loadPageCountReducerExpected: {

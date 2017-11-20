@@ -1,10 +1,8 @@
-import db from '../models';
+import models from '../models';
 
-const GroupMembers = db.GroupMembers;
-const Users = db.Users;
-const Groups = db.Groups;
-
-// const members = require('../models/').Members;
+const GroupMembers = models.GroupMembers;
+const Users = models.Users;
+const Groups = models.Groups;
 
 export default {
 
@@ -23,7 +21,7 @@ export default {
       })
       .then((user) => {
         if (!user) {
-          return res.status(400).send({
+          return res.status(401).send({
             success: false,
             message: 'Sign up to access this service'
           });
@@ -36,7 +34,7 @@ export default {
         })
         .then((group) => {
           if (!group) {
-            return res.status(400).send({
+            return res.status(404).send({
               success: false,
               message: 'Group does not exist'
             });
@@ -50,7 +48,7 @@ export default {
           })
           .then((member) => {
             if (member) {
-              return res.status(401).send({
+              return res.status(409).send({
                 success: false,
                 message: 'User already in group'
               });
@@ -65,26 +63,26 @@ export default {
                 message: 'successfully added to group',
                 id: addedMember.id
               });
-            }, err => res.status(400).send({
+            }, err => res.status(500).send({
               success: false,
               message: err.message
             }));
-          }, err => res.status(400).send({
+          }, err => res.status(500).send({
             success: false,
             message: err.message
           }));
-        }, err => res.status(400).send({
+        }, err => res.status(500).send({
           success: false,
           message: err.message
         }));
-      }, err => res.status(400).send({
+      }, err => res.status(500).send({
         success: false,
         message: err.message
       }));
     }
-    return res.status(400).send({
+    return res.status(404).send({
       success: false,
-      message: 'no user id for user to be added to the group'
+      message: 'user does not exist'
     });
   },
 
@@ -111,7 +109,7 @@ export default {
         })
         .then((group) => {
           if (!group) {
-            return res.status(400).send({
+            return res.status(404).send({
               success: false,
               message: 'Group does not exist'
             });
@@ -131,7 +129,7 @@ export default {
           })
           .then(users => res.status(200).send(users));
         })
-        .catch(err => res.status(400).send({
+        .catch(err => res.status(500).send({
           success: false,
           message: err.message
         }));
@@ -142,7 +140,7 @@ export default {
       });
     })
     .catch((err) => {
-      res.status(400).send({
+      res.status(500).send({
         success: false,
         message: err.message
       });

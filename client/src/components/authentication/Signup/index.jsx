@@ -3,13 +3,14 @@ import { Link, withRouter } from 'react-router-dom';
 import swal from 'sweetalert2';
 import { connect } from 'react-redux';
 import { signUserUp } from '../../../actions/authActions';
+import validate from '../../../helpers/validate';
 
 
 /**
- * @class SignUp
+ * @class Signup
  * @extends {React.Component}
  */
-export class SignUp extends React.Component {
+export class Signup extends React.Component {
 
   /**
    * Creates an instance of SignUp.
@@ -79,24 +80,12 @@ export class SignUp extends React.Component {
    */
   handleSubmit(event) {
     event.preventDefault();
-    if (this.state.password.length > 7) {
-      if (
-        this.state.password === this.state.confirmPassword
-      ) {
-        if (!isNaN(this.state.telephone)) {
-          this.props.signUserUp(this.state).then((res) => {
-            if (res) {
-              this.props.history.push('/dashboard');
-            }
-          });
-        } else {
-          swal('Oops...', 'Please input a valid telephone number', 'error');
+    if (validate(this.state, 'signup')) {
+      this.props.signUserUp(this.state).then((res) => {
+        if (res) {
+          this.props.history.push('/dashboard');
         }
-      } else {
-        swal('Oops...', 'Please confirm your password', 'error');
-      }
-    } else {
-      swal('Oops...', 'Please input a password of at least 8 characters', 'error');
+      });
     }
   }
 
@@ -245,7 +234,7 @@ export class SignUp extends React.Component {
   }
 }
 
-SignUp.propTypes = {
+Signup.propTypes = {
   auth: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
   signUserUp: PropTypes.func.isRequired
@@ -260,4 +249,4 @@ const mapStateToProps = state => (
 export default connect(
   mapStateToProps,
   { signUserUp }
-)(withRouter(SignUp));
+)(withRouter(Signup));

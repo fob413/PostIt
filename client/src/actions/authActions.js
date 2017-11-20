@@ -2,21 +2,44 @@ import axios from 'axios';
 import swal from 'sweetalert2';
 import { SIGN_UP, SIGN_IN, SIGN_OUT, RELOAD_USER_IN } from '../helpers/constants';
 
-const signUpSuccess = data => ({
+/**
+ * action creator that sets current user to the store
+ * @param {object} payLoad response from siginup api call
+ * @return {object} action object of current user and action type
+ */
+const signUpSuccess = payLoad => ({
   type: SIGN_UP,
-  data
+  payLoad
 });
 
-const signInSuccess = data => ({
+/**
+ * action creator that sets current user to the store
+ * @param {object} payLoad response from signin api call
+ * @return {object} action object of current user and action type
+ */
+const signInSuccess = payLoad => ({
   type: SIGN_IN,
-  data
+  payLoad
 });
 
-const signOutSuccess = data => ({
+/**
+ * action creator that clears the store on user signout
+ * @param {object} payLoad response from signout api call
+ * @return {object} cleared data object and action type
+ */
+const signOutSuccess = payLoad => ({
   type: SIGN_OUT,
-  data
+  payLoad
 });
 
+/**
+ * action creator that sets current user to the store
+ * @param {string} userName current user's name
+ * @param {string} email current user's email
+ * @param {Number} telephone current user's telephone number
+ * @param {Number} userId current user's id
+ * @return {object} action object of current user and action type
+ */
 const reloadUserInSuccess = (userName, email, telephone, userId) => ({
   type: RELOAD_USER_IN,
   userName,

@@ -8,7 +8,7 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case LOAD_GROUPS:
       return [
-        ...action.data
+        ...action.payLoad
       ];
 
     case UNLOAD_GROUPS:

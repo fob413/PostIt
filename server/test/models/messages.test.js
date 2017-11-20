@@ -1,6 +1,6 @@
 import chai from 'chai';
 import model from '../../models';
-import data from '../data';
+import data from '../mockData';
 
 const should = chai.should();
 

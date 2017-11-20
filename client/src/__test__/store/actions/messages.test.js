@@ -99,15 +99,15 @@ describe('LOAD GROUP MESSAGES action', () => {
     const expectedAction = [
       {
         type: types.LOAD_GROUP_MESSAGES,
-        data: dataArray
+        payLoad: dataArray
       },
       {
         type: types.LOAD_UNREAD_MESSAGES,
-        data: []
+        payLoad: []
       },
       {
         type: types.LOAD_READ_MESSAGES,
-        data: dataArray
+        payLoad: dataArray
       }
     ];
 
@@ -153,7 +153,7 @@ describe('LOAD PLATFORM USERS action', () => {
     const expectedAction = [
       {
         type: types.LOAD_PLATFORM_USERS,
-        data: usersArray
+        payLoad: usersArray
       }
     ];
 
@@ -200,15 +200,15 @@ describe('SEARCH USERS action', () => {
     const expectedAction = [
       {
         type: types.LOAD_PLATFORM_USERS,
-        data: datas.searchUserResult.users.rows
+        payLoad: datas.searchUserResult.users.rows
       },
       {
         type: types.LOAD_COUNT,
-        data: datas.searchUserResult.data.count
+        payLoad: datas.searchUserResult.paginateData.count
       },
       {
         type: types.LOAD_PAGE_COUNT,
-        data: datas.searchUserResult.data.pageCount
+        payLoad: datas.searchUserResult.paginateData.pageCount
       }
     ];
 
@@ -256,7 +256,7 @@ describe('LOAD GROUP USERS action', () => {
     const expectedAction = [
       {
         type: types.LOAD_GROUP_USERS,
-        data: usersArray
+        payLoad: usersArray
       }
     ];
 

@@ -157,7 +157,9 @@ export class MessageBoard extends React.Component {
         this.state.groupId,
         this.state.userId
       ),
-      err => console.log(err));
+      (err) => {
+        swal('Oops...', err.message, 'error');
+      });
       this.setState({
         priority: 'NORMAL'
       });
@@ -209,14 +211,14 @@ export class MessageBoard extends React.Component {
 
   /**
    * load next or previous page of users
-   * @param {any} data
+   * @param {any} selectedPage
    * @memberof MessageBoard
    * @return {void}
    */
-  pageClick(data) {
+  pageClick(selectedPage) {
     let { user } = this.state;
     user = user.trim();
-    const selected = data.selected;
+    const selected = selectedPage.selected;
     const limit = 5;
     const offset = Math.ceil(selected * limit);
     this.setState({

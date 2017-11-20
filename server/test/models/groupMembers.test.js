@@ -1,6 +1,6 @@
 import chai from 'chai';
 import models from '../../models';
-import data from '../data';
+import data from '../mockData';
 
 const shuold = chai.should();
 const GroupMember = models.GroupMembers;
