@@ -125,5 +125,18 @@ export default ({
     content: 'Hello World three',
     priority: 'CRITICAL'
   },
+  token: 'abcdefghijklmnopqrstuvwxyz',
+  updatePassword1: {
+    newPassword: 'asdf;lkj',
+    confirmPassword: 'asdf;lkj'
+  },
+  updatePassword2: {
+    newPassword: 'asdf;lkj',
+    confirmPassword: 'fdasjkl;'
+  },
+  searchParameter1: {
+    userName: 't',
+    limit: 5
+  }
 });
 

@@ -63,7 +63,7 @@ describe('Test setup', () => {
 });
 
 describe('Add User To A Group Route /api/group/:groupId/user', () => {
-  it('should return a status of 201 when successful', (done) => {
+  it('should add a user to a group when successful', (done) => {
     chai.request(app)
     .post('/api/v1/group/1/user')
     .set('token', token)
@@ -72,46 +72,50 @@ describe('Add User To A Group Route /api/group/:groupId/user', () => {
     })
     .end((err, res) => {
       res.should.have.status(201);
+      res.body.should.have.property('success').equals(true);
       done();
     });
   });
 
-  it('should return a status 404 when user object is not sent', (done) => {
+  it('should not add user to the group if no user object is sent', (done) => {
     chai.request(app)
     .post('/api/v1/group/1/user')
     .set('token', token)
     .send()
     .end((err, res) => {
       res.should.have.status(404);
+      res.body.should.have.property('success').equals(false);
       done();
     });
   });
 
-  it('should return a status 409 when user already belongs to the group', (done) => {
+  it('should not add a user to a group he already belongs to', (done) => {
     chai.request(app)
     .post('/api/v1/group/1/user')
     .set('token', token)
     .send(mockData.addUser1)
     .end((err, res) => {
       res.should.have.status(409);
+      res.body.should.have.property('success').equals(false);
       done();
     });
   });
 
-  it('should return a status 404 when group does not exist', (done) => {
+  it('should not add a user to a group that doesn\'t exist', (done) => {
     chai.request(app)
     .post('/api/v1/group/8/user')
     .set('token', token)
     .send(mockData.addUser1)
     .end((err, res) => {
       res.should.have.status(404);
+      res.body.should.have.property('success').equals(false);
       done();
     });
   });
 });
 
 describe('List Users In A Group api route \'GET: /api/group/:groupId/user/list\'', () => {
-  it('should return a status 200 when successful', (done) => {
+  it('should list users in a group when successful', (done) => {
     chai.request(app)
     .get('/api/v1/group/1/user/list')
     .set('token', token)
@@ -121,12 +125,13 @@ describe('List Users In A Group api route \'GET: /api/group/:groupId/user/list\'
     });
   });
 
-  it('should return a status 404 when group does not exist', (done) => {
+  it('should not list anything when group does not exist', (done) => {
     chai.request(app)
     .get('/api/v1/group/8/user/list')
     .set('token', token)
     .end((err, res) => {
       res.should.have.status(404);
+      res.body.should.have.property('success').equals(false);
       done();
     });
   });

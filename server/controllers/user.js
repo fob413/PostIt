@@ -299,6 +299,13 @@ export default {
         });
       })
       .then((updatedUser) => {
+        if (process.env.NODE_ENV === 'test' || 'travis') {
+          return res.status(200).send({
+            success: true,
+            message: 'reset password link has been sent to your mail',
+            resetToken: token
+          });
+        }
         res.status(200).send({
           success: true,
           message: 'reset password link has been sent to your mail'
