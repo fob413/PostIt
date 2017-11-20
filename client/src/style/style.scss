@@ -1,0 +1,143 @@
+// color variables
+$green: #004d40;
+$pink: #880e4f;
+
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
+.mainBody {
+  min-height: 82vh !important;
+  padding-top: 2vh;
+}
+
+.profileBody {
+  min-height: 64vh;
+}
+
+.logo {
+  padding-top: 10vh;
+}
+
+.signButton {
+  cursor: pointer;
+}
+
+.logout {
+  cursor: pointer;
+}
+
+.center {
+  margin: auto;
+}
+
+.cGroup {
+  padding-top: 5%;
+  cursor: pointer;
+}
+
+.click {
+  cursor: pointer;
+}
+
+.profile {
+  margin-top: 8%;
+}
+
+#profileName {
+  font-weight: bold;
+}
+
+.profileTable {
+  border: 2px solid $green;
+}
+
+.message {
+  border: 2px solid $pink;
+  padding: 10px;
+  height: 350px;
+  overflow-y: scroll;
+}
+
+.messageBoard {
+  margin-top: 5%;
+  min-height: 75vh;
+}
+
+.sendMessage {
+  overflow-x: scroll;
+  width: 100px;
+}
+
+.boardMessage {
+  font-size: 10px;
+}
+
+.addUser {
+  height: 400px;
+}
+
+.addUserBtn {
+  padding: 5%;
+}
+
+.hide {
+  display: none;
+}
+
+.show {
+  display: block;
+}
+
+.forgotInput {
+  margin: auto;
+}
+
+.forgotBold {
+  font-weight: bold;
+}
+
+.underline {
+  text-decoration: underline;
+  font-weight: bold;
+  color: $pink;
+}
+
+.modalWidth {
+  width: 80%;
+}
+
+.addUserButtons {
+  position: relative;
+  bottom: -80%;
+}
+
+.modalButton {
+  z-index: auto;
+}
+
+.pagination {
+  cursor: pointer;
+}
+
+.addUserList {
+  height: 210px;
+}
+
+.groupMessage {
+  padding-top: 10px;
+}
+
+.dashButtons {
+  margin-left: 1vh;
+}
+
+.groupsBody {
+  margin-top: 12vh;
+}

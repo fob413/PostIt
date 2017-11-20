@@ -1,10 +1,10 @@
-import db from '../models';
-import { sendMail } from '../middleware/priority';
+import models from '../models';
+import sendMail from '../middleware/messageMail';
 
-const Users = db.Users;
-const GroupMembers = db.GroupMembers;
-const Message = db.Messages;
-const Groups = db.Groups;
+const Users = models.Users;
+const GroupMembers = models.GroupMembers;
+const Message = models.Messages;
+const Groups = models.Groups;
 
 /**
  * checks if a user has read a message
@@ -47,7 +47,7 @@ export default {
         })
         .then((group) => {
           if (!group) {
-            return res.status(400).send({
+            return res.status(404).send({
               success: false,
               message: 'Group does not exist'
             });
@@ -61,7 +61,7 @@ export default {
           })
           .then((member) => {
             if (!member) {
-              return res.status(400).send({
+              return res.status(401).send({
                 success: false,
                 message: 'Not a member of this group'
               });
@@ -107,20 +107,20 @@ export default {
                 });
               })
               .catch((err) => {
-                res.status(400).send(err.message);
+                res.status(500).send(err.message);
               });
             })
-            .catch(err => res.status(400).send({
+            .catch(err => res.status(500).send({
               success: false,
               message: err.message
             }));
           })
-          .catch(err => res.status(400).send({
+          .catch(err => res.status(500).send({
             success: false,
             message: err.message
           }));
         })
-        .catch(err => res.status(400).send({
+        .catch(err => res.status(500).send({
           success: false,
           message: err.message
         }));
@@ -131,7 +131,7 @@ export default {
       });
     })
     .catch((err) => {
-      res.status(400).send({
+      res.status(500).send({
         success: false,
         message: err.message
       });
@@ -160,7 +160,7 @@ export default {
         })
         .then((group) => {
           if (!group) {
-            return res.status(400).send({
+            return res.status(404).send({
               success: false,
               message: 'Group does not exist'
             });
@@ -174,7 +174,7 @@ export default {
           })
           .then((member) => {
             if (!member) {
-              return res.status(400).send({
+              return res.status(401).send({
                 success: false,
                 message: 'Not a member of this group'
               });
@@ -188,17 +188,17 @@ export default {
             .then((groupMessages) => {
               res.status(200).send(groupMessages);
             })
-            .catch(err => res.status(400).send({
+            .catch(err => res.status(500).send({
               success: false,
               message: err.message
             }));
           })
-          .catch(err => res.status(400).send({
+          .catch(err => res.status(500).send({
             success: false,
             message: err.message
           }));
         })
-        .catch(err => res.status(400).send({
+        .catch(err => res.status(500).send({
           success: false,
           message: err.message
         }));
@@ -209,7 +209,7 @@ export default {
       });
     })
     .catch((err) => {
-      res.status(400).send({
+      res.status(500).send({
         success: false,
         message: err.message
       });
@@ -244,7 +244,7 @@ export default {
       })
       .then((member) => {
         if (!member) {
-          return res.status(400).send({
+          return res.status(401).send({
             success: false,
             message: 'Not a member of this group'
           });

@@ -5,7 +5,8 @@ import {
   clearGroupDatabase,
   clearGroupMemberDatabase,
   clearUserDatabase
-} from '../helper';
+} from '../mockData/helper';
+import mockData from '../mockData';
 
 process.env.NODE_ENV = 'travis';
 
@@ -18,6 +19,7 @@ clearGroupMemberDatabase();
 clearUserDatabase();
 
 let token = '';
+let secondToken = '';
 
 describe('Test setup', () => {
   before((done) => {
@@ -30,12 +32,7 @@ describe('Test setup', () => {
   it('should get token for other tests', (done) => {
     chai.request(app)
     .post('/api/v1/user/signup')
-    .send({
-      userName: 'seyi',
-      email: 'seyi@email.com',
-      telephone: '0987654321',
-      password: 'asdf;lkj'
-    })
+    .send(mockData.userData1)
     .end((err, res) => {
       token = res.body.token;
       res.should.have.status(201);
@@ -46,14 +43,9 @@ describe('Test setup', () => {
   it('should signup another user', (done) => {
     chai.request(app)
     .post('/api/v1/user/signup')
-    .send({
-      userName: 'funsho',
-      email: 'funsho@email.com',
-      telephone: '1234567890',
-      password: 'asdf;lkj'
-    })
+    .send(mockData.userData4)
     .end((err, res) => {
-      token = res.body.token;
+      secondToken = res.body.token;
       res.should.have.status(201);
       done();
     });
@@ -63,9 +55,7 @@ describe('Test setup', () => {
     chai.request(app)
     .post('/api/v1/group')
     .set('token', token)
-    .send({
-      groupName: 'Test Group One'
-    })
+    .send(mockData.groupData1)
     .end((err, res) => {
       res.should.have.status(201);
       done();
@@ -73,109 +63,80 @@ describe('Test setup', () => {
   });
 });
 
-describe('Send Messge Route /api/group/:groupId/message', () => {
-  describe('Send message positive response ', () => {
-    it('should return a status 201 when successful', (done) => {
-      chai.request(app)
-      .post('/api/v1/group/1/message')
-      .set('token', token)
-      .send({
-        content: 'Hello World one'
-      })
-      .end((err, res) => {
-        res.should.have.status(201);
-        done();
-      });
-    });
-
-    it('should return a status 201 when successful', (done) => {
-      chai.request(app)
-      .post('/api/v1/group/1/message')
-      .set('token', token)
-      .send({
-        content: 'Hello World two',
-        priorityValue: 'urgent'
-      })
-      .end((err, res) => {
-        res.should.have.status(201);
-        done();
-      });
-    });
-
-    it('should return a status 201 when successful', (done) => {
-      chai.request(app)
-      .post('/api/v1/group/1/message')
-      .set('token', token)
-      .send({
-        content: 'Hello World three',
-        priority: 'critical'
-      })
-      .end((err, res) => {
-        res.should.have.status(201);
-        done();
-      });
+describe('Send Messge Route \'POST: /api/group/:groupId/message\'', () => {
+  it('should return a status 201 when successful', (done) => {
+    chai.request(app)
+    .post('/api/v1/group/1/message')
+    .set('token', token)
+    .send(mockData.sendMessage1)
+    .end((err, res) => {
+      res.should.have.status(201);
+      done();
     });
   });
 
-  describe('Send message negative response ', () => {
-    let secondToken = '';
-    before((done) => {
-      chai.request(app)
-      .post('/api/v1/user/signup')
-      .send({
-        userName: 'temi',
-        email: 'temi@email.com',
-        telephone: '123456789012',
-        password: 'asdf;lkj'
-      })
-      .end((err, res) => {
-        secondToken = res.body.token;
-        res.should.have.status(201);
-        done();
-      });
+  it('should return a status 201 when successful', (done) => {
+    chai.request(app)
+    .post('/api/v1/group/1/message')
+    .set('token', token)
+    .send(mockData.sendMessage2)
+    .end((err, res) => {
+      res.should.have.status(201);
+      done();
     });
+  });
 
-    it('should return a status 400 when group does not exist', (done) => {
-      chai.request(app)
-      .post('/api/v1/group/8/message')
-      .set('token', token)
-      .send({
-        content: 'Hello World'
-      })
-      .end((err, res) => {
-        res.should.have.status(400);
-        done();
-      });
+  it('should return a status 201 when successful', (done) => {
+    chai.request(app)
+    .post('/api/v1/group/1/message')
+    .set('token', token)
+    .send(mockData.sendMessage3)
+    .end((err, res) => {
+      res.should.have.status(201);
+      done();
     });
+  });
 
-    it('should return a status 400 when user is not in group', (done) => {
-      chai.request(app)
-      .post('/api/v1/group/1/message')
-      .set('token', secondToken)
-      .send({
-        content: 'Hello World'
-      })
-      .end((err, res) => {
-        res.should.have.status(400);
-        done();
-      });
+  it('should return a status 404 when group does not exist', (done) => {
+    chai.request(app)
+    .post('/api/v1/group/8/message')
+    .set('token', token)
+    .send({
+      content: 'Hello World'
+    })
+    .end((err, res) => {
+      res.should.have.status(404);
+      done();
     });
+  });
 
-    it('should return a status 400 when there is no content in users request object', (done) => {
-      chai.request(app)
-      .post('/api/v1/group/1/message')
-      .set('token', token)
-      .send()
-      .end((err, res) => {
-        res.should.have.status(400);
-        done();
-      });
+  it('should return a status 401 when user is not in group', (done) => {
+    chai.request(app)
+    .post('/api/v1/group/1/message')
+    .set('token', secondToken)
+    .send({
+      content: 'Hello World'
+    })
+    .end((err, res) => {
+      res.should.have.status(401);
+      done();
+    });
+  });
+
+  it('should return a status 400 when there is no content in users request object', (done) => {
+    chai.request(app)
+    .post('/api/v1/group/1/message')
+    .set('token', token)
+    .send()
+    .end((err, res) => {
+      res.should.have.status(400);
+      done();
     });
   });
 });
 
-describe('Retrieve Group Messages Route /api/group/:groupId/messages', () => {
-  let secondToken = '';
+describe('Retrieve Group Messages Route \'GET: /api/group/:groupId/messages\'', () => {
+  let thirdToken = '';
   before((done) => {
     chai.request(app)
     .post('/api/v1/user/signup')
@@ -186,84 +147,72 @@ describe('Retrieve Group Messages Route /api/group/:groupId/messages', () => {
       password: 'asdf;lkj'
     })
     .end((err, res) => {
-      secondToken = res.body.token;
+      thirdToken = res.body.token;
       res.should.have.status(201);
       done();
     });
   });
-  describe('Retrieve group messages positive response ', () => {
-    it('should return a status 200 when successful', (done) => {
-      chai.request(app)
-      .get('/api/v1/group/1/messages')
-      .set('token', token)
-      .end((err, res) => {
-        res.should.have.status(200);
-        done();
-      });
+
+  it('should return a status 200 when successful', (done) => {
+    chai.request(app)
+    .get('/api/v1/group/1/messages')
+    .set('token', token)
+    .end((err, res) => {
+      res.should.have.status(200);
+      done();
     });
   });
 
-  describe('Retrieve group negative response', () => {
-    it('should return status 400 when group does not exist', (done) => {
-      chai.request(app)
-      .get('/api/v1/group/8/messages')
-      .set('token', token)
-      .end((err, res) => {
-        res.should.have.status(400);
-        done();
-      });
+  it('should return status 404 when group does not exist', (done) => {
+    chai.request(app)
+    .get('/api/v1/group/8/messages')
+    .set('token', token)
+    .end((err, res) => {
+      res.should.have.status(404);
+      done();
     });
+  });
 
-    it('should return status 400 when user is not a member of the group', (done) => {
-      chai.request(app)
-      .get('/api/v1/group/1/messages')
-      .set('token', secondToken)
-      .end((err, res) => {
-        res.should.have.status(400);
-        done();
-      });
+  it('should return status 401 when user is not a member of the group', (done) => {
+    chai.request(app)
+    .get('/api/v1/group/1/messages')
+    .set('token', thirdToken)
+    .end((err, res) => {
+      res.should.have.status(401);
+      done();
     });
   });
 });
 
-describe('Read Message route /api/group/:groupId/messages/read ', () => {
-  let secondToken = '';
+describe('Read Message route \'POST: /api/group/:groupId/messages/read\' ', () => {
+  let fourthToken = '';
   before((done) => {
     chai.request(app)
     .post('/api/v1/user/signup')
-    .send({
-      userName: 'femi',
-      email: 'femi@email.com',
-      telephone: '623456789012',
-      password: 'asdf;lkj'
-    })
+    .send(mockData.userData5)
     .end((err, res) => {
-      secondToken = res.body.token;
+      fourthToken = res.body.token;
       res.should.have.status(201);
       done();
     });
   });
-  describe('Read message positive response ', () => {
-    it('should return status 201 when successful', (done) => {
-      chai.request(app)
-      .post('/api/v1/group/1/messages/read')
-      .set('token', token)
-      .end((err, res) => {
-        res.should.have.status(201);
-        done();
-      });
+  it('should return status 201 when successful', (done) => {
+    chai.request(app)
+    .post('/api/v1/group/1/messages/read')
+    .set('token', token)
+    .end((err, res) => {
+      res.should.have.status(201);
+      done();
     });
   });
 
-  describe('Read message negative response ', () => {
-    it('should return status 400 when not a member of group', (done) => {
-      chai.request(app)
-      .post('/api/v1/group/1/messages/read')
-      .set('token', secondToken)
-      .end((err, res) => {
-        res.should.have.status(400);
-        done();
-      });
+  it('should return status 401 when not a member of group', (done) => {
+    chai.request(app)
+    .post('/api/v1/group/1/messages/read')
+    .set('token', fourthToken)
+    .end((err, res) => {
+      res.should.have.status(401);
+      done();
     });
   });
 });

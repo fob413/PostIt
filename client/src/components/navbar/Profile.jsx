@@ -54,7 +54,6 @@ export class Profile extends React.Component {
    * @return {void}
    */
   render() {
-    // console.log(this.state);
     return (
       <div className="container profile profileBody">
         <h3 className="center teal-text text-darken-4" id="profileName">Profile</h3>

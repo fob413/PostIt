@@ -3,6 +3,7 @@ import swal from 'sweetalert2';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { signUserIn, reloadUserIn } from '../../../actions/authActions';
+import validate from '../../../helpers/validate';
 
 
 /**
@@ -75,13 +76,15 @@ export class Signin extends React.Component {
    */
   handleSignIn(event) {
     event.preventDefault();
-    this.props.signUserIn(this.state).then((res) => {
-      if (res) {
-        this.props.history.push('/dashboard');
-      }
-    }, (err) => {
-      swal('Oops', err.message, 'error');
-    });
+    if (validate(this.state, 'signin')) {
+      this.props.signUserIn(this.state).then((res) => {
+        if (res) {
+          this.props.history.push('/dashboard');
+        }
+      }, (err) => {
+        swal('Oops', err.message, 'error');
+      });
+    }
   }
 
 

@@ -1,5 +1,4 @@
 import jwt from 'jsonwebtoken';
-import { secret } from '../helpers/config';
 import { RELOAD_USER_IN } from '../helpers/constants';
 
 /**
@@ -9,25 +8,14 @@ import { RELOAD_USER_IN } from '../helpers/constants';
  * @return {void}
  */
 export function authenticateUser(token, dispatch) {
-  jwt.verify(token, secret, (err, decoded) => {
-    if (!err) {
-      const data = {
-        userName: decoded.userName,
-        email: decoded.email,
-        telephone: decoded.telephone,
-        userId: decoded.userId
-      };
-      dispatch({
-        type: RELOAD_USER_IN,
-        data
-      });
-    }
+  const payLoad = {
+    userName: jwt.decode(token).userName,
+    email: jwt.decode(token).email,
+    telephone: jwt.decode(token).telephone,
+    userId: jwt.decode(token).userId
+  };
+  dispatch({
+    type: RELOAD_USER_IN,
+    payLoad
   });
-}
-
-/**
- * @return {void}
- */
-export function test() {
-  return true;
 }

@@ -1,6 +1,6 @@
 import chai from 'chai';
 import models from '../../models';
-import data from '../data';
+import data from '../mockData';
 
 const should = chai.should();
 const Users = models.Users;
