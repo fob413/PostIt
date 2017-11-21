@@ -33,6 +33,26 @@ describe('Reset ', () => {
     expect(component.length).toBeGreaterThan(0);
   });
 
+  it('always renders the logo', () => {
+    const component = mountReset().find('img');
+    expect(component.length).toBe(1);
+  });
+
+  it('always renders a form to collect the users email', () => {
+    const component = mountReset().find('form');
+    expect(component.length).toBe(1);
+  });
+
+  it('always renders an input box in the form', () => {
+    const component = mountReset().find('input');
+    expect(component.length).toBe(1);
+  });
+
+  it('always renders a form submit button', () => {
+    const component = mountReset().find('button');
+    expect(component.length).toBe(1);
+  });
+
   it('has map state to props', () => {
     const component = shallow(<Reset {...props} store={store} />);
     expect(component.length).toBe(1);

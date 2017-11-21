@@ -55,11 +55,11 @@ describe('MessageBoard ', () => {
   });
 
   it('always renders a div', () => {
-    const component = mountMessageBoard().find('div');
+    const component = mountMessageBoard();
     component.setState({
       unread: true
     });
-    expect(component.length).toBeGreaterThan(0);
+    expect(component.find('div').length).toBeGreaterThan(0);
   });
 
   it('has map state to props', () => {

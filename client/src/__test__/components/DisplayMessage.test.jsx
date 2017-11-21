@@ -24,5 +24,10 @@ describe('DisplayMessage ', () => {
     const component = mountDisplayMessage().find('li');
     expect(component.length).toBeGreaterThan(0);
   });
+
+  it('renders the message icon', () => {
+    const component = mountDisplayMessage().find('i');
+    expect(component.props().children).toBe(mockData.displayMessageIcon);
+  });
 });
 

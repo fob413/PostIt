@@ -65,6 +65,26 @@ describe('Signin ', () => {
     expect(wrapper.find(Link)).toHaveLength(2);
   });
 
+  it('always renders signin form', () => {
+    const component = mountSignin().find('form');
+    expect(component.length).toBe(1);
+  });
+
+  it('always renders a sigin form with the inputs required', () => {
+    const component = mountSignin().find('input');
+    expect(component.length).toBe(2);
+  });
+
+  it('always renders a form submit button ', () => {
+    const component = mountSignin().find('button');
+    expect(component.length).toBe(1);
+  });
+
+  it('alwyas renders the logo', () => {
+    const component = mountSignin().find('img');
+    expect(component.length).toBe(1);
+  });
+
   it('calls a componentDidMount method', () => {
     const wrapper = mountSignin();
     const componentDidMountSpy = jest.spyOn(

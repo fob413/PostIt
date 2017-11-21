@@ -26,7 +26,7 @@ describe('Groups ', () => {
     expect(component.length).toBeGreaterThan(0);
   });
 
-  xit('calls a componentWillReceiveProps method', () => {
+  it('calls a componentWillReceiveProps method', () => {
     const component = shallowMountGroups();
     const componentWillReceivePropsSpy = jest.spyOn(
       component.instance(), 'componentWillReceiveProps'
@@ -36,11 +36,11 @@ describe('Groups ', () => {
     expect(componentWillReceivePropsSpy).toHaveBeenCalled();
   });
 
-  it('always renders a div', () => {
+  it('always renders a text when there are no groups', () => {
     props = mockData.groupsNextProps;
     const component = shallow(
       <Groups {...props} />
-    ).find('div');
+    ).find('h4');
     expect(component.length).toBeGreaterThan(0);
   });
 });

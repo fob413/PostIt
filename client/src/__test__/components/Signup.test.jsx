@@ -61,6 +61,31 @@ describe('Signup ', () => {
     expect(component.length).toBeGreaterThan(0);
   });
 
+  it('always renders signup form', () => {
+    const component = mountSignup().find('form');
+    expect(component.length).toBe(1);
+  });
+
+  it('always renders a signup form with the inputs required', () => {
+    const component = mountSignup().find('input');
+    expect(component.length).toBe(5);
+  });
+
+  it('always renders a form submit button ', () => {
+    const component = mountSignup().find('button');
+    expect(component.length).toBe(1);
+  });
+
+  it('always renders a link to signin page', () => {
+    const component = mountSignup().find('Link');
+    expect(component.length).toBe(1);
+  });
+
+  it('alwyas renders the logo', () => {
+    const component = mountSignup().find('img');
+    expect(component.length).toBe(1);
+  });
+
   it('mounts', () => {
     const component = mountSignup();
     expect(component.find(Link)).toHaveLength(1);

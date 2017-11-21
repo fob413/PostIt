@@ -26,6 +26,16 @@ describe('SearchGroups ', () => {
     expect(component.length).toBeGreaterThan(0);
   });
 
+  it('always renders an input', () => {
+    const component = mountSearchGroups().find('input');
+    expect(component.length).toBe(1);
+  });
+
+  it('renders a label', () => {
+    const component = mountSearchGroups().find('label').first();
+    expect(component.props().children).toBe(mockData.searchGroupLabel);
+  });
+
   it('calls a componentWillReceiveProp', () => {
     const component = mountSearchGroups();
     const componentWillReceivePropSpy = jest.spyOn(

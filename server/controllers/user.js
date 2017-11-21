@@ -299,6 +299,7 @@ export default {
         });
       })
       .then((updatedUser) => {
+        sendResetMail(updatedUser.resetPasswordToken, updatedUser.email, req.headers.host);
         if (process.env.NODE_ENV === 'test' || 'travis') {
           return res.status(200).send({
             success: true,
@@ -310,7 +311,6 @@ export default {
           success: true,
           message: 'reset password link has been sent to your mail'
         });
-        sendResetMail(updatedUser.resetPasswordToken, updatedUser.email, req.headers.host);
       }, (err) => {
         res.status(500).send({
           success: false,

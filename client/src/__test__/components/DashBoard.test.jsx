@@ -4,6 +4,8 @@ import { mount, shallow } from 'enzyme';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import ConnectedDashBoard, { DashBoard } from '../../components/dashBoard/DashBoard';
+import { SearchGroups } from '../../components/dashBoard/SearchGroups';
+import { NewGroup } from '../../components/dashBoard/NewGroup';
 import mockData from '../__mocks__/componentMockData';
 
 const middleware = [thunk];
@@ -58,6 +60,21 @@ describe('DashBoard', () => {
   it('always renders a div', () => {
     const component = mountDashBoard().find('div');
     expect(component.length).toBeGreaterThan(0);
+  });
+
+  it('renders SearchGroup component', () => {
+    const component = mountDashBoard().find(SearchGroups);
+    expect(component.length).toBe(1);
+  });
+
+  it('renders NewGroup component', () => {
+    const component = mountDashBoard().find(NewGroup);
+    expect(component.length).toBe(1);
+  });
+
+  it('renders SearchGroup and NewGroup buttons', () => {
+    const component = mountDashBoard().find('a');
+    expect(component.length).toBe(2);
   });
 
   it('sends the user to signin if not authenticated', () => {

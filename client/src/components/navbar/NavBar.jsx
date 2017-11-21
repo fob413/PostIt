@@ -56,7 +56,6 @@ export class NavBar extends React.Component {
         this.setState({
           isAuth: false
         });
-        // this.props.unloadGroups();
         this.props.history.push('/signin');
       }
     });
