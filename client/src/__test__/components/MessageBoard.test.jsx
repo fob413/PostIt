@@ -81,15 +81,6 @@ describe('MessageBoard ', () => {
     expect(componentDidMountSpy).toHaveBeenCalled();
   });
 
-  it('calls a componentWillUnmount method', () => {
-    const component = mountMessageBoard();
-    const componentWillUnmountSpy = jest.spyOn(
-      component.instance(), 'componentWillUnmount'
-    );
-    component.instance().componentWillUnmount();
-    expect(componentWillUnmountSpy).toHaveBeenCalled();
-  });
-
   it('calls a componentWillReceiveProps method', () => {
     const component = mountMessageBoard();
     const componentWillReceivePropsSpy = jest.spyOn(

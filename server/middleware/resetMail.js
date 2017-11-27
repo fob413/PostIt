@@ -56,4 +56,4 @@ export default (token, email, host) => {
     }
     logger.info(`Message ${info.messageId} send: ${info.response}`);
   });
-}
+};

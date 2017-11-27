@@ -1,33 +1,33 @@
 import store from '../../../reducers/auth';
-import data from '../../__mocks__/mockData';
+import mockData from '../../__mocks__/mockData';
 
 describe('The Index Reducer ', () => {
   it('SIGN_UP', () => {
-    const state = data.signupReducerInitialState;
-    const action = data.signupReducerAction;
+    const state = mockData.signupReducerInitialState;
+    const action = mockData.signupReducerAction;
     const results = store(state, action);
-    expect(results).toEqual(data.signupReducerExpected);
+    expect(results).toEqual(mockData.signupReducerExpected);
   });
 
   it('SIGN_IN', () => {
     const state = {};
-    const action = data.signinReducerAction;
+    const action = mockData.signinReducerAction;
     const results = store(state, action);
-    expect(results).toEqual(data.signinReducerExpected);
+    expect(results).toEqual(mockData.signinReducerExpected);
   });
 
   it('SIGN_OUT', () => {
     const state = {};
-    const action = data.signoutReducerAction;
+    const action = mockData.signoutReducerAction;
     const results = store(state, action);
-    expect(results).toEqual(data.signoutReducerExpected);
+    expect(results).toEqual(mockData.signoutReducerExpected);
   });
 
   it('RELOAD_USER_IN', () => {
     const state = {};
-    const action = data.reloadUserInReducerAction;
+    const action = mockData.reloadUserInReducerAction;
     const results = store(state, action);
-    expect(results).toEqual(data.reloadUserInReducerExpected);
+    expect(results).toEqual(mockData.reloadUserInReducerExpected);
   });
 
   it('default', () => {

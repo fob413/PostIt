@@ -4,7 +4,7 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import mockLocalStorage from '../../__mocks__/mockLocalStorage';
 import * as types from '../../../helpers/constants';
-import data from '../../__mocks__/mockData';
+import mockData from '../../__mocks__/mockData';
 import {
   signUserUp,
   signUserIn,
@@ -21,8 +21,8 @@ describe('Sign up action', () => {
   beforeEach(() => {
     mock.reset();
   });
-  const user = data.userData;
-  const token = data.token;
+  const user = mockData.userData;
+  const token = mockData.token;
   const store = mockStore({});
 
   it('should contain a sign up function', () => {
@@ -37,7 +37,7 @@ describe('Sign up action', () => {
       success: true
     });
 
-    const expectedAction = data.signupSuccessfulAction;
+    const expectedAction = mockData.signupSuccessfulAction;
 
     return store.dispatch(signUserUp(user))
     .then(() => {
@@ -54,7 +54,7 @@ describe('Sign up action', () => {
       success: false
     });
 
-    const expectedAction = data.emptyAction;
+    const expectedAction = mockData.emptyAction;
 
     return stores.dispatch(signUserUp(user))
     .then(() => {
@@ -64,8 +64,8 @@ describe('Sign up action', () => {
 });
 
 describe('Sign in action', () => {
-  const user = data.userData;
-  const token = data.token;
+  const user = mockData.userData;
+  const token = mockData.token;
   const store = mockStore({});
 
   it('should contain a sign in function', () => {
@@ -80,7 +80,7 @@ describe('Sign in action', () => {
       success: true
     });
 
-    const expectedAction = data.signinSuccessfulAction;
+    const expectedAction = mockData.signinSuccessfulAction;
 
     return store.dispatch(signUserIn(user))
     .then(() => {
@@ -97,7 +97,7 @@ describe('Sign in action', () => {
       success: false
     });
 
-    const expectedAction = data.emptyAction;
+    const expectedAction = mockData.emptyAction;
 
     return stores.dispatch(signUserIn(user))
     .then(() => {
@@ -121,7 +121,7 @@ describe('Sign out aciton', () => {
       message: 'Successfully logged user out'
     });
 
-    const expectedAction = data.signoutSuccessfulAction;
+    const expectedAction = mockData.signoutSuccessfulAction;
 
     return store.dispatch(signUserOut())
     .then(() => {
@@ -138,7 +138,7 @@ describe('Sign out aciton', () => {
       message: 'An error has occured'
     });
 
-    const expectedAction = data.emptyAction;
+    const expectedAction = mockData.emptyAction;
 
     return stores.dispatch(signUserOut())
     .then(() => {
@@ -155,7 +155,7 @@ describe('Reload user in action', () => {
   });
 
   it('should dispatch RELOAD_USER_IN when called', () => {
-    const user = data.userData;
+    const user = mockData.userData;
     const expectedAction = [
       {
         type: types.RELOAD_USER_IN,

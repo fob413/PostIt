@@ -3,7 +3,7 @@ import thunk from 'redux-thunk';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import mockLocalStorage from '../../__mocks__/mockLocalStorage';
-import data from '../../__mocks__/mockData';
+import mockData from '../../__mocks__/mockData';
 import {
   forgotPassword,
   authToken,
@@ -22,7 +22,7 @@ describe('forgotPassword action', () => {
 
   it('should have a success of true when successful', () => {
     const store = mockStore({});
-    const email = data.email;
+    const email = mockData.email;
 
     mock.onPost('/api/v1/forgot/password')
     .reply(200, {
@@ -30,7 +30,7 @@ describe('forgotPassword action', () => {
       message: 'Reset password link has been sent to your mail'
     });
 
-    const expectedAction = data.emptyAction;
+    const expectedAction = mockData.emptyAction;
 
     return store.dispatch(forgotPassword(email))
     .then(() => {
@@ -41,7 +41,7 @@ describe('forgotPassword action', () => {
   it('should have a success of false when unsuccessful', () => {
     mock.reset();
     const store = mockStore({});
-    const email = data.email;
+    const email = mockData.email;
 
     mock.onPost('/api/v1/forgot/password')
     .reply(400, {
@@ -49,7 +49,7 @@ describe('forgotPassword action', () => {
       message: 'An error has occured'
     });
 
-    const expectedAction = data.emptyAction;
+    const expectedAction = mockData.emptyAction;
 
     return store.dispatch(forgotPassword(email))
     .then(() => {
@@ -65,7 +65,7 @@ describe('authToken action', () => {
 
   it('should have a success of true when successful', () => {
     const store = mockStore({});
-    const token = data.token;
+    const token = mockData.token;
 
     mock.onPost('/api/v1/reset/token')
     .reply(200, {
@@ -73,7 +73,7 @@ describe('authToken action', () => {
       message: 'Authenticated to change password'
     });
 
-    const expectedAction = data.emptyAction;
+    const expectedAction = mockData.emptyAction;
 
     return store.dispatch(authToken(token))
     .then(() => {
@@ -84,7 +84,7 @@ describe('authToken action', () => {
   it('should have a success of true when successful', () => {
     mock.reset();
     const store = mockStore({});
-    const token = data.token;
+    const token = mockData.token;
 
     mock.onPost('/api/v1/reset/token')
     .reply(400, {
@@ -92,7 +92,7 @@ describe('authToken action', () => {
       message: 'Not authenticated to change password'
     });
 
-    const expectedAction = data.emptyAction;
+    const expectedAction = mockData.emptyAction;
 
     return store.dispatch(authToken(token))
     .then(() => {
@@ -108,9 +108,9 @@ describe('resetPassword action', () => {
 
   it('should have a success of true when successful', () => {
     const store = mockStore({});
-    const token = data.token;
-    const newPassword = data.password;
-    const confirmPassword = data.password;
+    const token = mockData.token;
+    const newPassword = mockData.password;
+    const confirmPassword = mockData.password;
 
     mock.onPost(`/api/v1/reset/password/${token}`)
     .reply(200, {
@@ -118,7 +118,7 @@ describe('resetPassword action', () => {
       message: 'Successfully changed password'
     });
 
-    const expectedAction = data.emptyAction;
+    const expectedAction = mockData.emptyAction;
 
     return store.dispatch(resetPassword(token, newPassword, confirmPassword))
     .then(() => {
@@ -128,9 +128,9 @@ describe('resetPassword action', () => {
 
   it('should have a success of true when successful', () => {
     const store = mockStore({});
-    const token = data.token;
-    const newPassword = data.password;
-    const confirmPassword = data.password;
+    const token = mockData.token;
+    const newPassword = mockData.password;
+    const confirmPassword = mockData.password;
 
     mock.onPost(`/api/v1/reset/password/${token}`)
     .reply(200, {
@@ -138,7 +138,7 @@ describe('resetPassword action', () => {
       message: 'Successfully changed password'
     });
 
-    const expectedAction = data.emptyAction;
+    const expectedAction = mockData.emptyAction;
 
     return store.dispatch(resetPassword(token, newPassword, confirmPassword))
     .then(() => {
@@ -149,9 +149,9 @@ describe('resetPassword action', () => {
   it('should have a success of true when successful', () => {
     mock.reset();
     const store = mockStore({});
-    const token = data.token;
-    const newPassword = data.password;
-    const confirmPassword = data.password;
+    const token = mockData.token;
+    const newPassword = mockData.password;
+    const confirmPassword = mockData.password;
 
     mock.onPost(`/api/v1/reset/password/${token}`)
     .reply(400, {
@@ -159,7 +159,7 @@ describe('resetPassword action', () => {
       message: 'An error has occured'
     });
 
-    const expectedAction = data.emptyAction;
+    const expectedAction = mockData.emptyAction;
 
     return store.dispatch(resetPassword(token, newPassword, confirmPassword))
     .then(() => {

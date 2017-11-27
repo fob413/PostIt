@@ -2,7 +2,7 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import moxios from 'moxios';
 import mockLocalStorage from '../../__mocks__/mockLocalStorage';
-import data from '../../__mocks__/mockData';
+import mockData from '../../__mocks__/mockData';
 import {
   loadGroups,
   createNewGroup,
@@ -29,10 +29,10 @@ describe('Load Groups action ', () => {
   it('should dispatch LOAD_GROUPS on successful api call', (done) => {
     moxios.stubRequest('api/v1/group/list', {
       status: 200,
-      response: data.loadGroupsSuccessfulRes
+      response: mockData.loadGroupsSuccessfulRes
     });
 
-    const expectedActions = data.loadGroupsActions;
+    const expectedActions = mockData.loadGroupsActions;
 
     store.dispatch(loadGroups()).then(() => {
       expect(store.getActions()).toEqual(expectedActions);
@@ -51,7 +51,7 @@ describe('Unload groups action ', () => {
   });
 
   it('should dispatch unload groups when called', (done) => {
-    const expectedActions = data.unloadGroupsActions;
+    const expectedActions = mockData.unloadGroupsActions;
 
     store.dispatch(unloadGroups());
     expect(store.getActions()).toEqual(expectedActions);
@@ -71,7 +71,7 @@ describe('Create new group action ', () => {
   it('should return true when successful', (done) => {
     moxios.stubRequest('api/v1/group', {
       status: 201,
-      response: data.createNewGroupRes
+      response: mockData.createNewGroupRes
     });
 
     const expectedSuccess = true;

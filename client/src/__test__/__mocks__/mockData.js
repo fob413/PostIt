@@ -1,6 +1,6 @@
 import * as types from '../../helpers/constants';
 
-const data = {
+export default ({
   userData: {
     userName: 'funsho',
     email: 'funsho@email.com',
@@ -697,6 +697,5 @@ const data = {
     pageCount: 0
   },
 
-};
+});
 
-export default data;

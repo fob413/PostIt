@@ -64,4 +64,4 @@ export default (users, message, priorityHeader) => {
     }
     logger.info(`${info.messageId} send: ${info.response}`);
   });
-}
+};

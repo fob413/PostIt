@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     classMethods: {
       associate: (models) => {
-        // associations can be defined here
+        // associations
         GroupMembers.belongsTo(models.Groups, { foreignKey: 'groupId' });
         GroupMembers.belongsTo(models.Users, { foreignKey: 'userId' });
       }

@@ -1,71 +1,71 @@
 import store from '../../../reducers/messageReducer';
-import data from '../../__mocks__/mockData';
+import mockData from '../../__mocks__/mockData';
 
 describe('The Message Reducer', () => {
   it('LOAD_GROUP_MESSAGES', () => {
-    const state = data.loadGroupMessagesReducerInitialState;
-    const action = data.loadGroupMessagesReducerAction;
+    const state = mockData.loadGroupMessagesReducerInitialState;
+    const action = mockData.loadGroupMessagesReducerAction;
     const results = store(state, action);
-    expect(results).toEqual(data.loadGroupMessagesReducerExpected);
+    expect(results).toEqual(mockData.loadGroupMessagesReducerExpected);
   });
 
   it('CURRENT_GROUP', () => {
-    const state = data.loadGroupMessagesReducerInitialState;
-    const action = data.currentGroupReducerAction;
+    const state = mockData.loadGroupMessagesReducerInitialState;
+    const action = mockData.currentGroupReducerAction;
     const results = store(state, action);
-    expect(results).toEqual(data.currentGroupReducerExpected);
+    expect(results).toEqual(mockData.currentGroupReducerExpected);
   });
 
   it('LOAD_PLATFORM_USERS', () => {
-    const state = data.loadGroupMessagesReducerInitialState;
-    const action = data.loadPlatformUsersReducerAction;
+    const state = mockData.loadGroupMessagesReducerInitialState;
+    const action = mockData.loadPlatformUsersReducerAction;
     const results = store(state, action);
-    expect(results).toEqual(data.loadPlatformUsersReducerExpected);
+    expect(results).toEqual(mockData.loadPlatformUsersReducerExpected);
   });
 
   it('LOAD_GROUP_USERS', () => {
-    const state = data.loadGroupMessagesReducerInitialState;
-    const action = data.loadGroupUsersReducerAction;
+    const state = mockData.loadGroupMessagesReducerInitialState;
+    const action = mockData.loadGroupUsersReducerAction;
     const results = store(state, action);
-    expect(results).toEqual(data.loadGroupUsersReducerExpected);
+    expect(results).toEqual(mockData.loadGroupUsersReducerExpected);
   });
 
   it('LOAD_UNREAD_MESSAGES', () => {
-    const state = data.loadGroupMessagesReducerInitialState;
-    const action = data.loadUnreadMessagesReducerAction;
+    const state = mockData.loadGroupMessagesReducerInitialState;
+    const action = mockData.loadUnreadMessagesReducerAction;
 
     const results = store(state, action);
-    expect(results).toEqual(data.loadUnreadMessagesReducerExpected);
+    expect(results).toEqual(mockData.loadUnreadMessagesReducerExpected);
   });
 
   it('LOAD_READ_MESSAGES', () => {
-    const state = data.loadGroupMessagesReducerInitialState;
-    const action = data.loadReadMessagesReducersAction;
+    const state = mockData.loadGroupMessagesReducerInitialState;
+    const action = mockData.loadReadMessagesReducersAction;
 
     const results = store(state, action);
-    expect(results).toEqual(data.loadReadMessagesReducersExpected);
+    expect(results).toEqual(mockData.loadReadMessagesReducersExpected);
   });
 
   it('LOAD_COUNT', () => {
-    const state = data.loadGroupMessagesReducerInitialState;
-    const action = data.loadCountReducerAction;
+    const state = mockData.loadGroupMessagesReducerInitialState;
+    const action = mockData.loadCountReducerAction;
 
     const results = store(state, action);
-    expect(results).toEqual(data.loadCountReducerExpected);
+    expect(results).toEqual(mockData.loadCountReducerExpected);
   });
 
   it('LOAD_PAGE_COUNT', () => {
-    const state = data.loadGroupMessagesReducerInitialState;
-    const action = data.loadPageCountReducerAction;
+    const state = mockData.loadGroupMessagesReducerInitialState;
+    const action = mockData.loadPageCountReducerAction;
 
     const results = store(state, action);
-    expect(results).toEqual(data.loadPageCountReducerExpected);
+    expect(results).toEqual(mockData.loadPageCountReducerExpected);
   });
 
   it('default', () => {
-    const state = data.loadGroupMessagesReducerInitialState;
+    const state = mockData.loadGroupMessagesReducerInitialState;
     const action = {};
     const results = store(state, action);
-    expect(results).toEqual(data.defaultMessagesReducerExpected);
+    expect(results).toEqual(mockData.defaultMessagesReducerExpected);
   });
 });

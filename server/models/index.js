@@ -2,7 +2,6 @@ import fs from 'fs';
 import path from 'path';
 import Sequelize from 'sequelize';
 import dotenv from 'dotenv';
-import configUrl from '../config/config';
 
 dotenv.config();
 

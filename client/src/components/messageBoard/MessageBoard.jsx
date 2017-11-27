@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import ReactPaginate from 'react-paginate';
 import swal from 'sweetalert2';
 import Modal from 'react-modal';
+import shortid from 'shortid';
 import DisplayMessage from './DisplayMessage';
 import PlatformUsers from './PlatformUsers';
 import {
@@ -113,16 +114,6 @@ export class MessageBoard extends React.Component {
     if (!nextProps.auth.isLoggedIn) {
       this.props.history.push('/dashboard');
     }
-  }
-
-
-  /**
-   * api call when the component unmounts
-   * @memberof MessageBoard
-   * @return {void}
-   */
-  componentWillUnmount() {
-    // this.props.readMessages(this.state.groupId);
   }
 
   /**
@@ -324,12 +315,6 @@ export class MessageBoard extends React.Component {
                       className="tab click"
                     >
                       <Link to="/dashboard">
-                        {/* {<img
-                          width="70px"
-                          alt="back"
-                          src={require('../../image/back.png')} // eslint-disable-line
-                          className="click"
-                        />} */}
                         <i className="material-icons pink-text text-darken-4">
                           backspace
                         </i>
@@ -360,16 +345,14 @@ export class MessageBoard extends React.Component {
                       {this.state.unreadMessages &&
                         this.state.unreadMessages.length > 0 ?
                           <ul className="collection">
-                            {this.state.unreadMessages.map((message, i) => {
-                              return (
-                                <div key={i}>
-                                  <DisplayMessage
-                                    content={message.content}
-                                    author={message.authorsName}
-                                  />
-                                </div>
-                              );
-                            })}
+                            {this.state.unreadMessages.map(message => (
+                              <div key={shortid.generate()}>
+                                <DisplayMessage
+                                  content={message.content}
+                                  author={message.authorsName}
+                                />
+                              </div>
+                              ))}
                           </ul> :
                           <div className="center-align">No new message</div>
                       }
@@ -379,16 +362,14 @@ export class MessageBoard extends React.Component {
                       this.state.readMessages.length > 0) &&
                         <ul className="collection">
                           {
-                            this.state.readMessages.map((message, i) => {
-                              return (
-                                <div key={i}>
-                                  <DisplayMessage
-                                    content={message.content}
-                                    author={message.authorsName}
-                                  />
-                                </div>
-                              );
-                            })
+                            this.state.readMessages.map(message => (
+                              <div key={shortid.generate()}>
+                                <DisplayMessage
+                                  content={message.content}
+                                  author={message.authorsName}
+                                />
+                              </div>
+                              ))
                           }
                         </ul>
                       }
@@ -483,15 +464,13 @@ export class MessageBoard extends React.Component {
                       ) &&
                       <ul className="col s12 collection addUserList">
                         {this.state.PlatformUsers
-                        .map((platformUser, i) => {
-                          return (
-                            <PlatformUsers
-                              key={i}
-                              platformUser={platformUser}
-                              groupUsers={this.state.groupUsers}
-                            />
-                          );
-                        })
+                        .map(platformUser => (
+                          <PlatformUsers
+                            key={shortid.generate()}
+                            platformUser={platformUser}
+                            groupUsers={this.state.groupUsers}
+                          />
+                          ))
                         }
                       </ul>
                       }
@@ -516,13 +495,11 @@ export class MessageBoard extends React.Component {
               {this.state.groupUsers && this.state.groupUsers.length > 0 &&
                 <div>
                   <ul className="collection">
-                    {this.state.groupUsers.map((user, i) => {
-                      return (
-                          <li className="collection-item right-align" key={i}>
-                            {user.User.userName}
-                          </li>
-                      );
-                    })}
+                    {this.state.groupUsers.map(user => (
+                      <li className="collection-item right-align" key={shortid.generate()}>
+                        {user.User.userName}
+                      </li>
+                      ))}
                   </ul>
                 </div>
               }

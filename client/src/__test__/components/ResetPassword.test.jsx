@@ -5,7 +5,6 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import mockData from '../__mocks__/componentMockData';
 import ConnectedResetPassword, { ResetPassword } from '../../components/authentication/password/ResetPassword';
-import { exec } from 'child_process';
 
 // jest.mock('Materialize', () => jest.fn());
 const middleware = [thunk];
