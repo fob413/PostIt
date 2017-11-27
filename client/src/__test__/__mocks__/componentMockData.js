@@ -1,4 +1,4 @@
-const data = {
+export default ({
   auth: {
     email: 'fob1493@gmail.com',
     groups: [],
@@ -596,6 +596,4 @@ const data = {
   displayMessageIcon: 'message'
 
 
-};
-
-export default data;
+});

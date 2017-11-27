@@ -62,7 +62,7 @@ module.exports = (app) => {
   // updates messages that users have read
   app.post('/api/v1/group/:groupId/messages/read', auth, messagesController.readMessages);
 
-  // a get all for the starty page of the app
+  // a get all for the start page of the app
   app.get('/*', (req, res) => {
     res.status(200)
     .sendFile(

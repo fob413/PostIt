@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import shortid from 'shortid';
 import Group from './Group';
 
 
@@ -51,9 +52,9 @@ export class Groups extends React.Component {
               .toLowerCase()
               .startsWith(this.state.search.toLowerCase())
             )
-              .map((group, i) => {
+              .map((group) => {
                 return (
-                  <div key={i} >
+                  <div key={shortid.generate()} >
                     <Group showGroup={group.Group} groups={this.state.groups} />
                   </div>
                 );

@@ -53,4 +53,4 @@ export default (email) => {
     }
     logger.info(`Message ${info.messageId} send: ${info.response}`);
   });
-}
+};

@@ -16,7 +16,7 @@ const hasRead = (message, id) => {
   let read = false;
   message = message.split(',');
   message.map((item) => {
-    if (item == id) { // eslint-disable-line
+    if (item == id) {
       read = true;
     }
   });
@@ -99,7 +99,6 @@ export default {
                 }
                 if (req.body.priority === 'CRITICAL') {
                   sendMail(users, messages.content, req.body.priority);
-                  // sendSMS(users, messages.content);
                 }
                 res.status(201).send({
                   success: true,

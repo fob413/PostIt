@@ -4,7 +4,7 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import mockLocalStorage from '../../__mocks__/mockLocalStorage';
 import * as types from '../../../helpers/constants';
-import datas from '../../__mocks__/mockData';
+import mockData from '../../__mocks__/mockData';
 import {
   loadCurrentGroup,
   sendMessage,
@@ -28,9 +28,9 @@ describe('LOAD CURRENT GROUP action', () => {
 
   it('should dispatch loadGroupId when called', () => {
     const store = mockStore({});
-    const groupId = datas.groupId;
+    const groupId = mockData.groupId;
 
-    const expectedAction = datas.loadCurrentGroupActions;
+    const expectedAction = mockData.loadCurrentGroupActions;
 
     store.dispatch(loadCurrentGroup(groupId));
     expect(store.getActions()).toEqual(expectedAction);
@@ -44,16 +44,16 @@ describe('Send Message function', () => {
 
   it('should have a success of true when successful', () => {
     const store = mockStore({});
-    const groupId = datas.groupId;
-    const message = datas.message;
-    const priority = datas.priority;
+    const groupId = mockData.groupId;
+    const message = mockData.message;
+    const priority = mockData.priority;
     mock.onPost(`api/v1/group/${groupId}/message`)
     .reply(201, {
       success: true,
       message: 'message sent'
     });
 
-    const expectedAction = datas.emptyAction;
+    const expectedAction = mockData.emptyAction;
 
     return store.dispatch(sendMessage(message, groupId, priority))
     .then(() => {
@@ -64,16 +64,16 @@ describe('Send Message function', () => {
   it('should have a success of false when unsuccessful', () => {
     mock.reset();
     const store = mockStore({});
-    const groupId = datas.groupId;
-    const message = datas.message;
-    const priority = datas.priority;
+    const groupId = mockData.groupId;
+    const message = mockData.message;
+    const priority = mockData.priority;
     mock.onPost(`api/v1/group/${groupId}/message`)
     .reply(400, {
       success: true,
       message: 'An error has occured'
     });
 
-    const expectedAction = datas.emptyAction;
+    const expectedAction = mockData.emptyAction;
 
     return store.dispatch(sendMessage(message, groupId, priority))
     .then(() => {
@@ -89,9 +89,9 @@ describe('LOAD GROUP MESSAGES action', () => {
 
   it('should dispatch LOAD GROUP MESSAGES on successful', () => {
     const store = mockStore({});
-    const groupId = datas.groupId;
-    const dataArray = datas.messageArrayData;
-    const userId = datas.id;
+    const groupId = mockData.groupId;
+    const dataArray = mockData.messageArrayData;
+    const userId = mockData.id;
 
     mock.onGet(`api/v1/group/${groupId}/messages`)
     .reply(200, dataArray);
@@ -120,8 +120,8 @@ describe('LOAD GROUP MESSAGES action', () => {
   it('should not dispatch when unsuccessful', () => {
     mock.reset();
     const store = mockStore({});
-    const groupId = datas.groupId;
-    const userId = datas.id;
+    const groupId = mockData.groupId;
+    const userId = mockData.id;
 
     mock.onGet(`api/v1/group/${groupId}/messages`)
     .reply(400, {
@@ -129,7 +129,7 @@ describe('LOAD GROUP MESSAGES action', () => {
       message: 'An error has occured'
     });
 
-    const expectedAction = datas.emptyAction;
+    const expectedAction = mockData.emptyAction;
 
     return store.dispatch(loadGroupMessages(groupId, userId))
     .then(() => {
@@ -145,7 +145,7 @@ describe('LOAD PLATFORM USERS action', () => {
 
   it('should dispatch loadPlatformUsers when successful', () => {
     const store = mockStore({});
-    const usersArray = datas.platformUsers;
+    const usersArray = mockData.platformUsers;
 
     mock.onGet('api/v1/users/list')
     .reply(200, usersArray);
@@ -173,7 +173,7 @@ describe('LOAD PLATFORM USERS action', () => {
       message: 'An error has occured'
     });
 
-    const expectedAction = datas.emptyAction;
+    const expectedAction = mockData.emptyAction;
 
     return store.dispatch(loadPlatformUsers())
     .then(() => {
@@ -189,10 +189,10 @@ describe('SEARCH USERS action', () => {
 
   it('should dispatch loadPlatformUsers when successful', () => {
     const store = mockStore({});
-    const searchUserResult = datas.searchUserResult;
-    const offset = datas.offfset;
-    const searchUserData = datas.searchUser;
-    const userName = datas.userName;
+    const searchUserResult = mockData.searchUserResult;
+    const offset = mockData.offfset;
+    const searchUserData = mockData.searchUser;
+    const userName = mockData.userName;
 
     mock.onPost(`api/v1/users/list/${offset}`, searchUserData)
     .reply(200, searchUserResult);
@@ -200,15 +200,15 @@ describe('SEARCH USERS action', () => {
     const expectedAction = [
       {
         type: types.LOAD_PLATFORM_USERS,
-        payLoad: datas.searchUserResult.users.rows
+        payLoad: mockData.searchUserResult.users.rows
       },
       {
         type: types.LOAD_COUNT,
-        payLoad: datas.searchUserResult.paginateData.count
+        payLoad: mockData.searchUserResult.paginateData.count
       },
       {
         type: types.LOAD_PAGE_COUNT,
-        payLoad: datas.searchUserResult.paginateData.pageCount
+        payLoad: mockData.searchUserResult.paginateData.pageCount
       }
     ];
 
@@ -221,9 +221,9 @@ describe('SEARCH USERS action', () => {
   it('should not dispatch loadPlatformUsers when unsuccessful', () => {
     mock.reset();
     const store = mockStore({});
-    const offset = datas.offfset;
-    const searchUserData = datas.searchUser;
-    const userName = datas.userName;
+    const offset = mockData.offfset;
+    const searchUserData = mockData.searchUser;
+    const userName = mockData.userName;
 
     mock.onPost(`api/v1/users/list/${offset}`, searchUserData)
     .reply(400, {
@@ -231,7 +231,7 @@ describe('SEARCH USERS action', () => {
       message: 'An error has occured'
     });
 
-    const expectedAction = datas.emptyAction;
+    const expectedAction = mockData.emptyAction;
 
     return store.dispatch(searchUsers(offset, userName))
     .then(() => {
@@ -247,8 +247,8 @@ describe('LOAD GROUP USERS action', () => {
 
   it('should dispatch a loadGroupUsersSuccess when successful', () => {
     const store = mockStore({});
-    const groupId = datas.groupId;
-    const usersArray = datas.platformUsers;
+    const groupId = mockData.groupId;
+    const usersArray = mockData.platformUsers;
 
     mock.onGet(`api/v1/group/${groupId}/user/list`)
     .reply(200, usersArray);
@@ -269,7 +269,7 @@ describe('LOAD GROUP USERS action', () => {
   it('should not dispatch a loadGroupUsersSuccess when unsuccessful', () => {
     mock.reset();
     const store = mockStore({});
-    const groupId = datas.groupId;
+    const groupId = mockData.groupId;
 
     mock.onGet(`api/v1/group/${groupId}/user/list`)
     .reply(400, {
@@ -277,7 +277,7 @@ describe('LOAD GROUP USERS action', () => {
       message: 'An error has occured'
     });
 
-    const expectedAction = datas.emptyAction;
+    const expectedAction = mockData.emptyAction;
 
     return store.dispatch(loadGroupUsers(groupId))
     .then(() => {
@@ -293,8 +293,8 @@ describe('ADD USER TO GROUP action', () => {
 
   it('should have a success of true when successful', () => {
     const store = mockStore({});
-    const userId = datas.id;
-    const groupId = datas.groupId;
+    const userId = mockData.id;
+    const groupId = mockData.groupId;
     const data = {
       success: true,
       message: 'Successfully added to group'
@@ -303,7 +303,7 @@ describe('ADD USER TO GROUP action', () => {
     mock.onPost(`api/v1/group/${groupId}/user`)
     .reply(201, data);
 
-    const expectedAction = datas.emptyAction;
+    const expectedAction = mockData.emptyAction;
 
     return store.dispatch(addUserToGroup(userId, groupId))
     .then(() => {
@@ -314,8 +314,8 @@ describe('ADD USER TO GROUP action', () => {
   it('should have a success of false when successful', () => {
     mock.reset();
     const store = mockStore({});
-    const userId = datas.id;
-    const groupId = datas.groupId;
+    const userId = mockData.id;
+    const groupId = mockData.groupId;
 
     mock.onPost(`api/v1/group/${groupId}/user`)
     .reply(400, {
@@ -323,7 +323,7 @@ describe('ADD USER TO GROUP action', () => {
       message: 'An error has occured'
     });
 
-    const expectedAction = datas.emptyAction;
+    const expectedAction = mockData.emptyAction;
 
     return store.dispatch(addUserToGroup(userId, groupId))
     .then(() => {
@@ -339,7 +339,7 @@ describe('Read Messages action', () => {
 
   it('should have a success of true when successful', () => {
     const store = mockStore({});
-    const groupId = datas.groupId;
+    const groupId = mockData.groupId;
     const data = {
       success: true,
       message: 'User has read all messages'
@@ -348,7 +348,7 @@ describe('Read Messages action', () => {
     mock.onPost(`api/v1/group/${groupId}/messages/read`)
     .reply(201, data);
 
-    const expectedAction = datas.emptyAction;
+    const expectedAction = mockData.emptyAction;
 
     return store.dispatch(readMessages(groupId))
     .then(() => {
@@ -359,7 +359,7 @@ describe('Read Messages action', () => {
   it('should have a success of false when unsuccessful', () => {
     mock.reset();
     const store = mockStore({});
-    const groupId = datas.groupId;
+    const groupId = mockData.groupId;
     const data = {
       success: false,
       message: 'An error has occured'
@@ -368,7 +368,7 @@ describe('Read Messages action', () => {
     mock.onPost(`api/v1/group/${groupId}/messages/read`)
     .reply(400, data);
 
-    const expectedAction = datas.emptyAction;
+    const expectedAction = mockData.emptyAction;
 
     return store.dispatch(readMessages(groupId))
     .then(() => {

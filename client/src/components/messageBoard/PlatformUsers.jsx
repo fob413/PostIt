@@ -58,12 +58,12 @@ export class PlatformUsers extends React.Component {
    * @memberof PlatformUsers
    * @return {boolean} result to signify if user belongs to group
    */
-  isGroupMember(id) {
+  isGroupMember(userId) {
     const { groupUsers } = this.state;
     let groupMember = false;
     (groupUsers.length > 0) &&
       groupUsers.map((user) => {
-        if (id === user.userId) groupMember = true;
+        if (userId === user.userId) groupMember = true;
       });
 
     return groupMember;

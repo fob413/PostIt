@@ -1,21 +1,21 @@
 import store from '../../../reducers/groupReducer';
-import datas from '../../__mocks__/mockData';
+import mockData from '../../__mocks__/mockData';
 
 describe('The Group Reducer ', () => {
   it('LOAD GROUP', () => {
     const state = {
       Group: []
     };
-    const action = datas.loadGroupReducerAction;
+    const action = mockData.loadGroupReducerAction;
     const results = store(state, action);
-    expect(results).toEqual(datas.loadGroupReducerExpected);
+    expect(results).toEqual(mockData.loadGroupReducerExpected);
   });
 
   it('UNLOAD_GROUPS', () => {
-    const state = datas.unloadGroupReducerInitialState;
-    const action = datas.unloadGroupsReducerAction;
+    const state = mockData.unloadGroupReducerInitialState;
+    const action = mockData.unloadGroupsReducerAction;
     const results = store(state, action);
-    expect(results).toEqual(datas.unloadGroupsReducerExpected);
+    expect(results).toEqual(mockData.unloadGroupsReducerExpected);
   });
 
   it('default', () => {
