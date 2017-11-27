@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken';
 import models from '../models';
 import paginate from '../middleware/paginate';
 import sendResetMail from '../middleware/resetMail';
-import sendSuccessfulResetMail from '../middleware/successfulResetMail';
+import sendSuccessfulResetMail from '../middleware/successResetMail';
 import validate from '../middleware/validate';
 
 require('dotenv').config();
