@@ -12,7 +12,7 @@ const store = mockStore({
   auth: { isLoggedin: false }
 });
 
-describe('PlatformUsers', () => {
+describe('PlatformUsers component', () => {
   let props;
   let mountedPlatformUsers;
 
@@ -29,12 +29,12 @@ describe('PlatformUsers', () => {
     props = mockData.platformUsersProps;
   });
 
-  it('always renders a li', () => {
+  it('should always render an li element', () => {
     const component = mountPlatformUsers().find('li');
     expect(component.length).toBeGreaterThan(0);
   });
 
-  it('calls the componentWillReceiveProps method', () => {
+  it('should contain an componentWillReceiveProps method', () => {
     const component = mountPlatformUsers();
     const componentWillReceivePropsSpy = jest.spyOn(
       component.instance(), 'componentWillReceiveProps'
@@ -44,7 +44,7 @@ describe('PlatformUsers', () => {
     expect(componentWillReceivePropsSpy).toHaveBeenCalled();
   });
 
-  it('calls addUser method', () => {
+  it('should contain an addUser method', () => {
     const component = mountPlatformUsers();
     const addUserSpy = jest.spyOn(component.instance(), 'addUser');
     const event = {
@@ -54,7 +54,7 @@ describe('PlatformUsers', () => {
     expect(addUserSpy).toHaveBeenCalled();
   });
 
-  it('has map state to props', () => {
+  it('should render the coonnected component', () => {
     const component = shallow(<ConnectedPlatformUsers {...props} store={store} />);
     expect(component.length).toBe(1);
   });

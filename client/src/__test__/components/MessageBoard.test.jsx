@@ -12,7 +12,7 @@ const store = mockStore({
   auth: { isLoggedin: false }
 });
 
-describe('MessageBoard ', () => {
+describe('MessageBoard component', () => {
   let props;
   let mountedMessageBoard;
 
@@ -54,7 +54,7 @@ describe('MessageBoard ', () => {
     props = mockData.messageBoardProps;
   });
 
-  it('always renders a div', () => {
+  it('should always render a div', () => {
     const component = mountMessageBoard();
     component.setState({
       unread: true
@@ -62,14 +62,14 @@ describe('MessageBoard ', () => {
     expect(component.find('div').length).toBeGreaterThan(0);
   });
 
-  it('has map state to props', () => {
+  it('should render the connected component', () => {
     const component = shallow(
       <ConnectedMessageBoard {...props} store={store} />
     );
     expect(component.length).toBeGreaterThan(0);
   });
 
-  it('calls a componentDidMount method', () => {
+  it('should contain a componentDidMount method', () => {
     const component = mountMessageBoard();
     const componentDidMountSpy = jest.spyOn(
       component.instance(), 'componentDidMount'
@@ -81,7 +81,7 @@ describe('MessageBoard ', () => {
     expect(componentDidMountSpy).toHaveBeenCalled();
   });
 
-  it('calls a componentWillReceiveProps method', () => {
+  it('should contain a componentWillReceiveProps method', () => {
     const component = mountMessageBoard();
     const componentWillReceivePropsSpy = jest.spyOn(
       component.instance(), 'componentWillReceiveProps'
@@ -91,7 +91,7 @@ describe('MessageBoard ', () => {
     expect(componentWillReceivePropsSpy).toHaveBeenCalled();
   });
 
-  it('calls openThisModal method', () => {
+  it('should contain an openThisModal method', () => {
     const component = mountMessageBoard();
     const openThisModalSpy = jest.spyOn(
       component.instance(), 'openThisModal'
@@ -105,7 +105,7 @@ describe('MessageBoard ', () => {
     expect(openThisModalSpy).toHaveBeenCalled();
   });
 
-  it('calls closeModal method', () => {
+  it('should contain a closeModal method', () => {
     const component = mountMessageBoard();
     const closeModalSpy = jest.spyOn(
       component.instance(), 'closeModal'
@@ -115,7 +115,7 @@ describe('MessageBoard ', () => {
     expect(closeModalSpy).toHaveBeenCalled();
   });
 
-  it('calls afterOpenModal method', () => {
+  it('should contain an afterOpenModal method', () => {
     const component = mountMessageBoard();
     const afterOpenModalSpy = jest.spyOn(
       component.instance(), 'afterOpenModal'
@@ -125,7 +125,7 @@ describe('MessageBoard ', () => {
     expect(afterOpenModalSpy).toHaveBeenCalled();
   });
 
-  it('calls openModal method', () => {
+  it('should contain an openModal method', () => {
     const component = mountMessageBoard();
     const openModalSpy = jest.spyOn(
       component.instance(), 'openModal'
@@ -135,7 +135,7 @@ describe('MessageBoard ', () => {
     expect(openModalSpy).toHaveBeenCalled();
   });
 
-  it('calls toggleUnread method', () => {
+  it('should contain a toggleUnread method which calls when state.unread is true', () => {
     const component = mountMessageBoard();
     const toggleUnreadSpy = jest.spyOn(
       component.instance(), 'toggleUnread'
@@ -148,7 +148,7 @@ describe('MessageBoard ', () => {
     expect(toggleUnreadSpy).toHaveBeenCalled();
   });
 
-  it('calls toggleUnread method', () => {
+  it('should contain a toggleUnread method which calls when state.unread is false', () => {
     const component = mountMessageBoard();
     const toggleUnreadSpy = jest.spyOn(
       component.instance(), 'toggleUnread'
@@ -161,7 +161,7 @@ describe('MessageBoard ', () => {
     expect(toggleUnreadSpy).toHaveBeenCalled();
   });
 
-  it('calls onChange method', () => {
+  it('should contain an onChange method', () => {
     const component = mountMessageBoard();
     const onChangeSpy = jest.spyOn(
       component.instance(), 'onChange'
@@ -177,31 +177,33 @@ describe('MessageBoard ', () => {
     expect(onChangeSpy).toHaveBeenCalled();
   });
 
-  it('calls inputUser method', () => {
+  it('should contain an inputUser method', () => {
     const component = mountMessageBoard();
     const inputUserSpy = jest.spyOn(
       component.instance(), 'inputUser'
     );
 
+    // event mocked with a value
     const event = mockData.messageBoardEvent1;
 
     component.instance().inputUser(event);
     expect(inputUserSpy).toHaveBeenCalled();
   });
 
-  it('calls inputUser method', () => {
+  it('should contain an inputUser method', () => {
     const component = mountMessageBoard();
     const inputUserSpy = jest.spyOn(
       component.instance(), 'inputUser'
     );
 
+    // event mocked with an empty value
     const event = mockData.messageBoardEvent2;
 
     component.instance().inputUser(event);
     expect(inputUserSpy).toHaveBeenCalled();
   });
 
-  it('calls pageClick method', () => {
+  it('should contain a pageClick method', () => {
     const component = mountMessageBoard();
     const pageClickSpy = jest.spyOn(
       component.instance(), 'pageClick'
@@ -217,7 +219,7 @@ describe('MessageBoard ', () => {
     expect(pageClickSpy).toHaveBeenCalled();
   });
 
-  it('calls prevPage method', () => {
+  it('should contain a prevPage method', () => {
     const component = mountMessageBoard();
     const prevPageSpy = jest.spyOn(
       component.instance(), 'prevPage'
@@ -233,7 +235,7 @@ describe('MessageBoard ', () => {
     expect(prevPageSpy).toHaveBeenCalled();
   });
 
-  it('calls nextPage method', () => {
+  it('should contain a nextPage method', () => {
     const component = mountMessageBoard();
     const nextPageSpy = jest.spyOn(
       component.instance(), 'nextPage'
@@ -250,7 +252,8 @@ describe('MessageBoard ', () => {
     expect(nextPageSpy).toHaveBeenCalled();
   });
 
-  it('calls onSend method', () => {
+  it('should contain an onSend method', () => {
+    // simulates a resolved api call response
     const component = mountMessageBoard();
     const onSendSpy = jest.spyOn(
       component.instance(), 'onSend'
@@ -264,7 +267,8 @@ describe('MessageBoard ', () => {
     expect(onSendSpy).toHaveBeenCalled();
   });
 
-  it('calls onSend method', () => {
+  it('should contain an onSend method', () => {
+    // simulates a failed api call response
     props = mockData.messageBoardProps2;
     const component = mount(
       <MessageBoard {...props} />,

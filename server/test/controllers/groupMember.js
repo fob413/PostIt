@@ -89,7 +89,7 @@ describe('Add User To A Group Route /api/group/:groupId/user', () => {
     });
   });
 
-  it('should not add a user to a group he already belongs to', (done) => {
+  it('should not add a user to a group user is already a member', (done) => {
     chai.request(app)
     .post('/api/v1/group/1/user')
     .set('token', token)
@@ -121,6 +121,7 @@ describe('List Users In A Group api route \'GET: /api/group/:groupId/user/list\'
     .set('token', token)
     .end((err, res) => {
       res.should.have.status(200);
+      res.body[0].should.have.property('User');
       done();
     });
   });

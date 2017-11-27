@@ -333,7 +333,7 @@ describe('Forgot password route \'POST: /api/forgot/password\'', () => {
       .post(`/api/v1/reset/password/${resetToken}`)
       .send(mockData.updatePassword2)
       .end((err, res) => {
-        res.should.have.status(400);
+        res.should.have.status(401);
       });
     });
   });

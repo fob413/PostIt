@@ -13,6 +13,8 @@ const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 window.localStorage = mockLocalStorage;
 
+const { groups } = mockData.actions;
+
 const initialState = {
   Groups: []
 };
@@ -29,10 +31,10 @@ describe('Load Groups action ', () => {
   it('should dispatch LOAD_GROUPS on successful api call', (done) => {
     moxios.stubRequest('api/v1/group/list', {
       status: 200,
-      response: mockData.loadGroupsSuccessfulRes
+      response: groups.loadGroupsResponse
     });
 
-    const expectedActions = mockData.loadGroupsActions;
+    const expectedActions = groups.loadGroupsActions;
 
     store.dispatch(loadGroups()).then(() => {
       expect(store.getActions()).toEqual(expectedActions);
@@ -51,7 +53,7 @@ describe('Unload groups action ', () => {
   });
 
   it('should dispatch unload groups when called', (done) => {
-    const expectedActions = mockData.unloadGroupsActions;
+    const expectedActions = groups.unloadGroupsAction;
 
     store.dispatch(unloadGroups());
     expect(store.getActions()).toEqual(expectedActions);
@@ -71,7 +73,7 @@ describe('Create new group action ', () => {
   it('should return true when successful', (done) => {
     moxios.stubRequest('api/v1/group', {
       status: 201,
-      response: mockData.createNewGroupRes
+      response: groups.createGroupResponse
     });
 
     const expectedSuccess = true;

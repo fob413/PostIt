@@ -4,7 +4,7 @@ import { mount } from 'enzyme';
 import { NewGroup } from '../../components/dashBoard/NewGroup';
 import mockData from '../__mocks__/componentMockData';
 
-describe('NewGroup ', () => {
+describe('NewGroup component', () => {
   let props;
   let mountedNewGroup;
 
@@ -21,27 +21,27 @@ describe('NewGroup ', () => {
     props = mockData.newGroupsProps;
   });
 
-  it('renders a div', () => {
+  it('should always render a div', () => {
     const component = mountNewGroup().find('div');
     expect(component.length).toBeGreaterThan(0);
   });
 
-  it('renders a form', () => {
+  it('should render a form', () => {
     const component = mountNewGroup().find('form');
     expect(component.length).toBe(1);
   });
 
-  it('renders submit and cancel buttons', () => {
+  it('should render submit and cancel buttons', () => {
     const component = mountNewGroup().find('button');
     expect(component.length).toBe(2);
   });
 
-  it('renders an input field to accept the groupName', () => {
+  it('should render an input field to accept the groupName', () => {
     const component = mountNewGroup().find('input');
     expect(component.length).toBe(1);
   });
 
-  it('does not render anything when create is false', () => {
+  it('should not render anything when create is false', () => {
     props = mockData.newGroupsProps2;
     const component = mount(
       <NewGroup {...props} />
@@ -49,7 +49,7 @@ describe('NewGroup ', () => {
     expect(component.length).toBe(1);
   });
 
-  it('calls an onChange method', () => {
+  it('should contain an onChange method', () => {
     const component = mountNewGroup();
     const event = mockData.newGroupsEvent;
     const onChangeSpy = jest.spyOn(component.instance(), 'onChange');
@@ -57,7 +57,7 @@ describe('NewGroup ', () => {
     expect(onChangeSpy).toHaveBeenCalled();
   });
 
-  it('calls onCreateGroup method', () => {
+  it('should contain an onCreateGroup method', () => {
     const component = mountNewGroup();
     const event = mockData.messageBoardEvent3;
     component.setState(mockData.newGroupsSetState);
@@ -66,7 +66,7 @@ describe('NewGroup ', () => {
     expect(onCreateGroupSpy).toHaveBeenCalled();
   });
 
-  it('calls onCancelCreate method', () => {
+  it('should contain an onCancelCreate method', () => {
     const component = mountNewGroup();
     const event = mockData.messageBoardEvent3;
     const onCancelCreateSpy = jest.spyOn(component.instance(), 'onCancelCreate');

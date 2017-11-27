@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { PageNotFound } from '../../components/PageNotFound';
 import mockData from '../__mocks__/componentMockData';
 
-describe('PageNotFound ', () => {
+describe('PageNotFound component ', () => {
   let props;
   let mountedPageNotFound;
 
@@ -45,17 +45,17 @@ describe('PageNotFound ', () => {
     props = mockData.pageNotFoundProps;
   });
 
-  it('always renders a div', () => {
+  it('should always render a div', () => {
     const component = mountPageNotFound().find('div');
     expect(component.length).toBeGreaterThan(0);
   });
 
-  it('always renders the logo', () => {
+  it('should always render a logo', () => {
     const component = mountPageNotFound().find('img');
     expect(component.length).toBe(1);
   });
 
-  it('always renders a link to the home page', () => {
+  it('should always render a link to the home page', () => {
     const component = mountPageNotFound().find(Link);
     expect(component.length).toBe(1);
   });

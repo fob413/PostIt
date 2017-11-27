@@ -12,7 +12,7 @@ const store = mockStore({
   auth: { isLoggedin: false }
 });
 
-describe('Profile ', () => {
+describe('Profile component', () => {
   let props;
   let mountedProfile;
 
@@ -29,27 +29,27 @@ describe('Profile ', () => {
     props = mockData.profileProps;
   });
 
-  it('always renders a div', () => {
+  it('should always render a div', () => {
     const component = mountProfile().find('div');
     expect(component.length).toBeGreaterThan(0);
   });
 
-  it('always renders the user profile table', () => {
+  it('should always render the user profile table', () => {
     const component = mountProfile().find('ul');
     expect(component.length).toBe(1);
   });
 
-  it('always renders the userName, email and telephone fields', () => {
+  it('should always render the userName, email and telephone fields', () => {
     const component = mountProfile().find('li');
     expect(component.length).toBe(3);
   });
 
-  it('has map state to props', () => {
+  it('should render the connected component', () => {
     const component = shallow(<ConnectedProfile {...props} store={store} />);
     expect(component.length).toBe(1);
   });
 
-  it('has componentWillMount method', () => {
+  it('should contain a componentWillMount method', () => {
     props = mockData.profileProps2;
 
     const component = mount(
@@ -63,7 +63,7 @@ describe('Profile ', () => {
     expect(componentWillMountSpy).toHaveBeenCalled();
   });
 
-  it('has componentWillReceiveProps method', () => {
+  it('should contain a componentWillReceiveProps method', () => {
     props = mockData.profileProps;
 
     const component = mount(

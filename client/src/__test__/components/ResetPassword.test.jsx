@@ -15,7 +15,7 @@ const store = mockStore({
   }
 });
 
-describe('ResetPassword', () => {
+describe('ResetPassword component', () => {
   let props;
   let mountedResetPassword;
 
@@ -56,32 +56,33 @@ describe('ResetPassword', () => {
     props = mockData.resetPasswordProps;
   });
 
-  it('always renders a div', () => {
+  it('should always render a div', () => {
     const component = mountResetPassword().find('div');
     expect(component.length).toBeGreaterThan(0);
   });
 
-  it('always renders a form to change password', () => {
+  it('should always render a form to change password', () => {
     const component = mountResetPassword().find('form');
     expect(component.length).toBe(1);
   });
 
-  it('always renders a form with inputs to accept the new password', () => {
+  it('should always render a form with inputs to accept the new password', () => {
     const component = mountResetPassword().find('input');
     expect(component.length).toBe(2);
   });
 
-  it('always renders a form with the appropriate label', () => {
+  it('should always render a form with the appropriate label', () => {
     const component = mountResetPassword().find('label').first();
     expect(component.props().children).toBe(mockData.resetPasswordLabel);
   });
 
-  it('always renders a form submit button', () => {
+  it('should always render a form submit button', () => {
     const component = mountResetPassword().find('button');
     expect(component.length).toBe(1);
   });
 
-  it('calls a componentDidMount method', () => {
+  it('should contain a componentDidMount method', () => {
+    // simulate when authToken action call is resolved
     props = mockData.resetPasswordProps2;
     const component = mount(
       <ResetPassword {...props} />,
@@ -117,7 +118,8 @@ describe('ResetPassword', () => {
     expect(componentDidMountSpy).toHaveBeenCalled();
   });
 
-  it('calls a componentDidMount method', () => {
+  it('should contain a componentDidMount method', () => {
+    // simulate when authToken action call is rejected
     props = mockData.resetPasswordProps3;
     const component = mount(
       <ResetPassword {...props} />,
@@ -153,7 +155,7 @@ describe('ResetPassword', () => {
     expect(componentDidMountSpy).toHaveBeenCalled();
   });
 
-  it('calls a componentWillReceiveProps method', () => {
+  it('should contain a componentWillReceiveProps method', () => {
     const component = mountResetPassword();
     const componentWillReceivePropsSpy = jest.spyOn(
       component.instance(), 'componentWillReceiveProps'
@@ -164,12 +166,12 @@ describe('ResetPassword', () => {
     expect(componentWillReceivePropsSpy).toHaveBeenCalled();
   });
 
-  it('has map state to props', () => {
+  it('should render the connected component', () => {
     const component = shallow(<ConnectedResetPassword {...props} store={store} />);
     expect(component.length).toBe(1);
   });
 
-  it('calls onChange method', () => {
+  it('should contain an onChange method', () => {
     const component = mountResetPassword();
     const event = mockData.resetPasswordEvent;
     const onChangeSpy = jest.spyOn(component.instance(), 'onChange');
@@ -177,7 +179,7 @@ describe('ResetPassword', () => {
     expect(onChangeSpy).toHaveBeenCalled();
   });
 
-  it('calls onChangePassword method', () => {
+  it('should contain an onChangePassword method', () => {
     const component = mountResetPassword();
     const event = mockData.messageBoardEvent3;
     component.setState(mockData.resetPasswordSetState);
@@ -186,7 +188,7 @@ describe('ResetPassword', () => {
     expect(onChangePasswordspy).toHaveBeenCalled();
   });
 
-  it('calls onChangePassword method', () => {
+  it('should contain an onChangePassword method', () => {
     props = mockData.resetPasswordProps4;
     const component = mount(
       <ResetPassword {...props} />,

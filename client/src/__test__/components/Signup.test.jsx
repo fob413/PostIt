@@ -13,7 +13,7 @@ const store = mockStore({
   auth: { isLoggedin: false }
 });
 
-describe('Signup ', () => {
+describe('Signup component', () => {
   let props;
   let mountedSignup;
 
@@ -56,32 +56,32 @@ describe('Signup ', () => {
     props = mockData.signupProps;
   });
 
-  it('always rendrs a div', () => {
+  it('should always render a div', () => {
     const component = mountSignup().find('div');
     expect(component.length).toBeGreaterThan(0);
   });
 
-  it('always renders signup form', () => {
+  it('should render a form', () => {
     const component = mountSignup().find('form');
     expect(component.length).toBe(1);
   });
 
-  it('always renders a signup form with the inputs required', () => {
+  it('should render a signup form with the inputs required', () => {
     const component = mountSignup().find('input');
     expect(component.length).toBe(5);
   });
 
-  it('always renders a form submit button ', () => {
+  it('should render a form submit button ', () => {
     const component = mountSignup().find('button');
     expect(component.length).toBe(1);
   });
 
-  it('always renders a link to signin page', () => {
+  it('should render a link to signin page', () => {
     const component = mountSignup().find('Link');
     expect(component.length).toBe(1);
   });
 
-  it('alwyas renders the logo', () => {
+  it('should render the logo', () => {
     const component = mountSignup().find('img');
     expect(component.length).toBe(1);
   });
@@ -91,7 +91,7 @@ describe('Signup ', () => {
     expect(component.find(Link)).toHaveLength(1);
   });
 
-  it('calls history.push method if you are authenticated', () => {
+  it('should call history.push method if user is authenticated', () => {
     props = mockData.signupProps2;
     const component = mount(
       <Signup {...props} />,
@@ -129,7 +129,7 @@ describe('Signup ', () => {
     expect(componentDidMountSpy).toHaveBeenCalled();
   });
 
-  it('calls the componentWillReceiveProps method', () => {
+  it('should contain a componentWillReceiveProps method', () => {
     const component = mountSignup();
     const componentWillReceivePropsSpy = jest.spyOn(
       component.instance(), 'componentWillReceiveProps'
@@ -139,12 +139,12 @@ describe('Signup ', () => {
     expect(componentWillReceivePropsSpy).toHaveBeenCalled();
   });
 
-  it('has map state to props', () => {
+  it('should render the connected component', () => {
     const component = shallow(<ConnectedSignup {...props} store={store} />);
     expect(component.length).toBe(1);
   });
 
-  it('calls onChange method', () => {
+  it('should contain onChange method', () => {
     const component = mountSignup();
     const event = mockData.signupEvent;
     const onChangeSpy = jest.spyOn(component.instance(), 'onChange');
@@ -152,7 +152,8 @@ describe('Signup ', () => {
     expect(onChangeSpy).toHaveBeenCalled();
   });
 
-  it('calls handleSubmit method', () => {
+  it('should contain handleSubmit method', () => {
+    // simulate when there's no data in state
     props = mockData.signupProps;
     const component = mount(
       <Signup {...props} />,
@@ -194,7 +195,8 @@ describe('Signup ', () => {
     expect(handleSubmitSpy).toHaveBeenCalled();
   });
 
-  it('calls handleSubmit method', () => {
+  it('should contain handleSubmit method', () => {
+    // simulate when there's data in state
     props = mockData.signupProps;
     const component = mount(
       <Signup {...props} />,
@@ -238,7 +240,8 @@ describe('Signup ', () => {
     expect(handleSubmitSpy).toHaveBeenCalled();
   });
 
-  it('calls handleSubmit method', () => {
+  it('should contain an handleSubmit method', () => {
+    // simulate a resolved api call
     props = mockData.signupProps;
     const component = mount(
       <Signup {...props} />,
@@ -282,8 +285,9 @@ describe('Signup ', () => {
     expect(handleSubmitSpy).toHaveBeenCalled();
   });
 
-  it('calls handleSubmit method', () => {
-    props = mockData.signupProps;
+  it('should contain an handleSubmit method', () => {
+    // simulate a failed api call
+    props = mockData.signupProps2;
     const component = mount(
       <Signup {...props} />,
       {

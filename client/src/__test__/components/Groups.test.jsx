@@ -4,7 +4,7 @@ import { shallow } from 'enzyme';
 import { Groups } from '../../components/dashBoard/Groups';
 import mockData from '../__mocks__/componentMockData';
 
-describe('Groups ', () => {
+describe('Groups component ', () => {
   let props;
   let mountedGroups;
 
@@ -21,12 +21,12 @@ describe('Groups ', () => {
     props = mockData.groupsProps;
   });
 
-  it('always renders a div', () => {
+  it('should always render a div', () => {
     const component = shallowMountGroups().find('div');
     expect(component.length).toBeGreaterThan(0);
   });
 
-  it('calls a componentWillReceiveProps method', () => {
+  it('should contain a componentWillReceiveProps method', () => {
     const component = shallowMountGroups();
     const componentWillReceivePropsSpy = jest.spyOn(
       component.instance(), 'componentWillReceiveProps'
@@ -36,7 +36,7 @@ describe('Groups ', () => {
     expect(componentWillReceivePropsSpy).toHaveBeenCalled();
   });
 
-  it('always renders a text when there are no groups', () => {
+  it('should render a text when there are no groups', () => {
     props = mockData.groupsNextProps;
     const component = shallow(
       <Groups {...props} />

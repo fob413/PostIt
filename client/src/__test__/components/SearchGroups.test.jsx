@@ -4,7 +4,7 @@ import { mount } from 'enzyme';
 import mockData from '../__mocks__/componentMockData';
 import { SearchGroups } from '../../components/dashBoard/SearchGroups';
 
-describe('SearchGroups ', () => {
+describe('SearchGroups coponent', () => {
   let props;
   let mountedSearchGroups;
 
@@ -21,22 +21,22 @@ describe('SearchGroups ', () => {
     props = mockData.searchGroupsProps;
   });
 
-  it('renders a div', () => {
+  it('should always render a div', () => {
     const component = mountSearchGroups().find('div');
     expect(component.length).toBeGreaterThan(0);
   });
 
-  it('always renders an input', () => {
+  it('should always render an input', () => {
     const component = mountSearchGroups().find('input');
     expect(component.length).toBe(1);
   });
 
-  it('renders a label', () => {
+  it('should render a label', () => {
     const component = mountSearchGroups().find('label').first();
     expect(component.props().children).toBe(mockData.searchGroupLabel);
   });
 
-  it('calls a componentWillReceiveProp', () => {
+  it('should contain a componentWillReceiveProp', () => {
     const component = mountSearchGroups();
     const componentWillReceivePropSpy = jest.spyOn(
       component.instance(), 'componentWillReceiveProps'
@@ -47,7 +47,7 @@ describe('SearchGroups ', () => {
     expect(componentWillReceivePropSpy).toHaveBeenCalled();
   });
 
-  it('calls searchGroups method', () => {
+  it('should contain a searchGroups method', () => {
     const component = mountSearchGroups();
     const event = mockData.searchGroupEvent;
     const searchGroupsSpy = jest.spyOn(

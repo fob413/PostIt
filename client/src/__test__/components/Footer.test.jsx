@@ -12,7 +12,7 @@ const store = mockStore({
   auth: { isLoggedin: false }
 });
 
-describe('Footer ', () => {
+describe('Footer component ', () => {
   let props;
   let mountedFooter;
   const footer = () => {
@@ -28,14 +28,14 @@ describe('Footer ', () => {
     props = mockData.footerProps;
   });
 
-  it('always renders a div', () => {
+  it('should always render a div', () => {
     props = mockData.footerProps2;
 
     const divs = footer().find('div');
     expect(divs.length).toBeGreaterThan(0);
   });
 
-  it('does not render anything if auth is false', () => {
+  it('should not render anything if auth is false', () => {
     props = mockData.footerProps3;
 
     const divs = footer().find('div');
@@ -43,14 +43,14 @@ describe('Footer ', () => {
     expect(wrappingDiv.children().length).toBeLessThan(1);
   });
 
-  it('contains everything else that gets rendered', () => {
+  it('should render its children elements', () => {
     props = mockData.footerProps2;
     const divs = footer().find('div');
     const wrappingDiv = divs.first();
     expect(wrappingDiv.children()).toEqual(footer().children());
   });
 
-  it('renders footer whens state.isAuth is true', () => {
+  it('should render when state.isAuth is true', () => {
     props = mockData.footerProps2;
     const component = footer();
     component.setState({ isAuth: true });
@@ -58,7 +58,7 @@ describe('Footer ', () => {
     expect(wrappingDiv.children()).toEqual(footer().children());
   });
 
-  it('contains a componentWillReceiveProps Method', () => {
+  it('should contain a componentWillReceiveProps Method', () => {
     const component = footer();
     const componentWillMountSpy = jest.spyOn(component.instance(), 'componentWillReceiveProps');
     const nextProps = mockData.footerProps2;
@@ -66,7 +66,7 @@ describe('Footer ', () => {
     expect(componentWillMountSpy).toHaveBeenCalledTimes(1);
   });
 
-  it('has maps state to props', () => {
+  it('should render the connected component', () => {
     const component = shallow(<ConnectedFooter {...props} store={store} />);
     expect(component.length).toBe(1);
   });

@@ -119,80 +119,6 @@ export default ({
     }
   },
 
-  signupSuccessfulAction: [
-    {
-      type: types.SIGN_UP,
-      payLoad: {
-        success: true,
-        message: 'Successfully signed user up',
-        token: 'abcdefghijklmnopqrstuvwxyz'
-      }
-    }
-  ],
-
-  signinSuccessfulAction: [
-    {
-      type: types.SIGN_IN,
-      payLoad: {
-        success: true,
-        message: 'Successfully signed user in',
-        token: 'abcdefghijklmnopqrstuvwxyz'
-      }
-    }
-  ],
-
-  signoutSuccessfulAction: [
-    {
-      type: types.SIGN_OUT,
-      payLoad: {
-        success: true,
-        isLoggedIn: false,
-        message: 'Successfully logged user out'
-      }
-    }
-  ],
-
-  loadGroupsSuccessfulRes: {
-    success: true,
-    members: [
-      {
-        id: 1,
-        groupName: 'Group One'
-      },
-      {
-        id: 2,
-        groupName: 'Group Two'
-      }
-    ]
-  },
-
-  loadGroupsActions: [
-    {
-      type: types.LOAD_GROUPS,
-      payLoad: [
-        {
-          id: 1,
-          groupName: 'Group One'
-        },
-        {
-          id: 2,
-          groupName: 'Group Two'
-        }
-      ]
-    }
-  ],
-
-  unloadGroupsActions: [
-    {
-      type: types.UNLOAD_GROUPS
-    }
-  ],
-
-  createNewGroupRes: {
-    success: true,
-    message: 'New group successfully created'
-  },
-
   loadCurrentGroupActions: [
     {
       type: types.CURRENT_GROUP,
@@ -200,502 +126,579 @@ export default ({
     }
   ],
 
-  signupReducerInitialState: {
-    userName: '',
-    email: '',
-    telephone: '',
-    userId: '',
-    isLoggedIn: false,
-    token: '',
-    groups: []
-  },
+  actions: {
+    authAction: {
+      signupSuccess: [
+        {
+          type: types.SIGN_UP,
+          payLoad: {
+            success: true,
+            message: 'Successfully signed user up',
+            token: 'abcdefghijklmnopqrstuvwxyz'
+          }
+        }
+      ],
 
-  signupReducerAction: {
-    type: types.SIGN_UP,
-    payLoad: {
-      userName: 'funsho',
-      isLoggedin: true,
-      token: 'abcdefghijklmnopqrstuvwxyz',
-      email: 'fob1493@gmail.com',
-      telephone: '08138498175',
-      userId: '1'
-    }
-  },
+      signinSuccess: [
+        {
+          type: types.SIGN_IN,
+          payLoad: {
+            success: true,
+            message: 'Successfully signed user in',
+            token: 'abcdefghijklmnopqrstuvwxyz'
+          }
+        }
+      ],
 
-  signupReducerExpected: {
-    userName: 'funsho',
-    isLoggedIn: true,
-    token: 'abcdefghijklmnopqrstuvwxyz',
-    email: 'fob1493@gmail.com',
-    telephone: '08138498175',
-    userId: '1',
-    groups: []
-  },
-
-  signinReducerAction: {
-    type: types.SIGN_IN,
-    payLoad: {
-      userName: 'funsho',
-      isLoggedin: true,
-      token: 'abcdefghijklmnopqrstuvwxyz',
-      telephone: '08138498175',
-      email: 'fob1493@gmail.com',
-      userId: '1'
-    }
-  },
-
-  signinReducerExpected: {
-    userName: 'funsho',
-    isLoggedIn: true,
-    token: 'abcdefghijklmnopqrstuvwxyz',
-    telephone: '08138498175',
-    email: 'fob1493@gmail.com',
-    userId: '1'
-  },
-
-  signoutReducerAction: {
-    type: types.SIGN_OUT,
-    payLoad: {
-      isLoggedIn: false
-    }
-  },
-
-  signoutReducerExpected: {
-    userName: '',
-    isLoggedIn: false,
-    token: '',
-    email: '',
-    telephone: '',
-    groups: [],
-    userId: ''
-  },
-
-  reloadUserInReducerAction: {
-    type: types.RELOAD_USER_IN,
-    payLoad: {
-      userName: 'funsho',
-      email: 'fob1493@gmail.com',
-      telephone: '08138498175',
-      userId: '1',
-      isLoggedIn: true
-    }
-  },
-
-  reloadUserInReducerExpected: {
-    userName: 'funsho',
-    email: 'fob1493@gmail.com',
-    telephone: '08138498175',
-    userId: '1',
-    isLoggedIn: true
-  },
-
-  loadGroupReducerAction: {
-    type: types.LOAD_GROUPS,
-    payLoad: [
-      {
-        id: 1,
-        userId: 1,
-        groupId: 1,
-        createdAt: '2017-09-16T11:28:13.182Z',
-        updatedAt: '2017-09-16T11:28:13.182Z'
-      },
-      {
-        id: 2,
-        userId: 2,
-        groupId: 2,
-        createdAt: '2017-09-16T11:28:13.182Z',
-        updatedAt: '2017-09-16T11:28:13.182Z'
-      }
-    ]
-  },
-
-  loadGroupReducerExpected: [
-    {
-      id: 1,
-      userId: 1,
-      groupId: 1,
-      createdAt: '2017-09-16T11:28:13.182Z',
-      updatedAt: '2017-09-16T11:28:13.182Z'
+      signoutSuccess: [
+        {
+          type: types.SIGN_OUT,
+          payLoad: {
+            success: true,
+            isLoggedIn: false,
+            message: 'Successfully logged user out'
+          }
+        }
+      ],
     },
-    {
-      id: 2,
-      userId: 2,
-      groupId: 2,
-      createdAt: '2017-09-16T11:28:13.182Z',
-      updatedAt: '2017-09-16T11:28:13.182Z'
+    groups: {
+      loadGroupsResponse: {
+        success: true,
+        members: [
+          {
+            id: 1,
+            groupName: 'Group One'
+          },
+          {
+            id: 2,
+            groupName: 'Group Two'
+          }
+        ]
+      },
+
+      loadGroupsActions: [
+        {
+          type: types.LOAD_GROUPS,
+          payLoad: [
+            {
+              id: 1,
+              groupName: 'Group One'
+            },
+            {
+              id: 2,
+              groupName: 'Group Two'
+            }
+          ]
+        }
+      ],
+
+      unloadGroupsAction: [
+        {
+          type: types.UNLOAD_GROUPS
+        }
+      ],
+
+      createGroupResponse: {
+        success: true,
+        message: 'New group successfully created'
+      },
     }
-  ],
-
-  unloadGroupReducerInitialState: {
-    Groups: [
-      {
-        id: 1,
-        userId: 1,
-        groupId: 1,
-        createdAt: '2017-09-16T11:28:13.182Z',
-        updatedAt: '2017-09-16T11:28:13.182Z'
-      },
-      {
-        id: 2,
-        userId: 2,
-        groupId: 2,
-        createdAt: '2017-09-16T11:28:13.182Z',
-        updatedAt: '2017-09-16T11:28:13.182Z'
-      }
-    ]
   },
 
-  unloadGroupsReducerAction: {
-    type: types.UNLOAD_GROUPS
-  },
+  reducers: {
+    auth: {
 
-  unloadGroupsReducerExpected: {
-    Groups: []
-  },
-
-  loadGroupMessagesReducerInitialState: {
-    groupId: '',
-    messages: [],
-    unreadMessages: [],
-    readMessages: [],
-    groupUsers: [],
-    PlatformUsers: [],
-    count: 0,
-    pageCount: 0
-  },
-
-  loadGroupMessagesReducerAction: {
-    type: types.LOAD_GROUP_MESSAGES,
-    payLoad: [
-      {
-        id: 2,
-        content: 'second message sent to this group',
-        authorsName: 'tititawa',
-        priorityValue: 'NORMAL',
-        readby: '3,1',
-        createdAt: '2017-09-16T11:27:46.739Z',
-        updatedAt: '2017-09-16T11:29:16.282Z',
-        groupId: 1,
-        userId: 3
-      },
-      {
-        id: 3,
-        content: 'Third message sent to this group',
-        authorsName: 'funsho',
-        priorityValue: 'URGENT',
-        readby: '3,1',
-        createdAt: '2017-09-16T11:27:46.739Z',
-        updatedAt: '2017-09-16T11:29:16.282Z',
-        groupId: 1,
-        userId: 1
-      }
-    ]
-  },
-
-  loadGroupMessagesReducerExpected: {
-    groupId: '',
-    messages: [
-      {
-        id: 2,
-        content: 'second message sent to this group',
-        authorsName: 'tititawa',
-        priorityValue: 'NORMAL',
-        readby: '3,1',
-        createdAt: '2017-09-16T11:27:46.739Z',
-        updatedAt: '2017-09-16T11:29:16.282Z',
-        groupId: 1,
-        userId: 3
-      },
-      {
-        id: 3,
-        content: 'Third message sent to this group',
-        authorsName: 'funsho',
-        priorityValue: 'URGENT',
-        readby: '3,1',
-        createdAt: '2017-09-16T11:27:46.739Z',
-        updatedAt: '2017-09-16T11:29:16.282Z',
-        groupId: 1,
-        userId: 1
-      }
-    ],
-    unreadMessages: [],
-    readMessages: [],
-    groupUsers: [],
-    PlatformUsers: [],
-    count: 0,
-    pageCount: 0
-  },
-
-  currentGroupReducerAction: {
-    type: types.CURRENT_GROUP,
-    payLoad: 5
-  },
-
-  currentGroupReducerExpected: {
-    groupId: 5,
-    messages: [],
-    unreadMessages: [],
-    readMessages: [],
-    groupUsers: [],
-    PlatformUsers: [],
-    count: 0,
-    pageCount: 0
-  },
-
-  loadPlatformUsersReducerAction: {
-    type: types.LOAD_PLATFORM_USERS,
-    payLoad: [
-      {
-        id: 14,
-        UserName: 'user3'
-      },
-      {
-        id: 15,
-        UserName: 'user4'
-      }
-    ]
-  },
-
-  loadPlatformUsersReducerExpected: {
-    groupId: '',
-    messages: [],
-    unreadMessages: [],
-    readMessages: [],
-    groupUsers: [],
-    PlatformUsers: [
-      {
-        id: 14,
-        UserName: 'user3'
-      },
-      {
-        id: 15,
-        UserName: 'user4'
-      }
-    ],
-    count: 0,
-    pageCount: 0
-  },
-
-  loadGroupUsersReducerAction: {
-    type: types.LOAD_GROUP_USERS,
-    payLoad: [
-      {
-        id: 1,
-        userId: 3,
-        groupId: 1,
-        user: {
-          id: 3,
-          UserName: 'tititawa'
+      signupAction: {
+        type: types.SIGN_UP,
+        payLoad: {
+          userName: 'funsho',
+          isLoggedin: true,
+          token: 'abcdefghijklmnopqrstuvwxyz',
+          email: 'fob1493@gmail.com',
+          telephone: '08138498175',
+          userId: '1'
         }
       },
-      {
-        id: 1,
-        userId: 4,
-        groupId: 1,
-        user: {
-          id: 4,
-          UserName: 'funsho'
-        }
-      }
-    ]
-  },
 
-  loadGroupUsersReducerExpected: {
-    groupId: '',
-    messages: [],
-    unreadMessages: [],
-    readMessages: [],
-    groupUsers: [
-      {
-        id: 1,
-        userId: 3,
-        groupId: 1,
-        user: {
-          id: 3,
-          UserName: 'tititawa'
+      signupExpected: {
+        userName: 'funsho',
+        isLoggedIn: true,
+        token: 'abcdefghijklmnopqrstuvwxyz',
+        email: 'fob1493@gmail.com',
+        telephone: '08138498175',
+        userId: '1'
+      },
+
+      signinAction: {
+        type: types.SIGN_IN,
+        payLoad: {
+          userName: 'funsho',
+          isLoggedin: true,
+          token: 'abcdefghijklmnopqrstuvwxyz',
+          telephone: '08138498175',
+          email: 'fob1493@gmail.com',
+          userId: '1'
         }
       },
-      {
-        id: 1,
-        userId: 4,
-        groupId: 1,
-        user: {
-          id: 4,
-          UserName: 'funsho'
+
+      sigininExpected: {
+        userName: 'funsho',
+        isLoggedIn: true,
+        token: 'abcdefghijklmnopqrstuvwxyz',
+        telephone: '08138498175',
+        email: 'fob1493@gmail.com',
+        userId: '1'
+      },
+
+      signoutAction: {
+        type: types.SIGN_OUT,
+        payLoad: {
+          isLoggedIn: false
         }
-      }
-    ],
-    PlatformUsers: [],
-    count: 0,
-    pageCount: 0
-  },
-
-  loadUnreadMessagesReducerAction: {
-    type: types.LOAD_UNREAD_MESSAGES,
-    payLoad: [
-      {
-        id: 2,
-        content: 'second message sent to this group',
-        authorsName: 'tititawa',
-        priorityValue: 'NORMAL',
-        readby: '3,1',
-        createdAt: '2017-09-16T11:27:46.739Z',
-        updatedAt: '2017-09-16T11:29:16.282Z',
-        groupId: 1,
-        userId: 3
       },
-      {
-        id: 3,
-        content: 'third message sent to this group',
-        authorsName: 'Bunmi',
-        priorityValue: 'CRITICAL',
-        readby: '3,1',
-        createdAt: '2017-09-16T11:27:46.739Z',
-        updatedAt: '2017-09-16T11:29:16.282Z',
-        groupId: 1,
-        userId: 4
-      }
-    ]
-  },
 
-  loadUnreadMessagesReducerExpected: {
-    groupId: '',
-    messages: [],
-    unreadMessages: [
-      {
-        id: 2,
-        content: 'second message sent to this group',
-        authorsName: 'tititawa',
-        priorityValue: 'NORMAL',
-        readby: '3,1',
-        createdAt: '2017-09-16T11:27:46.739Z',
-        updatedAt: '2017-09-16T11:29:16.282Z',
-        groupId: 1,
-        userId: 3
+      signoutExpected: {
+        userName: '',
+        isLoggedIn: false,
+        token: '',
+        email: '',
+        telephone: '',
+        groups: [],
+        userId: ''
       },
-      {
-        id: 3,
-        content: 'third message sent to this group',
-        authorsName: 'Bunmi',
-        priorityValue: 'CRITICAL',
-        readby: '3,1',
-        createdAt: '2017-09-16T11:27:46.739Z',
-        updatedAt: '2017-09-16T11:29:16.282Z',
-        groupId: 1,
-        userId: 4
-      }
-    ],
-    readMessages: [],
-    groupUsers: [],
-    PlatformUsers: [],
-    count: 0,
-    pageCount: 0
-  },
 
-  loadReadMessagesReducersAction: {
-    type: types.LOAD_READ_MESSAGES,
-    payLoad: [
-      {
-        id: 2,
-        content: 'second message sent to this group',
-        authorsName: 'tititawa',
-        priorityValue: 'NORMAL',
-        readby: '3,1',
-        createdAt: '2017-09-16T11:27:46.739Z',
-        updatedAt: '2017-09-16T11:29:16.282Z',
-        groupId: 1,
-        userId: 3
+      reloadAction: {
+        type: types.RELOAD_USER_IN,
+        payLoad: {
+          userName: 'funsho',
+          email: 'fob1493@gmail.com',
+          telephone: '08138498175',
+          userId: '1',
+          isLoggedIn: true
+        }
       },
-      {
-        id: 3,
-        content: 'third message sent to this group',
-        authorsName: 'Bunmi',
-        priorityValue: 'CRITICAL',
-        readby: '3,1',
-        createdAt: '2017-09-16T11:27:46.739Z',
-        updatedAt: '2017-09-16T11:29:16.282Z',
-        groupId: 1,
-        userId: 4
-      }
-    ]
-  },
 
-  loadReadMessagesReducersExpected: {
-    groupId: '',
-    messages: [],
-    unreadMessages: [],
-    readMessages: [
-      {
-        id: 2,
-        content: 'second message sent to this group',
-        authorsName: 'tititawa',
-        priorityValue: 'NORMAL',
-        readby: '3,1',
-        createdAt: '2017-09-16T11:27:46.739Z',
-        updatedAt: '2017-09-16T11:29:16.282Z',
-        groupId: 1,
-        userId: 3
+      reloadExpected: {
+        userName: 'funsho',
+        email: 'fob1493@gmail.com',
+        telephone: '08138498175',
+        userId: '1',
+        isLoggedIn: true
       },
-      {
-        id: 3,
-        content: 'third message sent to this group',
-        authorsName: 'Bunmi',
-        priorityValue: 'CRITICAL',
-        readby: '3,1',
-        createdAt: '2017-09-16T11:27:46.739Z',
-        updatedAt: '2017-09-16T11:29:16.282Z',
-        groupId: 1,
-        userId: 4
-      }
-    ],
-    groupUsers: [],
-    PlatformUsers: [],
-    count: 0,
-    pageCount: 0
-  },
+    },
 
-  loadCountReducerAction: {
-    type: types.LOAD_COUNT,
-    payLoad: 16
-  },
+    group: {
+      loadAction: {
+        type: types.LOAD_GROUPS,
+        payLoad: [
+          {
+            id: 1,
+            userId: 1,
+            groupId: 1,
+            createdAt: '2017-09-16T11:28:13.182Z',
+            updatedAt: '2017-09-16T11:28:13.182Z'
+          },
+          {
+            id: 2,
+            userId: 2,
+            groupId: 2,
+            createdAt: '2017-09-16T11:28:13.182Z',
+            updatedAt: '2017-09-16T11:28:13.182Z'
+          }
+        ]
+      },
 
-  loadCountReducerExpected: {
-    groupId: '',
-    messages: [],
-    unreadMessages: [],
-    readMessages: [],
-    groupUsers: [],
-    PlatformUsers: [],
-    count: 16,
-    pageCount: 0
-  },
+      loadExpected: [
+        {
+          id: 1,
+          userId: 1,
+          groupId: 1,
+          createdAt: '2017-09-16T11:28:13.182Z',
+          updatedAt: '2017-09-16T11:28:13.182Z'
+        },
+        {
+          id: 2,
+          userId: 2,
+          groupId: 2,
+          createdAt: '2017-09-16T11:28:13.182Z',
+          updatedAt: '2017-09-16T11:28:13.182Z'
+        }
+      ],
 
-  loadPageCountReducerAction: {
-    type: types.LOAD_PAGE_COUNT,
-    payLoad: 5
-  },
+      unloadInitialState: {
+        Groups: [
+          {
+            id: 1,
+            userId: 1,
+            groupId: 1,
+            createdAt: '2017-09-16T11:28:13.182Z',
+            updatedAt: '2017-09-16T11:28:13.182Z'
+          },
+          {
+            id: 2,
+            userId: 2,
+            groupId: 2,
+            createdAt: '2017-09-16T11:28:13.182Z',
+            updatedAt: '2017-09-16T11:28:13.182Z'
+          }
+        ]
+      },
 
-  loadPageCountReducerExpected: {
-    groupId: '',
-    messages: [],
-    unreadMessages: [],
-    readMessages: [],
-    groupUsers: [],
-    PlatformUsers: [],
-    count: 0,
-    pageCount: 5
-  },
+      unloadAction: {
+        type: types.UNLOAD_GROUPS
+      },
 
-  defaultMessagesReducerExpected: {
-    groupId: '',
-    messages: [],
-    unreadMessages: [],
-    readMessages: [],
-    groupUsers: [],
-    PlatformUsers: [],
-    count: 0,
-    pageCount: 0
-  },
+      unloadExpected: {
+        Groups: []
+      },
+    },
+
+    messages: {
+      loadInitialState: {
+        groupId: '',
+        messages: [],
+        unreadMessages: [],
+        readMessages: [],
+        groupUsers: [],
+        PlatformUsers: [],
+        count: 0,
+        pageCount: 0
+      },
+
+      loadGroupAction: {
+        type: types.LOAD_GROUP_MESSAGES,
+        payLoad: [
+          {
+            id: 2,
+            content: 'second message sent to this group',
+            authorsName: 'tititawa',
+            priorityValue: 'NORMAL',
+            readby: '3,1',
+            createdAt: '2017-09-16T11:27:46.739Z',
+            updatedAt: '2017-09-16T11:29:16.282Z',
+            groupId: 1,
+            userId: 3
+          },
+          {
+            id: 3,
+            content: 'Third message sent to this group',
+            authorsName: 'funsho',
+            priorityValue: 'URGENT',
+            readby: '3,1',
+            createdAt: '2017-09-16T11:27:46.739Z',
+            updatedAt: '2017-09-16T11:29:16.282Z',
+            groupId: 1,
+            userId: 1
+          }
+        ]
+      },
+
+      loadGroupExpected: {
+        groupId: '',
+        messages: [
+          {
+            id: 2,
+            content: 'second message sent to this group',
+            authorsName: 'tititawa',
+            priorityValue: 'NORMAL',
+            readby: '3,1',
+            createdAt: '2017-09-16T11:27:46.739Z',
+            updatedAt: '2017-09-16T11:29:16.282Z',
+            groupId: 1,
+            userId: 3
+          },
+          {
+            id: 3,
+            content: 'Third message sent to this group',
+            authorsName: 'funsho',
+            priorityValue: 'URGENT',
+            readby: '3,1',
+            createdAt: '2017-09-16T11:27:46.739Z',
+            updatedAt: '2017-09-16T11:29:16.282Z',
+            groupId: 1,
+            userId: 1
+          }
+        ],
+        unreadMessages: [],
+        readMessages: [],
+        groupUsers: [],
+        PlatformUsers: [],
+        count: 0,
+        pageCount: 0
+      },
+
+      currentGroupAction: {
+        type: types.CURRENT_GROUP,
+        payLoad: 5
+      },
+
+      currentGroupExpected: {
+        groupId: 5,
+        messages: [],
+        unreadMessages: [],
+        readMessages: [],
+        groupUsers: [],
+        PlatformUsers: [],
+        count: 0,
+        pageCount: 0
+      },
+
+      platformUsersAction: {
+        type: types.LOAD_PLATFORM_USERS,
+        payLoad: [
+          {
+            id: 14,
+            UserName: 'user3'
+          },
+          {
+            id: 15,
+            UserName: 'user4'
+          }
+        ]
+      },
+
+      platformUsersExpected: {
+        groupId: '',
+        messages: [],
+        unreadMessages: [],
+        readMessages: [],
+        groupUsers: [],
+        PlatformUsers: [
+          {
+            id: 14,
+            UserName: 'user3'
+          },
+          {
+            id: 15,
+            UserName: 'user4'
+          }
+        ],
+        count: 0,
+        pageCount: 0
+      },
+
+      loadUsersAction: {
+        type: types.LOAD_GROUP_USERS,
+        payLoad: [
+          {
+            id: 1,
+            userId: 3,
+            groupId: 1,
+            user: {
+              id: 3,
+              UserName: 'tititawa'
+            }
+          },
+          {
+            id: 1,
+            userId: 4,
+            groupId: 1,
+            user: {
+              id: 4,
+              UserName: 'funsho'
+            }
+          }
+        ]
+      },
+
+      loadUsersExpected: {
+        groupId: '',
+        messages: [],
+        unreadMessages: [],
+        readMessages: [],
+        groupUsers: [
+          {
+            id: 1,
+            userId: 3,
+            groupId: 1,
+            user: {
+              id: 3,
+              UserName: 'tititawa'
+            }
+          },
+          {
+            id: 1,
+            userId: 4,
+            groupId: 1,
+            user: {
+              id: 4,
+              UserName: 'funsho'
+            }
+          }
+        ],
+        PlatformUsers: [],
+        count: 0,
+        pageCount: 0
+      },
+
+      unreadMessagesAction: {
+        type: types.LOAD_UNREAD_MESSAGES,
+        payLoad: [
+          {
+            id: 2,
+            content: 'second message sent to this group',
+            authorsName: 'tititawa',
+            priorityValue: 'NORMAL',
+            readby: '3,1',
+            createdAt: '2017-09-16T11:27:46.739Z',
+            updatedAt: '2017-09-16T11:29:16.282Z',
+            groupId: 1,
+            userId: 3
+          },
+          {
+            id: 3,
+            content: 'third message sent to this group',
+            authorsName: 'Bunmi',
+            priorityValue: 'CRITICAL',
+            readby: '3,1',
+            createdAt: '2017-09-16T11:27:46.739Z',
+            updatedAt: '2017-09-16T11:29:16.282Z',
+            groupId: 1,
+            userId: 4
+          }
+        ]
+      },
+
+      unreadMessagesExpected: {
+        groupId: '',
+        messages: [],
+        unreadMessages: [
+          {
+            id: 2,
+            content: 'second message sent to this group',
+            authorsName: 'tititawa',
+            priorityValue: 'NORMAL',
+            readby: '3,1',
+            createdAt: '2017-09-16T11:27:46.739Z',
+            updatedAt: '2017-09-16T11:29:16.282Z',
+            groupId: 1,
+            userId: 3
+          },
+          {
+            id: 3,
+            content: 'third message sent to this group',
+            authorsName: 'Bunmi',
+            priorityValue: 'CRITICAL',
+            readby: '3,1',
+            createdAt: '2017-09-16T11:27:46.739Z',
+            updatedAt: '2017-09-16T11:29:16.282Z',
+            groupId: 1,
+            userId: 4
+          }
+        ],
+        readMessages: [],
+        groupUsers: [],
+        PlatformUsers: [],
+        count: 0,
+        pageCount: 0
+      },
+
+      readMessagesAction: {
+        type: types.LOAD_READ_MESSAGES,
+        payLoad: [
+          {
+            id: 2,
+            content: 'second message sent to this group',
+            authorsName: 'tititawa',
+            priorityValue: 'NORMAL',
+            readby: '3,1',
+            createdAt: '2017-09-16T11:27:46.739Z',
+            updatedAt: '2017-09-16T11:29:16.282Z',
+            groupId: 1,
+            userId: 3
+          },
+          {
+            id: 3,
+            content: 'third message sent to this group',
+            authorsName: 'Bunmi',
+            priorityValue: 'CRITICAL',
+            readby: '3,1',
+            createdAt: '2017-09-16T11:27:46.739Z',
+            updatedAt: '2017-09-16T11:29:16.282Z',
+            groupId: 1,
+            userId: 4
+          }
+        ]
+      },
+
+      readMessagesExpected: {
+        groupId: '',
+        messages: [],
+        unreadMessages: [],
+        readMessages: [
+          {
+            id: 2,
+            content: 'second message sent to this group',
+            authorsName: 'tititawa',
+            priorityValue: 'NORMAL',
+            readby: '3,1',
+            createdAt: '2017-09-16T11:27:46.739Z',
+            updatedAt: '2017-09-16T11:29:16.282Z',
+            groupId: 1,
+            userId: 3
+          },
+          {
+            id: 3,
+            content: 'third message sent to this group',
+            authorsName: 'Bunmi',
+            priorityValue: 'CRITICAL',
+            readby: '3,1',
+            createdAt: '2017-09-16T11:27:46.739Z',
+            updatedAt: '2017-09-16T11:29:16.282Z',
+            groupId: 1,
+            userId: 4
+          }
+        ],
+        groupUsers: [],
+        PlatformUsers: [],
+        count: 0,
+        pageCount: 0
+      },
+
+      loadCountAction: {
+        type: types.LOAD_COUNT,
+        payLoad: 16
+      },
+
+      loadCountExpected: {
+        groupId: '',
+        messages: [],
+        unreadMessages: [],
+        readMessages: [],
+        groupUsers: [],
+        PlatformUsers: [],
+        count: 16,
+        pageCount: 0
+      },
+
+      loadPageCountAction: {
+        type: types.LOAD_PAGE_COUNT,
+        payLoad: 5
+      },
+
+      loadPageCountExpected: {
+        groupId: '',
+        messages: [],
+        unreadMessages: [],
+        readMessages: [],
+        groupUsers: [],
+        PlatformUsers: [],
+        count: 0,
+        pageCount: 5
+      },
+
+      defaultExpected: {
+        groupId: '',
+        messages: [],
+        unreadMessages: [],
+        readMessages: [],
+        groupUsers: [],
+        PlatformUsers: [],
+        count: 0,
+        pageCount: 0
+      },
+    }
+  }
 
 });
 

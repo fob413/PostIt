@@ -319,7 +319,7 @@ export function readMessages(groupId) {
     .then(() => {
       return;
     }, (err) => {
-      console.log(err);
+      swal('Oops...', err.response.data.message, 'error');
     });
   };
 }

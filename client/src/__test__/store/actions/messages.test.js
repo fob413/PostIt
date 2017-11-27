@@ -47,17 +47,18 @@ describe('Send Message function', () => {
     const groupId = mockData.groupId;
     const message = mockData.message;
     const priority = mockData.priority;
-    mock.onPost(`api/v1/group/${groupId}/message`)
+    mock.onPost(`/api/v1/group/${groupId}/message`)
     .reply(201, {
       success: true,
       message: 'message sent'
     });
 
-    const expectedAction = mockData.emptyAction;
+    const emptyAction = mockData.emptyAction;
 
     return store.dispatch(sendMessage(message, groupId, priority))
     .then(() => {
-      expect(store.getActions()).toEqual(expectedAction);
+      // expect(res.data.success).toEqual(true);
+      expect(store.getActions()).toEqual(emptyAction);
     });
   });
 
@@ -69,7 +70,7 @@ describe('Send Message function', () => {
     const priority = mockData.priority;
     mock.onPost(`api/v1/group/${groupId}/message`)
     .reply(400, {
-      success: true,
+      success: false,
       message: 'An error has occured'
     });
 
