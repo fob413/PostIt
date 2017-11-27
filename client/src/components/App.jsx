@@ -7,7 +7,7 @@ import PageNotFound from '../components/PageNotFound';
 import DashBoard from '../components/dashBoard/DashBoard';
 import Navbar from '../components/navbar/NavBar';
 import Profile from '../components/navbar/Profile';
-import MessageBoard from '../components//messageBoard/MessageBoard';
+import MessageBoard from '../components/messageBoard/MessageBoard';
 import Reset from '../components/authentication/password/Reset';
 import ResetPassword from '../components/authentication/password/ResetPassword';
 import Footer from '../components/Footer';

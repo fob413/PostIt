@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import swal from 'sweetalert2';
 import { connect } from 'react-redux';
 import { signUserUp } from '../../../actions/authActions';
 import validate from '../../../helpers/validate';

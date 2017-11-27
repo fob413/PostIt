@@ -695,7 +695,8 @@ const data = {
     PlatformUsers: [],
     count: 0,
     pageCount: 0
-  }
+  },
+
 };
 
 export default data;

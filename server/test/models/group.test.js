@@ -6,7 +6,7 @@ const should = chai.should();
 const Group = models.Groups;
 
 describe('Group model ', () => {
-  it('should create a group', (done) => {
+  xit('should create a group', (done) => {
     Group.create(data.group1).then((newGroup) => {
       newGroup.groupName.should.equal(data.group1.groupName);
       done();

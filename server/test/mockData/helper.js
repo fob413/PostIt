@@ -1,12 +1,12 @@
 import chaiHttp from 'chai-http';
 import chai from 'chai';
 import app from '../../app';
-import db from '../../models/index';
+import models from '../../models';
 
-const user = db.Users;
-const group = db.Groups;
-const groupMember = db.GroupMembers;
-const message = db.Messages;
+const user = models.Users;
+const group = models.Groups;
+const groupMember = models.GroupMembers;
+const message = models.Messages;
 
 chai.use(chaiHttp);
 

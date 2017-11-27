@@ -26,6 +26,21 @@ describe('NewGroup ', () => {
     expect(component.length).toBeGreaterThan(0);
   });
 
+  it('renders a form', () => {
+    const component = mountNewGroup().find('form');
+    expect(component.length).toBe(1);
+  });
+
+  it('renders submit and cancel buttons', () => {
+    const component = mountNewGroup().find('button');
+    expect(component.length).toBe(2);
+  });
+
+  it('renders an input field to accept the groupName', () => {
+    const component = mountNewGroup().find('input');
+    expect(component.length).toBe(1);
+  });
+
   it('does not render anything when create is false', () => {
     props = mockData.newGroupsProps2;
     const component = mount(

@@ -34,6 +34,16 @@ describe('Profile ', () => {
     expect(component.length).toBeGreaterThan(0);
   });
 
+  it('always renders the user profile table', () => {
+    const component = mountProfile().find('ul');
+    expect(component.length).toBe(1);
+  });
+
+  it('always renders the userName, email and telephone fields', () => {
+    const component = mountProfile().find('li');
+    expect(component.length).toBe(3);
+  });
+
   it('has map state to props', () => {
     const component = shallow(<ConnectedProfile {...props} store={store} />);
     expect(component.length).toBe(1);

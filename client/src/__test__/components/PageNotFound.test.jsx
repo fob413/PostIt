@@ -49,5 +49,15 @@ describe('PageNotFound ', () => {
     const component = mountPageNotFound().find('div');
     expect(component.length).toBeGreaterThan(0);
   });
+
+  it('always renders the logo', () => {
+    const component = mountPageNotFound().find('img');
+    expect(component.length).toBe(1);
+  });
+
+  it('always renders a link to the home page', () => {
+    const component = mountPageNotFound().find(Link);
+    expect(component.length).toBe(1);
+  });
 });
 

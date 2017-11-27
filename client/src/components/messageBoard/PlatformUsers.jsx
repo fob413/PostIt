@@ -1,4 +1,4 @@
-import React, { PropsTypes } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { addUserToGroup, loadGroupUsers } from '../../actions/messageActions';
 
@@ -98,13 +98,6 @@ export class PlatformUsers extends React.Component {
     );
   }
 }
-
-PlatformUsers.propTypes = {
-  // platformUser: PropsTypes.object.isRequired,
-  // addUserToGroup: PropsTypes.func.isRequired,
-  // Messages: PropsTypes.object.isRequired,
-  // loadGroupUsers: PropsTypes.func.isRequired
-};
 
 const mapStateToProps = state => ({
   Messages: state.Messages

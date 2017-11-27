@@ -34,6 +34,11 @@ describe('Group ', () => {
     expect(component.length).toBeGreaterThan(0);
   });
 
+  it('renders group icon', () => {
+    const component = mountGroup().find('i');
+    expect(component.props().children).toBe(mockData.groupIconName);
+  });
+
   it('calls a componentWillReceiveProps method', () => {
     const component = mountGroup();
     const componentWillReceivePropsSpy = jest.spyOn(

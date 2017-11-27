@@ -25,7 +25,7 @@ describe('Message ', () => {
     expect(component.length).toBeGreaterThan(0);
   });
 
-  it('always renders a div when there is not message content', () => {
+  it('always renders an empty div when there is not message content', () => {
     props = {};
     const component = mount(
       <Message {...props} />

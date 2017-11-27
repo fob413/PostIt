@@ -5,6 +5,7 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import mockData from '../__mocks__/componentMockData';
 import ConnectedResetPassword, { ResetPassword } from '../../components/authentication/password/ResetPassword';
+import { exec } from 'child_process';
 
 // jest.mock('Materialize', () => jest.fn());
 const middleware = [thunk];
@@ -59,6 +60,26 @@ describe('ResetPassword', () => {
   it('always renders a div', () => {
     const component = mountResetPassword().find('div');
     expect(component.length).toBeGreaterThan(0);
+  });
+
+  it('always renders a form to change password', () => {
+    const component = mountResetPassword().find('form');
+    expect(component.length).toBe(1);
+  });
+
+  it('always renders a form with inputs to accept the new password', () => {
+    const component = mountResetPassword().find('input');
+    expect(component.length).toBe(2);
+  });
+
+  it('always renders a form with the appropriate label', () => {
+    const component = mountResetPassword().find('label').first();
+    expect(component.props().children).toBe(mockData.resetPasswordLabel);
+  });
+
+  it('always renders a form submit button', () => {
+    const component = mountResetPassword().find('button');
+    expect(component.length).toBe(1);
   });
 
   it('calls a componentDidMount method', () => {

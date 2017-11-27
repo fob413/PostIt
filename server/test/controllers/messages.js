@@ -64,40 +64,43 @@ describe('Test setup', () => {
 });
 
 describe('Send Messge Route \'POST: /api/group/:groupId/message\'', () => {
-  it('should return a status 201 when successful', (done) => {
+  it('should successfully send a message', (done) => {
     chai.request(app)
     .post('/api/v1/group/1/message')
     .set('token', token)
     .send(mockData.sendMessage1)
     .end((err, res) => {
       res.should.have.status(201);
+      res.body.should.have.property('success').equals(true);
       done();
     });
   });
 
-  it('should return a status 201 when successful', (done) => {
+  it('should successfully send a message with a priority of urgent', (done) => {
     chai.request(app)
     .post('/api/v1/group/1/message')
     .set('token', token)
     .send(mockData.sendMessage2)
     .end((err, res) => {
       res.should.have.status(201);
+      res.body.should.have.property('success').equals(true);
       done();
     });
   });
 
-  it('should return a status 201 when successful', (done) => {
+  it('should successfully send a message with a priority of critical', (done) => {
     chai.request(app)
     .post('/api/v1/group/1/message')
     .set('token', token)
     .send(mockData.sendMessage3)
     .end((err, res) => {
       res.should.have.status(201);
+      res.body.should.have.property('success').equals(true);
       done();
     });
   });
 
-  it('should return a status 404 when group does not exist', (done) => {
+  it('should not send a message to a group that doesn\'t exist', (done) => {
     chai.request(app)
     .post('/api/v1/group/8/message')
     .set('token', token)
@@ -106,11 +109,12 @@ describe('Send Messge Route \'POST: /api/group/:groupId/message\'', () => {
     })
     .end((err, res) => {
       res.should.have.status(404);
+      res.body.should.have.property('success').equals(false);
       done();
     });
   });
 
-  it('should return a status 401 when user is not in group', (done) => {
+  it('should not send a message to a group the user does not belong to', (done) => {
     chai.request(app)
     .post('/api/v1/group/1/message')
     .set('token', secondToken)
@@ -119,17 +123,19 @@ describe('Send Messge Route \'POST: /api/group/:groupId/message\'', () => {
     })
     .end((err, res) => {
       res.should.have.status(401);
+      res.body.should.have.property('success').equals(false);
       done();
     });
   });
 
-  it('should return a status 400 when there is no content in users request object', (done) => {
+  it('should not send a message without message content', (done) => {
     chai.request(app)
     .post('/api/v1/group/1/message')
     .set('token', token)
     .send()
     .end((err, res) => {
       res.should.have.status(400);
+      res.body.should.have.property('success').equals(false);
       done();
     });
   });
@@ -153,7 +159,7 @@ describe('Retrieve Group Messages Route \'GET: /api/group/:groupId/messages\'', 
     });
   });
 
-  it('should return a status 200 when successful', (done) => {
+  it('should successfully retrive messages in a group', (done) => {
     chai.request(app)
     .get('/api/v1/group/1/messages')
     .set('token', token)
@@ -163,22 +169,24 @@ describe('Retrieve Group Messages Route \'GET: /api/group/:groupId/messages\'', 
     });
   });
 
-  it('should return status 404 when group does not exist', (done) => {
+  it('should not be able to retrieve messages of a group that does not exist', (done) => {
     chai.request(app)
     .get('/api/v1/group/8/messages')
     .set('token', token)
     .end((err, res) => {
       res.should.have.status(404);
+      res.body.should.have.property('success').equals(false);
       done();
     });
   });
 
-  it('should return status 401 when user is not a member of the group', (done) => {
+  it('should not retrieve messages from a group a user does not belong to', (done) => {
     chai.request(app)
     .get('/api/v1/group/1/messages')
     .set('token', thirdToken)
     .end((err, res) => {
       res.should.have.status(401);
+      res.body.should.have.property('success').equals(false);
       done();
     });
   });
@@ -196,22 +204,35 @@ describe('Read Message route \'POST: /api/group/:groupId/messages/read\' ', () =
       done();
     });
   });
-  it('should return status 201 when successful', (done) => {
+  it('should successfully read a message that a user has seen', (done) => {
     chai.request(app)
     .post('/api/v1/group/1/messages/read')
     .set('token', token)
     .end((err, res) => {
       res.should.have.status(201);
+      res.body.should.have.property('success').equals(true);
       done();
     });
   });
 
-  it('should return status 401 when not a member of group', (done) => {
+  it('should successfully read a message that a user has seen', (done) => {
+    chai.request(app)
+    .post('/api/v1/group/1/messages/read')
+    .set('token', token)
+    .end((err, res) => {
+      res.should.have.status(201);
+      res.body.should.have.property('success').equals(true);
+      done();
+    });
+  });
+
+  it('should not read a message in a group user does not belong to', (done) => {
     chai.request(app)
     .post('/api/v1/group/1/messages/read')
     .set('token', fourthToken)
     .end((err, res) => {
       res.should.have.status(401);
+      res.body.should.have.property('success').equals(false);
       done();
     });
   });

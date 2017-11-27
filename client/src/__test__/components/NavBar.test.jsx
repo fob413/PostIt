@@ -2,7 +2,6 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 import configureMockStore from 'redux-mock-store';
-import { Link } from 'react-router-dom';
 import thunk from 'redux-thunk';
 import ConnectedNavbar, { NavBar } from '../../components/navbar/NavBar';
 import mockData from '../__mocks__/componentMockData';

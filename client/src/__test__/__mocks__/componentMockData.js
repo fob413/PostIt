@@ -585,7 +585,16 @@ const data = {
     password: 'asdf;lkj',
     confirmPassword: 'asdf;lk',
     telephone: 'asdfghjkl;'
-  }
+  },
+
+  searchGroupLabel: 'Search Groups',
+
+  resetPasswordLabel: 'New Password',
+
+  groupIconName: 'group',
+
+  displayMessageIcon: 'message'
+
 
 };
 

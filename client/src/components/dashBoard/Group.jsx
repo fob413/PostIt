@@ -85,8 +85,7 @@ export class Group extends React.Component {
 Group.propTypes = {
   auth: PropTypes.object.isRequired,
   showGroup: PropTypes.object.isRequired,
-  history: PropTypes.object.isRequired,
-  // loadCurrentGroup: PropTypes.func.isRequired
+  history: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
