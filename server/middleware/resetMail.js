@@ -14,7 +14,7 @@ const mailPassword = process.env.EMAIL_PASSWORD;
  * @param {*} host
  * @return {void}
  */
-export default function sendResetMail(token, email, host) {
+export default (token, email, host) => {
   // create reusable transporter object using the default SMTP transport
   const transporter = nodemailer.createTransport({
     service: 'Gmail',

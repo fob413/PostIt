@@ -7,7 +7,7 @@ import { RELOAD_USER_IN } from '../helpers/constants';
  * @param {function} dispatch function to dispatch to store
  * @return {void}
  */
-export function authenticateUser(token, dispatch) {
+export default (token, dispatch) => {
   const payLoad = {
     userName: jwt.decode(token).userName,
     email: jwt.decode(token).email,
@@ -18,4 +18,4 @@ export function authenticateUser(token, dispatch) {
     type: RELOAD_USER_IN,
     payLoad
   });
-}
+};

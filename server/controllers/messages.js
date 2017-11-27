@@ -1,5 +1,5 @@
 import models from '../models';
-import sendMail from '../middleware/messageMail';
+import sendMail from '../middleware/sendMail';
 
 const Users = models.Users;
 const GroupMembers = models.GroupMembers;
