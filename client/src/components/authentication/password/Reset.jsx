@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { forgotPassword } from '../../../actions/resetPassActions';
+import { forgotPassword } from '../../../actions/passwordActions';
 
 
 /**

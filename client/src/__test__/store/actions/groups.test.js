@@ -41,6 +41,20 @@ describe('Load Groups action ', () => {
     });
     done();
   });
+
+  it('should not dispatch LOAD_GROUPS on unsuccessful api call', (done) => {
+    moxios.stubFailure('api/v1/group/list', {
+      status: 400,
+      response: groups.loadGroupsFail
+    });
+
+    const emptyAction = mockData.emptyAction;
+
+    store.dispatch(loadGroups()).then(() => {
+      expect(store.getActions()).toEqual(emptyAction);
+    });
+    done();
+  });
 });
 
 describe('Unload groups action ', () => {
@@ -77,6 +91,19 @@ describe('Create new group action ', () => {
     });
 
     const expectedSuccess = true;
+    store.dispatch(createNewGroup()).then((res) => {
+      expect(res.data.success).toEqual(expectedSuccess);
+    });
+    done();
+  });
+
+  it('should return false when unsuccessful', (done) => {
+    moxios.stubFailure('api/v1/group', {
+      status: 400,
+      response: groups.createGroupFail
+    });
+
+    const expectedSuccess = false;
     store.dispatch(createNewGroup()).then((res) => {
       expect(res.data.success).toEqual(expectedSuccess);
     });

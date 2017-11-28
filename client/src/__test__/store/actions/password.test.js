@@ -8,7 +8,7 @@ import {
   forgotPassword,
   authToken,
   resetPassword
-} from '../../../actions/resetPassActions';
+} from '../../../actions/passwordActions';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);

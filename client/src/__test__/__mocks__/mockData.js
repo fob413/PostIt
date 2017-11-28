@@ -176,6 +176,11 @@ export default ({
         ]
       },
 
+      loadGroupsFail: {
+        success: false,
+        message: 'an error occured'
+      },
+
       loadGroupsActions: [
         {
           type: types.LOAD_GROUPS,
@@ -202,6 +207,11 @@ export default ({
         success: true,
         message: 'New group successfully created'
       },
+
+      createGroupFail: {
+        success: false,
+        message: 'An error occured'
+      }
     }
   },
 

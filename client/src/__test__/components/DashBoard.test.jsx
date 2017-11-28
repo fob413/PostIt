@@ -176,6 +176,7 @@ describe('DashBoard component', () => {
   });
 
   it('should contain a toggleSearchGroups method', () => {
+    // simulate when state.createGroup is true
     const component = mountDashBoard();
     const toggleSearchGroupsSpy = jest.spyOn(
       component.instance(), 'toggleSearchGroups'
@@ -189,6 +190,7 @@ describe('DashBoard component', () => {
   });
 
   it('should contain a toggleSearchGroups method', () => {
+    // simulate when state.createGroup is false
     const component = mountDashBoard();
     const toggleSearchGroupsSpy = jest.spyOn(
       component.instance(), 'toggleSearchGroups'

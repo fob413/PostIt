@@ -55,11 +55,11 @@ describe('Sign up action', () => {
       success: false
     });
 
-    const expectedAction = mockData.emptyAction;
+    const emptyAction = mockData.emptyAction;
 
     return stores.dispatch(signUserUp(user))
     .then(() => {
-      expect(stores.getActions()).toEqual(expectedAction);
+      expect(stores.getActions()).toEqual(emptyAction);
     });
   });
 });
@@ -98,11 +98,11 @@ describe('Sign in action', () => {
       success: false
     });
 
-    const expectedAction = mockData.emptyAction;
+    const emptyAction = mockData.emptyAction;
 
     return stores.dispatch(signUserIn(user))
     .then(() => {
-      expect(stores.getActions()).toEqual(expectedAction);
+      expect(stores.getActions()).toEqual(emptyAction);
     });
   });
 });
@@ -139,11 +139,11 @@ describe('Sign out aciton', () => {
       message: 'An error has occured'
     });
 
-    const expectedAction = mockData.emptyAction;
+    const emptyAction = mockData.emptyAction;
 
     return stores.dispatch(signUserOut())
     .then(() => {
-      expect(stores.getActions()).toEqual(expectedAction);
+      expect(stores.getActions()).toEqual(emptyAction);
     });
   });
 });

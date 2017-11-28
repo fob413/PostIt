@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import swal from 'sweetalert2';
-import { resetPassword, authToken } from '../../../actions/resetPassActions';
+import { resetPassword, authToken } from '../../../actions/passwordActions';
 import { signUserIn } from '../../../actions/authActions';
 
 

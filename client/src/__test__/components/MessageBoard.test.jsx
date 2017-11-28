@@ -178,12 +178,12 @@ describe('MessageBoard component', () => {
   });
 
   it('should contain an inputUser method', () => {
+    // event mocked with a value
     const component = mountMessageBoard();
     const inputUserSpy = jest.spyOn(
       component.instance(), 'inputUser'
     );
 
-    // event mocked with a value
     const event = mockData.messageBoardEvent1;
 
     component.instance().inputUser(event);
@@ -191,12 +191,12 @@ describe('MessageBoard component', () => {
   });
 
   it('should contain an inputUser method', () => {
+    // event mocked with an empty value
     const component = mountMessageBoard();
     const inputUserSpy = jest.spyOn(
       component.instance(), 'inputUser'
     );
 
-    // event mocked with an empty value
     const event = mockData.messageBoardEvent2;
 
     component.instance().inputUser(event);

@@ -26,7 +26,7 @@ describe('LOAD CURRENT GROUP action', () => {
     expect(typeof (loadCurrentGroup())).toBe('function');
   });
 
-  it('should dispatch loadGroupId when called', () => {
+  it('should dispatch LOAD CURRENT GROUP when called', () => {
     const store = mockStore({});
     const groupId = mockData.groupId;
 
@@ -42,7 +42,7 @@ describe('Send Message function', () => {
     expect(typeof (sendMessage())).toBe('function');
   });
 
-  it('should have a success of true when successful', () => {
+  it('should contain an empty action if successful', () => {
     const store = mockStore({});
     const groupId = mockData.groupId;
     const message = mockData.message;
@@ -57,12 +57,11 @@ describe('Send Message function', () => {
 
     return store.dispatch(sendMessage(message, groupId, priority))
     .then(() => {
-      // expect(res.data.success).toEqual(true);
       expect(store.getActions()).toEqual(emptyAction);
     });
   });
 
-  it('should have a success of false when unsuccessful', () => {
+  it('should contain an empty action if unsuccessful', () => {
     mock.reset();
     const store = mockStore({});
     const groupId = mockData.groupId;
@@ -130,11 +129,11 @@ describe('LOAD GROUP MESSAGES action', () => {
       message: 'An error has occured'
     });
 
-    const expectedAction = mockData.emptyAction;
+    const emptyAction = mockData.emptyAction;
 
     return store.dispatch(loadGroupMessages(groupId, userId))
     .then(() => {
-      expect(store.getActions()).toEqual(expectedAction);
+      expect(store.getActions()).toEqual(emptyAction);
     });
   });
 });
@@ -144,7 +143,7 @@ describe('LOAD PLATFORM USERS action', () => {
     expect(typeof (loadPlatformUsers())).toBe('function');
   });
 
-  it('should dispatch loadPlatformUsers when successful', () => {
+  it('should dispatch LOAD PLATFORM USERS when successful', () => {
     const store = mockStore({});
     const usersArray = mockData.platformUsers;
 
@@ -164,7 +163,7 @@ describe('LOAD PLATFORM USERS action', () => {
     });
   });
 
-  it('should not dispatch loadPlatformUsers when unsuccessful', () => {
+  it('should not dispatch LOAD PLATFORM USERS when unsuccessful', () => {
     mock.reset();
     const store = mockStore({});
 
@@ -174,11 +173,11 @@ describe('LOAD PLATFORM USERS action', () => {
       message: 'An error has occured'
     });
 
-    const expectedAction = mockData.emptyAction;
+    const emptyAction = mockData.emptyAction;
 
     return store.dispatch(loadPlatformUsers())
     .then(() => {
-      expect(store.getActions()).toEqual(expectedAction);
+      expect(store.getActions()).toEqual(emptyAction);
     });
   });
 });
@@ -188,7 +187,7 @@ describe('SEARCH USERS action', () => {
     expect(typeof (searchUsers())).toBe('function');
   });
 
-  it('should dispatch loadPlatformUsers when successful', () => {
+  it('should dispatch LOAD PLATFORM USERS when successful', () => {
     const store = mockStore({});
     const searchUserResult = mockData.searchUserResult;
     const offset = mockData.offfset;
@@ -219,7 +218,7 @@ describe('SEARCH USERS action', () => {
     });
   });
 
-  it('should not dispatch loadPlatformUsers when unsuccessful', () => {
+  it('should not dispatch LOAD PLATFORM USERS when unsuccessful', () => {
     mock.reset();
     const store = mockStore({});
     const offset = mockData.offfset;
@@ -232,11 +231,11 @@ describe('SEARCH USERS action', () => {
       message: 'An error has occured'
     });
 
-    const expectedAction = mockData.emptyAction;
+    const emptyAction = mockData.emptyAction;
 
     return store.dispatch(searchUsers(offset, userName))
     .then(() => {
-      expect(store.getActions()).toEqual(expectedAction);
+      expect(store.getActions()).toEqual(emptyAction);
     });
   });
 });
@@ -246,7 +245,7 @@ describe('LOAD GROUP USERS action', () => {
     expect(typeof (loadGroupUsers())).toBe('function');
   });
 
-  it('should dispatch a loadGroupUsersSuccess when successful', () => {
+  it('should dispatch LOAD GROUP USERS when successful', () => {
     const store = mockStore({});
     const groupId = mockData.groupId;
     const usersArray = mockData.platformUsers;
@@ -267,7 +266,7 @@ describe('LOAD GROUP USERS action', () => {
     });
   });
 
-  it('should not dispatch a loadGroupUsersSuccess when unsuccessful', () => {
+  it('should not dispatch a LOAD GROUP USERS when unsuccessful', () => {
     mock.reset();
     const store = mockStore({});
     const groupId = mockData.groupId;
@@ -278,11 +277,11 @@ describe('LOAD GROUP USERS action', () => {
       message: 'An error has occured'
     });
 
-    const expectedAction = mockData.emptyAction;
+    const emptyAction = mockData.emptyAction;
 
     return store.dispatch(loadGroupUsers(groupId))
     .then(() => {
-      expect(store.getActions()).toEqual(expectedAction);
+      expect(store.getActions()).toEqual(emptyAction);
     });
   });
 });
@@ -292,27 +291,28 @@ describe('ADD USER TO GROUP action', () => {
     expect(typeof (addUserToGroup())).toBe('function');
   });
 
-  it('should have a success of true when successful', () => {
+  it('should not dispatch when successful', (done) => {
     const store = mockStore({});
     const userId = mockData.id;
     const groupId = mockData.groupId;
-    const data = {
+    const response = {
       success: true,
       message: 'Successfully added to group'
     };
 
-    mock.onPost(`api/v1/group/${groupId}/user`)
-    .reply(201, data);
+    mock.onPost(`/api/v1/group/${groupId}/user`)
+    .reply(201, response);
 
-    const expectedAction = mockData.emptyAction;
+    const emptyAction = mockData.emptyAction;
 
     return store.dispatch(addUserToGroup(userId, groupId))
     .then(() => {
-      expect(store.getActions()).toEqual(expectedAction);
+      expect(store.getActions()).toEqual(emptyAction);
+      done();
     });
   });
 
-  it('should have a success of false when successful', () => {
+  it('should not dispatch when unsuccessful', () => {
     mock.reset();
     const store = mockStore({});
     const userId = mockData.id;
@@ -324,11 +324,11 @@ describe('ADD USER TO GROUP action', () => {
       message: 'An error has occured'
     });
 
-    const expectedAction = mockData.emptyAction;
+    const emptyAction = mockData.emptyAction;
 
     return store.dispatch(addUserToGroup(userId, groupId))
     .then(() => {
-      expect(store.getActions()).toEqual(expectedAction);
+      expect(store.getActions()).toEqual(emptyAction);
     });
   });
 });
@@ -338,42 +338,42 @@ describe('Read Messages action', () => {
     expect(typeof (readMessages())).toBe('function');
   });
 
-  it('should have a success of true when successful', () => {
+  it('should not dispatch when successful', () => {
     const store = mockStore({});
     const groupId = mockData.groupId;
-    const data = {
+    const response = {
       success: true,
       message: 'User has read all messages'
     };
 
     mock.onPost(`api/v1/group/${groupId}/messages/read`)
-    .reply(201, data);
+    .reply(201, response);
 
-    const expectedAction = mockData.emptyAction;
+    const emptyAction = mockData.emptyAction;
 
     return store.dispatch(readMessages(groupId))
     .then(() => {
-      expect(store.getActions()).toEqual(expectedAction);
+      expect(store.getActions()).toEqual(emptyAction);
     });
   });
 
-  it('should have a success of false when unsuccessful', () => {
+  it('should not dispatch when unsuccessful', () => {
     mock.reset();
     const store = mockStore({});
     const groupId = mockData.groupId;
-    const data = {
+    const response = {
       success: false,
       message: 'An error has occured'
     };
 
     mock.onPost(`api/v1/group/${groupId}/messages/read`)
-    .reply(400, data);
+    .reply(400, response);
 
-    const expectedAction = mockData.emptyAction;
+    const emptyAction = mockData.emptyAction;
 
     return store.dispatch(readMessages(groupId))
     .then(() => {
-      expect(store.getActions()).toEqual(expectedAction);
+      expect(store.getActions()).toEqual(emptyAction);
     });
   });
 });
