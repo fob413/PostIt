@@ -8,15 +8,15 @@ describe('Database models', () => {
     should.exist(models.Users);
   });
 
-  it('should include User model', () => {
+  it('should include Group model', () => {
     should.exist(models.Groups);
   });
 
-  it('should include User model', () => {
+  it('should include GroupMember model', () => {
     should.exist(models.GroupMembers);
   });
 
-  it('should include User model', () => {
+  it('should include Messages model', () => {
     should.exist(models.Messages);
   });
 });
