@@ -86,12 +86,12 @@ describe('Signup component', () => {
     expect(component.length).toBe(1);
   });
 
-  it('mounts', () => {
+  it('should render a link to Signin page', () => {
     const component = mountSignup();
     expect(component.find(Link)).toHaveLength(1);
   });
 
-  it('should call history.push method if user is authenticated', () => {
+  it('should contain a componentDidMount method', () => {
     props = mockData.signupProps2;
     const component = mount(
       <Signup {...props} />,
@@ -193,140 +193,11 @@ describe('Signup component', () => {
     );
     component.instance().handleSubmit(event);
     expect(handleSubmitSpy).toHaveBeenCalled();
-  });
-
-  it('should contain handleSubmit method', () => {
-    // simulate when there's data in state
-    props = mockData.signupProps;
-    const component = mount(
-      <Signup {...props} />,
-      {
-        childContextTypes: { router: React.PropTypes.object },
-        context: { router: {
-          history: {
-            push: () => null,
-            createHref: () => null,
-            replace: () => null,
-            exact: true,
-            path: '/',
-            component: '[function Connect]',
-            location: {
-              pathname: '/',
-              search: '',
-              hash: '',
-              key: 'm6zrfw'
-            },
-            computedMatch: {
-              path: '/',
-              url: '/',
-              isExact: true,
-              params: {}
-            }
-          }
-        }
-        }
-      }
-    );
 
     component.setState(mockData.signupSetState);
 
-    const event = {
-      preventDefault: jest.fn()
-    };
-    const handleSubmitSpy = jest.spyOn(
-      component.instance(), 'handleSubmit'
-    );
     component.instance().handleSubmit(event);
     expect(handleSubmitSpy).toHaveBeenCalled();
-  });
-
-  it('should contain an handleSubmit method', () => {
-    // simulate a resolved api call
-    props = mockData.signupProps;
-    const component = mount(
-      <Signup {...props} />,
-      {
-        childContextTypes: { router: React.PropTypes.object },
-        context: { router: {
-          history: {
-            push: () => null,
-            createHref: () => null,
-            replace: () => null,
-            exact: true,
-            path: '/',
-            component: '[function Connect]',
-            location: {
-              pathname: '/',
-              search: '',
-              hash: '',
-              key: 'm6zrfw'
-            },
-            computedMatch: {
-              path: '/',
-              url: '/',
-              isExact: true,
-              params: {}
-            }
-          }
-        }
-        }
-      }
-    );
-
-    component.setState(mockData.signupSetState2);
-
-    const event = {
-      preventDefault: jest.fn()
-    };
-    const handleSubmitSpy = jest.spyOn(
-      component.instance(), 'handleSubmit'
-    );
-    component.instance().handleSubmit(event);
-    expect(handleSubmitSpy).toHaveBeenCalled();
-  });
-
-  it('should contain an handleSubmit method', () => {
-    // simulate a failed api call
-    props = mockData.signupProps2;
-    const component = mount(
-      <Signup {...props} />,
-      {
-        childContextTypes: { router: React.PropTypes.object },
-        context: { router: {
-          history: {
-            push: () => null,
-            createHref: () => null,
-            replace: () => null,
-            exact: true,
-            path: '/',
-            component: '[function Connect]',
-            location: {
-              pathname: '/',
-              search: '',
-              hash: '',
-              key: 'm6zrfw'
-            },
-            computedMatch: {
-              path: '/',
-              url: '/',
-              isExact: true,
-              params: {}
-            }
-          }
-        }
-        }
-      }
-    );
-
-    component.setState(mockData.signupSetState3);
-
-    const event = {
-      preventDefault: jest.fn()
-    };
-    const handleSubmitSpy = jest.spyOn(
-      component.instance(), 'handleSubmit'
-    );
-    component.instance().handleSubmit(event);
-    expect(handleSubmitSpy).toHaveBeenCalled();
+    expect(component.instance().state.userName).toBe('funsho');
   });
 });

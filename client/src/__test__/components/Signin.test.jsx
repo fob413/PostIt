@@ -86,15 +86,6 @@ describe('Signin component', () => {
   });
 
   it('should contain a componentDidMount method', () => {
-    const wrapper = mountSignin();
-    const componentDidMountSpy = jest.spyOn(
-      wrapper.instance(), 'componentDidMount'
-    );
-    wrapper.instance().componentDidMount();
-    expect(componentDidMountSpy).toHaveBeenCalled();
-  });
-
-  it('should call the history.push method if user is authenticated', () => {
     props = mockData.signinProps2;
     const wrapper = mount(
       <Signin {...props} />,
@@ -155,44 +146,6 @@ describe('Signin component', () => {
   });
 
   it('should contain an handleSignin method', () => {
-    // simulate a failed api call
-    props = mockData.signinProps3;
-    const component = mount(
-      <Signin {...props} />,
-      {
-        childContextTypes: { router: React.PropTypes.object },
-        context: { router: {
-          history: {
-            push: () => null,
-            createHref: () => null,
-            replace: () => null,
-            path: '/signin',
-            component: '[function Connect]',
-            location: {
-              pathname: '/SignIn',
-              search: '',
-              hash: '',
-              key: 'd2tlxq'
-            },
-            computedMatch: {
-              path: '/signin',
-              url: '/SignIn',
-              isExact: true,
-              params: {}
-            }
-          }
-        }
-        }
-      }
-    );
-    const event = mockData.messageBoardEvent3;
-    const handleSignInSpy = jest.spyOn(component.instance(), 'handleSignIn');
-    component.instance().handleSignIn(event);
-    expect(handleSignInSpy).toHaveBeenCalled();
-  });
-
-  it('should contain an handleSignin method', () => {
-    // simulate a resolved api call
     props = mockData.signinProps;
     const component = mount(
       <Signin {...props} />,
@@ -222,6 +175,8 @@ describe('Signin component', () => {
         }
       }
     );
+
+    component.setState(mockData.signupSetState);
     const event = mockData.messageBoardEvent3;
     const handleSignInSpy = jest.spyOn(component.instance(), 'handleSignIn');
     component.instance().handleSignIn(event);

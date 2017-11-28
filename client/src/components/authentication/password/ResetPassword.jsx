@@ -21,7 +21,7 @@ export class ResetPassword extends React.Component {
 
     this.state = {
       isLoggedIn: this.props.auth.isLoggedIn,
-      UserName: '',
+      userName: '',
       newPassword: '',
       confirmPassword: ''
     };
@@ -45,7 +45,7 @@ export class ResetPassword extends React.Component {
         this.props.history.push('/');
       }
       this.setState({
-        UserName: res.UserName
+        userName: res.userName
       });
     }, (err) => {
       swal('Oops...', err.message, 'error');
@@ -132,7 +132,7 @@ export class ResetPassword extends React.Component {
             <div className="card">
               <div className="card-content">
                 <h5 className="center-align">Password Recovery</h5>
-                <p className="center-align">Welcome back {this.state.UserName}. Enter Your New Password</p>
+                <p className="center-align">Welcome back {this.state.userName}. Enter Your New Password</p>
 
                 <form onSubmit={this.onChangePassword}>
                   <div className="row">

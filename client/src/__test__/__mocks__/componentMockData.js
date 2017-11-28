@@ -384,7 +384,11 @@ export default ({
     router: {
       history: { push: jest.fn() },
     },
-    authToken: jest.fn(() => Promise.resolve()),
+    authToken: jest.fn(() => Promise.resolve({
+      res: {
+        success: true
+      }
+    })),
     match: {
       params: {
         token: '82b786eb6e8e63c74814a74dc7445eb61eb19c41'
@@ -407,7 +411,8 @@ export default ({
     },
     authToken: jest.fn(() => Promise.resolve({
       res: {
-        UserName: 'user'
+        userName: 'user',
+        success: true
       }
     })),
     match: {
@@ -426,7 +431,12 @@ export default ({
     router: {
       history: { push: jest.fn() },
     },
-    authToken: jest.fn(() => Promise.reject()),
+    authToken: jest.fn(() => Promise.reject({
+      res: {
+        success: false,
+        message: 'an error occured'
+      }
+    })),
     match: {
       params: {
         token: '82b786eb6e8e63c74814a74dc7445eb61eb19c41'
@@ -570,6 +580,8 @@ export default ({
   },
 
   signupSetState: {
+    userName: 'funsho',
+    email: 'funsho@email.com',
     password: 'asdf;lkj',
     confirmPassword: 'asdf;lkj',
     telephone: '1234567890'

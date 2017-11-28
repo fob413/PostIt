@@ -421,7 +421,7 @@ export default {
         } else {
           res.status(200).send({
             success: true,
-            UserName: user.UserName
+            userName: user.UserName
           });
         }
       }, (err) => {

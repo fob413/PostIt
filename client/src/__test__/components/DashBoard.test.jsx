@@ -162,20 +162,23 @@ describe('DashBoard component', () => {
     expect(toggleCreateGroupSpy).toHaveBeenCalled();
   });
 
-  it('should contain a toggleCreateGroup method', () => {
+  it('should toggle showSearchGroups state to false', () => {
+    // simulate when state.createGroup is false
     const component = mountDashBoard();
-    const toggleCreateGroupSpy = jest.spyOn(
-      component.instance(), 'toggleCreateGroup'
+    const toggleSearchGroupsSpy = jest.spyOn(
+      component.instance(), 'toggleSearchGroups'
     );
     component.setState({
-      showSearchGroups: false
+      createGroup: false,
+      showSearchGroups: true
     });
 
-    component.instance().toggleCreateGroup();
-    expect(toggleCreateGroupSpy).toHaveBeenCalled();
+    component.instance().toggleSearchGroups();
+    expect(toggleSearchGroupsSpy).toHaveBeenCalled();
+    expect(component.instance().state.showSearchGroups).toBe(false);
   });
 
-  it('should contain a toggleSearchGroups method', () => {
+  it('should toggle showSearchGroups state to true', () => {
     // simulate when state.createGroup is true
     const component = mountDashBoard();
     const toggleSearchGroupsSpy = jest.spyOn(
@@ -187,20 +190,21 @@ describe('DashBoard component', () => {
 
     component.instance().toggleSearchGroups();
     expect(toggleSearchGroupsSpy).toHaveBeenCalled();
+    expect(component.instance().state.showSearchGroups).toBe(true);
   });
 
-  it('should contain a toggleSearchGroups method', () => {
-    // simulate when state.createGroup is false
+  it('should toggle createGroup state to true', () => {
     const component = mountDashBoard();
-    const toggleSearchGroupsSpy = jest.spyOn(
-      component.instance(), 'toggleSearchGroups'
+    const toggleCreateGroupSpy = jest.spyOn(
+      component.instance(), 'toggleCreateGroup'
     );
     component.setState({
-      createGroup: false
+      showSearchGroups: false
     });
 
-    component.instance().toggleSearchGroups();
-    expect(toggleSearchGroupsSpy).toHaveBeenCalled();
+    component.instance().toggleCreateGroup();
+    expect(toggleCreateGroupSpy).toHaveBeenCalled();
+    expect(component.instance().state.createGroup).toBe(true);
   });
 
   it('should render the connected component', () => {

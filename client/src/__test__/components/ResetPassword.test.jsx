@@ -82,7 +82,6 @@ describe('ResetPassword component', () => {
   });
 
   it('should contain a componentDidMount method', () => {
-    // simulate when authToken action call is resolved
     props = mockData.resetPasswordProps2;
     const component = mount(
       <ResetPassword {...props} />,
@@ -115,11 +114,11 @@ describe('ResetPassword component', () => {
       component.instance(), 'componentDidMount'
     );
     component.instance().componentDidMount();
+
     expect(componentDidMountSpy).toHaveBeenCalled();
   });
 
-  it('should contain a componentDidMount method', () => {
-    // simulate when authToken action call is rejected
+  it('should contain empty username state if authToken fails', () => {
     props = mockData.resetPasswordProps3;
     const component = mount(
       <ResetPassword {...props} />,
@@ -148,11 +147,8 @@ describe('ResetPassword component', () => {
         }
       }
     );
-    const componentDidMountSpy = jest.spyOn(
-      component.instance(), 'componentDidMount'
-    );
     component.instance().componentDidMount();
-    expect(componentDidMountSpy).toHaveBeenCalled();
+    expect(component.instance().state.userName).toEqual('');
   });
 
   it('should contain a componentWillReceiveProps method', () => {
@@ -184,11 +180,12 @@ describe('ResetPassword component', () => {
     const event = mockData.messageBoardEvent3;
     component.setState(mockData.resetPasswordSetState);
     const onChangePasswordspy = jest.spyOn(component.instance(), 'onChangePassword');
+    // console.log(component.instance().state, '<=>')
     component.instance().onChangePassword(event);
     expect(onChangePasswordspy).toHaveBeenCalled();
   });
 
-  it('should contain an onChangePassword method', () => {
+  it('should contain empty username in state', () => {
     props = mockData.resetPasswordProps4;
     const component = mount(
       <ResetPassword {...props} />,
@@ -217,13 +214,10 @@ describe('ResetPassword component', () => {
         }
       }
     );
-    const event = {
-      preventDefault: jest.fn()
-    };
+    const event = mockData.messageBoardEvent3;
     component.setState(mockData.resetPasswordSetState2);
-    const onChangePasswordspy = jest.spyOn(component.instance(), 'onChangePassword');
     component.instance().onChangePassword(event);
-    expect(onChangePasswordspy).toHaveBeenCalled();
+    expect(component.instance().state.userName).toEqual('');
   });
 });
 
