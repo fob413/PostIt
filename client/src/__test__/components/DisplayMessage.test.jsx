@@ -3,7 +3,7 @@ import { mount } from 'enzyme';
 import { DisplayMessage } from '../../components/messageBoard/DisplayMessage';
 import mockData from '../__mocks__/componentMockData';
 
-describe('DisplayMessage ', () => {
+describe('DisplayMessage component ', () => {
   let props;
   let mountedDisplayMessage;
 
@@ -20,12 +20,12 @@ describe('DisplayMessage ', () => {
     props = mockData.displayMessageProps;
   });
 
-  it('always renders li', () => {
+  it('should always render an li element', () => {
     const component = mountDisplayMessage().find('li');
     expect(component.length).toBeGreaterThan(0);
   });
 
-  it('renders the message icon', () => {
+  it('should always render a message icon', () => {
     const component = mountDisplayMessage().find('i');
     expect(component.props().children).toBe(mockData.displayMessageIcon);
   });

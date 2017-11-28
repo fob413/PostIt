@@ -1,40 +1,42 @@
-import store from '../../../reducers/auth';
+import authReducer from '../../../reducers/auth';
 import mockData from '../../__mocks__/mockData';
 
-describe('The Index Reducer ', () => {
-  it('SIGN_UP', () => {
-    const state = mockData.signupReducerInitialState;
-    const action = mockData.signupReducerAction;
-    const results = store(state, action);
-    expect(results).toEqual(mockData.signupReducerExpected);
-  });
+const { auth } = mockData.reducers;
 
-  it('SIGN_IN', () => {
+describe('The Authentication Reducer ', () => {
+  it('should handle SIGN_UP', () => {
     const state = {};
-    const action = mockData.signinReducerAction;
-    const results = store(state, action);
-    expect(results).toEqual(mockData.signinReducerExpected);
+    const action = auth.signupAction;
+    const results = authReducer(state, action);
+    expect(results).toEqual(auth.signupExpected);
   });
 
-  it('SIGN_OUT', () => {
+  it('should handle SIGN_IN', () => {
     const state = {};
-    const action = mockData.signoutReducerAction;
-    const results = store(state, action);
-    expect(results).toEqual(mockData.signoutReducerExpected);
+    const action = auth.signinAction;
+    const results = authReducer(state, action);
+    expect(results).toEqual(auth.sigininExpected);
   });
 
-  it('RELOAD_USER_IN', () => {
+  it('should handle SIGN_OUT', () => {
     const state = {};
-    const action = mockData.reloadUserInReducerAction;
-    const results = store(state, action);
-    expect(results).toEqual(mockData.reloadUserInReducerExpected);
+    const action = auth.signoutAction;
+    const results = authReducer(state, action);
+    expect(results).toEqual(auth.signoutExpected);
   });
 
-  it('default', () => {
+  it('should handle RELOAD_USER_IN', () => {
+    const state = {};
+    const action = auth.reloadAction;
+    const results = authReducer(state, action);
+    expect(results).toEqual(auth.reloadExpected);
+  });
+
+  it('should return initial state by default', () => {
     const state = {};
     const action = {};
 
-    const results = store(state, action);
+    const results = authReducer(state, action);
     expect(results).toEqual({});
   });
 });

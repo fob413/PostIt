@@ -159,7 +159,7 @@ describe('Retrieve Group Messages Route \'GET: /api/group/:groupId/messages\'', 
     });
   });
 
-  it('should successfully retrive messages in a group', (done) => {
+  it('should successfully retrieve messages in a group', (done) => {
     chai.request(app)
     .get('/api/v1/group/1/messages')
     .set('token', token)
@@ -201,16 +201,6 @@ describe('Read Message route \'POST: /api/group/:groupId/messages/read\' ', () =
     .end((err, res) => {
       fourthToken = res.body.token;
       res.should.have.status(201);
-      done();
-    });
-  });
-  it('should successfully read a message that a user has seen', (done) => {
-    chai.request(app)
-    .post('/api/v1/group/1/messages/read')
-    .set('token', token)
-    .end((err, res) => {
-      res.should.have.status(201);
-      res.body.should.have.property('success').equals(true);
       done();
     });
   });

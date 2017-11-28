@@ -66,7 +66,7 @@ describe('Signup route \'POST: /api/user/signup\'', () => {
     });
   });
 
-  it('should return a message Invalid credentials when no user object is given', (done) => {
+  it('should return a message \'Invalid credentials\' when no user object is given', (done) => {
     chai.request(app)
     .post('/api/v1/user/signup')
     .send()
@@ -76,7 +76,7 @@ describe('Signup route \'POST: /api/user/signup\'', () => {
     });
   });
 
-  it('should return a message Invalid credentials when a user object is incomplete', (done) => {
+  it('should return a message \'Invalid credentials\' when a user object is incomplete', (done) => {
     chai.request(app)
     .post('/api/v1/user/signup')
     .send(incompleteUser1)
@@ -121,7 +121,7 @@ describe('Signup route \'POST: /api/user/signup\'', () => {
 });
 
 describe('Signin route \'POST: /api/user/signin\'', () => {
-  it('should signin a user', (done) => {
+  it('should successfully signin a user', (done) => {
     chai.request(app)
     .post('/api/v1/user/signin')
     .send(testUser12)
@@ -274,7 +274,7 @@ describe('Forgot password route \'POST: /api/forgot/password\'', () => {
   });
 
   describe('Authenticate reset token route \'POST: /api/v1/reset/token\'', () => {
-    it('should successfullyl authenticate the restToken', (done) => {
+    it('should successfully authenticate the restToken', (done) => {
       chai.request(app)
       .post('/api/v1/reset/token')
       .send({
@@ -333,7 +333,7 @@ describe('Forgot password route \'POST: /api/forgot/password\'', () => {
       .post(`/api/v1/reset/password/${resetToken}`)
       .send(mockData.updatePassword2)
       .end((err, res) => {
-        res.should.have.status(400);
+        res.should.have.status(401);
       });
     });
   });

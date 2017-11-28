@@ -14,7 +14,7 @@ const store = mockStore({
   }
 });
 
-describe('Navbar ', () => {
+describe('Navbar component ', () => {
   let props;
   let mountedNavbar;
 
@@ -42,12 +42,12 @@ describe('Navbar ', () => {
     props = mockData.navbarProps;
   });
 
-  it('always renders a div', () => {
+  it('should always render a div', () => {
     const component = mountNavbar().find('div');
     expect(component.length).toBeGreaterThan(0);
   });
 
-  it('calls the componentWillReceiveProps method', () => {
+  it('should contain a componentWillReceiveProps method', () => {
     const component = mountNavbar();
     const componentWillReceivePropsSpy = jest.spyOn(
       component.instance(), 'componentWillReceiveProps'
@@ -58,7 +58,7 @@ describe('Navbar ', () => {
     expect(componentWillReceivePropsSpy).toHaveBeenCalled();
   });
 
-  it('calls onSignOut method', () => {
+  it('should contain an onSignOut method', () => {
     const component = mountNavbar();
     const event = mockData.messageBoardEvent3;
     const onSignOutSpy = jest.spyOn(
@@ -68,7 +68,7 @@ describe('Navbar ', () => {
     expect(onSignOutSpy).toHaveBeenCalled();
   });
 
-  it('has map state to props', () => {
+  it('should render the connected component', () => {
     const component = shallow(<ConnectedNavbar {...props} store={store} />);
     expect(component.length).toBe(1);
   });

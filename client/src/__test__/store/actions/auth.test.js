@@ -16,6 +16,7 @@ const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 const mock = new MockAdapter(axios);
 window.localStorage = mockLocalStorage;
+const { authAction } = mockData.actions;
 
 describe('Sign up action', () => {
   beforeEach(() => {
@@ -37,7 +38,7 @@ describe('Sign up action', () => {
       success: true
     });
 
-    const expectedAction = mockData.signupSuccessfulAction;
+    const expectedAction = authAction.signupSuccess;
 
     return store.dispatch(signUserUp(user))
     .then(() => {
@@ -54,11 +55,11 @@ describe('Sign up action', () => {
       success: false
     });
 
-    const expectedAction = mockData.emptyAction;
+    const emptyAction = mockData.emptyAction;
 
     return stores.dispatch(signUserUp(user))
     .then(() => {
-      expect(stores.getActions()).toEqual(expectedAction);
+      expect(stores.getActions()).toEqual(emptyAction);
     });
   });
 });
@@ -80,7 +81,7 @@ describe('Sign in action', () => {
       success: true
     });
 
-    const expectedAction = mockData.signinSuccessfulAction;
+    const expectedAction = authAction.signinSuccess;
 
     return store.dispatch(signUserIn(user))
     .then(() => {
@@ -97,11 +98,11 @@ describe('Sign in action', () => {
       success: false
     });
 
-    const expectedAction = mockData.emptyAction;
+    const emptyAction = mockData.emptyAction;
 
     return stores.dispatch(signUserIn(user))
     .then(() => {
-      expect(stores.getActions()).toEqual(expectedAction);
+      expect(stores.getActions()).toEqual(emptyAction);
     });
   });
 });
@@ -121,7 +122,7 @@ describe('Sign out aciton', () => {
       message: 'Successfully logged user out'
     });
 
-    const expectedAction = mockData.signoutSuccessfulAction;
+    const expectedAction = authAction.signoutSuccess;
 
     return store.dispatch(signUserOut())
     .then(() => {
@@ -138,11 +139,11 @@ describe('Sign out aciton', () => {
       message: 'An error has occured'
     });
 
-    const expectedAction = mockData.emptyAction;
+    const emptyAction = mockData.emptyAction;
 
     return stores.dispatch(signUserOut())
     .then(() => {
-      expect(stores.getActions()).toEqual(expectedAction);
+      expect(stores.getActions()).toEqual(emptyAction);
     });
   });
 });

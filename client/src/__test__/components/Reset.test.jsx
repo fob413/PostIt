@@ -11,7 +11,7 @@ const middleware = [thunk];
 const mockStore = configureMockStore(middleware);
 const store = mockStore(mockData.mockStore);
 
-describe('Reset ', () => {
+describe('Reset Component', () => {
   let props;
   let mountedReset;
 
@@ -28,37 +28,38 @@ describe('Reset ', () => {
     props = mockData.resetProps;
   });
 
-  it('always renders a div', () => {
+  it('should always render a div', () => {
     const component = mountReset().find('div');
     expect(component.length).toBeGreaterThan(0);
   });
 
-  it('always renders the logo', () => {
+  it('should always render the logo', () => {
     const component = mountReset().find('img');
     expect(component.length).toBe(1);
   });
 
-  it('always renders a form to collect the users email', () => {
+  it('should always render a form to collect the users email', () => {
     const component = mountReset().find('form');
     expect(component.length).toBe(1);
   });
 
-  it('always renders an input box in the form', () => {
+  it('should always render an input box in the form', () => {
     const component = mountReset().find('input');
     expect(component.length).toBe(1);
   });
 
-  it('always renders a form submit button', () => {
+  it('should always render a form submit button', () => {
     const component = mountReset().find('button');
     expect(component.length).toBe(1);
   });
 
-  it('has map state to props', () => {
-    const component = shallow(<Reset {...props} store={store} />);
+  it('should render the connected component', () => {
+    const component = shallow(<ConnectedReset {...props} store={store} />);
     expect(component.length).toBe(1);
   });
 
-  it('calls onReset method', () => {
+  it('should contain an onReset method', () => {
+    // simulate a resoloved api call
     const component = mountReset();
     component.setState(mockData.resetSetState);
     const event = mockData.messageBoardEvent3;
@@ -67,7 +68,8 @@ describe('Reset ', () => {
     expect(onResetSpy).toHaveBeenCalled();
   });
 
-  it('calls onReset method', () => {
+  it('should contain an onReset method', () => {
+    // simulates a failed api call
     props = mockData.resetProps2;
     const component = mount(
       <Reset {...props} />
@@ -81,7 +83,7 @@ describe('Reset ', () => {
     expect(onResetSpy).toHaveBeenCalled();
   });
 
-  it('calls onChange method', () => {
+  it('should contain an onChange method', () => {
     const component = mountReset();
     const event = mockData.resetEvent;
     const onChangeSpy = jest.spyOn(component.instance(), 'onChange');

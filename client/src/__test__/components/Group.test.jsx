@@ -12,7 +12,7 @@ const store = mockStore({
   auth: { isLoggedin: false }
 });
 
-describe('Group ', () => {
+describe('Group component ', () => {
   let props;
   let mountedGroup;
 
@@ -29,17 +29,17 @@ describe('Group ', () => {
     props = mockData.groupProps;
   });
 
-  it('always renders a div', () => {
+  it('should always render a div', () => {
     const component = mountGroup().find('div');
     expect(component.length).toBeGreaterThan(0);
   });
 
-  it('renders group icon', () => {
+  it('should render a group icon', () => {
     const component = mountGroup().find('i');
     expect(component.props().children).toBe(mockData.groupIconName);
   });
 
-  it('calls a componentWillReceiveProps method', () => {
+  it('should contain a componentWillReceiveProps method', () => {
     const component = mountGroup();
     const componentWillReceivePropsSpy = jest.spyOn(
       component.instance(), 'componentWillReceiveProps'
@@ -51,14 +51,14 @@ describe('Group ', () => {
     expect(componentWillReceivePropsSpy).toHaveBeenCalled();
   });
 
-  it('has map state to props', () => {
+  it('should render the connected component', () => {
     const component = shallow(
       <ConnectedGroup {...props} store={store} />
     );
     expect(component.length).toBe(1);
   });
 
-  it('calls openGroup method', () => {
+  it('should contain an openGroup method', () => {
     const component = mountGroup();
     const openGroupSpy = jest.spyOn(
       component.instance(), 'openGroup'

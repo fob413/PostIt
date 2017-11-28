@@ -5,8 +5,8 @@ import mockData from '../mockData';
 const should = chai.should();
 const Group = models.Groups;
 
-describe('Group model ', () => {
-  xit('should create a group', (done) => {
+describe('Group model', () => {
+  it('should create a group', (done) => {
     Group.create(mockData.group1).then((newGroup) => {
       newGroup.groupName.should.equal(mockData.group1.groupName);
       done();

@@ -3,7 +3,7 @@ import { mount } from 'enzyme';
 import { Message } from '../../components/messageBoard/Message';
 import mockData from '../__mocks__/componentMockData';
 
-describe('Message ', () => {
+describe('Message component ', () => {
   let props;
   let mountedMessage;
 
@@ -20,12 +20,12 @@ describe('Message ', () => {
     props = mockData.messageProps;
   });
 
-  it('always renders a div', () => {
+  it('should always render a div', () => {
     const component = mountMessage().find('div');
     expect(component.length).toBeGreaterThan(0);
   });
 
-  it('always renders an empty div when there is not message content', () => {
+  it('should always render a div when there\'s not message content', () => {
     props = {};
     const component = mount(
       <Message {...props} />

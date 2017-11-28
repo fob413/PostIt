@@ -13,7 +13,7 @@ const store = mockStore({
   auth: { isLoggedin: false }
 });
 
-describe('Signin ', () => {
+describe('Signin component', () => {
   let props;
   let mountedSignin;
 
@@ -55,46 +55,37 @@ describe('Signin ', () => {
     props = mockData.signinProps;
   });
 
-  it('always renders a div', () => {
+  it('should always render a div', () => {
     const componentDiv = mountSignin().find('div');
     expect(componentDiv.length).toBeGreaterThan(0);
   });
 
-  it('always renders 2 links', () => {
+  it('should always render 2 links', () => {
     const wrapper = mountSignin();
     expect(wrapper.find(Link)).toHaveLength(2);
   });
 
-  it('always renders signin form', () => {
+  it('should always render signin form', () => {
     const component = mountSignin().find('form');
     expect(component.length).toBe(1);
   });
 
-  it('always renders a sigin form with the inputs required', () => {
+  it('shoul dalways render a sigin form with the inputs required', () => {
     const component = mountSignin().find('input');
     expect(component.length).toBe(2);
   });
 
-  it('always renders a form submit button ', () => {
+  it('should always render a form submit button ', () => {
     const component = mountSignin().find('button');
     expect(component.length).toBe(1);
   });
 
-  it('alwyas renders the logo', () => {
+  it('should alwyas render the logo', () => {
     const component = mountSignin().find('img');
     expect(component.length).toBe(1);
   });
 
-  it('calls a componentDidMount method', () => {
-    const wrapper = mountSignin();
-    const componentDidMountSpy = jest.spyOn(
-      wrapper.instance(), 'componentDidMount'
-    );
-    wrapper.instance().componentDidMount();
-    expect(componentDidMountSpy).toHaveBeenCalled();
-  });
-
-  it('calls the history.push method if you are authenticated', () => {
+  it('should contain a componentDidMount method', () => {
     props = mockData.signinProps2;
     const wrapper = mount(
       <Signin {...props} />,
@@ -131,7 +122,7 @@ describe('Signin ', () => {
     expect(componentPushSpy).toHaveBeenCalled();
   });
 
-  it('calls the componentWillReceiveProps method', () => {
+  it('should contain the componentWillReceiveProps method', () => {
     const wrapper = mountSignin();
     const componentWillReceivePropsSpy = jest.spyOn(
       wrapper.instance(), 'componentWillReceiveProps'
@@ -141,12 +132,12 @@ describe('Signin ', () => {
     expect(componentWillReceivePropsSpy).toHaveBeenCalled();
   });
 
-  it('has map state to props', () => {
+  it('should render the connected component', () => {
     const component = shallow(<ConnectedSignin {...props} store={store} />);
     expect(component.length).toBe(1);
   });
 
-  it('calls onChange method', () => {
+  it('should contain an onChange method', () => {
     const component = mountSignin();
     const event = mockData.signinEvent;
     const onChangeSpy = jest.spyOn(component.instance(), 'onChange');
@@ -154,43 +145,7 @@ describe('Signin ', () => {
     expect(onChangeSpy).toHaveBeenCalledTimes(1);
   });
 
-  it('calls handleSignin method', () => {
-    props = mockData.signinProps3;
-    const component = mount(
-      <Signin {...props} />,
-      {
-        childContextTypes: { router: React.PropTypes.object },
-        context: { router: {
-          history: {
-            push: () => null,
-            createHref: () => null,
-            replace: () => null,
-            path: '/signin',
-            component: '[function Connect]',
-            location: {
-              pathname: '/SignIn',
-              search: '',
-              hash: '',
-              key: 'd2tlxq'
-            },
-            computedMatch: {
-              path: '/signin',
-              url: '/SignIn',
-              isExact: true,
-              params: {}
-            }
-          }
-        }
-        }
-      }
-    );
-    const event = mockData.messageBoardEvent3;
-    const handleSignInSpy = jest.spyOn(component.instance(), 'handleSignIn');
-    component.instance().handleSignIn(event);
-    expect(handleSignInSpy).toHaveBeenCalled();
-  });
-
-  it('calls handleSignin method', () => {
+  it('should contain an handleSignin method', () => {
     props = mockData.signinProps;
     const component = mount(
       <Signin {...props} />,
@@ -220,6 +175,8 @@ describe('Signin ', () => {
         }
       }
     );
+
+    component.setState(mockData.signupSetState);
     const event = mockData.messageBoardEvent3;
     const handleSignInSpy = jest.spyOn(component.instance(), 'handleSignIn');
     component.instance().handleSignIn(event);

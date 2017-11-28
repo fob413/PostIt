@@ -14,7 +14,7 @@ const store = mockStore({
   auth: { isLoggedin: false }
 });
 
-describe('DashBoard', () => {
+describe('DashBoard component', () => {
   let props;
   let mountedDashBoard;
 
@@ -57,27 +57,27 @@ describe('DashBoard', () => {
     props = mockData.dashBoardProps;
   });
 
-  it('always renders a div', () => {
+  it('should always render a div', () => {
     const component = mountDashBoard().find('div');
     expect(component.length).toBeGreaterThan(0);
   });
 
-  it('renders SearchGroup component', () => {
+  it('should render SearchGroup component', () => {
     const component = mountDashBoard().find(SearchGroups);
     expect(component.length).toBe(1);
   });
 
-  it('renders NewGroup component', () => {
+  it('should render NewGroup component', () => {
     const component = mountDashBoard().find(NewGroup);
     expect(component.length).toBe(1);
   });
 
-  it('renders SearchGroup and NewGroup buttons', () => {
+  it('should render SearchGroup and NewGroup buttons', () => {
     const component = mountDashBoard().find('a');
     expect(component.length).toBe(2);
   });
 
-  it('sends the user to signin if not authenticated', () => {
+  it('should render without crashing', () => {
     props = mockData.dashBoardProps2;
 
     const component = mount(
@@ -108,12 +108,11 @@ describe('DashBoard', () => {
         }
         }
       }
-    ).find('div');
-
+    );
     expect(component.length).toBeGreaterThan(0);
   });
 
-  it('calls a componentWillReceiveProps method', () => {
+  it('should contain a componentWillReceiveProps method', () => {
     const component = mountDashBoard();
 
     const componentWillReceivePropsSpy = jest.spyOn(
@@ -126,7 +125,7 @@ describe('DashBoard', () => {
     expect(componentWillReceivePropsSpy).toHaveBeenCalled();
   });
 
-  it('calls onCreateGroup', () => {
+  it('should contain an onCreateGroup method', () => {
     const component = mountDashBoard();
     const onCreateGroupSpy = jest.spyOn(
       component.instance(), 'onCreateGroup'
@@ -138,7 +137,7 @@ describe('DashBoard', () => {
     expect(onCreateGroupSpy).toHaveBeenCalled();
   });
 
-  it('calls onSearchGroups', () => {
+  it('should contain an onSearchGroups method', () => {
     const component = mountDashBoard();
     const onSearchGroupsSpy = jest.spyOn(
       component.instance(), 'onSearchGroups'
@@ -150,7 +149,7 @@ describe('DashBoard', () => {
     expect(onSearchGroupsSpy).toHaveBeenCalled();
   });
 
-  it('calls toggleCreateGroup', () => {
+  it('should contain a toggleCreateGroup method', () => {
     const component = mountDashBoard();
     const toggleCreateGroupSpy = jest.spyOn(
       component.instance(), 'toggleCreateGroup'
@@ -163,20 +162,24 @@ describe('DashBoard', () => {
     expect(toggleCreateGroupSpy).toHaveBeenCalled();
   });
 
-  it('calls toggleCreateGroup', () => {
+  it('should toggle showSearchGroups state to false', () => {
+    // simulate when state.createGroup is false
     const component = mountDashBoard();
-    const toggleCreateGroupSpy = jest.spyOn(
-      component.instance(), 'toggleCreateGroup'
+    const toggleSearchGroupsSpy = jest.spyOn(
+      component.instance(), 'toggleSearchGroups'
     );
     component.setState({
-      showSearchGroups: false
+      createGroup: false,
+      showSearchGroups: true
     });
 
-    component.instance().toggleCreateGroup();
-    expect(toggleCreateGroupSpy).toHaveBeenCalled();
+    component.instance().toggleSearchGroups();
+    expect(toggleSearchGroupsSpy).toHaveBeenCalled();
+    expect(component.instance().state.showSearchGroups).toBe(false);
   });
 
-  it('calls toggleSearchGroups', () => {
+  it('should toggle showSearchGroups state to true', () => {
+    // simulate when state.createGroup is true
     const component = mountDashBoard();
     const toggleSearchGroupsSpy = jest.spyOn(
       component.instance(), 'toggleSearchGroups'
@@ -187,22 +190,24 @@ describe('DashBoard', () => {
 
     component.instance().toggleSearchGroups();
     expect(toggleSearchGroupsSpy).toHaveBeenCalled();
+    expect(component.instance().state.showSearchGroups).toBe(true);
   });
 
-  it('calls toggleSearchGroups', () => {
+  it('should toggle createGroup state to true', () => {
     const component = mountDashBoard();
-    const toggleSearchGroupsSpy = jest.spyOn(
-      component.instance(), 'toggleSearchGroups'
+    const toggleCreateGroupSpy = jest.spyOn(
+      component.instance(), 'toggleCreateGroup'
     );
     component.setState({
-      createGroup: false
+      showSearchGroups: false
     });
 
-    component.instance().toggleSearchGroups();
-    expect(toggleSearchGroupsSpy).toHaveBeenCalled();
+    component.instance().toggleCreateGroup();
+    expect(toggleCreateGroupSpy).toHaveBeenCalled();
+    expect(component.instance().state.createGroup).toBe(true);
   });
 
-  it('has map state to props', () => {
+  it('should render the connected component', () => {
     const component = shallow(
       <ConnectedDashBoard {...props} store={store} />
     );
